@@ -7,9 +7,9 @@ Pelo presente instrumento particular, celebrado com fulcro nos artigos 421, 421-
 ## 1. DAS PARTES CONTRATANTES
 
 ### 1.1. CONTRATADA:
-**TIAGO TEIXEIRA DO NASCIMENTO SILVA**, pessoa jurídica de direito privado sob a forma de empresário individual (Microempreendedor Individual — MEI), inscrita no CNPJ/MF sob o nº **`69.390.968/0001-78`**, operando sob o nome empresarial e fantasia **TEIXO (ASSESSORIA DE CRESCIMENTO E TECNOLOGIA)**, com domicílio na Cidade do Rio de Janeiro / RJ, e-mails de contato: `contato@teixo.com.br` / `rhenanteixeira.rj@gmail.com`, representada por seu titular e signatário:
+**TIAGO TEIXEIRA DO NASCIMENTO SILVA**, pessoa jurídica de direito privado sob a forma de empresário individual (Microempreendedor Individual — MEI), inscrita no CNPJ/MF sob o nº **`69.390.968/0001-78`**, operando sob o nome empresarial e fantasia **TEIXO (ASSESSORIA DE CRESCIMENTO E TECNOLOGIA)**, com domicílio na Cidade do Rio de Janeiro / RJ, e-mail de contato: `contato@teixo.com.br`, representada por seu titular e signatário:
 - **TIAGO TEIXEIRA DO NASCIMENTO SILVA**, gestor de aquisição de tráfego pago e estrategista de crescimento, titular do CPF/MF sob o nº [ARQUIVADO NA OPERAÇÃO / PREENCHIDO], plenamente capaz civilmente;
-- **Equipe Técnica e Copartícipes Operacionais:** Contando para a execução com **PAULO ROBERTO - "PL"** (Influenciador, Apresentador e Diretor de Criação Audiovisual de Campo) e **RHENAN DE OLIVEIRA TEIXEIRA** (Operações e Estratégia Digital).
+- **Equipe Técnica e Copartícipe Operacional:** Contando para a execução dos serviços de captação de campo com **PAULO ROBERTO - "PL"** (Influenciador, Apresentador e Diretor de Criação Audiovisual de Campo).
 
 ### 1.2. CONTRATANTE:
 **SÍTIO HOSTEL NATUREZA** [Razão Social / Denominação Comercial / Titular: __________________________________________________], pessoa jurídica de direito privado [ou empreendimento econômico], inscrita no CNPJ/MF sob o nº ____________________________, situada na Cidade do Rio de Janeiro / RJ, neste ato formalmente representada por seu Gestor / Administrador Operacional de Fato:
