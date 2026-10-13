@@ -51,7 +51,8 @@ Resolvem celebrar o presente Contrato, subordinando-se às seguintes cláusulas 
 - **PILAR 2 — PRODUÇÃO AUDIOVISUAL, CONTEÚDO ORGÂNICO E COBERTURA DE CAMPO (PAULO ROBERTO - PL):**
   - **Fase 1 — Apresentação Institucional de Lançamento (1º Mês de Operação):** Produção, captação presencial e edição de 1 (um) vídeo matriz em alta definição no formato horizontal (16:9), formatado especificamente para o canal do YouTube, evidenciando as instalações, áreas de lazer, acomodações, ecoturismo e a gastronomia da casa. A partir dessa gravação matriz, extração e edição de um **lote de pelo menos 20 (vinte) cortes verticais dinâmicos (9:16)** com ganchos de retenção e ritmo viral para postagem estratégica e coordenada no YouTube Shorts, Instagram Reels, TikTok e Facebook;
   - **Fase 2 — Cobertura Presencial Dinâmica de Eventos:** Cobertura presencial em eventos realizados nas dependências do hostel (tais como rodas de pagode, encontros comemorativos, confraternizações e programações festivas), reproduzindo a mesma esteira de entrega: captação presencial de campo no estilo repórter autêntico, 1 (um) vídeo matriz horizontal para YouTube e geração de cortes verticais virais para redes sociais, sem quantidade pré-fixada ou limite de cortes estipulado por evento;
-  - **Política de Remarcação e Proteção de Deslocamento:** As visitas e filmagens presenciais serão agendadas previamente entre as Partes. Qualquer solicitação de cancelamento ou remarcação de data por parte da CONTRATANTE deverá ser comunicada formalmente via WhatsApp com antecedência mínima de **24 (vinte e quatro) horas**. Caso o cancelamento ocorra com prazo inferior a 24 horas ou haja impossibilidade de gravação por circunstância imputável à CONTRATANTE após o deslocamento do profissional até o estabelecimento, **50% (cinquenta por cento) do custo de deslocamento do PL é devolvido** à CONTRATANTE (sendo os 50% restantes retidos para cobertura das despesas efetivas de transporte e logística havidas pelo criador).
+  - **Política de Remarcação, Condições Climáticas e Proteção de Deslocamento:** As visitas e filmagens presenciais serão agendadas previamente entre as Partes. Qualquer solicitação de cancelamento ou remarcação de data por parte da CONTRATANTE deverá ser comunicada formalmente via WhatsApp oficial com antecedência mínima de **24 (vinte e quatro) horas**. Caso o cancelamento ocorra com prazo inferior a 24 horas ou haja impossibilidade de gravação por circunstância imputável à CONTRATANTE após o deslocamento do profissional até o estabelecimento, **50% (cinquenta por cento) do custo de deslocamento do PL é devolvido** à CONTRATANTE (sendo os 50% restantes retidos para cobertura das despesas efetivas de transporte e logística havidas pelo criador). Na hipótese de intempéries meteorológicas severas (chuvas fortes, tempestades ou temporais comprovados) ou motivo de força maior que inviabilizem a captação externa no sítio, a data será remarcada de comum acordo sem qualquer retenção ou penalidade para ambas as Partes;
+  - **Delimitação da Entrega Final e Não Fornecimento de Arquivos Brutos (Raw Footage):** A obrigação de entrega da CONTRATADA e do criador PL restringe-se exclusivamente aos produtos audiovisuais finais, finalizados, sonorizados e renderizados em alta definição (1080p/4K). Os arquivos brutos de captação de câmera (*raw footage*), descartes de gravação, arquivos de projeto e linhas do tempo de software de edição não integram a entrega contratual, constituindo acervo técnico e patrimônio metodológico privativo da CONTRATADA.
 
 - **PILAR 3 — STOREFRONT WEB PRÓPRIO & MÓDULO BALCÃO/MESA NFC (MODALIDADE RISCO ZERO):**
   - Estruturação de plataforma web responsiva, ultrarrápida e intuitiva para visualização de cardápio, consumação e reservas diretas no celular do cliente;
@@ -99,6 +100,8 @@ c) **Implementação da Plataforma Web & Módulo Balcão/Mesa NFC (Rhenan Teixei
 
 2.3. **Mora e Encargos Financeiros:** O atraso injustificado no pagamento de qualquer parcela contratual sujeitará a CONTRATANTE, de pleno direito e independentemente de notificação judicial prévia, ao pagamento de multa moratória de **2% (dois por cento)** sobre o montante em atraso, juros moratórios de **1% (um por cento) ao mês** calculados *pro rata die*, acrescidos de correção monetária calculada pela variação positiva do IPCA/IBGE.
 
+2.4. **Suspensão Preventiva por Inadimplemento (Art. 476 do Código Civil):** O atraso injustificado no pagamento de qualquer parcela mensal de honorários, liquidação quinzenal de microtaxas ou despesas de produção por prazo superior a **5 (cinco) dias corridos** autoriza a CONTRATADA, de pleno direito e independentemente de prévia interpelação judicial, a suspender e pausar imediatamente a gestão e veiculação de anúncios patrocinados, bem como paralisar novos agendamentos e gravações presenciais até a integral quitação da mora financeira acrescida dos encargos legais. A suspensão preventiva dos serviços em decorrência de inadimplência da CONTRATANTE não configura descumprimento contratual pela CONTRATADA, não gera direito a ressarcimento ou abatimento proporcional e não exonera a CONTRATANTE da exigibilidade do pagamento integral das mensalidades contratadas.
+
 ---
 
 ### CLÁUSULA TERCEIRA — DA GARANTIA CONDICIONAL DE SATISFAÇÃO (RISCO ZERO E CONVERSÃO EM TRÁFEGO)
@@ -123,6 +126,8 @@ II - A imagem corporal e a voz de seus sócios, representantes, recepcionistas e
 III - Os materiais captados para exibição em Instagram (Reels e Stories), TikTok, YouTube (vídeos longos e Shorts), Facebook, campanhas patrocinadas de tráfego e no portfólio institucional da CONTRATADA.
 
 4.3. **Preservação da Imagem e Honra:** A CONTRATADA compromete-se a conduzir as edições com elevado rigor estético e ético, valorizando a hospitalidade, a gastronomia e os atributos positivos do hostel, sendo expressamente vedada a utilização dos conteúdos em contexto depreciativo, vexatório ou ilícito.
+
+4.4. **Garantia de Titularidade sobre Materiais Fornecidos pela CONTRATANTE:** A CONTRATANTE declara e garante que detém a titularidade originária ou todas as licenças, autorizações e direitos de cessão patrimonial sobre quaisquer logotipos, slogans, fotografias de arquivo, vídeos preexistentes, depoimentos ou trilhas sonoras que fornecer à CONTRATADA para composição de criativos, campanhas ou páginas web. Caso a CONTRATADA ou membros de sua equipe técnica venham a ser demandados judicial ou extrajudicialmente por terceiros (tais como fotógrafos anteriores, designers ou associações de direitos autorais) alegando plágio, contrafação ou uso desautorizado de material remetido pela CONTRATANTE, esta assumirá a responsabilidade integral e exclusiva pela demanda, ressarcindo regressivamente a CONTRATADA nos termos do item 5.4 deste instrumento.
 
 ---
 
@@ -183,9 +188,24 @@ III - Por insolvência civil comprovada, recuperação judicial ou decretação 
 
 ---
 
-### CLÁUSULA DÉCIMA — DO FORO DE ELEIÇÃO
+### CLÁUSULA DÉCIMA — DAS COMUNICAÇÕES OFICIAIS, NÃO NOVAÇÃO E DISPOSIÇÕES GERAIS
 
-10.1. Para dirimir quaisquer litígios, dúvidas ou controvérsias oriundas do presente instrumento que não possam ser solucionadas amigavelmente pelas Partes, fica eleito com exclusividade o **Foro da Comarca da Capital do Estado do Rio de Janeiro / RJ**, com expressa renúncia a qualquer outro, por mais privilegiado que seja ou venha a ser.
+10.1. **Canais Oficiais de Notificação:** Todas as comunicações, notificações, avisos de remarcação, solicitações de ajuste de peças, aplicação de aprovação tácita e comunicações de rescisão entre as Partes somente serão consideradas juridicamente válidas e eficazes se realizadas por escrito e encaminhadas aos seguintes canais formais:
+I - Mensagens trocadas pelos números de WhatsApp oficiais declarados no preâmbulo deste contrato; ou
+II - Correio eletrônico (e-mail) oficial das Partes especificado no preâmbulo.
+*Parágrafo Único:* Fica expressamente desprovida de qualquer validade jurídica qualquer mensagem, instrução ou aviso transmitido por redes sociais pessoais, mensagens diretas (*DMs*) de Instagram ou comunicados verbais dirigidos a colaboradores operacionais.
+
+10.2. **Não Novação (Tolerância Mútua):** A eventual tolerância, abstenção do exercício de direitos ou concessão de prazos adicionais por qualquer das Partes em relação a inadimplementos pontuais constituirá ato de mera liberalidade e não importará em novação contratual, renúncia a direitos, alteração tácita das obrigações ou precedente invocável, permanecendo plenamente exigíveis todas as cláusulas e penalidades deste contrato a qualquer momento.
+
+10.3. **Divisibilidade e Independência das Cláusulas:** A eventual declaração judicial de nulidade, ineficácia ou inexequibilidade de qualquer cláusula ou disposição deste instrumento não afetará nem invalidará as demais disposições, as quais permanecerão plenamente vigentes, vinculantes e eficazes entre as Partes.
+
+10.4. **Urbanidade e Horário de Suporte Técnico:** As Partes comprometem-se a pautar suas relações operacionais pelos princípios da mútua urbanidade e respeito profissional. O atendimento técnico, alinhamentos e suporte serão prestados pela CONTRATADA prioritariamente em horário comercial (de segunda a sexta-feira, das 09h às 18h), ressalvadas coberturas presenciais de eventos previamente agendadas e situações emergenciais que afetem a estabilidade direta da plataforma web.
+
+---
+
+### CLÁUSULA DÉCIMA PRIMEIRA — DO FORO DE ELEIÇÃO
+
+11.1. Para dirimir quaisquer litígios, dúvidas ou controvérsias oriundas do presente instrumento que não possam ser solucionadas amigavelmente pelas Partes, fica eleito com exclusividade o **Foro da Comarca da Capital do Estado do Rio de Janeiro / RJ**, com expressa renúncia a qualquer outro, por mais privilegiado que seja ou venha a ser.
 
 E, por estarem assim justas, acordadas e contratadas, as Partes firmam o presente instrumento em 2 (duas) vias de igual teor e forma para um só efeito de direito, na presença de 2 (duas) testemunhas instrumentárias abaixo qualificadas.
 

@@ -46,7 +46,11 @@ Para superar a objeção de preço e a resistência inicial da contratante, o Ti
 
 - **Vigência:** Prazo inicial determinado de 3 meses, prorrogando-se automaticamente por prazo indeterminado (aviso prévio de 30 dias).
 - **Vencimento do Tráfego:** Todo dia 13 de cada mês na conta do gestor Tiago (data de aniversário do primeiro pagamento em 13/10 -> próximos em 13/11, 13/12...).
-- **Proteção de Deslocamento do PL:** Remarcação exige aviso prévio de 24h. Em caso de cancelamento com menos de 24h após deslocamento do profissional, 50% do custo de deslocamento do PL é devolvido (sendo os 50% restantes retidos para cobrir as despesas de transporte e logística).
+- **Suspensão Preventiva (Corte de Sinal):** Atraso superior a 5 dias autoriza a pausa imediata de anúncios e gravações (Art. 476 CC), sem exoneração das parcelas.
+- **Proteção de Deslocamento do PL & Clima:** Remarcação exige aviso prévio de 24h. Em caso de cancelamento com menos de 24h após deslocamento do profissional, 50% do custo de deslocamento do PL é devolvido. Chuvas torrenciais e tempestades no sítio justificam remarcação amigável por força maior sem penalidades.
+- **Entrega Audiovisual Final (Zero Raw Footage):** A entrega limita-se aos vídeos finais renderizados (1080p/4K); arquivos brutos de câmera e projetos de edição pertencem à metodologia da Teixo e não são fornecidos.
+- **Garantia de Titularidade:** O hostel é integralmente responsável por fotos, marcas ou trilhas que enviar, isentando a Teixo de disputas de direitos autorais de terceiros.
 - **Fase de Aprendizado do Meta Ads:** Primeiros 14 dias úteis focados em calibração algorítmica e inteligência de público.
 - **Regularidade do Cartão:** A manutenção de saldo no cartão corporativo do Meta Ads é do cliente; eventual pausa de anúncios não suspende os honorários de R$ 1.200 do Tiago.
+- **Comunicação Oficial e Urbanidade:** Validade jurídica restrita a WhatsApp e e-mails oficiais; suporte técnico em horário comercial (seg a sex das 09h às 18h).
 - **Início Efetivo:** O cronograma de trabalho inicia mediante a liberação dos acessos administrativos pela contratante.
