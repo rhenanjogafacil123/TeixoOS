@@ -39,3 +39,14 @@ Para superar a objeção de preço e a resistência inicial da contratante, o Ti
      - **Opção 1:** Devolução imediata de 100% dos R$ 500,00 de volta para o Sítio Hostel Natureza; **OU**
      - **Opção 2:** Conversão integral dos R$ 500,00 em crédito de tráfego pago para pagar o Tiago.
 4. **Resultado Previsto:** O cliente sente risco absolutamente zero para experimentar, o Rhenan entrega um storefront ultrarrápido com plaquinhas NFC que resolve o gargalo operacional do hostel, o cliente se apaixona pelo resultado prático e os R$ 500,00 se consolidam no bolso do Rhenan.
+
+---
+
+## 4. Condições Comerciais, Prazos e Salvaguardas Alinhadas
+
+- **Vigência:** Prazo inicial determinado de 3 meses, prorrogando-se automaticamente por prazo indeterminado (aviso prévio de 30 dias).
+- **Vencimento do Tráfego:** Todo dia 20 de cada mês na conta do gestor Tiago.
+- **Proteção de Deslocamento do PL:** Remarcação exige aviso de 24h. Se cancelado com menos de 24h após deslocamento, 50% do valor do evento é retido e 50% devolvido.
+- **Fase de Aprendizado do Meta Ads:** Primeiros 14 dias úteis focados em calibração algorítmica e inteligência de público.
+- **Regularidade do Cartão:** A manutenção de saldo no cartão corporativo do Meta Ads é do cliente; eventual pausa de anúncios não suspende os honorários de R$ 1.200 do Tiago.
+- **Início Efetivo:** O cronograma de trabalho inicia mediante a liberação dos acessos administrativos pela contratante.
