@@ -7,19 +7,19 @@
 
 ## 1. Fase Atual
 
-Expansão acelerada no nicho de **gastronomia e delivery local** (pizzarias, hamburguerias, confeitarias, açaiterias) na Zona Oeste do Rio de Janeiro, com produto validado e contratos já fechados.
+Expansão acelerada no nicho de **gastronomia, food delivery e alimentação local** (pizzarias, hamburguerias, confeitarias, açaiterias e marmitas fit saudáveis) na Zona Oeste e Zona Norte do Rio de Janeiro, com produtos validados e operações ativas.
 
 ---
 
 ## 2. Metas e Prazos
 
 ### Marco 1 — Até 20/12/2026:
-- **30 lojas de lanchonete/delivery** ativas com site próprio da Teixo no ar.
+- **30 lojas de alimentação/delivery** ativas com site próprio da TeixoAI no ar (Pizza do Juca e Marmitas Fit já integradas).
 - **30.000 pedidos mensais** processados (média de 1.000 pedidos/loja).
 - **Faturamento estimado:** **R$ 20.100,00/mês** só na microtaxa de R$ 0,67 por pedido.
 
 ### Marco 2 — Até Janeiro (Escala Plena):
-- **40 lojas ativas** no modelo de delivery próprio da Teixo.
+- **40 lojas ativas** no modelo de delivery próprio da TeixoAI.
 - **1.500 pedidos mensais por loja** (total de 60.000 pedidos/mês).
 - **2.000 logins/clientes ativos cadastrados por loja** (total de 80.000 usuários ativos na base).
 - **Faturamento estimado:** **R$ 40.200,00/mês** recorrentes.
@@ -34,7 +34,12 @@ Expansão acelerada no nicho de **gastronomia e delivery local** (pizzarias, ham
   - [x] Central de despacho de motoboys espelhada e painel administrativo prontos.
   - [x] Primeiro vídeo viral comercial Earth to Shop Zoom concluído (`clientes/Pizza do Juca/videos/`).
 
-- **Prioridades Imediatas (Próximos Passos):**
+- **Marmitas Fit (Piedade, RJ — Eduardo Fiocchi):**
+  - [x] Mapeamento completo de produção (lotes, porcionamento 150g/120g/70-80g, curva ABC e rotina de quinta-feira de estoque/CMV).
+  - [ ] Desenvolvimento e deploy do cardápio digital próprio para desmame do Prefiro Delivery.
+  - [ ] Implementação de sugestão inteligente de compras com fator de cocção na Ordem de Produção.
+
+- **Prioridades Imediatas de Infraestrutura & Escala:**
   - **Domínio e SSL (HTTPS):** Configurar apontamento de DNS e certificado SSL na VPS HostGator (`143.95.174.216:22022`).
   - **Validação de Fluxo de Ponta a Ponta:** Simular fechamento e impressão de pedidos da Pizza do Juca em ambiente real.
   - **Template Modular ("Clonador de Lojas"):** Empacotar a estrutura validada do Juca como matriz para acelerar a meta de 30 lojas até 20/12/2026.

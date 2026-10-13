@@ -120,7 +120,7 @@ Quando o usuário pedir skill nova:
 
 **Fundadores:** Rhenan Teixeira (Sites, Tecnologia e Operação), Thiago Teixeira (Tráfego Pago), Erick Teixeira (Automação e CRM).  
 **Equipe de Produção e Campo:** Patrick Teixeira (Drone), PL & Mateus/Big (Comercial presencial e captação no formato repórter de rua).  
-**Foco Atual:** Gastronomia local e delivery (pizzarias, hamburguerias, confeitarias, açaiterias) na Zona Oeste do Rio de Janeiro.  
+**Foco Atual:** Gastronomia local, delivery e marmitas fit (pizzarias, hamburguerias, confeitarias, açaiterias, refeições congeladas) na Zona Oeste e Zona Norte do Rio de Janeiro.  
 **Modelo Comercial:** Delivery próprio com taxa de R$ 0,67 por pedido (R$ 0 de setup e R$ 0 de mensalidade), mais tráfego local, automações e captação de conteúdo.
 
 **Padrões Operacionais de Food Delivery:**
@@ -128,6 +128,7 @@ Quando o usuário pedir skill nova:
 - **Comandas Impressas Segmentadas:** Via Cozinha (sem valores monetários, foco em preparo e alertas) + Via Motoboy (endereço com referência, conferência, destaque de cobrança/pago) + Balcão. Botão 1-clique [ ⚡ As 2 Vias ].
 - **Central de Despacho:** Visão em tempo real das telas dos celulares dos motoboys (pedidos em espera no balcão e rota ativa com WhatsApp do cliente). Zero mapas decorativos pesados.
 - **Performance e Custo Zero:** Frontend estático ultrarrápido + API REST/SQLite com fallback local (`localStorage`), sem requisições caras ou dependência de nuvem pesada.
+- **Controle de Estoque & CMV Semanal (Quinta-feira):** Curva ABC (Classe A diário; B e C por cardápio), Ordem de Produção antecipada em lote com fatores de cocção (perdas e rendimento de insumos crus).
 
 **Estrutura de Pastas:**
 - `_memoria/` — memória permanente (empresa, preferências, estratégia)

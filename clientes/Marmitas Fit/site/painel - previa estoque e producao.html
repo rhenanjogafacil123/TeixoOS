@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marmitas Fit — Painel Operacional de Estoque & Produção</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Phosphor Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            fit: {
+              primary: '#015c34',
+              primaryHover: '#014527',
+              primaryLight: '#e6f2ec',
+              accent: '#fd4d00',
+              accentLight: '#fff1ec',
+              dark: '#1e293b',
+              gray: '#64748b',
+              lightGray: '#f8fafc',
+              border: '#e2e8f0',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #f1f5f9; }
+    .glass-card { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col font-sans">
+
+  <!-- Topbar Header -->
+  <header class="bg-[#015c34] text-white sticky top-0 z-50 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-white/10 border border-white/20 flex items-center justify-center font-bold text-xl text-white shadow-inner">
+          <i class="fa-solid fa-leaf text-emerald-300"></i>
+        </div>
+        <div>
+          <div class="flex items-center space-x-2">
+            <h1 class="font-bold text-lg leading-tight tracking-tight">Marmitas Fit</h1>
+            <span class="bg-emerald-500/20 text-emerald-200 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-emerald-400/30">MÓDULO ADMIN</span>
+          </div>
+          <p class="text-xs text-emerald-100/80">Gestão Inteligente de Estoque, Lotes e CMV</p>
+        </div>
+      </div>
+
+      <!-- User / Manager Profile -->
+      <div class="flex items-center space-x-3">
+        <div class="text-right hidden sm:block">
+          <p class="text-xs font-semibold leading-none">Eduardo Fiocchi</p>
+          <p class="text-[11px] text-emerald-200/80 leading-tight">Gerente de Operações</p>
+        </div>
+        <div class="w-9 h-9 rounded-full bg-white text-[#015c34] font-bold text-sm flex items-center justify-center shadow-md">
+          EF
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <div class="bg-white border-b border-slate-200 sticky top-[65px] z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav class="flex space-x-2 sm:space-x-8 overflow-x-auto py-2.5" id="navTabs">
+        <button onclick="switchTab('lote')" id="tab-lote" class="tab-btn px-3 py-2 text-sm font-bold text-[#015c34] border-b-2 border-[#015c34] flex items-center space-x-2 whitespace-nowrap">
+          <i class="fa-solid fa-calculator text-base"></i>
+          <span>Calculadora de Lote (Cocção)</span>
+        </button>
+        <button onclick="switchTab('freezer')" id="tab-freezer" class="tab-btn px-3 py-2 text-sm font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent flex items-center space-x-2 whitespace-nowrap">
+          <i class="fa-solid fa-snowflake text-base"></i>
+          <span>Giro do Freezer & Reposição</span>
+          <span class="bg-red-500 text-white text-[10px] px-1.5 py-0.2 rounded-full font-bold ml-1">2 Alertas</span>
+        </button>
+        <button onclick="switchTab('quinta')" id="tab-quinta" class="tab-btn px-3 py-2 text-sm font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent flex items-center space-x-2 whitespace-nowrap">
+          <i class="fa-solid fa-chart-pie text-base"></i>
+          <span>Balanço de Quinta (CMV)</span>
+        </button>
+        <button onclick="switchTab('curva')" id="tab-curva" class="tab-btn px-3 py-2 text-sm font-semibold text-slate-500 hover:text-slate-800 border-b-2 border-transparent flex items-center space-x-2 whitespace-nowrap">
+          <i class="fa-solid fa-clipboard-check text-base"></i>
+          <span>Checklist Curva A (Diário)</span>
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <!-- Main Content Container -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-1 w-full">
+
+    <!-- ==================== TAB 1: CALCULADORA DE LOTE & COCÇÃO ==================== -->
+    <section id="view-lote" class="tab-content block space-y-6">
+      <!-- Explanatory banner -->
+      <div class="bg-emerald-50 border border-emerald-200 rounded-2xl p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div class="flex items-start space-x-3.5">
+          <div class="w-10 h-10 rounded-xl bg-[#015c34] text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+            <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+          </div>
+          <div>
+            <h2 class="text-base font-bold text-emerald-950">Calculadora Inteligente de Cocção para Cozinha</h2>
+            <p class="text-xs sm:text-sm text-emerald-800">
+              Automatiza a matemática de perdas: escolha o prato e a quantidade de marmitas prontas. O sistema calcula a gramatura crua exata para compra e descongelamento sem sobrar nem faltar.
+            </p>
+          </div>
+        </div>
+        <div class="flex items-center space-x-2 shrink-0">
+          <span class="text-xs font-semibold text-emerald-900 bg-emerald-200/70 px-3 py-1.5 rounded-lg border border-emerald-300">
+            Ficha Técnica Padrão: 150g / 120g / 80g
+          </span>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <!-- Control Left Panel -->
+        <div class="lg:col-span-5 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-5">
+          <h3 class="text-base font-bold text-slate-800 flex items-center justify-between">
+            <span>1. Configurar Lote de Produção</span>
+            <span class="text-xs font-medium text-slate-400">Tempo Real</span>
+          </h3>
+
+          <!-- Seleção do Prato -->
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-slate-500 mb-2">Prato a Produzir</label>
+            <select id="selectPrato" onchange="calcularLote()" class="w-full bg-slate-50 border border-slate-300 rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#015c34] transition">
+              <option value="strogonoff_frango" data-prot="Frango" data-fc-prot="0.75" data-carbo="Arroz Integral" data-fc-carbo="2.2" data-leg="Legumes no Vapor" data-fc-leg="0.88">
+                Strogonoff de Frango Fit (com Arroz Integral)
+              </option>
+              <option value="patinho_pure" data-prot="Patinho Moído" data-fc-prot="0.74" data-carbo="Purê de Mandioquinha" data-fc-carbo="1.0" data-leg="Mix de Brócolis e Cenoura" data-fc-leg="0.85">
+                Patinho Moído com Purê de Mandioquinha
+              </option>
+              <option value="frango_batata" data-prot="Peito de Frango Grelhado" data-fc-prot="0.75" data-carbo="Batata Doce Assada" data-fc-carbo="0.90" data-leg="Vagem Refogada" data-fc-leg="0.88">
+                Frango Grelhado com Batata Doce
+              </option>
+              <option value="tilapia_arroz" data-prot="Filé de Tilápia" data-fc-prot="0.70" data-carbo="Arroz Branco" data-fc-carbo="2.3" data-leg="Cenoura e Ervilha" data-fc-leg="0.85">
+                Tilápia Grelhada com Arroz e Legumes
+              </option>
+            </select>
+          </div>
+
+          <!-- Slider de Quantidade de Marmitas -->
+          <div>
+            <div class="flex justify-between items-center mb-2">
+              <label class="text-xs font-bold uppercase tracking-wider text-slate-500">Meta do Lote (Unidades Prontas)</label>
+              <span id="labelQtd" class="text-lg font-extrabold text-[#015c34] bg-emerald-50 px-3 py-0.5 rounded-lg border border-emerald-200">
+                40 marmitas
+              </span>
+            </div>
+            <input type="range" id="sliderQtd" min="10" max="120" step="5" value="40" oninput="calcularLote()" class="w-full h-2.5 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-[#015c34]">
+            <div class="flex justify-between text-[11px] font-semibold text-slate-400 mt-1.5">
+              <span>10 un</span>
+              <span>30 un</span>
+              <span>50 un</span>
+              <span>80 un</span>
+              <span>120 un</span>
+            </div>
+          </div>
+
+          <!-- Ficha Técnica Resumo -->
+          <div class="bg-slate-50 rounded-xl p-4 border border-slate-200/80 space-y-2 text-xs">
+            <p class="font-bold text-slate-700 flex items-center justify-between">
+              <span>Porcionamento da Casa por Pote:</span>
+              <span class="text-emerald-700 font-extrabold">350g Total</span>
+            </p>
+            <div class="grid grid-cols-3 gap-2 pt-1 text-center">
+              <div class="bg-white p-2 rounded-lg border border-slate-200">
+                <span class="text-slate-400 block text-[10px]">Proteína Pronta</span>
+                <span class="font-bold text-slate-800 text-sm">150g</span>
+              </div>
+              <div class="bg-white p-2 rounded-lg border border-slate-200">
+                <span class="text-slate-400 block text-[10px]">Carboidrato Pronto</span>
+                <span class="font-bold text-slate-800 text-sm">120g</span>
+              </div>
+              <div class="bg-white p-2 rounded-lg border border-slate-200">
+                <span class="text-slate-400 block text-[10px]">Legumes Prontos</span>
+                <span class="font-bold text-slate-800 text-sm">80g</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ação Direta para Cozinha -->
+          <div class="pt-2">
+            <button onclick="copiarOrdemWhatsApp()" class="w-full bg-[#015c34] hover:bg-[#014527] text-white py-3 px-4 rounded-xl font-bold text-sm shadow-md transition flex items-center justify-center space-x-2">
+              <i class="fa-brands fa-whatsapp text-lg"></i>
+              <span>Enviar Ordem Mastigada pra Cozinheira</span>
+            </button>
+            <p id="msgCopiado" class="text-center text-xs text-emerald-700 font-bold mt-2 hidden">✓ Ordem de produção copiada! Pronta pra colar no WhatsApp.</p>
+          </div>
+        </div>
+
+        <!-- Result Right Panel (Calculated Ingredients) -->
+        <div class="lg:col-span-7 bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+              <div>
+                <h3 class="text-base font-bold text-slate-900">2. Lista de Insumos & Descongelamento Exato</h3>
+                <p class="text-xs text-slate-500">Calculado automaticamente com base nos Fatores de Cocção (FC)</p>
+              </div>
+              <span class="bg-emerald-100 text-emerald-800 font-bold text-xs px-2.5 py-1 rounded-full">
+                Zero Erro de Pesagem
+              </span>
+            </div>
+
+            <!-- Insumos Detalhados -->
+            <div class="space-y-3.5" id="listaInsumos">
+              <!-- Proteína Card -->
+              <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3.5">
+                  <div class="w-12 h-12 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-drumstick-bite"></i>
+                  </div>
+                  <div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-amber-700 bg-amber-100 px-2 py-0.5 rounded">
+                      Descongelar / Separar Cru
+                    </span>
+                    <h4 id="nomeProt" class="font-bold text-slate-900 text-base mt-0.5">Peito de Frango Cru</h4>
+                    <p class="text-xs text-slate-500">Perda de cocção estimada: <span class="font-semibold text-slate-700" id="perdaProt">-25% (FC 0.75)</span></p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span id="qtdProtCru" class="text-2xl font-black text-amber-700">8.0 kg</span>
+                  <span class="block text-[11px] text-slate-400">rende <b id="qtdProtPronto" class="text-slate-600">6.0 kg pronto</b></span>
+                </div>
+              </div>
+
+              <!-- Carboidrato Card -->
+              <div class="bg-blue-50/60 border border-blue-200/80 rounded-xl p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3.5">
+                  <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-600 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-bowl-rice"></i>
+                  </div>
+                  <div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-blue-700 bg-blue-100 px-2 py-0.5 rounded">
+                      Cozinhar de Grão Seco / Cru
+                    </span>
+                    <h4 id="nomeCarbo" class="font-bold text-slate-900 text-base mt-0.5">Arroz Integral Seco</h4>
+                    <p class="text-xs text-slate-500">Ganho por absorção de água: <span class="font-semibold text-slate-700" id="ganhoCarbo">Rende 2.2x (FC 2.2)</span></p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span id="qtdCarboCru" class="text-2xl font-black text-blue-700">2.18 kg</span>
+                  <span class="block text-[11px] text-slate-400">rende <b id="qtdCarboPronto" class="text-slate-600">4.8 kg pronto</b></span>
+                </div>
+              </div>
+
+              <!-- Legumes Card -->
+              <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-4 flex items-center justify-between">
+                <div class="flex items-center space-x-3.5">
+                  <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center text-xl shrink-0">
+                    <i class="fa-solid fa-carrot"></i>
+                  </div>
+                  <div>
+                    <span class="text-[10px] uppercase font-bold tracking-wider text-emerald-700 bg-emerald-100 px-2 py-0.5 rounded">
+                      Higienizar / Vapor
+                    </span>
+                    <h4 id="nomeLeg" class="font-bold text-slate-900 text-base mt-0.5">Legumes Frescos Crus</h4>
+                    <p class="text-xs text-slate-500">Perda de aparas e cocção: <span class="font-semibold text-slate-700" id="perdaLeg">-12% (FC 0.88)</span></p>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span id="qtdLegCru" class="text-2xl font-black text-emerald-700">3.64 kg</span>
+                  <span class="block text-[11px] text-slate-400">rende <b id="qtdLegPronto" class="text-slate-600">3.2 kg pronto</b></span>
+                </div>
+              </div>
+
+              <!-- Embalagens -->
+              <div class="bg-slate-50 border border-slate-200 rounded-xl p-3.5 flex items-center justify-between text-xs">
+                <div class="flex items-center space-x-3">
+                  <i class="fa-solid fa-box text-slate-400 text-lg"></i>
+                  <div>
+                    <span class="font-bold text-slate-800">Potes Freezer 350ml + Tampas + Selo:</span>
+                    <span class="text-slate-500 block">Separar do estoque de embalagens</span>
+                  </div>
+                </div>
+                <span id="qtdEmbalagens" class="text-base font-extrabold text-slate-800">40 unidades</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rodapé de Indicador Financeiro do Lote -->
+          <div class="mt-6 pt-4 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4 bg-slate-50 -mx-6 -mb-6 p-6 rounded-b-2xl">
+            <div class="flex items-center space-x-6">
+              <div>
+                <span class="text-[11px] font-semibold text-slate-400 block uppercase">Custo Médio Insumos</span>
+                <span id="custoLote" class="text-lg font-extrabold text-slate-900">R$ 296,00</span>
+              </div>
+              <div class="border-l border-slate-200 pl-6">
+                <span class="text-[11px] font-semibold text-slate-400 block uppercase">Faturamento Previsto</span>
+                <span id="faturamentoLote" class="text-lg font-extrabold text-[#015c34]">R$ 1.000,00</span>
+              </div>
+            </div>
+            <div class="bg-white px-3.5 py-1.5 rounded-xl border border-slate-200 shadow-sm">
+              <span class="text-[10px] text-slate-400 uppercase font-bold block">CMV Projetado do Lote</span>
+              <span id="cmvLote" class="text-base font-black text-emerald-600">29.6% (Saudável)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: GIRO DO FREEZER & PONTO DE REPOSIÇÃO ==================== -->
+    <section id="view-freezer" class="tab-content hidden space-y-6">
+      <div class="bg-blue-50 border border-blue-200 rounded-2xl p-4 sm:p-5 flex items-start space-x-3.5">
+        <div class="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-sm">
+          <i class="fa-solid fa-snowflake text-lg"></i>
+        </div>
+        <div>
+          <h2 class="text-base font-bold text-blue-950">Monitor do Freezer com Alerta de Antecedência (48h)</h2>
+          <p class="text-xs sm:text-sm text-blue-800">
+            Diferente do contador estático comum que só avisa quando zera no site, este painel calcula o **tempo que o freezer aguenta** baseado no ritmo de vendas dos últimos 7 dias. Dispare a produção antes do prato esgotar!
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <!-- Card 1: Crítico -->
+        <div class="bg-white rounded-2xl p-5 border-2 border-red-200 shadow-sm flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+            Crítico (Acaba em 18h)
+          </div>
+          <div>
+            <span class="text-xs font-semibold text-slate-400 uppercase">Linha Tradicional</span>
+            <h3 class="text-lg font-extrabold text-slate-900 mt-0.5">Strogonoff de Frango Fit</h3>
+            <p class="text-xs text-slate-500 mt-1">Giro médio: <b class="text-slate-700">14 marmitas/dia</b></p>
+
+            <div class="my-4 bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex items-center justify-between">
+              <div>
+                <span class="text-[11px] text-slate-400 block font-semibold">Estoque no Freezer</span>
+                <span class="text-2xl font-black text-red-600">8 un</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[11px] text-slate-400 block font-semibold">Estoque Mínimo Seguro</span>
+                <span class="text-base font-bold text-slate-700">20 un</span>
+              </div>
+            </div>
+
+            <div class="w-full bg-slate-100 rounded-full h-2 mb-2">
+              <div class="bg-red-500 h-2 rounded-full" style="width: 25%"></div>
+            </div>
+            <p class="text-[11px] text-red-600 font-semibold flex items-center">
+              <i class="fa-solid fa-triangle-exclamation mr-1.5"></i>
+              Faltam 12 unidades para a margem de segurança
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 mt-4">
+            <button onclick="carregarLoteParaProducao('strogonoff_frango', 40)" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center space-x-2 shadow-sm">
+              <i class="fa-solid fa-fire-burner"></i>
+              <span>Gerar Ordem de 40 Marmitas</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: Atenção -->
+        <div class="bg-white rounded-2xl p-5 border-2 border-amber-200 shadow-sm flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-amber-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+            Atenção (Acaba em 36h)
+          </div>
+          <div>
+            <span class="text-xs font-semibold text-slate-400 uppercase">Linha Carne Vermelha</span>
+            <h3 class="text-lg font-extrabold text-slate-900 mt-0.5">Patinho com Mandioquinha</h3>
+            <p class="text-xs text-slate-500 mt-1">Giro médio: <b class="text-slate-700">10 marmitas/dia</b></p>
+
+            <div class="my-4 bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex items-center justify-between">
+              <div>
+                <span class="text-[11px] text-slate-400 block font-semibold">Estoque no Freezer</span>
+                <span class="text-2xl font-black text-amber-600">14 un</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[11px] text-slate-400 block font-semibold">Estoque Mínimo Seguro</span>
+                <span class="text-base font-bold text-slate-700">20 un</span>
+              </div>
+            </div>
+
+            <div class="w-full bg-slate-100 rounded-full h-2 mb-2">
+              <div class="bg-amber-500 h-2 rounded-full" style="width: 45%"></div>
+            </div>
+            <p class="text-[11px] text-amber-600 font-semibold flex items-center">
+              <i class="fa-solid fa-clock mr-1.5"></i>
+              Colocar patinho para descongelar hoje
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 mt-4">
+            <button onclick="carregarLoteParaProducao('patinho_pure', 30)" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-2.5 rounded-xl transition flex items-center justify-center space-x-2 shadow-sm">
+              <i class="fa-solid fa-fire-burner"></i>
+              <span>Gerar Ordem de 30 Marmitas</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 3: Seguro -->
+        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm flex flex-col justify-between relative overflow-hidden">
+          <div class="absolute top-0 right-0 bg-emerald-500 text-white text-[10px] font-extrabold px-3 py-1 rounded-bl-xl uppercase tracking-wider">
+            Estoque Seguro
+          </div>
+          <div>
+            <span class="text-xs font-semibold text-slate-400 uppercase">Linha Low Carb</span>
+            <h3 class="text-lg font-extrabold text-slate-900 mt-0.5">Frango com Batata Doce</h3>
+            <p class="text-xs text-slate-500 mt-1">Giro médio: <b class="text-slate-700">12 marmitas/dia</b></p>
+
+            <div class="my-4 bg-slate-50 p-3.5 rounded-xl border border-slate-100 flex items-center justify-between">
+              <div>
+                <span class="text-[11px] text-slate-400 block font-semibold">Estoque no Freezer</span>
+                <span class="text-2xl font-black text-emerald-600">42 un</span>
+              </div>
+              <div class="text-right">
+                <span class="text-[11px] text-slate-400 block font-semibold">Estoque Mínimo Seguro</span>
+                <span class="text-base font-bold text-slate-700">20 un</span>
+              </div>
+            </div>
+
+            <div class="w-full bg-slate-100 rounded-full h-2 mb-2">
+              <div class="bg-emerald-500 h-2 rounded-full" style="width: 85%"></div>
+            </div>
+            <p class="text-[11px] text-emerald-600 font-semibold flex items-center">
+              <i class="fa-solid fa-check-circle mr-1.5"></i>
+              Garante vendas até o fim da semana
+            </p>
+          </div>
+
+          <div class="pt-4 border-t border-slate-100 mt-4">
+            <button class="w-full bg-slate-100 text-slate-400 font-bold text-xs py-2.5 rounded-xl cursor-not-allowed">
+              Estoque Abastecido
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: BALANÇO DE QUINTA (CMV) ==================== -->
+    <section id="view-quinta" class="tab-content hidden space-y-6">
+      <div class="bg-purple-50 border border-purple-200 rounded-2xl p-4 sm:p-5 flex items-start space-x-3.5">
+        <div class="w-10 h-10 rounded-xl bg-purple-700 text-white flex items-center justify-center shrink-0 shadow-sm">
+          <i class="fa-solid fa-file-invoice-dollar text-lg"></i>
+        </div>
+        <div>
+          <h2 class="text-base font-bold text-purple-950">A Quinta-feira do Eduardo Automatizada em 1 Clique</h2>
+          <p class="text-xs sm:text-sm text-purple-800">
+            Cruza as vendas totais do site com as notas fiscais de compras lançadas na semana. O CMV e o percentual de custo sobre faturamento já saem prontos na tela sem precisar de planilha do Excel.
+          </p>
+        </div>
+      </div>
+
+      <!-- KPI Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-400 uppercase">Faturamento Semanal</span>
+          <p class="text-2xl font-black text-slate-900 mt-1">R$ 14.850,00</p>
+          <span class="text-xs text-emerald-600 font-bold flex items-center mt-1">
+            <i class="fa-solid fa-arrow-trend-up mr-1"></i> +8.4% vs semana anterior
+          </span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-400 uppercase">Gasto Total em Compras</span>
+          <p class="text-2xl font-black text-slate-900 mt-1">R$ 4.410,00</p>
+          <span class="text-xs text-slate-400 font-medium block mt-1">Notas lançadas no período</span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border-2 border-emerald-500 shadow-sm bg-emerald-50/20">
+          <span class="text-xs font-bold text-emerald-800 uppercase">CMV da Semana</span>
+          <p class="text-2xl font-black text-emerald-700 mt-1">29,7%</p>
+          <span class="text-xs text-emerald-700 font-bold flex items-center mt-1">
+            <i class="fa-solid fa-shield-halved mr-1"></i> Meta da Operação (28% - 32%)
+          </span>
+        </div>
+
+        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-sm">
+          <span class="text-xs font-bold text-slate-400 uppercase">Capital Imobilizado</span>
+          <p class="text-2xl font-black text-slate-900 mt-1">R$ 8.230,00</p>
+          <span class="text-xs text-slate-500 font-medium block mt-1">Valor do estoque físico atual</span>
+        </div>
+      </div>
+
+      <!-- Detalhamento de Compras da Semana -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="font-bold text-slate-800 text-base">Fechamento do Período (Últimos 7 Dias)</h3>
+          <button class="bg-[#015c34] text-white text-xs font-bold px-3 py-1.5 rounded-lg flex items-center space-x-1.5">
+            <i class="fa-solid fa-file-arrow-down"></i>
+            <span>Exportar Relatório em PDF</span>
+          </button>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-xs">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-400 uppercase">
+                <th class="py-2.5 font-bold">Categoria</th>
+                <th class="py-2.5 font-bold">Investido em Compras</th>
+                <th class="py-2.5 font-bold">Consumo na Produção</th>
+                <th class="py-2.5 font-bold">% sobre Faturamento</th>
+                <th class="py-2.5 font-bold text-right">Status</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-slate-700">
+              <tr>
+                <td class="py-3 font-bold text-slate-900">Proteínas (Frango, Patinho, Peixes)</td>
+                <td class="py-3">R$ 2.450,00</td>
+                <td class="py-3">R$ 2.380,00</td>
+                <td class="py-3 font-semibold text-slate-900">16,0%</td>
+                <td class="py-3 text-right"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Dentro da Meta</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-bold text-slate-900">Carboidratos & Grãos (Arroz, Batata, Mandioquinha)</td>
+                <td class="py-3">R$ 720,00</td>
+                <td class="py-3">R$ 680,00</td>
+                <td class="py-3 font-semibold text-slate-900">4,5%</td>
+                <td class="py-3 text-right"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Excelente</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-bold text-slate-900">Legumes, Vegetais e Temperos</td>
+                <td class="py-3">R$ 640,00</td>
+                <td class="py-3">R$ 620,00</td>
+                <td class="py-3 font-semibold text-slate-900">4,2%</td>
+                <td class="py-3 text-right"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Normal</span></td>
+              </tr>
+              <tr>
+                <td class="py-3 font-bold text-slate-900">Embalagens, Tampas e Etiquetas</td>
+                <td class="py-3">R$ 600,00</td>
+                <td class="py-3">R$ 530,00</td>
+                <td class="py-3 font-semibold text-slate-900">3,6%</td>
+                <td class="py-3 text-right"><span class="bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded font-bold">Otimizado</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 4: CHECKLIST CURVA ABC DIÁRIO ==================== -->
+    <section id="view-curva" class="tab-content hidden space-y-6">
+      <div class="bg-slate-900 text-white rounded-2xl p-5 flex items-start space-x-3.5 shadow-sm">
+        <div class="w-10 h-10 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center shrink-0 font-bold">
+          <i class="fa-solid fa-list-check text-lg"></i>
+        </div>
+        <div>
+          <h2 class="text-base font-bold">Checklist Diário dos Itens "Categoria A" (30 Segundos no Celular)</h2>
+          <p class="text-xs text-slate-300">
+            Itens que o Eduardo checa todo dia para garantir que a produção nunca pare por falta de base (frango, arroz, ovos, creme de leite). Marque em 1 toque:
+          </p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Item 1: Peito de Frango -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+              🍗
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-slate-900">Peito de Frango Congelado (kg)</h4>
+              <p class="text-xs text-slate-400">Estoque mínimo: 30 kg | Giro diário: ~15 kg</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="toggleStatus(this)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 transition">
+              ✓ Estoque OK
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 2: Arroz Branco e Integral -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center font-bold">
+              🍚
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-slate-900">Arroz Branco & Integral (Sacos 5kg)</h4>
+              <p class="text-xs text-slate-400">Estoque mínimo: 6 sacos</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="toggleStatus(this)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 transition">
+              ✓ Estoque OK
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 3: Ovos -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold">
+              🥚
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-slate-900">Ovos Médios/Grandes (Placas)</h4>
+              <p class="text-xs text-slate-400">Estoque mínimo: 4 placas (120 ovos)</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="toggleStatus(this)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-red-100 text-red-800 border border-red-300 transition">
+              ⚡ Comprar Hoje
+            </button>
+          </div>
+        </div>
+
+        <!-- Item 4: Creme de Leite -->
+        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+          <div class="flex items-center space-x-3">
+            <div class="w-10 h-10 rounded-lg bg-slate-50 text-slate-600 flex items-center justify-center font-bold">
+              🥛
+            </div>
+            <div>
+              <h4 class="font-bold text-sm text-slate-900">Creme de Leite Leve (Caixas 1kg)</h4>
+              <p class="text-xs text-slate-400">Estoque mínimo: 8 caixas</p>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="toggleStatus(this)" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 transition">
+              ✓ Estoque OK
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer Branding -->
+  <footer class="bg-white border-t border-slate-200 py-4 mt-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-2">
+      <div class="flex items-center space-x-2">
+        <span class="font-bold text-[#015c34]">TeixoAI</span>
+        <span>•</span>
+        <span>Sistema de Crescimento & Operações para Food Delivery</span>
+      </div>
+      <div>
+        <span>Feito sob medida para <b>Marmitas Fit Saudável</b> (Piedade, RJ)</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Interactive JavaScript Logic -->
+  <script>
+    // Tab switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('text-[#015c34]', 'border-[#015c34]');
+        el.classList.add('text-slate-500', 'border-transparent');
+      });
+
+      document.getElementById('view-' + tabId).classList.remove('hidden');
+      const activeBtn = document.getElementById('tab-' + tabId);
+      activeBtn.classList.remove('text-slate-500', 'border-transparent');
+      activeBtn.classList.add('text-[#015c34]', 'border-[#015c34]');
+    }
+
+    // Toggle button status in Curva ABC
+    function toggleStatus(btn) {
+      if (btn.innerText.includes('OK')) {
+        btn.innerText = '⚡ Comprar Hoje';
+        btn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-red-100 text-red-800 border border-red-300 transition';
+      } else {
+        btn.innerText = '✓ Estoque OK';
+        btn.className = 'px-3 py-1.5 rounded-lg text-xs font-bold bg-emerald-100 text-emerald-800 border border-emerald-300 transition';
+      }
+    }
+
+    // Preencher Lote a partir do monitor do freezer
+    function carregarLoteParaProducao(pratoId, qtd) {
+      switchTab('lote');
+      document.getElementById('selectPrato').value = pratoId;
+      document.getElementById('sliderQtd').value = qtd;
+      calcularLote();
+    }
+
+    // Cálculo em tempo real da Calculadora de Lote
+    function calcularLote() {
+      const select = document.getElementById('selectPrato');
+      const option = select.options[select.selectedIndex];
+      const qtd = parseInt(document.getElementById('sliderQtd').value);
+
+      document.getElementById('labelQtd').innerText = qtd + ' marmitas';
+      document.getElementById('qtdEmbalagens').innerText = qtd + ' unidades';
+
+      // Dados do prato selecionado
+      const nomeProt = option.getAttribute('data-prot');
+      const fcProt = parseFloat(option.getAttribute('data-fc-prot')); // Ex: 0.75
+      const nomeCarbo = option.getAttribute('data-carbo');
+      const fcCarbo = parseFloat(option.getAttribute('data-fc-carbo')); // Ex: 2.2
+      const nomeLeg = option.getAttribute('data-leg');
+      const fcLeg = parseFloat(option.getAttribute('data-fc-leg')); // Ex: 0.88
+
+      // Metas padronizadas da casa:
+      // Proteína: 150g pronta por marmita
+      const metaProtProntaKg = (qtd * 150) / 1000;
+      const protCruKg = metaProtProntaKg / fcProt;
+
+      // Carboidrato: 120g pronta por marmita
+      const metaCarboProntaKg = (qtd * 120) / 1000;
+      const carboCruKg = metaCarboProntaKg / fcCarbo;
+
+      // Legumes: 80g pronta por marmita
+      const metaLegProntaKg = (qtd * 80) / 1000;
+      const legCruKg = metaLegProntaKg / fcLeg;
+
+      // Atualiza interface
+      document.getElementById('nomeProt').innerText = nomeProt + ' Cru';
+      document.getElementById('qtdProtCru').innerText = protCruKg.toFixed(2) + ' kg';
+      document.getElementById('qtdProtPronto').innerText = metaProtProntaKg.toFixed(1) + ' kg pronto';
+
+      document.getElementById('nomeCarbo').innerText = nomeCarbo + ' Cru';
+      document.getElementById('qtdCarboCru').innerText = carboCruKg.toFixed(2) + ' kg';
+      document.getElementById('qtdCarboPronto').innerText = metaCarboProntaKg.toFixed(1) + ' kg pronto';
+
+      document.getElementById('nomeLeg').innerText = nomeLeg + ' Cru';
+      document.getElementById('qtdLegCru').innerText = legCruKg.toFixed(2) + ' kg';
+      document.getElementById('qtdLegPronto').innerText = metaLegProntaKg.toFixed(1) + ' kg pronto';
+
+      // Financeiro simulado
+      const custoUnitarioEstimado = 7.40;
+      const precoVendaMedio = 25.00;
+      const custoTotal = qtd * custoUnitarioEstimado;
+      const faturamentoTotal = qtd * precoVendaMedio;
+      const cmvPercent = (custoTotal / faturamentoTotal) * 100;
+
+      document.getElementById('custoLote').innerText = 'R$ ' + custoTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+      document.getElementById('faturamentoLote').innerText = 'R$ ' + faturamentoTotal.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+      document.getElementById('cmvLote').innerText = cmvPercent.toFixed(1) + '% (Na Meta)';
+    }
+
+    // Copiar mensagem formatada para WhatsApp
+    function copiarOrdemWhatsApp() {
+      const select = document.getElementById('selectPrato');
+      const pratoNome = select.options[select.selectedIndex].text.trim();
+      const qtd = document.getElementById('sliderQtd').value;
+      const protCru = document.getElementById('qtdProtCru').innerText;
+      const protNome = document.getElementById('nomeProt').innerText;
+      const carboCru = document.getElementById('qtdCarboCru').innerText;
+      const carboNome = document.getElementById('nomeCarbo').innerText;
+      const legCru = document.getElementById('qtdLegCru').innerText;
+      const legNome = document.getElementById('nomeLeg').innerText;
+
+      const texto = `*ORDEM DE PRODUÇÃO — MARMITAS FIT* 🥗
+*Prato:* ${pratoNome}
+*Lote a Produzir:* ${qtd} marmitas (350g padrão)
+
+🥩 *DESCONGELAR / SEPARAR CRU:*
+• ${protNome}: *${protCru}* (para render 150g/pote)
+• ${carboNome}: *${carboCru}* (para render 120g/pote)
+• ${legNome}: *${legCru}* (para render 80g/pote)
+• Potes + Tampas: *${qtd} unidades*
+
+_Calculado automaticamente pelo Painel de Cocção da Teixo._`;
+
+      navigator.clipboard.writeText(texto).then(() => {
+        const msg = document.getElementById('msgCopiado');
+        msg.classList.remove('hidden');
+        setTimeout(() => msg.classList.add('hidden'), 4000);
+      });
+    }
+
+    // Inicializa ao carregar
+    window.onload = function() {
+      calcularLote();
+    };
+  </script>
+</body>
+</html>

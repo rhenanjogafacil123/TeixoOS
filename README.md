@@ -36,6 +36,11 @@ O **TeixoAI** unifica tecnologia, inteligência artificial prática, infraestrut
    - Banco dedicado de trilhas sonoras com mixagem e *ducking* automático sobre a voz.
    - Capas cinematográficas no estilo pôster de ação/cinema com respeito obrigatório à **Safe Zone** central.
 
+3. **Marmitas Fit (Piedade, RJ) — Food Delivery & Marmitas Congeladas:**
+   - Migração da plataforma Prefiro Delivery para o ecossistema de canal próprio da TeixoAI (taxa de R$ 0,67 no checkout).
+   - Cardápio digital focado em combos e marmitas saudáveis congeladas porcionadas (150g proteína, 120g carbo, 70-80g legumes) com pratos quinzenais rotativos.
+   - Painel inteligente com controle de estoque físico semanal (rotina de quinta-feira), Curva ABC de insumos e cálculo de rendimento por fator de cocção.
+
 ---
 
 ## Catálogo de Skills (16 Automações Disponíveis)
