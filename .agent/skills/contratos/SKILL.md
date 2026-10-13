@@ -44,7 +44,7 @@ O contrato pode ser emitido sob duas modalidades jurídicas, de acordo com o mom
   `TIAGO TEIXEIRA DO NASCIMENTO SILVA, pessoa jurídica de direito privado, inscrita no CNPJ/MF sob o nº 69.390.968/0001-78, operando sob o nome fantasia TEIXO (ASSESSORIA DE CRESCIMENTO E TECNOLOGIA), com sede no Rio de Janeiro/RJ, neste ato representada por seu titular legal, TIAGO TEIXEIRA DO NASCIMENTO SILVA, doravante denominada simplesmente "CONTRATADA" ou "TEIXO"...`
 
 - **Opção B (Sócios Fundadores como Pessoas Físicas / Sociedade de Fato):**  
-  `RHENAN DE OLIVEIRA TEIXEIRA, brasileiro, desenvolvedor e diretor de tecnologia, portador do CPF nº [CPF]; TIAGO TEIXEIRA DO NASCIMENTO SILVA, brasileiro, gestor de tráfego, portador do CPF nº [CPF]; e ERICK TEIXEIRA DA SILVA, brasileiro, gestor de automações, portador do CPF nº [CPF]; todos residentes e domiciliados na Cidade do Rio de Janeiro/RJ, doravante denominados em conjunto simplesmente "CONTRATADA" ou "TEIXO"...`
+  `RHENAN DE OLIVEIRA TEIXEIRA, brasileiro, desenvolvedor e diretor de tecnologia, portador do CPF nº [CPF]; TIAGO TEIXEIRA DO NASCIMENTO SILVA, brasileiro, gestor de tráfego, portador do CPF nº [CPF]; e ERICK TEIXEIRA FIGUEIREDO, brasileiro, gestor de automações, portador do CPF nº [CPF]; todos residentes e domiciliados na Cidade do Rio de Janeiro/RJ, doravante denominados em conjunto simplesmente "CONTRATADA" ou "TEIXO"...`
 
 - **Padrão Oficial de Assinatura e Recebimento:**
   - **Signatário Oficial da Teixo:** **Tiago Teixeira do Nascimento Silva (21 anos)** assina como o titular e representante legal nos contratos. Isso confere capacidade civil plena imediata e validade jurídica de 100% sem envolver pais/responsáveis legais.

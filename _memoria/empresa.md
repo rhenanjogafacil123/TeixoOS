@@ -15,7 +15,7 @@
 
 - **Rhenan de Oliveira Teixeira (17 anos):** Sites, tecnologia, infraestrutura web, ecossistema de delivery, conteúdo orgânico e expansão operacional.
 - **Tiago Teixeira do Nascimento Silva (21 anos):** Tráfego pago (Meta Ads e Google Ads), titular do CNPJ da Teixo e pioneiro na fundação da operação.
-- **Erick Teixeira (19-20 anos):** Automações de processos, CRM e fluxos inteligentes de atendimento.
+- **Erick Teixeira Figueiredo (19-20 anos):** Automações de processos, CRM e fluxos inteligentes de atendimento.
 
 ---
 
