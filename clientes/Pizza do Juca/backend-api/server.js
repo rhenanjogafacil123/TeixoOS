@@ -178,6 +178,38 @@ app.patch('/api/carrinho-abandonado/:id/recuperado', (req, res) => {
 });
 
 // ===========================================
+// MOTOBOYS — FECHAMENTOS DE TURNO
+// ===========================================
+
+// 10. Salvar fechamento de turno do motoboy
+app.post('/api/motoboys/fechamentos', (req, res) => {
+  try {
+    const data = req.body;
+    if (!data || !data.courier_name) {
+      return res.status(400).json({ success: false, error: 'Nome do motoboy é obrigatório' });
+    }
+    const closing = db.saveMotoboyClosing(data);
+    console.log(`[Motoboy] Fechamento registrado: ${closing.courier_name} (${closing.deliveries_count} entregas) - Saldo: R$ ${closing.final_balance}`);
+    res.status(201).json({ success: true, closing });
+  } catch (err) {
+    console.error('Erro ao salvar fechamento de motoboy:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// 11. Listar histórico de fechamentos de motoboys
+app.get('/api/motoboys/fechamentos', (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit, 10) || 100;
+    const closings = db.getMotoboyClosings(limit);
+    res.json({ success: true, count: closings.length, closings });
+  } catch (err) {
+    console.error('Erro ao listar fechamentos de motoboys:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// ===========================================
 // MERCADO PAGO — CHECKOUT BRICKS
 // ===========================================
 

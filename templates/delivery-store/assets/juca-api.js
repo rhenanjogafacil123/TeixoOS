@@ -132,6 +132,42 @@ window.JucaAPI = (function() {
         method: 'POST',
         body: JSON.stringify(paymentData)
       });
+    },
+
+    // 10. Salvar Fechamento de Motoboy
+    saveMotoboyClosing: async function(closingData) {
+      // Salvar em fallback local
+      try {
+        const localClosings = JSON.parse(localStorage.getItem('juca-motoboy-closings') || '[]');
+        localClosings.unshift({
+          ...closingData,
+          id: Date.now(),
+          created_at: new Date().toISOString()
+        });
+        localStorage.setItem('juca-motoboy-closings', JSON.stringify(localClosings));
+      } catch (e) {
+        console.warn('Erro ao salvar fechamento localmente:', e);
+      }
+
+      // Enviar para a API
+      const res = await request('/motoboys/fechamentos', {
+        method: 'POST',
+        body: JSON.stringify(closingData)
+      });
+      return res;
+    },
+
+    // 11. Buscar Histórico de Fechamentos de Motoboys
+    getMotoboyClosings: async function() {
+      const res = await request('/motoboys/fechamentos');
+      if (res && res.success && Array.isArray(res.closings)) {
+        return res.closings;
+      }
+      try {
+        return JSON.parse(localStorage.getItem('juca-motoboy-closings') || '[]');
+      } catch (e) {
+        return [];
+      }
     }
   };
 })();
