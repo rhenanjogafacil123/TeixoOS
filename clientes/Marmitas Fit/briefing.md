@@ -10,6 +10,7 @@
 - **Coordenadas:** Lat -22.8888033, Lon -43.3087959
 
 ## Contatos & Redes Sociais
+- **Gerente / Decisor:** Eduardo Fiocchi
 - **WhatsApp Oficial:** (21) 97035-7153
 - **Instagram:** [@_marmitasfit](https://www.instagram.com/_marmitasfit)
 - **E-mail Comercial:** marmitasfitrefeicaosaudavel@gmail.com
@@ -35,3 +36,6 @@
    - Checkout limpo com cálculo de frete por CEP/bairro e confirmação instantânea no WhatsApp.
 3. **Escalar Pedidos Locais:**
    - Centralizar operação na Zona Norte/Oeste do Rio, gerando previsibilidade de produção e entrega em lote.
+4. **Painel Admin & Controle de Estoque Operacional (Eduardo Fiocchi):**
+   - Mapear e otimizar o fluxo de estoque de marmitas prontas/congeladas e insumos básicos.
+   - Vencer atritos e objeções de sistemas tradicionais pesados/burocráticos através de uma interface prática (1-clique) que poupa tempo do gerente.
