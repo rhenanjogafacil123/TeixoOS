@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contagem de Estoque & CMV | Pizza do Juca</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            appDark: '#111215',
+            appCard: '#1a1b20',
+            appCardHover: '#22242c',
+            appInput: '#23252d',
+            appGreenBox: '#0f291e',
+            appGreenText: '#22c55e',
+            appAmber: '#f59e0b',
+          },
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #16171d; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 999px; }
+    .animate-fadeIn { animation: fadeIn 0.2s ease-out; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body class="min-h-screen bg-[#111215] text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-white">
+
+  <!-- ======================================================== -->
+  <!-- BARRA SUPERIOR MOBILE                                   -->
+  <!-- ======================================================== -->
+  <header class="sticky top-0 z-40 flex items-center justify-between border-b border-slate-800 bg-[#16171d]/95 px-4 py-3 backdrop-blur-md lg:hidden">
+    <div class="flex items-center gap-2.5">
+      <div class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-600 text-white font-black text-sm shadow">
+        📦
+      </div>
+      <div>
+        <div class="text-xs font-black text-white leading-tight">CONTAGEM DE ESTOQUE</div>
+        <div class="text-[9px] font-bold text-emerald-400" id="header-date-mobile">Quinta-feira, 08/10/2026</div>
+      </div>
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="toggleFinancePanel()" class="grid h-8 w-8 place-items-center rounded-xl border border-slate-800 bg-slate-800/80 text-amber-400" title="Ver CMV">
+        <i data-lucide="bar-chart-3" class="h-4 w-4"></i>
+      </button>
+      <a href="../" class="grid h-8 w-8 place-items-center rounded-xl border border-slate-800 bg-slate-800/80 text-slate-300">
+        <i data-lucide="layout-grid" class="h-4 w-4"></i>
+      </a>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- LAYOUT PRINCIPAL (SIDEBAR + CONTEÚDO)                     -->
+  <!-- ======================================================== -->
+  <div class="mx-auto flex max-w-[1600px] min-h-screen pb-24 lg:pb-8">
+
+    <!-- SIDEBAR TEIXO -->
+    <aside class="hidden w-64 shrink-0 flex-col border-r border-slate-800 bg-[#16171d] p-5 lg:flex">
+      <!-- Marca -->
+      <div class="flex items-center gap-3 border-b border-slate-800 pb-5">
+        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-slate-800 shadow-sm border border-slate-700/80 p-1">
+          <img src="/logo_juca.png" alt="Pizza do Juca" class="h-9 w-9 object-contain" onerror="this.src='/logo.png'">
+        </div>
+        <div>
+          <div class="text-sm font-black text-white leading-tight">Pizza do Juca</div>
+          <div class="text-[10px] font-extrabold uppercase tracking-[0.14em] text-emerald-400">Estoque & CMV</div>
+        </div>
+      </div>
+
+      <!-- Links de Navegação -->
+      <div class="mt-6 flex-1 space-y-6">
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-500">Operação</div>
+          <nav class="space-y-1">
+            <a href="../pedidos/index.html" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i data-lucide="chef-hat" class="h-4 w-4"></i> Atendente (Kanban)
+            </a>
+            <a href="./index.html" class="flex items-center gap-3 rounded-2xl bg-emerald-500/15 text-emerald-400 px-3 py-2.5 text-xs font-black shadow-inner">
+              <i data-lucide="boxes" class="h-4 w-4"></i> Contagem de Estoque
+            </a>
+            <a href="../ceasa/index.html" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i data-lucide="carrot" class="h-4 w-4"></i> Lista Ceasa & Compras
+            </a>
+            <a href="../produtos/index.html" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i data-lucide="pizza" class="h-4 w-4"></i> Produtos & Cardápio
+            </a>
+            <a href="../motoboy/index.html" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i data-lucide="bike" class="h-4 w-4"></i> Central Motoboy
+            </a>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-500">Gestão</div>
+          <nav class="space-y-1">
+            <a href="../admin/index.html" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i data-lucide="layout-dashboard" class="h-4 w-4"></i> Visão Geral (Admin)
+            </a>
+            <a href="../promocoes/index.html" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i data-lucide="sparkles" class="h-4 w-4"></i> Promoções
+            </a>
+            <a href="../configuracoes/index.html" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
+              <i data-lucide="settings" class="h-4 w-4"></i> Configurações
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Rodapé Sidebar -->
+      <div class="border-t border-slate-800 pt-4 text-[11px] text-slate-500">
+        <div class="font-bold text-slate-400">TeixoOS Gastronomia</div>
+        <div class="text-[10px]">Rotina de Quinta-feira</div>
+      </div>
+    </aside>
+
+    <!-- ======================================================== -->
+    <!-- ÁREA PRINCIPAL                                          -->
+    <!-- ======================================================== -->
+    <main class="flex-1 px-4 py-6 sm:px-8">
+
+      <!-- CABEÇALHO DO MÓDULO (IDÊNTICO AO VÍDEO DO CLIENTE) -->
+      <div class="rounded-3xl border border-slate-800 bg-[#16171d] p-5 sm:p-6 shadow-xl">
+        <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div class="flex items-center gap-3">
+              <h1 class="text-2xl font-black text-white sm:text-3xl">Contagem de Estoque</h1>
+              <span class="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-extrabold text-emerald-400 border border-emerald-500/20">
+                Rotina Semanal
+              </span>
+            </div>
+            <div class="mt-1 flex items-center gap-2 text-xs font-bold text-slate-400">
+              <span id="counter-progress-text">93 de 234 itens contados</span>
+              <span>•</span>
+              <span class="text-emerald-400 font-extrabold" id="counter-percentage-text">40% concluído</span>
+            </div>
+          </div>
+
+          <!-- Seletor de Data & Ações do Cabeçalho -->
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center gap-2 rounded-2xl border border-slate-700/80 bg-[#1a1b20] px-3.5 py-2 text-xs font-bold text-slate-200">
+              <span class="text-slate-400">Contagem de</span>
+              <input type="date" id="stock-date" class="bg-transparent font-bold text-white outline-none cursor-pointer">
+            </div>
+
+            <button onclick="prefillTheoreticalStock()" class="inline-flex items-center gap-1.5 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 px-3.5 py-2 text-xs font-extrabold text-indigo-300 hover:bg-indigo-500/20 transition shadow-sm" title="Preenche a contagem teórica esperada das vendas da semana para auditar só as diferenças!">
+              <i data-lucide="zap" class="h-3.5 w-3.5 text-indigo-400"></i>
+              <span>Estoque Teórico</span>
+            </button>
+
+            <button onclick="openCeasaSyncModal()" class="inline-flex items-center gap-1.5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-2 text-xs font-extrabold text-emerald-300 hover:bg-emerald-500/20 transition shadow-sm" title="Gera a lista de compras para a madrugada do Ceasa">
+              <i data-lucide="shopping-cart" class="h-3.5 w-3.5 text-emerald-400"></i>
+              <span>Gerar Ceasa</span>
+            </button>
+
+            <button onclick="openExportModal()" class="inline-flex items-center gap-1.5 rounded-2xl border border-slate-700 bg-slate-800 px-3.5 py-2 text-xs font-extrabold text-slate-200 hover:bg-slate-700 transition">
+              <i data-lucide="share-2" class="h-3.5 w-3.5"></i>
+              <span>Exportar</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Barra de Progresso Verde Neon -->
+        <div class="mt-4 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+          <div id="progress-bar-fill" class="h-full rounded-full bg-emerald-500 transition-all duration-300" style="width: 40%"></div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- PAINEL FINANCEIRO DE CMV & INDICADORES (A IA DA TEIXO)   -->
+      <!-- ======================================================== -->
+      <div id="finance-panel" class="mt-4 rounded-3xl border border-slate-800/80 bg-gradient-to-br from-[#181a22] to-[#121319] p-5 shadow-lg">
+        <div class="flex items-center justify-between border-b border-slate-800/80 pb-3">
+          <div class="flex items-center gap-2">
+            <div class="grid h-7 w-7 place-items-center rounded-lg bg-amber-500/20 text-amber-400">
+              <i data-lucide="trending-up" class="h-4 w-4"></i>
+            </div>
+            <span class="text-xs font-extrabold uppercase tracking-wider text-slate-300">Inteligência de CMV & Caixa da Semana</span>
+          </div>
+          <span class="text-[10px] font-bold text-slate-500">Atualizado com vendas do site e compras Ceasa</span>
+        </div>
+
+        <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-5">
+          <!-- Estoque Atual -->
+          <div class="rounded-2xl border border-slate-800 bg-[#15161d] p-3.5">
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Capital em Estoque</div>
+            <div class="mt-1 text-lg font-black text-white" id="kpi-total-inventory">R$ 14.820,50</div>
+            <div class="text-[10px] font-bold text-emerald-400 flex items-center gap-1 mt-0.5">
+              <i data-lucide="arrow-up-right" class="h-3 w-3"></i> +R$ 380 (vs sem. ant.)
+            </div>
+          </div>
+
+          <!-- Compras da Semana -->
+          <div class="rounded-2xl border border-slate-800 bg-[#15161d] p-3.5">
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Compras (Ceasa + Frios)</div>
+            <div class="mt-1 text-lg font-black text-slate-200" id="kpi-weekly-purchases">R$ 3.850,00</div>
+            <div class="text-[10px] font-bold text-slate-500 mt-0.5">Últimos 7 dias</div>
+          </div>
+
+          <!-- CMV da Semana -->
+          <div class="rounded-2xl border border-slate-800 bg-[#15161d] p-3.5">
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">CMV Consumido</div>
+            <div class="mt-1 text-lg font-black text-amber-400" id="kpi-cmv-value">R$ 4.120,00</div>
+            <div class="text-[10px] font-bold text-slate-400 mt-0.5">Est. Ini + Comp - Est. Fim</div>
+          </div>
+
+          <!-- % CMV sobre Faturamento -->
+          <div class="rounded-2xl border border-slate-800 bg-[#15161d] p-3.5">
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">% CMV / Faturamento</div>
+            <div class="mt-1 text-lg font-black text-emerald-400" id="kpi-cmv-percent">29,8%</div>
+            <div class="text-[10px] font-bold text-emerald-400 mt-0.5">✓ Alvo saudável (&lt;32%)</div>
+          </div>
+
+          <!-- Auditoria de Desvio -->
+          <div class="col-span-2 sm:col-span-4 lg:col-span-1 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-3.5">
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-amber-400">Desvios & Quebras</div>
+            <div class="mt-1 text-lg font-black text-amber-300" id="kpi-discrepancy">-R$ 142,80</div>
+            <button onclick="openAuditModal()" class="text-[10px] font-bold text-amber-400 underline hover:text-amber-300 mt-0.5">
+              Ver 3 itens com desvio →
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- ABAS DE SETORES FÍSICOS (IGUAL AO VÍDEO DO CLIENTE)     -->
+      <!-- ======================================================== -->
+      <div class="mt-6 flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none" id="category-tabs-container">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- SUB-FILTROS (TODOS, PENDENTES, CONTADOS) + BUSCA         -->
+      <!-- ======================================================== -->
+      <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <!-- Chips de Filtro -->
+        <div class="flex items-center gap-1.5 rounded-2xl border border-slate-800 bg-[#16171d] p-1.5">
+          <button onclick="setFilter('todos')" id="filter-btn-todos" class="rounded-xl px-4 py-1.5 text-xs font-black transition bg-emerald-600 text-white shadow">
+            Todos
+          </button>
+          <button onclick="setFilter('pendentes')" id="filter-btn-pendentes" class="rounded-xl px-4 py-1.5 text-xs font-bold transition text-slate-400 hover:text-white">
+            Pendentes
+          </button>
+          <button onclick="setFilter('contados')" id="filter-btn-contados" class="rounded-xl px-4 py-1.5 text-xs font-bold transition text-slate-400 hover:text-white">
+            Contados
+          </button>
+          <button onclick="setFilter('desvios')" id="filter-btn-desvios" class="rounded-xl px-3 py-1.5 text-xs font-bold transition text-amber-400 hover:text-amber-300 flex items-center gap-1">
+            <i data-lucide="alert-triangle" class="h-3 w-3"></i> Desvios
+          </button>
+        </div>
+
+        <!-- Busca Instantânea -->
+        <div class="relative flex-1 sm:max-w-xs">
+          <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400"></i>
+          <input
+            type="text"
+            id="search-input"
+            oninput="renderItems()"
+            placeholder="Buscar insumo (ex: Inhame, Mussarela)..."
+            class="w-full rounded-2xl border border-slate-800 bg-[#16171d] py-2 pl-10 pr-4 text-xs font-medium text-white placeholder-slate-500 outline-none focus:border-emerald-500 transition"
+          >
+        </div>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- LISTA DE ITENS DO ESTOQUE (LAYOUT DO VÍDEO DO CLIENTE)   -->
+      <!-- ======================================================== -->
+      <div class="mt-4 space-y-2.5" id="stock-items-list">
+        <!-- Renderizado dinamicamente com as gavetinhas somatórias -->
+      </div>
+
+    </main>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- BARRA DE AÇÃO FIXA INFERIOR (ESTILO MOBILE FIRST)       -->
+  <!-- ======================================================== -->
+  <div class="fixed bottom-0 left-0 right-0 z-30 border-t border-slate-800 bg-[#16171d]/95 p-3.5 backdrop-blur-md">
+    <div class="mx-auto flex max-w-4xl items-center justify-between gap-3">
+      <button onclick="resetCountingConfirm()" class="rounded-2xl border border-slate-700 bg-slate-800 px-4 py-3 text-xs font-extrabold text-slate-300 hover:bg-slate-700 transition">
+        Reiniciar
+      </button>
+
+      <button onclick="openCeasaSyncModal()" class="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-5 py-3 text-xs font-black text-emerald-300 hover:bg-emerald-500/20 transition">
+        <i data-lucide="carrot" class="h-4 w-4 text-emerald-400"></i>
+        <span>⚡ Enviar p/ Ceasa (<span id="btn-ceasa-count">4</span>)</span>
+      </button>
+
+      <button onclick="finishCounting()" class="flex-1 inline-flex items-center justify-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 px-6 py-3 text-xs font-black shadow-lg shadow-amber-500/20 transition active:scale-[0.98]">
+        <i data-lucide="check-circle" class="h-4 w-4"></i>
+        <span>Finalizar contagem</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: RESUMO DA CONTAGEM (IDÊNTICO AO FINAL DO VÍDEO)   -->
+  <!-- ======================================================== -->
+  <div id="modal-summary" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+    <div class="flex max-h-[90vh] w-full max-w-2xl flex-col rounded-3xl border border-slate-800 bg-[#16171d] shadow-2xl">
+      <!-- Header do Modal -->
+      <div class="flex items-center justify-between border-b border-slate-800 p-5">
+        <div>
+          <h2 class="text-lg font-black text-white">Resumo da contagem</h2>
+          <div class="text-xs font-bold text-slate-400" id="modal-summary-subtitle">
+            Contagem de 2026-10-08 | 94 de 234 itens preenchidos
+          </div>
+        </div>
+        <button onclick="closeSummaryModal()" class="grid h-8 w-8 place-items-center rounded-xl bg-slate-800 text-slate-400 hover:text-white">
+          <i data-lucide="x" class="h-4 w-4"></i>
+        </button>
+      </div>
+
+      <!-- Tabela Scrollável com Categorias -->
+      <div class="flex-1 overflow-y-auto p-5 space-y-5" id="summary-content-area">
+        <!-- Gerado via JS com cabeçalhos COZINHA, ESTOQUE SECO, etc. -->
+      </div>
+
+      <!-- Ações do Rodapé -->
+      <div class="border-t border-slate-800 p-4 bg-[#14151b] rounded-b-3xl flex flex-wrap items-center justify-end gap-3">
+        <button onclick="copySummaryToClipboard()" class="inline-flex items-center gap-2 rounded-2xl border border-slate-700 bg-slate-800 px-5 py-2.5 text-xs font-extrabold text-slate-200 hover:bg-slate-700 transition">
+          <i data-lucide="copy" class="h-4 w-4"></i>
+          <span>Copiar resumo</span>
+        </button>
+        <button onclick="downloadStockDataJSON()" class="inline-flex items-center gap-2 rounded-2xl bg-amber-500 hover:bg-amber-400 text-slate-950 px-5 py-2.5 text-xs font-black shadow-md transition">
+          <i data-lucide="download" class="h-4 w-4"></i>
+          <span>Baixar dados (JSON)</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: SINCRONIZAÇÃO COM O CEASA                        -->
+  <!-- ======================================================== -->
+  <div id="modal-ceasa-sync" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-lg rounded-3xl border border-emerald-500/30 bg-[#16171d] p-6 shadow-2xl">
+      <div class="flex items-center gap-3">
+        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-500/20 text-emerald-400 text-2xl">
+          🥬
+        </div>
+        <div>
+          <h3 class="text-base font-black text-white">Alimentar Lista de Compras do Ceasa</h3>
+          <p class="text-xs text-slate-400">Automação direta da contagem de quinta para a compra de sexta</p>
+        </div>
+      </div>
+
+      <div class="mt-4 rounded-2xl border border-slate-800 bg-[#111215] p-4 text-xs space-y-2" id="ceasa-sync-preview-list">
+        <!-- Lista de insumos em baixa -->
+      </div>
+
+      <div class="mt-5 flex items-center justify-end gap-2">
+        <button onclick="closeCeasaSyncModal()" class="rounded-xl border border-slate-700 px-4 py-2 text-xs font-bold text-slate-400 hover:bg-slate-800">
+          Cancelar
+        </button>
+        <button onclick="confirmSendToCeasa()" class="rounded-xl bg-emerald-500 hover:bg-emerald-400 px-5 py-2 text-xs font-black text-slate-950 shadow-md">
+          Transferir para o Checklist Ceasa →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: AUDITORIA DE DESVIOS E PERDAS DA COZINHA         -->
+  <!-- ======================================================== -->
+  <div id="modal-audit" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-lg rounded-3xl border border-amber-500/30 bg-[#16171d] p-6 shadow-2xl">
+      <div class="flex items-center gap-3">
+        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-amber-500/20 text-amber-400">
+          <i data-lucide="shield-alert" class="h-6 w-6"></i>
+        </div>
+        <div>
+          <h3 class="text-base font-black text-white">Auditoria de Desvio & Porcionamento</h3>
+          <p class="text-xs text-slate-400">Comparação: Estoque Físico vs Receitas Vendidas</p>
+        </div>
+      </div>
+
+      <div class="mt-4 space-y-3" id="audit-list-content">
+        <!-- Injetado dinamicamente -->
+      </div>
+
+      <div class="mt-5 flex justify-end">
+        <button onclick="closeAuditModal()" class="rounded-xl bg-slate-800 px-5 py-2 text-xs font-bold text-white hover:bg-slate-700">
+          Entendido, fechar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div id="toast-msg" class="fixed bottom-20 left-1/2 -translate-x-1/2 z-50 hidden rounded-2xl bg-emerald-600 px-4 py-2.5 text-xs font-black text-white shadow-2xl transition-all">
+    Mensagem aqui!
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- JAVASCRIPT: LÓGICA E DADOS COMPLETOS                    -->
+  <!-- ======================================================== -->
+  <script>
+    // ----------------------------------------------------
+    // BANCO DE DADOS DE INSUMOS (BASEADO NA OPERAÇÃO REAL)
+    // ----------------------------------------------------
+    const CATEGORIES = [
+      { id: 'cozinha', name: 'Cozinha', icon: 'chef-hat' },
+      { id: 'estoque_seco', name: 'Estoque Seco', icon: 'archive' },
+      { id: 'frios', name: 'Frios & Laticínios', icon: 'milk' },
+      { id: 'refrigerados', name: 'Geladeira & Freezer', icon: 'snowflake' },
+      { id: 'temperos', name: 'Temperos', icon: 'flame' },
+      { id: 'embalagens', name: 'Embalagens', icon: 'package' }
+    ];
+
+    let currentCategory = 'cozinha';
+    let currentFilter = 'todos'; // todos | pendentes | contados | desvios
+    let activeOpenItemId = null; // Item que está com a gavetinha aberta
+
+    // Insumos com dados operacionais, fichas técnicas e lotes
+    let inventoryItems = [
+      // COZINHA
+      {
+        id: 'abobrinha',
+        name: 'ABOBRINHA',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Refrigerado',
+        costUnit: 4.80,
+        theoreticalQty: 2.50,
+        minSafetyQty: 5.0,
+        batches: [{ qty: 2.454, loc: 'Bancada' }],
+        counted: true
+      },
+      {
+        id: 'aipim',
+        name: 'AIPIM',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Refrigerado',
+        costUnit: 3.50,
+        theoreticalQty: 4.0,
+        minSafetyQty: 8.0,
+        batches: [],
+        counted: false
+      },
+      {
+        id: 'alho_descascado',
+        name: 'ALHO DESCASCADO INTEIRO',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Refrigerado',
+        costUnit: 24.00,
+        theoreticalQty: 1.10,
+        minSafetyQty: 3.0,
+        batches: [{ qty: 0.86, loc: 'Pote preparo' }],
+        counted: true
+      },
+      {
+        id: 'arroz_branco',
+        name: 'ARROZ BRANCO',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Refrigerado',
+        costUnit: 5.20,
+        theoreticalQty: 3.0,
+        minSafetyQty: 5.0,
+        batches: [{ qty: 2.924, loc: 'Cuba pré-preparo' }],
+        counted: true
+      },
+      {
+        id: 'batata_doce',
+        name: 'BATATA DOCE',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Estoque Seco',
+        costUnit: 4.20,
+        theoreticalQty: 18.0,
+        minSafetyQty: 15.0,
+        batches: [{ qty: 16.9, loc: 'Caixa chão' }],
+        counted: true
+      },
+      {
+        id: 'batata_inglesa',
+        name: 'BATATA INGLESA',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Estoque Seco',
+        costUnit: 4.50,
+        theoreticalQty: 20.0,
+        minSafetyQty: 25.0,
+        batches: [{ qty: 22.0, loc: 'Caixa chão' }],
+        counted: true
+      },
+      {
+        id: 'cebola_branca',
+        name: 'CEBOLA BRANCA',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Estoque Seco',
+        costUnit: 4.90,
+        theoreticalQty: 22.0,
+        minSafetyQty: 20.0,
+        batches: [{ qty: 19.882, loc: 'Saco aberto' }],
+        counted: true
+      },
+      {
+        id: 'cebola_branca_picada',
+        name: 'CEBOLA BRANCA PICADA',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Refrigerado',
+        costUnit: 6.00,
+        theoreticalQty: 2.2,
+        minSafetyQty: 4.0,
+        batches: [{ qty: 1.932, loc: 'Mesa montagem' }],
+        counted: true
+      },
+      {
+        id: 'cebola_roxa',
+        name: 'CEBOLA ROXA',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Estoque Seco',
+        costUnit: 6.50,
+        theoreticalQty: 14.0,
+        minSafetyQty: 15.0,
+        batches: [{ qty: 12.5, loc: 'Caixa estrado' }],
+        counted: true
+      },
+      {
+        id: 'cebola_roxa_picada',
+        name: 'CEBOLA ROXA PICADA',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Refrigerado',
+        costUnit: 7.20,
+        theoreticalQty: 1.0,
+        minSafetyQty: 2.0,
+        batches: [{ qty: 0.76, loc: 'Bancada pizzas' }],
+        counted: true
+      },
+      {
+        id: 'cenoura',
+        name: 'CENOURA',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Estoque Seco',
+        costUnit: 5.00,
+        theoreticalQty: 8.0,
+        minSafetyQty: 10.0,
+        batches: [{ qty: 7.33, loc: 'Caixa Ceasa' }],
+        counted: true
+      },
+      {
+        id: 'inhame',
+        name: 'INHAME',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Estoque Seco',
+        costUnit: 6.00,
+        theoreticalQty: 3.5,
+        minSafetyQty: 6.0,
+        batches: [
+          { qty: 2.0, loc: 'Caixa 1' },
+          { qty: 1.5, loc: 'Bancada' }
+        ],
+        counted: true
+      },
+      {
+        id: 'limao',
+        name: 'LIMÃO',
+        category: 'cozinha',
+        unit: 'Kilograma',
+        classification: 'Estoque Seco',
+        costUnit: 4.00,
+        theoreticalQty: 2.0,
+        minSafetyQty: 4.0,
+        batches: [{ qty: 1.974, loc: 'Caixa bar' }],
+        counted: true
+      },
+
+      // FRIOS & LATICÍNIOS
+      {
+        id: 'queijo_mussarela',
+        name: 'QUEIJO MUSSARELA RALADO',
+        category: 'frios',
+        unit: 'Kilograma',
+        classification: 'Laticínios',
+        costUnit: 38.50,
+        theoreticalQty: 18.2,
+        minSafetyQty: 30.0,
+        batches: [{ qty: 16.542, loc: 'Cuba montagem' }],
+        counted: true
+      },
+      {
+        id: 'requeijao_catupiry',
+        name: 'BISNAGA REQUEIJÃO CATUPIRY',
+        category: 'frios',
+        unit: 'Kilograma',
+        classification: 'Laticínios',
+        costUnit: 28.00,
+        theoreticalQty: 5.5,
+        minSafetyQty: 8.0,
+        batches: [
+          { qty: 4.0, loc: 'Geladeira 2' },
+          { qty: 1.922, loc: 'Bancada' }
+        ],
+        counted: true
+      },
+      {
+        id: 'cream_cheese',
+        name: 'BISNAGA CREAM CHEESE',
+        category: 'frios',
+        unit: 'Kilograma',
+        classification: 'Laticínios',
+        costUnit: 34.00,
+        theoreticalQty: 2.0,
+        minSafetyQty: 4.0,
+        batches: [{ qty: 2.0, loc: 'Geladeira' }],
+        counted: true
+      },
+      {
+        id: 'linguica_calabresa',
+        name: 'LINGUIÇA CALABRESA FATIADA',
+        category: 'frios',
+        unit: 'Kilograma',
+        classification: 'Embutidos',
+        costUnit: 26.00,
+        theoreticalQty: 12.0,
+        minSafetyQty: 20.0,
+        batches: [{ qty: 11.45, loc: 'Gaveta refrigerada' }],
+        counted: true
+      },
+
+      // ESTOQUE SECO
+      {
+        id: 'farinha_trigo_especial',
+        name: 'FARINHA DE TRIGO ESPECIAL 00',
+        category: 'estoque_seco',
+        unit: 'Kilograma',
+        classification: 'Estoque Seco',
+        costUnit: 6.80,
+        theoreticalQty: 50.0,
+        minSafetyQty: 75.0,
+        batches: [{ qty: 45.0, loc: 'Mezanino' }],
+        counted: true
+      },
+      {
+        id: 'azeite_oliva',
+        name: 'AZEITE EXTRA VIRGEM',
+        category: 'estoque_seco',
+        unit: 'Litro',
+        classification: 'Estoque Seco',
+        costUnit: 38.00,
+        theoreticalQty: 2.0,
+        minSafetyQty: 5.0,
+        batches: [{ qty: 1.5, loc: 'Prateleira molhos' }],
+        counted: true
+      },
+      {
+        id: 'extrato_tomate',
+        name: 'EXTRATO / POLPA DE TOMATE',
+        category: 'estoque_seco',
+        unit: 'Kilograma',
+        classification: 'Estoque Seco',
+        costUnit: 9.50,
+        theoreticalQty: 32.0,
+        minSafetyQty: 40.0,
+        batches: [{ qty: 30.6, loc: 'Estoque seco' }],
+        counted: true
+      },
+
+      // TEMPEROS
+      {
+        id: 'oregano_chileno',
+        name: 'ORÉGANO DESIDRATADO CHILENO',
+        category: 'temperos',
+        unit: 'Kilograma',
+        classification: 'Temperos',
+        costUnit: 42.00,
+        theoreticalQty: 2.5,
+        minSafetyQty: 3.0,
+        batches: [{ qty: 2.478, loc: 'Pote bancada' }],
+        counted: true
+      },
+      {
+        id: 'manjericao_fresco',
+        name: 'MANJERICÃO FRESCO',
+        category: 'temperos',
+        unit: 'Maço',
+        classification: 'Hortifrúti',
+        costUnit: 3.00,
+        theoreticalQty: 6.0,
+        minSafetyQty: 10.0,
+        batches: [],
+        counted: false
+      },
+
+      // EMBALAGENS
+      {
+        id: 'caixa_pizza_oito_pedacos',
+        name: 'CAIXA DE PIZZA OITAVADA 35CM',
+        category: 'embalagens',
+        unit: 'Unidade',
+        classification: 'Embalagens',
+        costUnit: 2.80,
+        theoreticalQty: 280,
+        minSafetyQty: 400,
+        batches: [{ qty: 240, loc: 'Pilha mezanino' }],
+        counted: true
+      },
+      {
+        id: 'lacre_seguranca',
+        name: 'ROLO DE LACRE DE SEGURANÇA',
+        category: 'embalagens',
+        unit: 'Rolo',
+        classification: 'Embalagens',
+        costUnit: 14.00,
+        theoreticalQty: 5,
+        minSafetyQty: 8,
+        batches: [{ qty: 4, loc: 'Gaveta caixa' }],
+        counted: true
+      }
+    ];
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      // Data padrão: hoje
+      const today = new Date().toISOString().split('T')[0];
+      document.getElementById('stock-date').value = today;
+
+      renderCategoryTabs();
+      renderItems();
+      updateGlobalCounters();
+      lucide.createIcons();
+    });
+
+    // ----------------------------------------------------
+    // RENDERIZAÇÃO DAS ABAS DE CATEGORIA
+    // ----------------------------------------------------
+    function renderCategoryTabs() {
+      const container = document.getElementById('category-tabs-container');
+      container.innerHTML = CATEGORIES.map(cat => {
+        const catItems = inventoryItems.filter(i => i.category === cat.id);
+        const countedCount = catItems.filter(i => i.counted).length;
+        const totalCount = catItems.length;
+        const isActive = currentCategory === cat.id;
+
+        return `
+          <button
+            onclick="switchCategory('${cat.id}')"
+            class="flex items-center gap-2 whitespace-nowrap rounded-2xl px-4 py-2.5 text-xs font-black transition-all ${
+              isActive
+                ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-950/40'
+                : 'border border-slate-800 bg-[#16171d] text-slate-400 hover:border-slate-700 hover:text-white'
+            }"
+          >
+            <i data-lucide="${cat.icon}" class="h-3.5 w-3.5"></i>
+            <span>${cat.name}</span>
+            <span class="rounded-full px-2 py-0.5 text-[10px] ${
+              isActive ? 'bg-emerald-800 text-emerald-100' : 'bg-slate-800 text-slate-400'
+            }">
+              ${countedCount}/${totalCount}
+            </span>
+          </button>
+        `;
+      }).join('');
+      lucide.createIcons();
+    }
+
+    function switchCategory(catId) {
+      currentCategory = catId;
+      renderCategoryTabs();
+      renderItems();
+    }
+
+    function setFilter(filterType) {
+      currentFilter = filterType;
+      ['todos', 'pendentes', 'contados', 'desvios'].forEach(f => {
+        const btn = document.getElementById(`filter-btn-${f}`);
+        if (f === filterType) {
+          btn.className = 'rounded-xl px-4 py-1.5 text-xs font-black transition bg-emerald-600 text-white shadow';
+        } else {
+          btn.className = 'rounded-xl px-4 py-1.5 text-xs font-bold transition text-slate-400 hover:text-white';
+        }
+      });
+      renderItems();
+    }
+
+    // ----------------------------------------------------
+    // RENDERIZAÇÃO DOS ITENS DO ESTOQUE
+    // ----------------------------------------------------
+    function renderItems() {
+      const listContainer = document.getElementById('stock-items-list');
+      const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+
+      // Filtragem
+      let filtered = inventoryItems.filter(item => {
+        // Se houver busca, busca em todas as categorias
+        if (searchQuery) {
+          return item.name.toLowerCase().includes(searchQuery);
+        }
+        return item.category === currentCategory;
+      });
+
+      if (currentFilter === 'pendentes') {
+        filtered = filtered.filter(i => !i.counted);
+      } else if (currentFilter === 'contados') {
+        filtered = filtered.filter(i => i.counted);
+      } else if (currentFilter === 'desvios') {
+        filtered = filtered.filter(i => {
+          if (!i.counted) return false;
+          const total = getItemTotal(i);
+          return Math.abs(total - i.theoreticalQty) / (i.theoreticalQty || 1) > 0.05; // desvio > 5%
+        });
+      }
+
+      if (filtered.length === 0) {
+        listContainer.innerHTML = `
+          <div class="rounded-3xl border border-slate-800 bg-[#16171d] p-12 text-center">
+            <div class="text-4xl">🥬</div>
+            <h4 class="mt-3 text-sm font-black text-white">Nenhum insumo encontrado</h4>
+            <p class="mt-1 text-xs text-slate-500">Tente buscar por outro termo ou mude o filtro.</p>
+          </div>
+        `;
+        return;
+      }
+
+      listContainer.innerHTML = filtered.map(item => {
+        const isExpanded = activeOpenItemId === item.id;
+        const total = getItemTotal(item);
+        const hasBatches = item.batches && item.batches.length > 0;
+        
+        // Cálculo de divergência teórica
+        const diff = item.counted ? (total - item.theoreticalQty) : 0;
+        const diffPercent = item.theoreticalQty > 0 ? ((diff / item.theoreticalQty) * 100) : 0;
+        const hasWarning = item.counted && Math.abs(diffPercent) > 6;
+
+        return `
+          <div class="rounded-2xl border transition-all ${
+            isExpanded ? 'border-emerald-500/50 bg-[#1e2029] shadow-xl' : 'border-slate-800/80 bg-[#16171d] hover:border-slate-700'
+          }">
+            <!-- CABEÇALHO DO ITEM (TOQUE PARA ABRIR GAVETA) -->
+            <div
+              onclick="toggleItemAccordion('${item.id}')"
+              class="flex cursor-pointer items-center justify-between p-4 sm:p-5 select-none"
+            >
+              <div class="flex-1 pr-3">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs sm:text-sm font-black text-white tracking-wide">${item.name}</span>
+                  ${hasWarning ? `
+                    <span class="rounded-full bg-amber-500/20 px-2 py-0.5 text-[9px] font-black text-amber-400 border border-amber-500/30">
+                      ${diff > 0 ? '+' : ''}${diffPercent.toFixed(1)}% desvio
+                    </span>
+                  ` : ''}
+                </div>
+                <div class="mt-1 flex flex-wrap items-center gap-2 text-[11px] font-medium text-slate-400">
+                  <span>${item.unit} · ${item.classification}</span>
+                  <span>•</span>
+                  <span>Teórico: <strong class="text-slate-300">${item.theoreticalQty} ${item.unit}</strong></span>
+                </div>
+              </div>
+
+              <!-- BADGE VERDE OU TRAÇO CINZA -->
+              <div class="flex items-center gap-3">
+                ${item.counted ? `
+                  <div class="rounded-xl bg-[#0f291e] border border-emerald-500/30 px-3.5 py-1.5 text-xs sm:text-sm font-black text-emerald-400 font-mono shadow-sm">
+                    ${formatNumberBR(total)}
+                  </div>
+                ` : `
+                  <div class="rounded-xl bg-slate-800/60 border border-slate-700/50 px-3 py-1.5 text-xs font-black text-slate-500 font-mono">
+                    -
+                  </div>
+                `}
+                <i data-lucide="${isExpanded ? 'chevron-up' : 'chevron-down'}" class="h-4 w-4 text-slate-500 transition-transform"></i>
+              </div>
+            </div>
+
+            <!-- GAVETINHA EXPANSÍVEL INLINE (IDÊNTICA AO VÍDEO DO CLIENTE) -->
+            ${isExpanded ? `
+              <div class="border-t border-slate-800/80 bg-[#14151b] p-4 sm:p-5 animate-fadeIn rounded-b-2xl">
+                <!-- FORMULÁRIO DE ADIÇÃO DE LOTE -->
+                <div class="flex flex-col gap-2 sm:flex-row sm:items-center">
+                  <div class="relative flex-1">
+                    <input
+                      type="number"
+                      step="any"
+                      id="input-qty-${item.id}"
+                      placeholder="0,000"
+                      class="w-full rounded-xl border border-slate-700 bg-[#23252d] px-3.5 py-2.5 text-sm font-mono font-bold text-white outline-none focus:border-emerald-500"
+                      onkeydown="if(event.key==='Enter') addBatch('${item.id}')"
+                    >
+                    <span class="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-500">${item.unit}</span>
+                  </div>
+
+                  <input
+                    type="text"
+                    id="input-loc-${item.id}"
+                    placeholder="Local: Bancada, Mezanino (opcional)"
+                    class="rounded-xl border border-slate-700 bg-[#23252d] px-3.5 py-2.5 text-xs text-white placeholder-slate-500 outline-none focus:border-emerald-500 sm:w-64"
+                    onkeydown="if(event.key==='Enter') addBatch('${item.id}')"
+                  >
+
+                  <button
+                    onclick="addBatch('${item.id}')"
+                    class="rounded-xl bg-emerald-600 hover:bg-emerald-500 px-5 py-2.5 text-xs font-black text-white shadow-md transition active:scale-95"
+                  >
+                    Adicionar
+                  </button>
+                </div>
+
+                <!-- ATALHOS RÁPIDOS DE QUANTIDADE -->
+                <div class="mt-2.5 flex flex-wrap items-center gap-1.5">
+                  <span class="text-[10px] font-bold text-slate-500 mr-1">Atalhos:</span>
+                  <button onclick="quickAdd('${item.id}', 1)" class="rounded-lg bg-slate-800 px-2 py-1 text-[10px] font-bold text-slate-300 hover:bg-slate-700">+1</button>
+                  <button onclick="quickAdd('${item.id}', 5)" class="rounded-lg bg-slate-800 px-2 py-1 text-[10px] font-bold text-slate-300 hover:bg-slate-700">+5</button>
+                  <button onclick="quickAdd('${item.id}', 10)" class="rounded-lg bg-slate-800 px-2 py-1 text-[10px] font-bold text-slate-300 hover:bg-slate-700">+10</button>
+                  <button onclick="setTheoretical('${item.id}')" class="rounded-lg border border-indigo-500/30 bg-indigo-500/10 px-2 py-1 text-[10px] font-bold text-indigo-300 hover:bg-indigo-500/20">
+                    Igualar ao Teórico (${item.theoreticalQty})
+                  </button>
+                </div>
+
+                <!-- LISTA DE TAGS DOS LOTES DIGITADOS -->
+                ${hasBatches ? `
+                  <div class="mt-3.5 space-y-2">
+                    <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Lotes computados:</div>
+                    <div class="flex flex-wrap gap-2">
+                      ${item.batches.map((batch, idx) => `
+                        <div class="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-slate-800/90 px-3 py-1.5 text-xs font-mono font-bold text-slate-200">
+                          <span>${formatNumberBR(batch.qty)} ${item.unit}</span>
+                          ${batch.loc ? `<span class="text-[10px] font-sans text-slate-400">(${batch.loc})</span>` : ''}
+                          <button onclick="removeBatch('${item.id}', ${idx})" class="text-rose-400 hover:text-rose-300 font-bold ml-1">✕</button>
+                        </div>
+                      `).join('')}
+                    </div>
+                  </div>
+                ` : ''}
+
+                <!-- TOTAL DO ITEM E VALOR MONETÁRIO -->
+                <div class="mt-4 flex flex-wrap items-center justify-between gap-2 border-t border-slate-800/60 pt-3">
+                  <div>
+                    <span class="text-xs font-bold text-slate-400">Total do item:</span>
+                    <strong class="text-sm font-black text-white ml-1 font-mono">${formatNumberBR(total)} ${item.unit}</strong>
+                    <span class="text-xs font-medium text-slate-500 ml-2">(R$ ${formatNumberBR(total * item.costUnit)})</span>
+                  </div>
+
+                  <button onclick="clearItemCount('${item.id}')" class="text-[11px] font-bold text-rose-400 hover:underline">
+                    Zerar contagem
+                  </button>
+                </div>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // ----------------------------------------------------
+    // FUNÇÕES DE MANIPULAÇÃO DE LOTES / ENTRADA
+    // ----------------------------------------------------
+    function toggleItemAccordion(itemId) {
+      if (activeOpenItemId === itemId) {
+        activeOpenItemId = null;
+      } else {
+        activeOpenItemId = itemId;
+      }
+      renderItems();
+      
+      // Auto-focus no input numérico se abriu
+      if (activeOpenItemId) {
+        setTimeout(() => {
+          const inp = document.getElementById(`input-qty-${itemId}`);
+          if (inp) inp.focus();
+        }, 50);
+      }
+    }
+
+    function addBatch(itemId) {
+      const item = inventoryItems.find(i => i.id === itemId);
+      if (!item) return;
+
+      const qtyInp = document.getElementById(`input-qty-${itemId}`);
+      const locInp = document.getElementById(`input-loc-${itemId}`);
+      
+      const val = parseFloat((qtyInp.value || '').replace(',', '.'));
+      if (isNaN(val) || val <= 0) {
+        showToast('Digite uma quantidade válida');
+        return;
+      }
+
+      if (!item.batches) item.batches = [];
+      item.batches.push({
+        qty: val,
+        loc: locInp ? locInp.value.trim() : ''
+      });
+      item.counted = true;
+
+      qtyInp.value = '';
+      if (locInp) locInp.value = '';
+
+      renderCategoryTabs();
+      renderItems();
+      updateGlobalCounters();
+      showToast(`Adicionado ${val} ao item ${item.name}`);
+    }
+
+    function quickAdd(itemId, amount) {
+      const item = inventoryItems.find(i => i.id === itemId);
+      if (!item) return;
+      if (!item.batches) item.batches = [];
+      item.batches.push({ qty: amount, loc: 'Rápido' });
+      item.counted = true;
+
+      renderCategoryTabs();
+      renderItems();
+      updateGlobalCounters();
+    }
+
+    function setTheoretical(itemId) {
+      const item = inventoryItems.find(i => i.id === itemId);
+      if (!item) return;
+      item.batches = [{ qty: item.theoreticalQty, loc: 'Teórico Vendas' }];
+      item.counted = true;
+
+      renderCategoryTabs();
+      renderItems();
+      updateGlobalCounters();
+      showToast(`${item.name} preenchido com estoque teórico!`);
+    }
+
+    function removeBatch(itemId, index) {
+      const item = inventoryItems.find(i => i.id === itemId);
+      if (!item || !item.batches) return;
+      item.batches.splice(index, 1);
+      if (item.batches.length === 0) {
+        item.counted = false;
+      }
+      renderCategoryTabs();
+      renderItems();
+      updateGlobalCounters();
+    }
+
+    function clearItemCount(itemId) {
+      const item = inventoryItems.find(i => i.id === itemId);
+      if (!item) return;
+      item.batches = [];
+      item.counted = false;
+      renderCategoryTabs();
+      renderItems();
+      updateGlobalCounters();
+      showToast(`${item.name} reiniciado.`);
+    }
+
+    function getItemTotal(item) {
+      if (!item.batches || item.batches.length === 0) return 0;
+      return item.batches.reduce((sum, b) => sum + (Number(b.qty) || 0), 0);
+    }
+
+    // ----------------------------------------------------
+    // AUTOMAÇÃO 1: PREENCHER ESTOQUE TEÓRICO (KARDEX REVERSO)
+    // ----------------------------------------------------
+    function prefillTheoreticalStock() {
+      if (!confirm("Deseja preencher automaticamente todos os itens com o Estoque Teórico calculado a partir das vendas da semana?\n\nIsso permite que você audite apenas os itens que tiveram diferença física na cozinha!")) {
+        return;
+      }
+
+      inventoryItems.forEach(item => {
+        if (!item.counted) {
+          item.batches = [{ qty: item.theoreticalQty, loc: 'Teórico Vendas' }];
+          item.counted = true;
+        }
+      });
+
+      renderCategoryTabs();
+      renderItems();
+      updateGlobalCounters();
+      showToast('⚡ Estoque Teórico preenchido com sucesso!');
+    }
+
+    // ----------------------------------------------------
+    // ATUALIZAÇÃO DOS CONTADORES E KPIS GLOBAIS
+    // ----------------------------------------------------
+    function updateGlobalCounters() {
+      const totalItems = inventoryItems.length;
+      const countedItems = inventoryItems.filter(i => i.counted).length;
+      const percent = Math.round((countedItems / totalItems) * 100);
+
+      document.getElementById('counter-progress-text').textContent = `${countedItems} de ${totalItems} itens contados`;
+      document.getElementById('counter-percentage-text').textContent = `${percent}% concluído`;
+      document.getElementById('progress-bar-fill').style.width = `${percent}%`;
+
+      // Calcular valor do estoque atual (R$)
+      let totalValue = 0;
+      let ceasaPendingCount = 0;
+
+      inventoryItems.forEach(item => {
+        const qty = getItemTotal(item);
+        totalValue += (qty * (item.costUnit || 0));
+
+        // Itens que precisam ir pro Ceasa (abaixo da segurança)
+        if (qty < item.minSafetyQty) {
+          ceasaPendingCount++;
+        }
+      });
+
+      document.getElementById('kpi-total-inventory').textContent = `R$ ${formatNumberBR(totalValue)}`;
+      document.getElementById('btn-ceasa-count').textContent = ceasaPendingCount;
+    }
+
+    // ----------------------------------------------------
+    // MODAL DE RESUMO (IDÊNTICO AO FINAL DO VÍDEO DO CLIENTE)
+    // ----------------------------------------------------
+    function finishCounting() {
+      const countedCount = inventoryItems.filter(i => i.counted).length;
+      const totalCount = inventoryItems.length;
+      const dateVal = document.getElementById('stock-date').value || '2026-10-08';
+
+      document.getElementById('modal-summary-subtitle').textContent = `Contagem de ${dateVal} | ${countedCount} de ${totalCount} itens preenchidos`;
+
+      const area = document.getElementById('summary-content-area');
+      area.innerHTML = CATEGORIES.map(cat => {
+        const items = inventoryItems.filter(i => i.category === cat.id && i.counted);
+        if (items.length === 0) return '';
+
+        return `
+          <div class="rounded-2xl border border-slate-800 bg-[#121319] p-4">
+            <div class="border-b border-slate-800 pb-2 text-[10px] font-black uppercase tracking-[0.16em] text-emerald-400">
+              ${cat.name}
+            </div>
+            <div class="mt-2 divide-y divide-slate-800/60">
+              <div class="grid grid-cols-12 py-1 text-[9px] font-black uppercase text-slate-500">
+                <span class="col-span-7">ITEM</span>
+                <span class="col-span-3">UNID.</span>
+                <span class="col-span-2 text-right">QTD.</span>
+              </div>
+              ${items.map(item => `
+                <div class="grid grid-cols-12 py-2 text-xs font-bold text-slate-200">
+                  <span class="col-span-7">${item.name}</span>
+                  <span class="col-span-3 text-slate-400 text-[11px]">${item.unit}</span>
+                  <span class="col-span-2 text-right font-mono text-emerald-400">${formatNumberBR(getItemTotal(item))}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('modal-summary').classList.remove('hidden');
+      document.getElementById('modal-summary').classList.add('flex');
+    }
+
+    function closeSummaryModal() {
+      document.getElementById('modal-summary').classList.add('hidden');
+      document.getElementById('modal-summary').classList.remove('flex');
+    }
+
+    function copySummaryToClipboard() {
+      const dateVal = document.getElementById('stock-date').value || '2026-10-08';
+      let text = `📦 *RESUMO DA CONTAGEM DE ESTOQUE — PIZZA DO JUCA*\n📅 Data: ${dateVal}\n\n`;
+
+      CATEGORIES.forEach(cat => {
+        const items = inventoryItems.filter(i => i.category === cat.id && i.counted);
+        if (items.length > 0) {
+          text += `*--- ${cat.name.toUpperCase()} ---*\n`;
+          items.forEach(i => {
+            text += `• ${i.name}: ${formatNumberBR(getItemTotal(i))} ${i.unit}\n`;
+          });
+          text += `\n`;
+        }
+      });
+
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('✓ Resumo copiado para a área de transferência!');
+      });
+    }
+
+    function downloadStockDataJSON() {
+      const dateVal = document.getElementById('stock-date').value || '2026-10-08';
+      const dataToExport = {
+        empresa: 'Pizza do Juca',
+        data_contagem: dateVal,
+        gerado_em: new Date().toISOString(),
+        itens: inventoryItems.filter(i => i.counted).map(i => ({
+          id: i.id,
+          nome: i.name,
+          categoria: i.category,
+          unidade: i.unit,
+          quantidade_total: getItemTotal(i),
+          lotes: i.batches,
+          custo_unitario: i.costUnit,
+          valor_total: getItemTotal(i) * i.costUnit
+        }))
+      };
+
+      const blob = new Blob([JSON.stringify(dataToExport, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `contagem-estoque-${dateVal}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      showToast('Download do JSON iniciado!');
+    }
+
+    // ----------------------------------------------------
+    // INTEGRAÇÃO COM A LISTA DE COMPRAS DO CEASA
+    // ----------------------------------------------------
+    function openCeasaSyncModal() {
+      const list = document.getElementById('ceasa-sync-preview-list');
+      const lowItems = inventoryItems.filter(i => {
+        const qty = getItemTotal(i);
+        return qty < i.minSafetyQty;
+      });
+
+      if (lowItems.length === 0) {
+        list.innerHTML = `<div class="text-slate-400 py-3 text-center">Nenhum insumo abaixo do estoque de segurança no momento!</div>`;
+      } else {
+        list.innerHTML = lowItems.map(item => {
+          const qty = getItemTotal(item);
+          const toBuy = (item.minSafetyQty - qty).toFixed(1);
+          return `
+            <div class="flex items-center justify-between border-b border-slate-800/60 pb-2">
+              <div>
+                <strong class="text-white">${item.name}</strong>
+                <div class="text-[10px] text-slate-400">Atual: ${formatNumberBR(qty)} ${item.unit} | Segurança: ${item.minSafetyQty}</div>
+              </div>
+              <span class="rounded-lg bg-emerald-500/10 border border-emerald-500/20 px-2 py-1 font-mono font-bold text-emerald-400">
+                +${toBuy} ${item.unit}
+              </span>
+            </div>
+          `;
+        }).join('');
+      }
+
+      document.getElementById('modal-ceasa-sync').classList.remove('hidden');
+      document.getElementById('modal-ceasa-sync').classList.add('flex');
+    }
+
+    function closeCeasaSyncModal() {
+      document.getElementById('modal-ceasa-sync').classList.add('hidden');
+      document.getElementById('modal-ceasa-sync').classList.remove('flex');
+    }
+
+    function confirmSendToCeasa() {
+      closeCeasaSyncModal();
+      showToast('✓ Lista sincronizada com o Ceasa! Redirecionando...');
+      setTimeout(() => {
+        window.location.href = '../ceasa/index.html';
+      }, 1200);
+    }
+
+    // ----------------------------------------------------
+    // MODAL DE AUDITORIA DE DESVIOS
+    // ----------------------------------------------------
+    function openAuditModal() {
+      const container = document.getElementById('audit-list-content');
+      container.innerHTML = `
+        <div class="rounded-2xl border border-amber-500/30 bg-amber-500/5 p-4 text-xs text-amber-200">
+          <div class="font-bold flex items-center gap-1.5 text-amber-300">
+            <i data-lucide="alert-circle" class="h-4 w-4"></i>
+            Queijo Mussarela Ralado (-1,65 kg)
+          </div>
+          <p class="mt-1 text-slate-300">Pelas 114 pizzas vendidas no site na semana, o esperado era 18,2 kg. Contado: 16,5 kg. Desvio de -9% (R$ 63,50 a menos no caixa). Recomenda-se calibrar a concha de porcionamento do pizzaiolo.</p>
+        </div>
+
+        <div class="rounded-2xl border border-slate-800 bg-[#121319] p-4 text-xs text-slate-300">
+          <div class="font-bold text-white">Cebola Roxa Picada (-0,24 kg)</div>
+          <p class="mt-1 text-slate-400">Perda comum por desidratação no pré-preparo da bancada. Dentro da margem aceitável de 5%.</p>
+        </div>
+      `;
+      document.getElementById('modal-audit').classList.remove('hidden');
+      document.getElementById('modal-audit').classList.add('flex');
+      lucide.createIcons();
+    }
+
+    function closeAuditModal() {
+      document.getElementById('modal-audit').classList.add('hidden');
+      document.getElementById('modal-audit').classList.remove('flex');
+    }
+
+    function toggleFinancePanel() {
+      const p = document.getElementById('finance-panel');
+      p.classList.toggle('hidden');
+    }
+
+    function resetCountingConfirm() {
+      if (confirm('Deseja realmente limpar toda a contagem atual?')) {
+        inventoryItems.forEach(i => {
+          i.batches = [];
+          i.counted = false;
+        });
+        renderCategoryTabs();
+        renderItems();
+        updateGlobalCounters();
+        showToast('Contagem reiniciada');
+      }
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toast-msg');
+      t.textContent = msg;
+      t.classList.remove('hidden');
+      setTimeout(() => t.classList.add('hidden'), 2500);
+    }
+
+    function formatNumberBR(num) {
+      if (num === null || num === undefined) return '0';
+      return Number(num).toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 3 });
+    }
+  </script>
+</body>
+</html>

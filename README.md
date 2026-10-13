@@ -1,8 +1,8 @@
-# TeixoOS — Sistema Operacional do Negócio
+# TeixoAI (TeixoOS) — Sistema Operacional de Negócios & IA
 
-> Sistema operacional e inteligência de operações da **Teixo (Assessoria de Crescimento)**.
+> Sistema operacional, inteligência operacional e esteira de IA da **TeixoAI (Assessoria de Crescimento Teixo)**.
 
-O **TeixoOS** unifica tecnologia, infraestrutura web, tráfego pago local, automações de CRM, captação de campo e produção audiovisual cinematográfica em um ecossistema integrado para alavancar empresas e comércios locais (com foco inicial em gastronomia e food delivery na Zona Oeste do Rio de Janeiro).
+O **TeixoAI** (TeixoOS) unifica tecnologia, inteligência artificial prática, infraestrutura web, tráfego pago local, automações de CRM, captação de campo e produção audiovisual cinematográfica em um ecossistema integrado para alavancar empresas e comércios locais (com foco inicial em gastronomia e food delivery na Zona Oeste do Rio de Janeiro).
 
 ---
 
