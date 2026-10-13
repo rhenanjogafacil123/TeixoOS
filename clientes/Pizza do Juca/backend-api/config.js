@@ -26,4 +26,7 @@ module.exports = {
 
   // Segredo JWT para assinatura de tokens de sessão
   JWT_SECRET: process.env.JWT_SECRET || 'teixo-pizzadojuca-jwt-blindado-2026-auth',
+
+  // E-mail master de acesso global (Superadmin Teixo)
+  SUPERADMIN_EMAIL: process.env.SUPERADMIN_EMAIL || 'rhenanteixeira.rj@gmail.com',
 };

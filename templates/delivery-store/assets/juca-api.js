@@ -26,12 +26,14 @@ window.JucaAPI = (function() {
 
     try {
       const response = await fetch(url, config);
+      const data = await response.json().catch(() => null);
       if (!response.ok) {
+        if (data && (data.error || data.message)) return data;
         throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
-      return await response.json();
+      return data;
     } catch (err) {
-      console.warn(`[JucaAPI] Fallback local ativado para ${endpoint}:`, err.message);
+      console.warn(`[JucaAPI] Falha em ${endpoint}:`, err.message);
       return null;
     }
   }
@@ -173,10 +175,22 @@ window.JucaAPI = (function() {
     },
 
     // 12. Autenticação & Gestão de Sessão (RBAC)
-    login: async function(username, password) {
+    login: async function(emailOrUsername, password) {
       const res = await request('/auth/login', {
         method: 'POST',
-        body: JSON.stringify({ username, password })
+        body: JSON.stringify({ email: emailOrUsername, login: emailOrUsername, password, senha: password })
+      });
+      if (res && res.success && res.token) {
+        localStorage.setItem('juca_auth_token', res.token);
+        localStorage.setItem('juca_auth_user', JSON.stringify(res.user));
+      }
+      return res;
+    },
+
+    register: async function(userData) {
+      const res = await request('/auth/register', {
+        method: 'POST',
+        body: JSON.stringify(userData)
       });
       if (res && res.success && res.token) {
         localStorage.setItem('juca_auth_token', res.token);
@@ -203,9 +217,28 @@ window.JucaAPI = (function() {
       return localStorage.getItem('juca_auth_token') || null;
     },
 
-    // 13. Relatório de Faturamento Blindado (Apenas ADMIN)
+    // 13. Relatório de Faturamento Blindado (ADMIN e SUPERADMIN)
     getBillingSummary: async function() {
       return await request('/admin/faturamento');
+    },
+
+    // 14. Gestão de Equipe & Permissões Hierárquicas
+    getEquipe: async function() {
+      return await request('/equipe');
+    },
+
+    promoverMembro: async function(email, role) {
+      return await request('/equipe/promover', {
+        method: 'POST',
+        body: JSON.stringify({ email, role })
+      });
+    },
+
+    removerMembro: async function(email) {
+      return await request('/equipe/remover', {
+        method: 'POST',
+        body: JSON.stringify({ email })
+      });
     }
   };
 })();

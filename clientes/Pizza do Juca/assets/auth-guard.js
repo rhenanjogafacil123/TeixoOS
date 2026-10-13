@@ -1,10 +1,12 @@
 /**
- * auth-guard.js - Guardião de Autenticação e RBAC do Painel Teixo / Juca
+ * auth-guard.js - Guardião de Autenticação e RBAC Hierárquico Teixo / Juca
  * Blindagem 100% no Frontend e Backend:
  * - Se não estiver logado -> Redireciona para /painel/login/
+ * - Se for perfil Cliente -> Redireciona para /painel/cliente/ (aviso de aguardo de liberação pelo gestor)
  * - Se for perfil Motoboy -> Bloqueia telas da cozinha/admin e manda para /painel/motoboy/
- * - Se for perfil Atendente -> Bloqueia telas de finanças/admin e manda para /painel/pedidos/
- * - Se for Admin -> Acesso total irrestrito
+ * - Se for perfil Atendente -> Bloqueia telas de finanças/equipe e manda para /painel/pedidos/
+ * - Se for Admin (Juca) -> Acesso total à pizzaria e gestão de equipe da loja
+ * - Se for Superadmin (Rhenan) -> Acesso global master a tudo do sistema
  * - Injeta pill flutuante com dados da sessão e botão Sair/Logout
  */
 
@@ -45,10 +47,26 @@
     return;
   }
 
-  const role = (user.role || '').toLowerCase();
+  const role = (user.role || 'cliente').toLowerCase();
 
-  // 2. Validação de Permissões por Rota (RBAC)
-  // Regra A: Motoboy NUNCA acessa telas de pedidos gerais, admin, estoque, ceasa, cardápio
+  // 2. Validação de Permissões por Rota (RBAC Hierárquico)
+
+  // Regra A: Cliente tentando acessar painel operacional
+  if (role === 'cliente') {
+    if (!currentPath.includes('/painel/cliente/')) {
+      console.warn('[AuthGuard] Conta de cliente detectada no painel. Redirecionando para /painel/cliente/...');
+      window.location.replace('/painel/cliente/');
+      return;
+    }
+  }
+
+  // Se estiver na tela informativa de cliente mas já foi promovido, manda pro painel
+  if (currentPath.includes('/painel/cliente/') && role !== 'cliente') {
+    redirectByRole(role);
+    return;
+  }
+
+  // Regra B: Motoboy NUNCA acessa telas de pedidos gerais, admin, estoque, ceasa, cardápio, equipe
   const isAdminOrKitchenRoute = 
     currentPath.includes('/pedidos/') ||
     currentPath.includes('/admin/') ||
@@ -57,6 +75,7 @@
     currentPath.includes('/produtos/') ||
     currentPath.includes('/promocoes/') ||
     currentPath.includes('/canais/') ||
+    currentPath.includes('/equipe/') ||
     currentPath.includes('/configuracoes/');
 
   if (role === 'motoboy') {
@@ -67,11 +86,11 @@
     }
   }
 
-  // Regra B: Atendente não acessa administração financeira pura
-  const isAdminOnlyRoute = currentPath.includes('/admin/') || currentPath.includes('/configuracoes/');
+  // Regra C: Atendente não acessa administração financeira nem gestão de equipe
+  const isAdminOnlyRoute = currentPath.includes('/admin/') || currentPath.includes('/configuracoes/') || currentPath.includes('/equipe/');
   if (role === 'atendente') {
     if (isAdminOnlyRoute) {
-      console.warn('[AuthGuard] Atendente bloqueado de tela administrativa. Redirecionando para /painel/pedidos/...');
+      console.warn('[AuthGuard] Atendente bloqueado de tela administrativa/equipe. Redirecionando para /painel/pedidos/...');
       window.location.replace('/painel/pedidos/');
       return;
     }
@@ -82,6 +101,8 @@
     }
   }
 
+  // Regra D: Admin e Superadmin têm acesso liberado às suas respectivas áreas
+
   // 3. Injetar Pill de Sessão do Usuário no DOM após carregar
   document.addEventListener('DOMContentLoaded', () => {
     injectUserSessionBadge(user);
@@ -91,11 +112,15 @@
   }
 
   function redirectByRole(userRole) {
-    if (userRole === 'motoboy') {
+    const r = (userRole || '').toLowerCase();
+    if (r === 'cliente') {
+      window.location.replace('/painel/cliente/');
+    } else if (r === 'motoboy') {
       window.location.replace('/painel/motoboy/');
-    } else if (userRole === 'atendente') {
+    } else if (r === 'atendente') {
       window.location.replace('/painel/pedidos/');
     } else {
+      // admin ou superadmin
       window.location.replace('/painel/pedidos/');
     }
   }
@@ -104,12 +129,15 @@
     if (document.getElementById('juca-auth-session-badge')) return;
 
     const roleBadges = {
-      admin: { label: 'Gestor', bg: 'bg-orange-500/10 text-orange-400 border-orange-500/20', icon: '👑' },
-      atendente: { label: 'Atendente', bg: 'bg-blue-500/10 text-blue-400 border-blue-500/20', icon: '🍕' },
-      motoboy: { label: 'Motoboy', bg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20', icon: '🛵' }
+      superadmin: { label: 'Master Global', bg: 'bg-amber-500/10 text-amber-400 border-amber-500/30', icon: '👑' },
+      admin: { label: 'Gestor Geral', bg: 'bg-orange-500/10 text-orange-400 border-orange-500/30', icon: '🍕' },
+      atendente: { label: 'Atendente', bg: 'bg-blue-500/10 text-blue-400 border-blue-500/30', icon: '📋' },
+      motoboy: { label: 'Motoboy', bg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30', icon: '🛵' },
+      cliente: { label: 'Cliente', bg: 'bg-purple-500/10 text-purple-400 border-purple-500/30', icon: '👤' }
     };
 
-    const info = roleBadges[currentUser.role] || roleBadges.atendente;
+    const userRoleKey = (currentUser.role || 'cliente').toLowerCase();
+    const info = roleBadges[userRoleKey] || roleBadges.cliente;
     const badge = document.createElement('div');
     badge.id = 'juca-auth-session-badge';
     badge.className = 'fixed bottom-4 right-4 z-[9999] flex items-center gap-2 rounded-2xl border border-slate-700/80 bg-slate-900/95 p-2 shadow-2xl backdrop-blur-md text-xs';
@@ -117,7 +145,7 @@
       <div class="flex items-center gap-1.5 pl-2 pr-1">
         <span class="text-sm">${info.icon}</span>
         <div>
-          <div class="font-extrabold text-white text-[11px] leading-tight">${currentUser.nome || currentUser.name || currentUser.username}</div>
+          <div class="font-extrabold text-white text-[11px] leading-tight">${currentUser.nome_completo || currentUser.nome || currentUser.name || currentUser.username}</div>
           <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">${info.label}</div>
         </div>
       </div>
@@ -139,7 +167,7 @@
     getUser: () => user,
     getRole: () => role,
     logout: () => {
-      if (confirm('Deseja realmente sair do painel?')) {
+      if (confirm('Deseja realmente sair da sua conta?')) {
         localStorage.removeItem('juca_auth_token');
         localStorage.removeItem('juca_auth_user');
         window.location.replace('/painel/login/');

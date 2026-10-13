@@ -157,8 +157,14 @@ Para todos os estabelecimentos gastronômicos e clientes de delivery atendidos p
    - **Curva ABC Prática:** Classe A (alto giro / impacto crítico no CMV, ex: frango, arroz, ovos, queijos) auditados com alta frequência; Classes B e C calibrados pelo ciclo de cardápio.
    - **Fator de Cocção & Rendimento na Ordem de Produção:** Cálculo automático das perdas e ganhos de peso no preparo (arroz quase dobra, feijão triplica, proteínas perdem 20-30%, frutos do mar perdem ~60%), conectando a projeção de vendas à quantidade real de insumo cru a ser comprado e descongelado.
 
-8. **Segurança & Controle de Acesso (RBAC Blindado):**
-   - **Camada 1 — Senhas Criptografadas com Salt (`bcrypt`):** As senhas de administradores, atendentes e motoboys são armazenadas exclusivamente com hash salgado irreversível (mínimo de 10 rounds de salt). Zero senhas em texto puro no banco de dados.
-   - **Camada 2 — Tokens de Sessão Protegidos (`JWT`):** Cada login autenticado gera um token digital temporário assinado via HMAC-SHA256 (`Bearer Token`), contendo ID, usuário e perfil de acesso (`role`), com tempo de expiração e renovação segura.
-   - **Camada 3 — Bloqueio no Backend (API REST):** Proteção no nível da requisição. Middlewares dedicados (`requireAuth`, `requireRole(['admin'])`, `requireRole(['admin', 'atendente'])`) validam as permissões na raiz da API. Se um motoboy tentar acessar rotas financeiras ou de gestão (ex: `/api/admin/faturamento`), o servidor bloqueia instantaneamente com HTTP 403 Forbidden (*Acesso Negado*).
+8. **Segurança, Auto-Cadastro & RBAC Hierárquico Blindado:**
+   - **Auto-Cadastro Sem Limites:** Qualquer pessoa se cadastra com dados pessoais completos (Nome Completo, E-mail, Telefone/WhatsApp, Data de Nascimento e Senha Pessoal). Todas as novas contas nascem automaticamente como `cliente`. Zero contas pré-fixadas forçadas.
+   - **Camada 1 — Senhas Criptografadas com Salt (`bcrypt`):** Senhas pessoais armazenadas com hash salgado irreversível (10 rounds de salt). Zero texto puro no SQLite.
+   - **Camada 2 — Tokens Digitais Assinados (`JWT`):** Cada login emite token JWT assinado (`12h` de validade) com id, e-mail e cargo do usuário.
+   - **Camada 3 — Bloqueio Nativo no Backend (API REST) + Guardião Frontend (`auth-guard.js`):** Middlewares barram acessos não autorizados com `HTTP 403 Forbidden`. No frontend, telas operacionais são restritas a quem possui cargo concedido.
+   - **Hierarquia de Permissões por E-mail:**
+     - **Superadmin Master Global (`rhenanteixeira.rj@gmail.com`):** Acesso irrestrito a todo o sistema. Concede permissão de **Gestor Geral (Admin)** para as contas dos donos de loja (ex: conta do Juca).
+     - **Gestor Geral da Loja (`admin` — Juca):** No seu painel de equipe, digita os e-mails de qualquer pessoa cadastrada e concede permissão de **`atendente`** ou **`motoboy`** (ou revoga de volta para `cliente`). Bloqueado de alterar superadministradores.
+     - **Equipe Operacional (`atendente` e `motoboy`):** Atendentes acessam KDS/pedidos/balcão; motoboys acessam exclusivamente suas rotas e fechamentos.
+     - **Cliente (`cliente`):** Acesso ao cardápio e checkout. Se entrar no painel, é orientado com cordialidade a solicitar liberação ao gestor informando seu e-mail.
 
