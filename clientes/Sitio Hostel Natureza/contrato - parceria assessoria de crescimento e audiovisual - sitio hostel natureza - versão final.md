@@ -56,7 +56,8 @@ Resolvem celebrar o presente Contrato, subordinando-se às seguintes cláusulas 
 
 - **PILAR 3 — STOREFRONT WEB PRÓPRIO & MÓDULO BALCÃO/MESA NFC (MODALIDADE RISCO ZERO):**
   - Estruturação de plataforma web responsiva, ultrarrápida e intuitiva para visualização de cardápio, consumação e reservas diretas no celular do cliente;
-  - Implementação presencial de plaquinhas inteligentes munidas de tecnologia NFC (*Near Field Communication*) e QR Code nas mesas e no balcão, permitindo que hóspedes e visitantes realizem pedidos diretamente em seus próprios celulares, com confirmação sonora e notificações automáticas, dispensando o investimento em bips físicos convencionais e eliminando filas de espera;
+  - Implementação presencial de plaquinha inteligente física munida de tecnologia NFC (*Near Field Communication*) e QR Code para o balcão principal, permitindo que hóspedes e visitantes realizem pedidos diretamente em seus próprios celulares, com confirmação sonora e notificações automáticas, dispensando o investimento em bips físicos convencionais e eliminando filas de espera;
+  - **Unidades Adicionais de Plaquinhas NFC:** O valor inicial de setup contempla 1 (uma) plaquinha física codificada para o balcão. Caso a CONTRATANTE solicite a confecção e implementação de plaquinhas físicas adicionais para mesas, quiosque, piscina ou ambientes complementares, cada plaquinha física suplementar terá o valor unitário de **R$ 40,00 (quarenta reais)**, cobrado no ato de sua confecção física;
   - Painel administrativo de controle de pedidos em tempo real.
 
 - **PILAR 4 — AUTOMAÇÕES DE CRM E MENSAGERIA WHATSAPP (MODALIDADE FUTURA):**
@@ -90,9 +91,11 @@ b) **Honorários de Produção Audiovisual e Criação Orgânica (PL - Paulo Rob
   **Chave PIX do PL:** `_____________________________________________` (Titular: Paulo Roberto).
 
 c) **Implementação da Plataforma Web & Módulo Balcão/Mesa NFC (Rhenan Teixeira):**
-- **Taxa Única de Setup e Implementação Tecnológica:** **R$ 500,00 (quinhentos reais)**, devida no ato da contratação e estritamente subordinada à Cláusula Terceira de Garantia Condicional;
+- **Taxa Única de Setup e Implementação Tecnológica:** **R$ 500,00 (quinhentos reais)**, devida no ato da contratação e estritamente subordinada à Cláusula Terceira de Garantia Condicional, contemplando o desenvolvimento do storefront e o fornecimento de 1 (uma) plaquinha física NFC codificada para o balcão principal;
+- **Plaquinhas NFC Adicionais:** Caso a CONTRATANTE demande a instalação de mais de 1 (uma) plaquinha física para mesas ou áreas externas, será acrescido o valor fixo de **R$ 40,00 (quarenta reais)** por cada plaquinha física adicional confeccionada;
 - **Mensalidade Fixa de Manutenção:** **R$ 0,00 (zero reais)** — a CONTRATANTE usufrui de **100% DE ISENÇÃO** de taxas ou mensalidades fixas recorrentes para a operação básica do cardápio digital e storefront;
 - **Microtaxa Operacional de Manutenção:** **R$ 0,67 (sessenta e sete centavos)** por pedido processado e concluído na plataforma web, embutida e discriminada diretamente no checkout para pagamento pelo consumidor final, sem gerar desconto na margem líquida dos produtos da CONTRATANTE;
+- **Exigibilidade da Microtaxa Durante o Período de Teste:** A microtaxa de R$ 0,67 remunera o processamento efetivo das transações de pedidos e a infraestrutura de servidores web mantida ativa em tempo real, sendo **estritamente devida e exigível desde o primeiro dia de operação**, inclusive durante o período de 15 (quinze) dias de teste em campo, independentemente da manutenção ou eventual descontinuidade futura do sistema;
 - **Fechamento e Repasse Quinzenal:** A apuração e liquidação do saldo acumulado das microtaxas de R$ 0,67 por pedido ocorrerá **quinzenalmente, pontualmente em terças-feiras alternadas ("terça-feira sim, terça-feira não")**, com base no relatório consolidado de pedidos extraído diretamente da plataforma;
 - **Destino Bancário Individual:** Transferência bancária PIX direta para a conta de titularidade de **Rhenan de Oliveira Teixeira** (Mercado Pago), Chave PIX: **`rhenanteixeira.rj@gmail.com`**.
 
@@ -109,10 +112,12 @@ c) **Implementação da Plataforma Web & Módulo Balcão/Mesa NFC (Rhenan Teixei
 3.1. **Período de Validação e Teste em Campo:** Em demonstração da robustez técnica e eficácia do ecossistema de storefront web e plaquinhas NFC desenvolvido pelo Diretor de Tecnologia Rhenan de Oliveira Teixeira, a CONTRATADA confere à CONTRATANTE um período de garantia condicional e teste operacional de **15 (quinze) dias corridos**, contados a partir da entrega e publicação oficial do sistema.
 
 3.2. **Opções em Caso de Descontinuidade:** Caso a CONTRATANTE, no decurso improrrogável dos 15 dias de teste, avalie a seu livre e exclusivo critério que não deseja manter o uso da plataforma web e das plaquinhas NFC, notificará formalmente a CONTRATADA por escrito via WhatsApp oficial, tendo o direito líquido e certo de escolher:
-I - **Restituição Integral:** Devolução imediata e sem retenções de 100% da quantia paga a título de setup, no valor de **R$ 500,00 (quinhentos reais)**, diretamente de volta para a conta bancária da CONTRATANTE; **OU**
+I - **Restituição do Setup:** Devolução imediata e sem retenções de 100% da quantia paga a título de implementação inicial, no valor de **R$ 500,00 (quinhentos reais)**, diretamente de volta para a conta bancária da CONTRATANTE; **OU**
 II - **Conversão em Crédito de Tráfego Pago com Tiago Teixeira:** O valor integral de **R$ 500,00 (quinhentos reais)** será convertido integralmente em crédito de serviços de gestão de tráfego pago, abatendo-se dos honorários vincendos devidos ao gestor Tiago Teixeira.
 
-3.3. **Consolidação de Titularidade:** Transcorrido o prazo decadencial de 15 (quinze) dias corridos sem qualquer manifestação formal em contrário da CONTRATANTE, ou caso esta continue utilizando ativamente o sistema web e as plaquinhas NFC, a taxa de setup de R$ 500,00 considerar-se-á definitivamente consolidada e quitada a título de implementação tecnológica em favor de Rhenan de Oliveira Teixeira, mantendo-se plenamente em vigor as regras de apuração quinzenal da microtaxa de R$ 0,67 por pedido.
+3.3. **Irrepetibilidade das Microtaxas de R$ 0,67 e Manutenção dos Servidores:** Fica expressamente ajustado que a restituição ou conversão prevista no item 3.2 recai com exclusividade sobre a taxa de setup tecnológico de R$ 500,00. O montante acumulado correspondente às microtaxas de **R$ 0,67 (sessenta e sete centavos) por pedido processado** na plataforma durante o período de 15 dias de teste é **estritamente devido, exigível e irrepetível (não reembolsável)** em favor de Rhenan de Oliveira Teixeira, visto que remunera o consumo computacional, tráfego de dados e custos de infraestrutura de servidores web mantidos ativos em tempo real para processar os pedidos dos clientes da CONTRATANTE.
+
+3.4. **Consolidação de Titularidade:** Transcorrido o prazo decadencial de 15 (quinze) dias corridos sem qualquer manifestação formal em contrário da CONTRATANTE, ou caso esta continue utilizando ativamente o sistema web e as plaquinhas NFC, a taxa de setup de R$ 500,00 considerar-se-á definitivamente consolidada e quitada a título de implementação tecnológica em favor de Rhenan de Oliveira Teixeira, mantendo-se plenamente em vigor as regras de apuração quinzenal da microtaxa de R$ 0,67 por pedido.
 
 ---
 

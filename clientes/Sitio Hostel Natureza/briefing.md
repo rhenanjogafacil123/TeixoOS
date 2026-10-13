@@ -19,7 +19,7 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **Tráfego Pago Local** | **Tiago Teixeira** | **100% Fechado** | R$ 1.200,00 / mês fixo | Conta do Tiago / MEI (`69.390.968/0001-78`) |
 | **Audiovisual e Conteúdo Orgânico** | **PL (Paulo Roberto)** | **100% Fechado** | • R$ 500 no 1º mês (apresentação horizontal no YouTube + lote de pelo menos 20 cortes verticais)<br>• R$ 200 por evento (vídeo no YouTube + cortes verticais, sem quantidade fixa estipulada) | Conta individual do PL (PIX direto para o PL) |
-| **Site Próprio & Balcão/Mesa NFC** | **Rhenan Teixeira** | **Oferta Risco Zero** | R$ 500 setup (15 dias de garantia) + R$ 0/mês + R$ 0,67/pedido (repasse quinzenal às terças alternadas) | Conta individual do Rhenan (`rhenanteixeira.rj@gmail.com` - Mercado Pago) |
+| **Site Próprio & Balcão/Mesa NFC** | **Rhenan Teixeira** | **Oferta Risco Zero** | R$ 500 setup (com 1 plaquinha de balcão inclusa; adicionais R$ 40/cada; 15 dias de garantia) + R$ 0/mês + R$ 0,67/pedido (repasse quinzenal às terças alternadas, irrepetível no teste) | Conta individual do Rhenan (`rhenanteixeira.rj@gmail.com` - Mercado Pago) |
 | **Automações de CRM / WhatsApp** | **Erick Teixeira** | Em planejamento futuro | A definir no onboarding | Conta do Erick |
 
 *(Nota de Pagamentos: O cliente efetua os pagamentos diretamente para a conta individual de cada responsável técnico — Tiago, PL e Rhenan).*  
@@ -32,12 +32,12 @@
 
 Para superar a objeção de preço e a resistência inicial da contratante, o Tiago entrará na mesa com a proposta de **Garantia de Satisfação Incondicional**:
 
-1. **Taxa de Implementação:** R$ 500,00 pagos no ato da contratação diretamente para o Rhenan para a criação e entrega do site/cardápio digital e módulo presencial de pedidos NFC.
-2. **Microtaxa de Manutenção:** R$ 0,67 por pedido aprovado na plataforma (paga no checkout pelo consumidor final). O fechamento e acerto dessa microtaxa para o Rhenan é realizado quinzenalmente, pontualmente às terças-feiras alternadas ("terça-feira sim, terça-feira não"), por ser o dia de menor atrito e mais tranquilo da semana para liquidação financeira.
+1. **Taxa de Implementação:** R$ 500,00 pagos no ato da contratação diretamente para o Rhenan para a criação e entrega do site/cardápio digital e 1 plaquinha NFC física inicial do balcão (plaquinhas adicionais a R$ 40 cada).
+2. **Microtaxa de Manutenção (Irrepetível):** R$ 0,67 por pedido aprovado na plataforma (paga no checkout pelo consumidor final). Devida desde o primeiro dia de operação inclusive no teste de 15 dias (pois cobre o custo real de servidores ativos e processamento de pedidos). O repasse é quinzenal às terças-feiras alternadas.
 3. **Aposta de Risco Zero:**
-   - Se o cliente testar por 15 dias e, por qualquer motivo, não quiser manter o site, a Teixo oferece duas opções diretas:
-     - **Opção 1:** Devolução imediata de 100% dos R$ 500,00 de volta para o Sítio Hostel Natureza; **OU**
-     - **Opção 2:** Conversão integral dos R$ 500,00 em crédito de tráfego pago para pagar o Tiago.
+   - Se o cliente testar por 15 dias e, por qualquer motivo, não quiser manter o site, a Teixo oferece duas opções diretas sobre a taxa de setup:
+     - **Opção 1:** Devolução imediata de 100% dos R$ 500,00 de setup de volta para o Sítio Hostel Natureza; **OU**
+     - **Opção 2:** Conversão integral dos R$ 500,00 de setup em crédito de tráfego pago para pagar o Tiago.
 4. **Resultado Previsto:** O cliente sente risco absolutamente zero para experimentar, o Rhenan entrega um storefront ultrarrápido com plaquinhas NFC que resolve o gargalo operacional do hostel, o cliente se apaixona pelo resultado prático e os R$ 500,00 se consolidam no bolso do Rhenan.
 
 ---

@@ -57,13 +57,14 @@ A Teixo atua como uma **Assessoria de Crescimento**, combinando tecnologia, trá
 A Teixo opera com esteiras padronizadas de serviços, garantindo escalabilidade comercial e previsibilidade de caixa:
 
 1. **Food Delivery Próprio & Balcão NFC:**
-   - **Cobrança:** Fricção zero para o lojista — **R$ 0 de setup** e **R$ 0 de mensalidade fixa**.
+   - **Cobrança:** Fricção zero para o lojista no delivery convencional — **R$ 0 de setup** e **R$ 0 de mensalidade fixa** (ou taxa de setup quando envolver site institucional/hospedagem exclusiva, incluindo 1 plaquinha física de balcão).
+   - **Plaquinhas NFC Adicionais:** Caso o cliente demande mais de 1 plaquinha física codificada (mesas, quiosques, quartos ou áreas externas), o valor adicional é de **R$ 40,00 por plaquinha física**.
    - **Monetização:** Microtaxa de **R$ 0,67 por pedido** aprovado no checkout (paga pelo consumidor final).
    - **Repasse Quinzenal às Terças-feiras:** O acerto e repasse do saldo acumulado das taxas de R$ 0,67 para o Rhenan é realizado quinzenalmente, pontualmente em terças-feiras alternadas ("terça-feira sim, terça-feira não"), dia de menor fluxo operacional.
 
 2. **Gestão de Tráfego Pago Local (Tiago Teixeira):**
    - **Cobrança Padrão:** **R$ 1.200,00 mensais** para negócios locais.
-   - **Ciclo e Vencimento por Aniversário de Pagamento:** As mensalidades recorrentes de assessoria vencem sempre no mesmo dia civil em que ocorreu o primeiro pagamento da contratação (data de aniversário). Exemplo: primeiro pagamento efetuado em 13 de outubro -> próximas parcelas vencem rigorosamente em 13 de novembro, 13 de dezembro, e assim sucessivamente.
+   - **Ciclo e Vencimento por Aniversário de Pagamento:** As mensalidades recorrentes de assessoria vencem sempre no mesmo dia civil em que ocorreu o primeiro pagamento da contratação (data de aniversário). Exemplo: primeiro pagamento efetuado em 14 de outubro -> próximas parcelas vencem rigorosamente em 14 de novembro, 14 de dezembro, e assim sucessivamente.
    - **Mídia:** Verba de anúncios custeada diretamente pelo cliente via cartão corporativo cadastrado nas plataformas (Meta/Google).
 
 3. **Produção Audiovisual e Captação de Campo (PL - Paulo Roberto):**
@@ -72,7 +73,8 @@ A Teixo opera com esteiras padronizadas de serviços, garantindo escalabilidade 
 
 4. **Tática Comercial de Risco Zero (Garantia Condicional de 15 Dias):**
    - Utilizada para superar objeções de lojistas a custos iniciais de tecnologia (ex: setup de R$ 500 em sites ou módulo NFC).
-   - O cliente tem 15 dias de teste na prática; se não quiser continuar, escolhe entre **devolução de 100%** ou **conversão em crédito de tráfego pago para pagar o Tiago**.
+   - O cliente tem 15 dias de teste na prática sobre o setup; se não quiser continuar, escolhe entre **devolução de 100% do setup** ou **conversão em crédito de tráfego pago para pagar o Tiago**.
+   - **Taxa Operacional Irrepetível no Teste:** A microtaxa de **R$ 0,67 por pedido processado** durante os 15 dias de teste é **estritamente devida e não reembolsável**, pois remunera o custo real de processamento e servidores web mantidos ativos no ar para atender a clientela da loja.
 
 5. **Recebimentos e Flexibilidade de Contas:**
    - A operação adota flexibilidade nos recebimentos conforme o alinhamento de cada cliente: pode centralizar na conta do MEI do Tiago (`69.390.968/0001-78`) OU receber diretamente nas contas individuais de cada executor técnico (Tiago no tráfego, PL no vídeo e Rhenan no site via Mercado Pago `rhenanteixeira.rj@gmail.com`).
