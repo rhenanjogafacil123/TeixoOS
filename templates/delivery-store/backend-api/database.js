@@ -134,10 +134,15 @@ function initSqliteTables() {
 
     CREATE TABLE IF NOT EXISTS usuarios (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
-      username TEXT UNIQUE NOT NULL,
-      password_hash TEXT NOT NULL,
+      nome TEXT NOT NULL,
+      login TEXT UNIQUE NOT NULL,
+      senha_hash TEXT NOT NULL,
       role TEXT NOT NULL,
+      status TEXT DEFAULT 'ativo',
+      criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
+      name TEXT,
+      username TEXT,
+      password_hash TEXT,
       active INTEGER DEFAULT 1,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
@@ -148,10 +153,10 @@ function initSqliteTables() {
 
 function seedDefaultUsers() {
   const defaultUsers = [
-    { name: 'Gestor Geral', username: 'admin', password: 'juca@admin2026', role: 'admin' },
-    { name: 'Atendente Balcão', username: 'balcao', password: 'balcao@juca', role: 'atendente' },
-    { name: 'Rafael Lima', username: 'rafael', password: 'moto@rafael', role: 'motoboy' },
-    { name: 'Diego Souza', username: 'diego', password: 'moto@diego', role: 'motoboy' }
+    { nome: 'Gestor Geral', login: 'admin', senha: 'juca@admin2026', role: 'admin' },
+    { nome: 'Atendente Balcão', login: 'balcao', senha: 'balcao@juca', role: 'atendente' },
+    { nome: 'Rafael Lima', login: 'rafael', senha: 'moto@rafael', role: 'motoboy' },
+    { nome: 'Diego Souza', login: 'diego', senha: 'moto@diego', role: 'motoboy' }
   ];
 
   if (dbDriver === 'sqlite') {
@@ -159,12 +164,12 @@ function seedDefaultUsers() {
     if (row && row.count === 0) {
       console.log('[Banco de Dados] Criando contas de acesso padrão blindadas (bcrypt)...');
       const insert = sqliteDb.prepare(`
-        INSERT INTO usuarios (name, username, password_hash, role)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO usuarios (nome, login, senha_hash, role, status, name, username, password_hash, active)
+        VALUES (?, ?, ?, ?, 'ativo', ?, ?, ?, 1)
       `);
       for (const u of defaultUsers) {
-        const hash = bcrypt.hashSync(u.password, 10);
-        insert.run(u.name, u.username, hash, u.role);
+        const hash = bcrypt.hashSync(u.senha, 10);
+        insert.run(u.nome, u.login, hash, u.role, u.nome, u.login, hash);
       }
       console.log('[Banco de Dados] Contas padrão ativadas: admin, balcao, rafael, diego');
     }
@@ -172,11 +177,16 @@ function seedDefaultUsers() {
     if (!jsonStore.usuarios || jsonStore.usuarios.length === 0) {
       jsonStore.usuarios = defaultUsers.map((u, idx) => ({
         id: idx + 1,
-        name: u.name,
-        username: u.username,
-        password_hash: bcrypt.hashSync(u.password, 10),
+        nome: u.nome,
+        name: u.nome,
+        login: u.login,
+        username: u.login,
+        senha_hash: bcrypt.hashSync(u.senha, 10),
+        password_hash: bcrypt.hashSync(u.senha, 10),
         role: u.role,
+        status: 'ativo',
         active: 1,
+        criado_em: new Date().toISOString(),
         created_at: new Date().toISOString()
       }));
       persistJsonStore();
@@ -582,74 +592,108 @@ const dbService = {
   },
 
   // --- USUÁRIOS & AUTENTICAÇÃO (RBAC BLINDADO) ---
-  getUserByUsername: (username) => {
-    if (!username) return null;
-    const cleanUser = String(username).trim().toLowerCase();
+  getUserByUsername: (loginOrUser) => {
+    if (!loginOrUser) return null;
+    const cleanUser = String(loginOrUser).trim().toLowerCase();
     if (dbDriver === 'sqlite') {
-      return sqliteDb.prepare('SELECT * FROM usuarios WHERE LOWER(username) = ? AND active = 1').get(cleanUser) || null;
+      const u = sqliteDb.prepare(`
+        SELECT * FROM usuarios 
+        WHERE (LOWER(login) = ? OR LOWER(username) = ?) 
+          AND (active = 1 OR status = 'ativo')
+      `).get(cleanUser, cleanUser);
+      if (!u) return null;
+      return {
+        ...u,
+        nome: u.nome || u.name,
+        name: u.name || u.nome,
+        login: u.login || u.username,
+        username: u.username || u.login,
+        senha_hash: u.senha_hash || u.password_hash,
+        password_hash: u.password_hash || u.senha_hash,
+        status: u.status || 'ativo'
+      };
     } else {
       const list = jsonStore.usuarios || [];
-      return list.find(u => u.username.toLowerCase() === cleanUser && u.active) || null;
+      const u = list.find(x => ((x.login && x.login.toLowerCase() === cleanUser) || (x.username && x.username.toLowerCase() === cleanUser)) && (x.active || x.status === 'ativo'));
+      return u || null;
     }
   },
 
   getUserById: (id) => {
     if (!id) return null;
     if (dbDriver === 'sqlite') {
-      return sqliteDb.prepare('SELECT id, name, username, role, active, created_at FROM usuarios WHERE id = ?').get(id) || null;
+      const u = sqliteDb.prepare('SELECT id, nome, login, role, status, criado_em, name, username, active, created_at FROM usuarios WHERE id = ?').get(id);
+      if (!u) return null;
+      return {
+        ...u,
+        nome: u.nome || u.name,
+        name: u.name || u.nome,
+        login: u.login || u.username,
+        username: u.username || u.login,
+        status: u.status || 'ativo'
+      };
     } else {
       const list = jsonStore.usuarios || [];
       const u = list.find(x => x.id === Number(id));
       if (!u) return null;
-      const { password_hash, ...safe } = u;
+      const { password_hash, senha_hash, ...safe } = u;
       return safe;
     }
   },
 
   listUsers: () => {
     if (dbDriver === 'sqlite') {
-      return sqliteDb.prepare('SELECT id, name, username, role, active, created_at FROM usuarios ORDER BY id ASC').all();
+      return sqliteDb.prepare('SELECT id, nome, login, role, status, criado_em, name, username FROM usuarios ORDER BY id ASC').all();
     } else {
       const list = jsonStore.usuarios || [];
-      return list.map(({ password_hash, ...safe }) => safe);
+      return list.map(({ password_hash, senha_hash, ...safe }) => safe);
     }
   },
 
-  createUser: ({ name, username, password, role = 'atendente' }) => {
-    const cleanUser = String(username).trim().toLowerCase();
-    const hash = bcrypt.hashSync(password, 10);
+  createUser: ({ nome, login, name, username, senha, password, role = 'atendente' }) => {
+    const finalNome = nome || name || 'Usuário';
+    const finalLogin = String(login || username || '').trim().toLowerCase();
+    const finalSenha = senha || password;
+    const hash = bcrypt.hashSync(finalSenha, 10);
     const validRoles = ['admin', 'atendente', 'motoboy'];
     const safeRole = validRoles.includes(role) ? role : 'atendente';
 
     if (dbDriver === 'sqlite') {
       const stmt = sqliteDb.prepare(`
-        INSERT INTO usuarios (name, username, password_hash, role)
-        VALUES (?, ?, ?, ?)
+        INSERT INTO usuarios (nome, login, senha_hash, role, status, name, username, password_hash, active)
+        VALUES (?, ?, ?, ?, 'ativo', ?, ?, ?, 1)
       `);
-      const info = stmt.run(name, cleanUser, hash, safeRole);
+      const info = stmt.run(finalNome, finalLogin, hash, safeRole, finalNome, finalLogin, hash);
       return dbService.getUserById(info.lastInsertRowid);
     } else {
       if (!jsonStore.usuarios) jsonStore.usuarios = [];
       const newUser = {
         id: jsonStore.usuarios.length + 1,
-        name,
-        username: cleanUser,
+        nome: finalNome,
+        name: finalNome,
+        login: finalLogin,
+        username: finalLogin,
+        senha_hash: hash,
         password_hash: hash,
         role: safeRole,
+        status: 'ativo',
         active: 1,
+        criado_em: new Date().toISOString(),
         created_at: new Date().toISOString()
       };
       jsonStore.usuarios.push(newUser);
       persistJsonStore();
-      const { password_hash, ...safe } = newUser;
+      const { password_hash, senha_hash, ...safe } = newUser;
       return safe;
     }
   },
 
   verifyUserPassword: (user, plainPassword) => {
-    if (!user || !user.password_hash || !plainPassword) return false;
+    if (!user || !plainPassword) return false;
+    const hash = user.senha_hash || user.password_hash;
+    if (!hash) return false;
     try {
-      return bcrypt.compareSync(plainPassword, user.password_hash);
+      return bcrypt.compareSync(plainPassword, hash);
     } catch (e) {
       return false;
     }

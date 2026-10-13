@@ -148,34 +148,38 @@ function authorizeRoles(...allowedRoles) {
 // Login com verificação de hash bcrypt e emissão de JWT
 app.post('/api/auth/login', (req, res) => {
   try {
-    const { username, password } = req.body;
-    if (!username || !password) {
-      return res.status(400).json({ success: false, error: 'Usuário e senha são obrigatórios.' });
+    const userLogin = req.body.login || req.body.username;
+    const userPassword = req.body.senha || req.body.password;
+    if (!userLogin || !userPassword) {
+      return res.status(400).json({ success: false, error: 'Login e senha são obrigatórios.' });
     }
 
-    const user = db.getUserByUsername(username);
+    const user = db.getUserByUsername(userLogin);
     if (!user) {
-      console.warn(`[Auth Falhou] Usuário inexistente: "${username}"`);
+      console.warn(`[Auth Falhou] Usuário inexistente: "${userLogin}"`);
       return res.status(401).json({ success: false, error: 'Usuário ou senha incorretos.' });
     }
 
-    const passwordOk = db.verifyUserPassword(user, password);
+    const passwordOk = db.verifyUserPassword(user, userPassword);
     if (!passwordOk) {
-      console.warn(`[Auth Falhou] Senha incorreta para o usuário: "${username}"`);
+      console.warn(`[Auth Falhou] Senha incorreta para o usuário: "${userLogin}"`);
       return res.status(401).json({ success: false, error: 'Usuário ou senha incorretos.' });
     }
 
     // Gerar token assinado JWT válido por 12 horas
     const payload = {
       id: user.id,
-      name: user.name,
-      username: user.username,
-      role: user.role
+      nome: user.nome || user.name,
+      name: user.name || user.nome,
+      login: user.login || user.username,
+      username: user.username || user.login,
+      role: user.role,
+      status: user.status || 'ativo'
     };
 
     const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '12h' });
 
-    console.log(`[Auth Sucesso] Login aprovado: ${user.name} (${user.username}) [Perfil: ${user.role.toUpperCase()}]`);
+    console.log(`[Auth Sucesso] Login aprovado: ${payload.nome} (${payload.login}) [Perfil: ${payload.role.toUpperCase()}]`);
     res.json({
       success: true,
       token,

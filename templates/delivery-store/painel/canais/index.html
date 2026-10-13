@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hub de Canais | iFood & 99Food Integrados | Pizza do Juca</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/assets/auth-guard.js"></script>
+  <script>if (!window.JucaAuthGuard) { document.write('<script src="../../assets/auth-guard.js"><\/script>'); }</script>
+  <script src="../panel-data.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 0.3; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .ring-pulse { animation: pulse-ring 2s infinite ease-in-out; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#f4f6fa] text-slate-950 font-sans antialiased">
+  <div class="flex min-h-screen">
+
+    <!-- ========================================== -->
+    <!-- SIDEBAR DE NAVEGAÇÃO                       -->
+    <!-- ========================================== -->
+    <aside class="fixed inset-y-0 left-0 z-40 flex w-[248px] flex-col border-r border-slate-200/80 bg-white px-4 py-5 shadow-sm">
+      <a href="../admin/" class="mb-6 flex items-center gap-3 px-2">
+        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-orange-50 p-1 border border-orange-100">
+          <img src="/logo_juca.png" alt="Pizza do Juca" class="h-9 w-9 object-contain" onerror="this.src='/logo.png'">
+        </div>
+        <div>
+          <div class="text-sm font-black tracking-tight text-slate-900 leading-none">Pizza do Juca</div>
+          <div class="mt-1 text-[10px] font-extrabold uppercase tracking-[0.16em] text-orange-600 leading-none">Painel Master</div>
+        </div>
+      </a>
+
+      <div class="space-y-6 overflow-y-auto pr-1">
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Visão geral</div>
+          <nav class="space-y-1">
+            <a href="../admin/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="layout-dashboard" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Dashboard</span>
+            </a>
+            <a href="../pedidos/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="clipboard-list" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Pedidos</span>
+              <span class="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-extrabold text-white">10</span>
+            </a>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Operação</div>
+          <nav class="space-y-1">
+            <a href="../produtos/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="package" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Pizzas & Itens</span>
+            </a>
+            <a href="../estoque/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition group">
+              <i data-lucide="boxes" class="h-[17px] w-[17px] text-emerald-500 group-hover:scale-110 transition-transform"></i>
+              <span class="flex-1">Contagem Estoque</span>
+              <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-black text-emerald-800">Semanal</span>
+            </a>
+            <a href="../ceasa/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition group">
+              <i data-lucide="carrot" class="h-[17px] w-[17px] text-orange-500 group-hover:scale-110 transition-transform"></i>
+              <span class="flex-1">Lista Ceasa</span>
+              <span class="rounded-full bg-red-100 px-1.5 py-0.5 text-[9px] font-black text-red-700">Insumos</span>
+            </a>
+            <a href="../promocoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="tag" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Promoções</span>
+            </a>
+
+            <!-- Aba Ativa: Hub de Canais (iFood & 99) -->
+            <a href="./" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-bold bg-orange-50 text-orange-600 transition">
+              <i data-lucide="store" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">iFood & 99Food</span>
+              <span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-black text-emerald-800">2 online</span>
+            </a>
+
+            <!-- Submenu Motoboys -->
+            <div class="space-y-1">
+              <div class="flex items-center gap-1 rounded-xl px-3 py-2 text-left text-[13px] font-semibold text-slate-700 hover:bg-slate-50 transition">
+                <a href="../motoboy/?gestor=true" class="flex flex-1 items-center gap-3 text-slate-700 hover:text-slate-950">
+                  <i data-lucide="bike" class="h-[17px] w-[17px] text-orange-500"></i>
+                  <span class="flex-1 font-bold">Motoboys</span>
+                  <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-extrabold text-emerald-700">4 online</span>
+                </a>
+                <button
+                  type="button"
+                  id="btn-sidebar-motoboys"
+                  onclick="toggleSidebarMotoboys()"
+                  class="rounded-lg p-1 text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition"
+                  title="Expandir motoboys"
+                >
+                  <i data-lucide="chevron-down" id="icon-sidebar-motoboys" class="h-3.5 w-3.5 transition-transform duration-200"></i>
+                </button>
+              </div>
+              <div id="sub-sidebar-motoboys" class="ml-3.5 space-y-1 border-l-2 border-orange-100 pl-2.5 text-xs">
+                <a href="../motoboy/?view=grid&gestor=true" class="flex items-center gap-2 rounded-lg px-2 py-1.5 font-bold text-orange-600 hover:bg-orange-50 transition">
+                  <i data-lucide="layout-grid" class="h-3.5 w-3.5 text-orange-500"></i>
+                  <span>4 Telas Lado a Lado</span>
+                </a>
+                <a href="../motoboy/?courier=rafael&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Rafael Lima</span>
+                  <span class="text-[10px] text-slate-400">12 ent.</span>
+                </a>
+                <a href="../motoboy/?courier=diego&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Diego Souza</span>
+                  <span class="text-[10px] text-slate-400">8 ent.</span>
+                </a>
+                <a href="../motoboy/?courier=matheus&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Matheus Alves</span>
+                  <span class="rounded bg-amber-100 px-1 text-[9px] font-extrabold text-amber-700">Em rota</span>
+                </a>
+                <a href="../motoboy/?courier=bruno&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Bruno Costa</span>
+                  <span class="text-[10px] text-slate-400">6 ent.</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Gestão</div>
+          <nav class="space-y-1">
+            <a href="../configuracoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="settings" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Configurações</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Rodapé Sidebar -->
+      <div class="mt-auto rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 via-white to-amber-50 p-4">
+        <div class="text-[11px] font-extrabold uppercase tracking-[0.12em] text-orange-600">Pizza do Juca</div>
+        <div class="mt-2 text-xs leading-5 text-slate-500">
+          Operação Paciência - RJ. Todos os canais de venda integrados.
+        </div>
+        <a href="/" class="mt-3 inline-flex items-center text-xs font-extrabold text-slate-800 hover:text-orange-600 transition">
+          Ver cardápio <i data-lucide="arrow-right" class="ml-1 h-3.5 w-3.5"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- ÁREA PRINCIPAL DO CONTEÚDO                 -->
+    <!-- ========================================== -->
+    <div class="pl-[248px] flex-1">
+      
+      <!-- Topbar Header -->
+      <header class="sticky top-0 z-30 flex h-[72px] items-center justify-between border-b border-slate-200/80 bg-white/95 px-6 backdrop-blur-xl">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-1.5 text-xs text-slate-600 font-bold">
+            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Hub Conectado • Sincronização em tempo real</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            onclick="simulateNewOrder('ifood')"
+            class="inline-flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-xs font-extrabold text-red-700 hover:bg-red-100 transition shadow-sm"
+            title="Simular pedido entrando pelo iFood"
+          >
+            <span class="text-sm">🔴</span>
+            <span>+ Simular Pedido iFood</span>
+          </button>
+          <button
+            type="button"
+            onclick="simulateNewOrder('99food')"
+            class="inline-flex items-center gap-1.5 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 text-xs font-extrabold text-amber-800 hover:bg-amber-100 transition shadow-sm"
+            title="Simular pedido entrando pelo 99Food"
+          >
+            <span class="text-sm">🟡</span>
+            <span>+ Simular Pedido 99</span>
+          </button>
+
+          <div class="h-4 w-[1px] bg-slate-200 mx-1"></div>
+
+          <!-- Perfil Seu Juca -->
+          <div class="flex items-center gap-3">
+            <div class="text-right">
+              <div class="text-xs font-extrabold text-slate-900 leading-tight">Seu Juca</div>
+              <div class="text-[10px] text-slate-400 font-semibold leading-tight">Dono da Pizzaria</div>
+            </div>
+            <div class="grid h-9 w-9 place-items-center rounded-xl bg-orange-500 text-white font-black text-xs shadow-sm">
+              SJ
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Conteúdo do Hub -->
+      <main class="mx-auto w-full max-w-[1720px] p-6 2xl:p-8 space-y-6">
+
+        <!-- Banner Explicativo do Hub de Canais -->
+        <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+          <div class="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="rounded-full bg-orange-50 border border-orange-200 px-3 py-1 text-[10px] font-black uppercase tracking-wider text-orange-600">
+                  Sem Múltiplas Abas
+                </span>
+                <span class="text-xs font-bold text-slate-400">Integração Direta com iFood & 99Food</span>
+              </div>
+              <h1 class="mt-2 text-3xl font-black tracking-tight text-slate-950">
+                Gestor de Canais: <span class="text-red-600">iFood</span> & <span class="text-amber-500">99Food</span> Integrados
+              </h1>
+              <p class="mt-1.5 text-xs text-slate-500 max-w-3xl leading-relaxed">
+                Opere a recepção de pedidos dos grandes aplicativos direto no site da pizzaria. Você não precisa mais ficar alternando entre o portal do iFood, a aba da 99 e o seu sistema: controle tudo aqui, com tempo de preparo sincronizado e aviso sonoro de campainha.
+              </p>
+            </div>
+
+            <!-- Botões de Acesso Rápido aos Portais Oficiais -->
+            <div class="flex flex-wrap items-center gap-2">
+              <a
+                href="https://portal.ifood.com.br"
+                target="_blank"
+                class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 hover:border-red-300 hover:text-red-600 transition"
+                title="Acessar painel web parceiro do iFood"
+              >
+                <i data-lucide="external-link" class="h-3.5 w-3.5 text-red-500"></i>
+                <span>Portal iFood</span>
+              </a>
+              <a
+                href="https://food.99app.com"
+                target="_blank"
+                class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 hover:border-amber-300 hover:text-amber-600 transition"
+                title="Acessar painel parceiro da 99Food"
+              >
+                <i data-lucide="external-link" class="h-3.5 w-3.5 text-amber-500"></i>
+                <span>Portal 99Food</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Cards de Status e Controle Rápido dos Apps -->
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Card iFood -->
+            <div class="rounded-2xl border-2 border-red-200 bg-gradient-to-br from-red-50/60 via-white to-white p-5 shadow-sm">
+              <div class="flex items-center justify-between pb-3 border-b border-red-100">
+                <div class="flex items-center gap-2.5">
+                  <div class="grid h-10 w-10 place-items-center rounded-2xl bg-red-600 text-white font-black text-sm shadow-md shadow-red-500/30">
+                    iF
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-black text-slate-900 leading-none">iFood Restaurante</h2>
+                    <span class="text-[10px] font-bold text-slate-400">ID da Loja: #40921 • Paciência</span>
+                  </div>
+                </div>
+                <div id="badge-ifood-status" class="flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-1 text-[10px] font-black text-emerald-800">
+                  <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span id="text-ifood-status">Loja Aberta</span>
+                </div>
+              </div>
+
+              <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
+                <div class="rounded-xl bg-white p-2.5 border border-red-100">
+                  <span class="text-[10px] font-bold text-slate-400">Vendas Hoje</span>
+                  <div id="stat-ifood-sales" class="text-base font-black text-slate-900">28 pedidos</div>
+                  <span class="text-[10px] font-extrabold text-emerald-600">R$ 1.940,00</span>
+                </div>
+                <div class="rounded-xl bg-white p-2.5 border border-red-100">
+                  <span class="text-[10px] font-bold text-slate-400">Tempo de Entrega</span>
+                  <div id="stat-ifood-time" class="text-base font-black text-red-600">40-50 min</div>
+                  <span class="text-[10px] text-slate-400 font-semibold">Estimativa cliente</span>
+                </div>
+              </div>
+
+              <!-- Ações Rápidas iFood -->
+              <div class="mt-4 pt-3 border-t border-red-100 flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  id="btn-toggle-ifood"
+                  onclick="toggleAppStatus('ifood')"
+                  class="rounded-xl px-3 py-1.5 text-xs font-black text-red-700 bg-red-100 hover:bg-red-200 transition"
+                >
+                  Pausar Loja (Cozinha Cheia)
+                </button>
+                <div class="flex items-center gap-1">
+                  <button type="button" onclick="adjustDeliveryTime('ifood', -5)" class="rounded-lg border border-slate-200 px-2 py-1 text-xs font-bold hover:bg-slate-50">-5m</button>
+                  <button type="button" onclick="adjustDeliveryTime('ifood', +10)" class="rounded-lg border border-slate-200 px-2 py-1 text-xs font-bold hover:bg-slate-50">+10m</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 99Food -->
+            <div class="rounded-2xl border-2 border-amber-200 bg-gradient-to-br from-amber-50/60 via-white to-white p-5 shadow-sm">
+              <div class="flex items-center justify-between pb-3 border-b border-amber-100">
+                <div class="flex items-center gap-2.5">
+                  <div class="grid h-10 w-10 place-items-center rounded-2xl bg-amber-500 text-white font-black text-sm shadow-md shadow-amber-500/30">
+                    99
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-black text-slate-900 leading-none">99Food Parceiro</h2>
+                    <span class="text-[10px] font-bold text-slate-400">ID da Loja: #99318 • Paciência</span>
+                  </div>
+                </div>
+                <div id="badge-99-status" class="flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-1 text-[10px] font-black text-emerald-800">
+                  <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                  <span id="text-99-status">Loja Aberta</span>
+                </div>
+              </div>
+
+              <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
+                <div class="rounded-xl bg-white p-2.5 border border-amber-100">
+                  <span class="text-[10px] font-bold text-slate-400">Vendas Hoje</span>
+                  <div id="stat-99-sales" class="text-base font-black text-slate-900">14 pedidos</div>
+                  <span class="text-[10px] font-extrabold text-emerald-600">R$ 965,00</span>
+                </div>
+                <div class="rounded-xl bg-white p-2.5 border border-amber-100">
+                  <span class="text-[10px] font-bold text-slate-400">Tempo de Entrega</span>
+                  <div id="stat-99-time" class="text-base font-black text-amber-700">35-45 min</div>
+                  <span class="text-[10px] text-slate-400 font-semibold">Estimativa cliente</span>
+                </div>
+              </div>
+
+              <!-- Ações Rápidas 99Food -->
+              <div class="mt-4 pt-3 border-t border-amber-100 flex items-center justify-between gap-2">
+                <button
+                  type="button"
+                  id="btn-toggle-99"
+                  onclick="toggleAppStatus('99food')"
+                  class="rounded-xl px-3 py-1.5 text-xs font-black text-amber-900 bg-amber-100 hover:bg-amber-200 transition"
+                >
+                  Pausar Loja (Cozinha Cheia)
+                </button>
+                <div class="flex items-center gap-1">
+                  <button type="button" onclick="adjustDeliveryTime('99food', -5)" class="rounded-lg border border-slate-200 px-2 py-1 text-xs font-bold hover:bg-slate-50">-5m</button>
+                  <button type="button" onclick="adjustDeliveryTime('99food', +10)" class="rounded-lg border border-slate-200 px-2 py-1 text-xs font-bold hover:bg-slate-50">+10m</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card Cardápio Próprio / WhatsApp (Nosso Site) -->
+            <div class="rounded-2xl border-2 border-emerald-200 bg-gradient-to-br from-emerald-50/60 via-white to-white p-5 shadow-sm">
+              <div class="flex items-center justify-between pb-3 border-b border-emerald-100">
+                <div class="flex items-center gap-2.5">
+                  <div class="grid h-10 w-10 place-items-center rounded-2xl bg-emerald-600 text-white font-black text-sm shadow-md shadow-emerald-500/30">
+                    🍕
+                  </div>
+                  <div>
+                    <h2 class="text-sm font-black text-slate-900 leading-none">Cardápio Próprio</h2>
+                    <span class="text-[10px] font-bold text-slate-400">Taxa R$ 0,00 • Sem comissão de app</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-1 text-[10px] font-black text-emerald-800">
+                  <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                  <span>100% Ativo</span>
+                </div>
+              </div>
+
+              <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
+                <div class="rounded-xl bg-white p-2.5 border border-emerald-100">
+                  <span class="text-[10px] font-bold text-slate-400">Vendas Hoje</span>
+                  <div class="text-base font-black text-slate-900">32 pedidos</div>
+                  <span class="text-[10px] font-extrabold text-emerald-600">R$ 2.295,00</span>
+                </div>
+                <div class="rounded-xl bg-white p-2.5 border border-emerald-100">
+                  <span class="text-[10px] font-bold text-slate-400">Economia em Taxas</span>
+                  <div class="text-base font-black text-emerald-700">R$ 514,00</div>
+                  <span class="text-[10px] text-slate-400 font-semibold">Sem comissão iFood/99</span>
+                </div>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-emerald-100 flex items-center justify-between">
+                <a href="../pedidos/" class="text-xs font-black text-emerald-700 hover:underline flex items-center gap-1">
+                  <span>Abrir Central Geral de Pedidos</span>
+                  <i data-lucide="arrow-right" class="h-3.5 w-3.5"></i>
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- SELETOR DE VISUALIZAÇÃO: ABAS DO GESTOR DE APLICATIVOS   -->
+        <!-- ======================================================== -->
+        <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-2">
+          <div class="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onclick="setHubView('split')"
+              id="tab-btn-split"
+              class="hub-tab rounded-xl px-4 py-2.5 text-xs font-extrabold transition bg-slate-900 text-white shadow-sm flex items-center gap-2"
+            >
+              <i data-lucide="columns-2" class="h-4 w-4"></i>
+              <span>Tela Dividida (iFood + 99 Lado a Lado)</span>
+            </button>
+            <button
+              type="button"
+              onclick="setHubView('ifood')"
+              id="tab-btn-ifood"
+              class="hub-tab rounded-xl px-4 py-2.5 text-xs font-extrabold transition bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 flex items-center gap-2"
+            >
+              <span class="grid h-4 w-4 place-items-center rounded bg-red-600 text-[10px] font-black text-white">iF</span>
+              <span>Modo Gestor iFood</span>
+              <span id="tab-badge-ifood" class="rounded-full bg-red-100 px-2 py-0.5 text-[10px] font-black text-red-700">3 ativos</span>
+            </button>
+            <button
+              type="button"
+              onclick="setHubView('99food')"
+              id="tab-btn-99food"
+              class="hub-tab rounded-xl px-4 py-2.5 text-xs font-extrabold transition bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 flex items-center gap-2"
+            >
+              <span class="grid h-4 w-4 place-items-center rounded bg-amber-500 text-[10px] font-black text-white">99</span>
+              <span>Modo Gestor 99Food</span>
+              <span id="tab-badge-99" class="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-black text-amber-800">2 ativos</span>
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2 text-xs">
+            <button
+              type="button"
+              onclick="testAlarmSound()"
+              class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-2 font-bold text-slate-600 hover:bg-slate-50 transition"
+              title="Testar campainha de novo pedido"
+            >
+              <i data-lucide="volume-2" class="h-4 w-4 text-orange-500"></i>
+              <span>Testar Som dos Apps</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- MODO 1: TELA DIVIDIDA (iFood e 99Food Lado a Lado)       -->
+        <!-- ======================================================== -->
+        <div id="view-split" class="grid grid-cols-1 xl:grid-cols-2 gap-6">
+          
+          <!-- COLUNA ESQUERDA: GESTOR IFOOD -->
+          <div class="rounded-3xl border-2 border-red-200 bg-white shadow-sm overflow-hidden flex flex-col">
+            <!-- Barra Estilo Gestor iFood -->
+            <div class="bg-red-600 px-5 py-3.5 text-white flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="grid h-7 w-7 place-items-center rounded-xl bg-white text-red-600 font-black text-xs">iF</span>
+                <div>
+                  <div class="text-xs font-black tracking-wide leading-none">iFood Gestor de Pedidos</div>
+                  <div class="text-[10px] text-red-100 leading-none mt-0.5">Integrado ao vivo • Paciência</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-bold">
+                <span class="rounded bg-red-700/80 px-2 py-0.5 text-[10px] font-black">Super Restaurante ★ 4.8</span>
+                <span id="pill-ifood-timer" class="rounded bg-white text-red-700 px-2 py-0.5 text-[10px] font-black">40-50 min</span>
+              </div>
+            </div>
+
+            <!-- Lista de Pedidos iFood em Andamento -->
+            <div class="p-5 flex-1 space-y-3" id="list-ifood-orders">
+              <!-- Renderizado dinamicamente -->
+            </div>
+          </div>
+
+          <!-- COLUNA DIREITA: GESTOR 99FOOD -->
+          <div class="rounded-3xl border-2 border-amber-200 bg-white shadow-sm overflow-hidden flex flex-col">
+            <!-- Barra Estilo Gestor 99Food -->
+            <div class="bg-[#ff8900] px-5 py-3.5 text-white flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <span class="grid h-7 w-7 place-items-center rounded-xl bg-white text-amber-600 font-black text-xs">99</span>
+                <div>
+                  <div class="text-xs font-black tracking-wide leading-none">99Food Parceiro</div>
+                  <div class="text-[10px] text-amber-100 leading-none mt-0.5">Integrado ao vivo • Paciência</div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2 text-xs font-bold">
+                <span class="rounded bg-amber-700/60 px-2 py-0.5 text-[10px] font-black">Nota ★ 4.9</span>
+                <span id="pill-99-timer" class="rounded bg-white text-amber-800 px-2 py-0.5 text-[10px] font-black">35-45 min</span>
+              </div>
+            </div>
+
+            <!-- Lista de Pedidos 99Food em Andamento -->
+            <div class="p-5 flex-1 space-y-3" id="list-99-orders">
+              <!-- Renderizado dinamicamente -->
+            </div>
+          </div>
+
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- MODO 2: GESTOR IFOOD EM TELA CHEIA                       -->
+        <!-- ======================================================== -->
+        <div id="view-ifood" class="hidden space-y-4">
+          <div class="rounded-3xl border-2 border-red-200 bg-white shadow-sm overflow-hidden">
+            <div class="bg-red-600 px-6 py-4 text-white flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-items-center rounded-2xl bg-white text-red-600 font-black text-sm shadow">iF</span>
+                <div>
+                  <h2 class="text-base font-black">iFood Gestor de Pedidos — Pizza do Juca</h2>
+                  <p class="text-xs text-red-100">Visual idêntico ao portal oficial do iFood. Aceite, avance e imprima comandas.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="simulateNewOrder('ifood')" class="rounded-xl bg-white text-red-700 font-black px-3.5 py-2 text-xs shadow hover:bg-red-50 transition">
+                  + Simular Pedido iFood
+                </button>
+              </div>
+            </div>
+
+            <div class="p-6">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="fullscreen-ifood-columns">
+                <!-- Colunas iFood cheias: Novos / Em Preparo / Pronto para Entrega -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ======================================================== -->
+        <!-- MODO 3: GESTOR 99FOOD EM TELA CHEIA                      -->
+        <!-- ======================================================== -->
+        <div id="view-99food" class="hidden space-y-4">
+          <div class="rounded-3xl border-2 border-amber-200 bg-white shadow-sm overflow-hidden">
+            <div class="bg-[#ff8900] px-6 py-4 text-white flex flex-wrap items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <span class="grid h-10 w-10 place-items-center rounded-2xl bg-white text-amber-600 font-black text-sm shadow">99</span>
+                <div>
+                  <h2 class="text-base font-black">99Food Restaurante — Pizza do Juca</h2>
+                  <p class="text-xs text-amber-100">Recepção de pedidos ao vivo da 99Food com despacho e motoboys do app.</p>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button type="button" onclick="simulateNewOrder('99food')" class="rounded-xl bg-white text-amber-800 font-black px-3.5 py-2 text-xs shadow hover:bg-amber-50 transition">
+                  + Simular Pedido 99Food
+                </button>
+              </div>
+            </div>
+
+            <div class="p-6">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="fullscreen-99-columns">
+                <!-- Colunas 99Food cheias: Novos / Em Preparo / Pronto para Retirada -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT DO HUB DE APLICATIVOS -->
+  <script>
+    lucide.createIcons();
+
+    window.toggleSidebarMotoboys = function() {
+      const sub = document.getElementById("sub-sidebar-motoboys");
+      const icon = document.getElementById("icon-sidebar-motoboys");
+      if (sub) {
+        const isHidden = sub.classList.toggle("hidden");
+        if (icon) icon.style.transform = isHidden ? "rotate(0deg)" : "rotate(180deg)";
+      }
+    };
+
+    // Estado dos Canais
+    const APP_STATE = {
+      ifood: {
+        online: true,
+        deliveryTime: 45,
+        salesCount: 28,
+        revenue: 1940.00
+      },
+      99: {
+        online: true,
+        deliveryTime: 40,
+        salesCount: 14,
+        revenue: 965.00
+      }
+    };
+
+    // Pedidos mockados com estilo e identificador oficial dos apps
+    let ifoodOrders = [
+      {
+        id: 4812,
+        code: "4812",
+        customer: "Rodrigo Almeida",
+        items: ["1x Pizza Portuguesa Especial (Grande)", "1x Borda Recheada Catupiry", "1x Guaraná Antarctica 2L"],
+        price: "R$ 72,50",
+        payment: "Pago no iFood (Online)",
+        status: "novo",
+        courierType: "Entregador parceiro do iFood",
+        timeAgo: "2 min atrás",
+        address: "Rua Amaral Costa, 142 - Campo Grande"
+      },
+      {
+        id: 4809,
+        code: "4809",
+        customer: "Juliana Alves",
+        items: ["1x Pizza Moda do Chef (Grande 40cm)", "1x Pizza Doce Nutella (Broto)"],
+        price: "R$ 84,00",
+        payment: "Pago no iFood (Pix)",
+        status: "preparando",
+        courierType: "Entregador iFood a caminho",
+        timeAgo: "14 min atrás",
+        address: "Av. Santa Cruz, 1902 - Bangu"
+      },
+      {
+        id: 4805,
+        code: "4805",
+        customer: "Felipe Siqueira",
+        items: ["1x Pizza Calabresa com Bacon Crocante (Grande)"],
+        price: "R$ 68,00",
+        payment: "Pago no iFood",
+        status: "pronto",
+        courierType: "Entregador na porta: Aguardando retirada",
+        timeAgo: "22 min atrás",
+        address: "Estrada do Mendanha, 410 - Campo Grande"
+      }
+    ];
+
+    let food99Orders = [
+      {
+        id: 9932,
+        code: "9932",
+        customer: "Marcos Vinícius",
+        items: ["1x Pizza Frango com Catupiry (Grande)", "1x Coca-Cola 2L Gelada"],
+        price: "R$ 66,00",
+        payment: "Pago na 99Food (Cartão)",
+        status: "novo",
+        courierType: "Motoboy 99 alocado",
+        timeAgo: "3 min atrás",
+        address: "Rua Silva Cardoso, 219 - Santa Cruz"
+      },
+      {
+        id: 9928,
+        code: "9928",
+        customer: "Lucas Peixoto",
+        items: ["1x Pizza Marguerita Especial (Grande)", "1x Calzone 4 Queijos"],
+        price: "R$ 63,50",
+        payment: "Pago na 99Food",
+        status: "preparando",
+        courierType: "Motoboy 99 em rota para a pizzaria",
+        timeAgo: "16 min atrás",
+        address: "Rua Pioneiros, 789 - Paciência"
+      }
+    ];
+
+    // Áudio Synthesizer para Campainha dos Apps (Sem depender de arquivos externos)
+    function playDeliverySound(type) {
+      try {
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const now = ctx.currentTime;
+        
+        // Frequência diferente para iFood e 99
+        const freq1 = type === 'ifood' ? 587.33 : 440.00; // D5 ou A4
+        const freq2 = type === 'ifood' ? 880.00 : 659.25; // A5 ou E5
+
+        const osc1 = ctx.createOscillator();
+        const osc2 = ctx.createOscillator();
+        const gain = ctx.createGain();
+
+        osc1.type = "sine";
+        osc2.type = "triangle";
+
+        osc1.frequency.setValueAtTime(freq1, now);
+        osc1.frequency.exponentialRampToValueAtTime(freq2, now + 0.15);
+
+        osc2.frequency.setValueAtTime(freq2, now + 0.18);
+        osc2.frequency.exponentialRampToValueAtTime(freq1, now + 0.35);
+
+        gain.gain.setValueAtTime(0.3, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+
+        osc1.connect(gain);
+        osc2.connect(gain);
+        gain.connect(ctx.destination);
+
+        osc1.start(now);
+        osc1.stop(now + 0.2);
+        osc2.start(now + 0.18);
+        osc2.stop(now + 0.5);
+      } catch (e) {
+        console.log("Audio play blocked or unsupported:", e);
+      }
+    }
+
+    function testAlarmSound() {
+      playDeliverySound('ifood');
+      JucaPanel.showToast("🔔 Som de campainha de novo pedido testado com sucesso!");
+    }
+
+    // Alternar Visualizações do Hub (Split, iFood, 99Food)
+    window.setHubView = function(view) {
+      document.querySelectorAll(".hub-tab").forEach(tab => {
+        tab.className = "hub-tab rounded-xl px-4 py-2.5 text-xs font-extrabold transition bg-white text-slate-600 border border-slate-200 hover:bg-slate-50 flex items-center gap-2";
+      });
+
+      const activeBtn = document.getElementById(`tab-btn-${view}`);
+      if (activeBtn) {
+        activeBtn.className = "hub-tab rounded-xl px-4 py-2.5 text-xs font-extrabold transition bg-slate-900 text-white shadow-sm flex items-center gap-2";
+      }
+
+      document.getElementById("view-split").classList.toggle("hidden", view !== "split");
+      document.getElementById("view-ifood").classList.toggle("hidden", view !== "ifood");
+      document.getElementById("view-99food").classList.toggle("hidden", view !== "99food");
+
+      renderAllHub();
+      lucide.createIcons();
+    };
+
+    // Renderizar Pedidos iFood
+    function renderIFoodOrders() {
+      const splitContainer = document.getElementById("list-ifood-orders");
+      const fullContainer = document.getElementById("fullscreen-ifood-columns");
+      
+      const countEl = document.getElementById("tab-badge-ifood");
+      if (countEl) countEl.textContent = `${ifoodOrders.length} ativos`;
+
+      const cardHTML = (ord) => `
+        <article class="rounded-2xl border ${ord.status === 'novo' ? 'border-red-400 bg-red-50/30' : 'border-slate-200 bg-white'} p-4 shadow-sm hover:border-red-300 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="rounded-lg bg-red-600 px-2.5 py-1 text-xs font-black text-white font-mono">#${ord.code}</span>
+              <div>
+                <h4 class="text-sm font-black text-slate-900">${ord.customer}</h4>
+                <div class="text-[10px] text-slate-400 font-bold">${ord.timeAgo} • ${ord.address}</div>
+              </div>
+            </div>
+            <span class="text-xs font-black text-slate-900">${ord.price}</span>
+          </div>
+
+          <!-- Itens -->
+          <div class="mt-3 rounded-xl bg-slate-50 p-2.5 text-xs text-slate-700 font-semibold space-y-1">
+            ${ord.items.map(it => `<div>• ${it}</div>`).join('')}
+          </div>
+
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+            <div class="flex items-center gap-1.5 text-slate-500 font-bold">
+              <i data-lucide="bike" class="h-3.5 w-3.5 text-red-600"></i>
+              <span>${ord.courierType}</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              ${ord.status === 'novo' ? `
+                <button type="button" onclick="advanceIFoodOrder(${ord.id}, 'preparando')" class="rounded-xl bg-red-600 px-3.5 py-1.5 font-black text-white text-xs hover:bg-red-700 transition shadow">
+                  Aceitar Pedido
+                </button>
+              ` : ord.status === 'preparando' ? `
+                <button type="button" onclick="advanceIFoodOrder(${ord.id}, 'pronto')" class="rounded-xl bg-amber-500 px-3.5 py-1.5 font-black text-white text-xs hover:bg-amber-600 transition shadow">
+                  Marcar Pronto
+                </button>
+              ` : `
+                <button type="button" onclick="advanceIFoodOrder(${ord.id}, 'concluido')" class="rounded-xl bg-emerald-600 px-3.5 py-1.5 font-black text-white text-xs hover:bg-emerald-700 transition shadow">
+                  Despachar c/ Motoboy
+                </button>
+              `}
+              <button type="button" onclick="printReceiptMock(${ord.id}, '${ord.customer}', '${ord.price}')" class="rounded-xl border border-slate-200 p-1.5 text-slate-600 hover:bg-slate-100" title="Imprimir comanda">
+                <i data-lucide="printer" class="h-4 w-4"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+
+      if (splitContainer) {
+        if (ifoodOrders.length === 0) {
+          splitContainer.innerHTML = `<div class="rounded-2xl border border-dashed border-red-200 p-8 text-center text-xs font-bold text-slate-400">Nenhum pedido do iFood em andamento.</div>`;
+        } else {
+          splitContainer.innerHTML = ifoodOrders.map(cardHTML).join('');
+        }
+      }
+
+      if (fullContainer) {
+        const novos = ifoodOrders.filter(o => o.status === 'novo');
+        const prep = ifoodOrders.filter(o => o.status === 'preparando');
+        const pronto = ifoodOrders.filter(o => o.status === 'pronto');
+
+        fullContainer.innerHTML = `
+          <div class="rounded-2xl bg-slate-50 p-4 border border-slate-200">
+            <div class="flex items-center justify-between pb-3 border-b font-extrabold text-xs text-red-700 uppercase">
+              <span>Novos Pedidos (${novos.length})</span>
+              <span class="h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
+            </div>
+            <div class="mt-3 space-y-3">${novos.map(cardHTML).join('') || '<div class="py-6 text-center text-xs text-slate-400">Vazio</div>'}</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-4 border border-slate-200">
+            <div class="flex items-center justify-between pb-3 border-b font-extrabold text-xs text-amber-700 uppercase">
+              <span>No Forno / Preparo (${prep.length})</span>
+            </div>
+            <div class="mt-3 space-y-3">${prep.map(cardHTML).join('') || '<div class="py-6 text-center text-xs text-slate-400">Vazio</div>'}</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-4 border border-slate-200">
+            <div class="flex items-center justify-between pb-3 border-b font-extrabold text-xs text-emerald-700 uppercase">
+              <span>Prontos para Retirada (${pronto.length})</span>
+            </div>
+            <div class="mt-3 space-y-3">${pronto.map(cardHTML).join('') || '<div class="py-6 text-center text-xs text-slate-400">Vazio</div>'}</div>
+          </div>
+        `;
+      }
+    }
+
+    // Renderizar Pedidos 99Food
+    function render99Orders() {
+      const splitContainer = document.getElementById("list-99-orders");
+      const fullContainer = document.getElementById("fullscreen-99-columns");
+
+      const countEl = document.getElementById("tab-badge-99");
+      if (countEl) countEl.textContent = `${food99Orders.length} ativos`;
+
+      const cardHTML = (ord) => `
+        <article class="rounded-2xl border ${ord.status === 'novo' ? 'border-amber-400 bg-amber-50/30' : 'border-slate-200 bg-white'} p-4 shadow-sm hover:border-amber-300 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div class="flex items-center gap-2">
+              <span class="rounded-lg bg-amber-500 px-2.5 py-1 text-xs font-black text-white font-mono">#${ord.code}</span>
+              <div>
+                <h4 class="text-sm font-black text-slate-900">${ord.customer}</h4>
+                <div class="text-[10px] text-slate-400 font-bold">${ord.timeAgo} • ${ord.address}</div>
+              </div>
+            </div>
+            <span class="text-xs font-black text-slate-900">${ord.price}</span>
+          </div>
+
+          <!-- Itens -->
+          <div class="mt-3 rounded-xl bg-slate-50 p-2.5 text-xs text-slate-700 font-semibold space-y-1">
+            ${ord.items.map(it => `<div>• ${it}</div>`).join('')}
+          </div>
+
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-[11px]">
+            <div class="flex items-center gap-1.5 text-slate-500 font-bold">
+              <i data-lucide="bike" class="h-3.5 w-3.5 text-amber-600"></i>
+              <span>${ord.courierType}</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              ${ord.status === 'novo' ? `
+                <button type="button" onclick="advance99Order(${ord.id}, 'preparando')" class="rounded-xl bg-amber-500 px-3.5 py-1.5 font-black text-white text-xs hover:bg-amber-600 transition shadow">
+                  Aceitar Pedido
+                </button>
+              ` : ord.status === 'preparando' ? `
+                <button type="button" onclick="advance99Order(${ord.id}, 'pronto')" class="rounded-xl bg-orange-500 px-3.5 py-1.5 font-black text-white text-xs hover:bg-orange-600 transition shadow">
+                  Marcar Pronto
+                </button>
+              ` : `
+                <button type="button" onclick="advance99Order(${ord.id}, 'concluido')" class="rounded-xl bg-emerald-600 px-3.5 py-1.5 font-black text-white text-xs hover:bg-emerald-700 transition shadow">
+                  Entregar ao Motoboy 99
+                </button>
+              `}
+              <button type="button" onclick="printReceiptMock(${ord.id}, '${ord.customer}', '${ord.price}')" class="rounded-xl border border-slate-200 p-1.5 text-slate-600 hover:bg-slate-100" title="Imprimir comanda">
+                <i data-lucide="printer" class="h-4 w-4"></i>
+              </button>
+            </div>
+          </div>
+        </article>
+      `;
+
+      if (splitContainer) {
+        if (food99Orders.length === 0) {
+          splitContainer.innerHTML = `<div class="rounded-2xl border border-dashed border-amber-200 p-8 text-center text-xs font-bold text-slate-400">Nenhum pedido da 99Food em andamento.</div>`;
+        } else {
+          splitContainer.innerHTML = food99Orders.map(cardHTML).join('');
+        }
+      }
+
+      if (fullContainer) {
+        const novos = food99Orders.filter(o => o.status === 'novo');
+        const prep = food99Orders.filter(o => o.status === 'preparando');
+        const pronto = food99Orders.filter(o => o.status === 'pronto');
+
+        fullContainer.innerHTML = `
+          <div class="rounded-2xl bg-slate-50 p-4 border border-slate-200">
+            <div class="flex items-center justify-between pb-3 border-b font-extrabold text-xs text-amber-800 uppercase">
+              <span>Novos Pedidos (${novos.length})</span>
+              <span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+            </div>
+            <div class="mt-3 space-y-3">${novos.map(cardHTML).join('') || '<div class="py-6 text-center text-xs text-slate-400">Vazio</div>'}</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-4 border border-slate-200">
+            <div class="flex items-center justify-between pb-3 border-b font-extrabold text-xs text-orange-800 uppercase">
+              <span>No Forno / Preparo (${prep.length})</span>
+            </div>
+            <div class="mt-3 space-y-3">${prep.map(cardHTML).join('') || '<div class="py-6 text-center text-xs text-slate-400">Vazio</div>'}</div>
+          </div>
+          <div class="rounded-2xl bg-slate-50 p-4 border border-slate-200">
+            <div class="flex items-center justify-between pb-3 border-b font-extrabold text-xs text-emerald-700 uppercase">
+              <span>Prontos para Retirada (${pronto.length})</span>
+            </div>
+            <div class="mt-3 space-y-3">${pronto.map(cardHTML).join('') || '<div class="py-6 text-center text-xs text-slate-400">Vazio</div>'}</div>
+          </div>
+        `;
+      }
+    }
+
+    function renderAllHub() {
+      renderIFoodOrders();
+      render99Orders();
+    }
+
+    // Avançar Pedidos iFood
+    window.advanceIFoodOrder = function(id, nextStatus) {
+      if (nextStatus === "concluido") {
+        ifoodOrders = ifoodOrders.filter(o => o.id !== id);
+        JucaPanel.showToast("🛵 Pedido do iFood despachado com sucesso!");
+      } else {
+        const ord = ifoodOrders.find(o => o.id === id);
+        if (ord) ord.status = nextStatus;
+        JucaPanel.showToast(`Pedido iFood #${id} avançado para ${nextStatus}!`);
+      }
+      renderAllHub();
+      lucide.createIcons();
+    };
+
+    // Avançar Pedidos 99
+    window.advance99Order = function(id, nextStatus) {
+      if (nextStatus === "concluido") {
+        food99Orders = food99Orders.filter(o => o.id !== id);
+        JucaPanel.showToast("🛵 Pedido da 99Food entregue ao motoboy!");
+      } else {
+        const ord = food99Orders.find(o => o.id === id);
+        if (ord) ord.status = nextStatus;
+        JucaPanel.showToast(`Pedido 99Food #${id} avançado para ${nextStatus}!`);
+      }
+      renderAllHub();
+      lucide.createIcons();
+    };
+
+    // Pausar / Despausar Loja nos Apps
+    window.toggleAppStatus = function(app) {
+      const isIfood = app === 'ifood';
+      const state = isIfood ? APP_STATE.ifood : APP_STATE[99];
+      state.online = !state.online;
+
+      const badge = document.getElementById(isIfood ? "badge-ifood-status" : "badge-99-status");
+      const text = document.getElementById(isIfood ? "text-ifood-status" : "text-99-status");
+      const btn = document.getElementById(isIfood ? "btn-toggle-ifood" : "btn-toggle-99");
+
+      if (state.online) {
+        badge.className = "flex items-center gap-1.5 rounded-full bg-emerald-100 px-2.5 py-1 text-[10px] font-black text-emerald-800";
+        text.textContent = "Loja Aberta";
+        btn.textContent = "Pausar Loja (Cozinha Cheia)";
+        JucaPanel.showToast(`✅ Loja no ${isIfood ? 'iFood' : '99Food'} está ABERTA para pedidos!`);
+      } else {
+        badge.className = "flex items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-1 text-[10px] font-black text-red-800";
+        text.textContent = "Loja Pausada";
+        btn.textContent = "Reabrir Loja Agora";
+        JucaPanel.showToast(`⏸️ Loja no ${isIfood ? 'iFood' : '99Food'} foi PAUSADA temporariamente.`);
+      }
+    };
+
+    // Ajustar Tempo de Entrega (+10m / -5m)
+    window.adjustDeliveryTime = function(app, delta) {
+      const isIfood = app === 'ifood';
+      const state = isIfood ? APP_STATE.ifood : APP_STATE[99];
+      state.deliveryTime = Math.max(25, state.deliveryTime + delta);
+
+      const label = `${state.deliveryTime - 5}-${state.deliveryTime + 5} min`;
+      document.getElementById(isIfood ? "stat-ifood-time" : "stat-99-time").textContent = label;
+      document.getElementById(isIfood ? "pill-ifood-timer" : "pill-99-timer").textContent = label;
+
+      JucaPanel.showToast(`⏱️ Tempo de entrega no ${isIfood ? 'iFood' : '99Food'} ajustado para ${label}!`);
+    };
+
+    // Simulação de Novos Pedidos
+    window.simulateNewOrder = function(app) {
+      playDeliverySound(app);
+      const isIfood = app === 'ifood';
+      const randId = Math.floor(1000 + Math.random() * 9000);
+      const nomes = ["Camila Guimarães", "Eduardo Silveira", "Fabrícia Leite", "Thiago Morais", "Tatiana Rocha"];
+      const bairros = ["Paciência", "Campo Grande", "Santa Cruz", "Bangu", "Realengo"];
+      const randomNome = nomes[Math.floor(Math.random() * nomes.length)];
+      const randomBairro = bairros[Math.floor(Math.random() * bairros.length)];
+
+      const newOrder = {
+        id: randId,
+        code: String(randId),
+        customer: randomNome,
+        items: ["1x Pizza Calabresa Especial Grande", "1x Guaraná 2L"],
+        price: "R$ 68,90",
+        payment: isIfood ? "Pago no iFood" : "Pago na 99Food",
+        status: "novo",
+        courierType: isIfood ? "Entregador parceiro do iFood" : "Motoboy 99 alocado",
+        timeAgo: "Agora mesmo",
+        address: `${randomBairro} - Rua Principal, ${Math.floor(100 + Math.random() * 900)}`
+      };
+
+      if (isIfood) {
+        ifoodOrders.unshift(newOrder);
+      } else {
+        food99Orders.unshift(newOrder);
+      }
+
+      // Sincroniza também no Kanban geral de pedidos
+      try {
+        const kanbanOrder = {
+          id: randId,
+          customer: randomNome,
+          channel: isIfood ? "iFood" : "99Food",
+          items: newOrder.items,
+          payment: newOrder.payment,
+          price: newOrder.price,
+          minutes: 0,
+          status: "recebido",
+          phone: "App",
+          address: newOrder.address,
+          neighborhood: randomBairro,
+          notes: `Pedido recebido automaticamente via ${isIfood ? 'iFood' : '99Food'}.`,
+          createdAt: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })
+        };
+        const curOrders = JSON.parse(localStorage.getItem("juca-panel-orders") || "[]");
+        localStorage.setItem("juca-panel-orders", JSON.stringify([kanbanOrder, ...curOrders]));
+      } catch (e) {}
+
+      renderAllHub();
+      lucide.createIcons();
+      JucaPanel.showToast(`🚨 NOVO PEDIDO RECEBIDO VIA ${isIfood ? 'iFood' : '99Food'}! (#${randId} - ${randomNome})`);
+    };
+
+    window.printReceiptMock = function(id, customer, price) {
+      alert(`[IMPRESSORA TÉRMICA 80mm]\n--------------------------------\nPIZZA DO JUCA • CUPOM DE COZINHA\nPEDIDO #${id}\nCLIENTE: ${customer}\nTOTAL: ${price}\nVIA EXPEDIÇÃO / BALCÃO\n--------------------------------`);
+    };
+
+    // Inicialização
+    renderAllHub();
+  </script>
+</body>
+</html>

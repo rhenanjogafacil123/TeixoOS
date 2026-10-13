@@ -11,6 +11,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/lucide@latest"></script>
   <script src="/assets/juca-api.js"></script>
+  <script src="/assets/auth-guard.js"></script>
+  <script>if (!window.JucaAuthGuard) { document.write('<script src="../../assets/auth-guard.js"><\/script>'); }</script>
   <script>
     tailwind.config = {
       theme: {
