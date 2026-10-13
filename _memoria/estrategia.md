@@ -28,12 +28,16 @@ Expansão acelerada no nicho de **gastronomia e delivery local** (pizzarias, ham
 
 ## 3. Gargalo Crítico Atual (Prioridade #1 Imediata)
 
-- **Infraestrutura, Backend e Segurança (VPS HostGator `143.95.174.216:22022`):**
-  - Servidor Nginx configurado e servindo a Pizza do Juca em produção com deploy via SCP.
-  - **Backend & Banco de Dados:** Implementar persistência dos pedidos, produtos e clientes no banco de dados na VPS (com fallback local no navegador para zero risco de travar vendas).
-  - **Domínio e SSL (HTTPS):** Configurar apontamento de DNS e certificado SSL (cadeado verde) para navegação 100% segura.
-  - **Segurança da VPS:** Configurar firewall UFW (apenas portas 22022, 80 e 443 liberadas), fail2ban contra ataques de força bruta e rotina de backup.
-  - Capacitar o Rhenan para dominar a operação completa sem depender de termos técnicos complexos, operando com total segurança e confiança.
+- **Infraestrutura, Backend e Produção Concluídos (Pizza do Juca):**
+  - [x] Servidor Nginx configurado e scripts de deploy 1-clique automatizados via SCP (`atualizar-tudo-vps.bat` e `.ps1`).
+  - [x] Backend REST em Node.js/Express e banco de dados SQLite implementados com persistência híbrida e fallback em `localStorage` (`clientes/Pizza do Juca/backend-api/`).
+  - [x] Central de despacho de motoboys espelhada e painel administrativo prontos.
+  - [x] Primeiro vídeo viral comercial Earth to Shop Zoom concluído (`clientes/Pizza do Juca/videos/`).
+
+- **Prioridades Imediatas (Próximos Passos):**
+  - **Domínio e SSL (HTTPS):** Configurar apontamento de DNS e certificado SSL na VPS HostGator (`143.95.174.216:22022`).
+  - **Validação de Fluxo de Ponta a Ponta:** Simular fechamento e impressão de pedidos da Pizza do Juca em ambiente real.
+  - **Template Modular ("Clonador de Lojas"):** Empacotar a estrutura validada do Juca como matriz para acelerar a meta de 30 lojas até 20/12/2026.
 
 ---
 

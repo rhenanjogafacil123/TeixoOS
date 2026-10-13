@@ -123,6 +123,12 @@ Quando o usuário pedir skill nova:
 **Foco Atual:** Gastronomia local e delivery (pizzarias, hamburguerias, confeitarias, açaiterias) na Zona Oeste do Rio de Janeiro.  
 **Modelo Comercial:** Delivery próprio com taxa de R$ 0,67 por pedido (R$ 0 de setup e R$ 0 de mensalidade), mais tráfego local, automações e captação de conteúdo.
 
+**Padrões Operacionais de Food Delivery:**
+- **Dia Operacional Noturno:** Corte às 05:00 da manhã (pedidos da madrugada pertencem ao turno da noite anterior).
+- **Comandas Impressas Segmentadas:** Via Cozinha (sem valores monetários, foco em preparo e alertas) + Via Motoboy (endereço com referência, conferência, destaque de cobrança/pago) + Balcão. Botão 1-clique [ ⚡ As 2 Vias ].
+- **Central de Despacho:** Visão em tempo real das telas dos celulares dos motoboys (pedidos em espera no balcão e rota ativa com WhatsApp do cliente). Zero mapas decorativos pesados.
+- **Performance e Custo Zero:** Frontend estático ultrarrápido + API REST/SQLite com fallback local (`localStorage`), sem requisições caras ou dependência de nuvem pesada.
+
 **Estrutura de Pastas:**
 - `_memoria/` — memória permanente (empresa, preferências, estratégia)
 - `identidade/` — logo, cores e guia de design da Teixo

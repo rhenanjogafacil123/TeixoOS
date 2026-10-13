@@ -1,110 +1,95 @@
-# MazyOS
+# TeixoOS — Sistema Operacional do Negócio
 
-> O sistema operacional do seu negócio dentro do Claude Code.
+> Sistema operacional e inteligência de operações da **Teixo (Assessoria de Crescimento)**.
 
-Você acaba de instalar o MazyOS. Em alguns minutos, sua empresa vai
-ter uma memória própria, uma identidade visual aplicada em tudo que
-o sistema gerar, e 15 skills prontas pra fazer marketing, SEO, ads
-e operação rodarem com você dirigindo.
-
-Bora voar.
+O **TeixoOS** unifica tecnologia, infraestrutura web, tráfego pago local, automações de CRM, captação de campo e produção audiovisual cinematográfica em um ecossistema integrado para alavancar empresas e comércios locais (com foco inicial em gastronomia e food delivery na Zona Oeste do Rio de Janeiro).
 
 ---
 
-## Ligando o sistema
+## Liderança & Equipe
 
-Dois caminhos. Escolhe o que combina contigo.
+- **Sócios Fundadores:**
+  - **Rhenan Teixeira:** Sites, tecnologia, infraestrutura web, ecossistema de delivery, conteúdo orgânico e expansão operacional.
+  - **Thiago Teixeira:** Tráfego pago de alta conversão (Meta Ads e Google Ads).
+  - **Erick Teixeira:** Automações de processos, CRM e fluxos inteligentes no WhatsApp.
+- **Produção e Presença de Campo:**
+  - **Patrick Teixeira:** Filmmaker e captação de vídeo aéreo com drone.
+  - **PL (Paulo Roberto) & Mateus ("Big"):** Prospecção comercial presencial e gravação de conteúdo dinâmico no formato "repórter de rua" com microfone de canopla personalizada.
 
-### Pelo Claude (mais rápido)
+---
 
-Abre o Claude Code em qualquer pasta e cola:
+## Clientes & Operações Ativas
+
+1. **Pizza do Juca (Paciência, RJ) — Food Delivery & Balcão NFC:**
+   - Plataforma própria de delivery (R$ 0 de setup e R$ 0 de mensalidade fixa; microtaxa de R$ 0,67 por pedido paga no checkout).
+   - Cardápio digital mobile-first ultrarrápido com persistência híbrida e fallback em `localStorage`.
+   - Painel Kanban de pedidos (Novos, Produção, Balcão, Em Rota, Entregues).
+   - Central de despacho com visão simultânea das telas dos smartphones dos motoboys.
+   - Comandas térmicas segmentadas (Via Cozinha sem valores + Via Motoboy com destaque explícito de pagamento) e botão 1-clique [ ⚡ As 2 Vias ].
+   - Backend REST em Node.js/Express com banco SQLite local e deploy automatizado 1-clique para VPS HostGator (`atualizar-tudo-vps.bat`).
+   - Primeiro vídeo comercial viral 3D *Earth to Shop Zoom* finalizado.
+
+2. **Beto Chaves (@betochavesrj) — Esteira Audiovisual Cinematográfica:**
+   - Garimpo de cortes em podcasts em alta resolução (1080p / 4K).
+   - Edição vertical (9:16) com gancho de retenção nos primeiros segundos e enquadramento *punch-in*.
+   - Padrão **Zero Legendas** na tela com identificador fixo `@Betochavesrj` no terço inferior.
+   - Banco dedicado de trilhas sonoras com mixagem e *ducking* automático sobre a voz.
+   - Capas cinematográficas no estilo pôster de ação/cinema com respeito obrigatório à **Safe Zone** central.
+
+---
+
+## Catálogo de Skills (16 Automações Disponíveis)
+
+### Núcleo de Operação
+- `/abrir` — Carrega o contexto do negócio (`_memoria/`) e resume as prioridades da sessão.
+- `/salvar` — Versiona o trabalho no repositório GitHub com commit e push seguros.
+- `/atualizar` — Varre o workspace, compara evidências reais e mantém arquivos de contexto sincronizados.
+- `/novo-projeto` — Cria pastas padronizadas e instruções dedicadas para novos clientes.
+- `/mapear-rotinas` — Identifica tarefas repetitivas do dia a dia e cria skills personalizadas.
+
+### Conteúdo, Audiovisual & SEO
+- `/video-produto` — Cria vídeos comerciais 3D de produtos (embalagens, hambúrgueres, pizzas) e o formato viral *Earth to Shop Zoom* (do espaço sideral até a loja), gerando prompts para Google Flow/Veo e renderizando localmente com FFmpeg.
+- `/carrossel` — Cria posts e carrosséis visuais para Instagram/LinkedIn em padrão 1080×1350 com Playwright.
+- `/publicar-tema` — Transforma um tema em artigo de blog, carrossel e legendas completas.
+- `/seo` — Fluxo estratégico de 8 passos (demanda, concorrentes, Google Meu Negócio, on-page, GEO/IAs).
+- `/responder-avaliacoes` — Gera respostas humanas e personalizadas para avaliações do Google Meu Negócio.
+- `/aprovar-post` — Publica artigos e carrosséis em redes sociais via Meta Graph API e deploy de site.
+
+### Tráfego & Performance
+- `/anuncio-google` — Estrutura campanhas de Search em CSV pronto para o Google Ads Editor.
+- `/relatorio-ads` — Gera análises executivas semanais de Meta Ads e Google Ads com alertas e planos de ação.
+
+### Operação & Produtividade
+- `/analisar-dados` — Analisa arquivos CSV, Excel e JSON gerando insights estratégicos.
+- `/email-profissional` — Redige comunicados e propostas com calibragem de tom para B2B.
+- `/instalar` — Setup guiado de novos módulos e entrevistas de calibragem de negócio.
+
+---
+
+## Estrutura do Workspace
 
 ```
-Clona o https://github.com/mazzeoia/MazyOS.git na pasta atual,
-entra nela e roda o /instalar.
+TeixoOS/
+├── _memoria/            # Memória central permanente (empresa, preferências, estratégia)
+├── identidade/          # Logo oficial, paleta Dark/Verde Teixo e guia de design
+├── clientes/            # Pastas dedicadas por cliente (Pizza do Juca, Beto Chaves, etc.)
+│   ├── Pizza do Juca/   # Cardápio, painel, motoboys, API SQLite, scripts de deploy VPS
+│   └── Beto/            # Capas, frames, trilhas sonoras, cortes e referências de rosto
+├── propostas/           # Propostas comerciais B2B
+├── marketing/           # Materiais institucionais e posicionamento da Teixo
+├── saidas/              # Arquivos finais, relatórios e entregas prontas
+├── dados/               # Planilhas, métricas e bases de dados
+├── scripts/             # Scripts utilitários de automação
+├── templates/           # Modelos de skills, perfis e design guides
+├── .agent/skills/       # Skills do Antigravity (Google / Gemini)
+└── .claude/skills/      # Skills do Claude Code
 ```
 
-Ele clona, entra na pasta nova e dispara a entrevista de setup. Você
-só responde.
-
-### Pelo terminal (mais previsível)
-
-```
-git clone https://github.com/mazzeoia/MazyOS.git
-cd MazyOS
-code .
-```
-
-Na janela do VS Code que abrir: terminal integrado → `claude` → `/instalar`.
-
 ---
 
-Quando o `/instalar` terminar, renomeia a pasta `MazyOS/` pro nome do teu
-negócio (fecha o VS Code, renomeia no Explorer/Finder, abre de novo). A
-pasta não fica como "MazyOS" — ela é o teu negócio agora.
+## Regras Fundamentais da Operação
 
-O `/instalar` roda uma vez só. Te entrevista sobre o negócio, monta a
-memória e configura o sistema. Depois disso, é só usar.
-
----
-
-## O sistema
-
-**Núcleo** — o jeito de operar o dia a dia
-`/abrir` carrega o contexto antes de cada sessão de trabalho · `/salvar`
-faz commit + push no GitHub · `/atualizar` varre o projeto e atualiza
-a memória · `/novo-projeto` cria pasta isolada pra cada cliente ou
-iniciativa · `/mapear-rotinas` descobre o que você repete e transforma
-em skill personalizada.
-
-**Conteúdo e SEO** — vitrine pública da empresa
-`/carrossel` cria carrosséis 1080×1350 com identidade da marca (com ou
-sem foto IA) · `/publicar-tema` pega um tema e entrega artigo de blog +
-carrossel + 3 legendas amarradas · `/seo` roda fluxo completo de 8 passos
-(demanda, concorrência, GMB, on-page, conteúdo, ads, monitoramento, GEO)
-· `/responder-avaliacoes` escreve respostas humanas pras reviews do
-Google · `/aprovar-post` publica blog + Instagram + Facebook num comando.
-
-**Anúncios pagos** — onde o dinheiro entra
-`/anuncio-google` monta a campanha inteira em CSV pronto pra importar
-no Google Ads Editor · `/relatorio-ads` lê os exports de Google + Meta
-e devolve relatório semanal com alertas e recomendações.
-
-**Produção** — ferramentas do dia a dia
-`/analisar-dados` lê CSV/XLSX/PDF e gera resumo executivo ·
-`/email-profissional` rascunha email a partir de contexto livre.
-
----
-
-## A tese
-
-IA não é uma ferramenta que sua empresa usa. É o sistema operacional em
-que ela roda.
-
-A diferença não é velocidade. É capacidade nova — uma pessoa com IA
-constrói o que antes exigia time inteiro. Cada processo crítico que hoje
-roda em open loop (decide → executa → não mede → repete cego) vira
-closed loop dentro do MazyOS (decide → executa → captura → realimenta →
-ajusta sozinho).
-
-O sistema não substitui você. Vira parte da sua empresa.
-
----
-
-## Como o MazyOS pensa
-
-`_memoria/` é o cérebro. Tudo que importa do seu negócio mora aqui —
-quem é a empresa, como ela fala, o que tá em foco essa semana. O Claude
-lê isso antes de cada resposta. Quanto melhor a memória, melhor o sistema.
-
-`identidade/` é o rosto. Cores, fontes, logo, padrão visual. Todo
-carrossel, slide, peça que o sistema gera respeita isso.
-
-`marketing/`, `saidas/` e `scripts/` são o resultado. O sistema produz,
-versiona no GitHub, fica tudo seu.
-
----
-
-## Quando precisar
-
-[mazzeoia.com.br](https://mazzeoia.com.br)
+1. **Zero underline (`_`):** Nomes de arquivos gerados e salvos devem ser sempre legíveis, usando hífens e espaços em português (ex: `capa - tema - versão final.jpg`).
+2. **Dia Operacional Noturno (Corte às 05:00):** Em clientes de delivery, vendas entre 00:00 e 04:59 pertencem operacionalmente ao turno da noite anterior.
+3. **Comandas Segmentadas:** Cozinha focada em preparo (sem valores); Motoboy com destaque obrigatório de cobrança/pago.
+4. **Performance e Custo Zero:** Frontend estático com backend leve (Node.js/SQLite) e persistência em `localStorage` — sem dependência de serviços pagos por requisição.

@@ -1,0 +1,15 @@
+{
+  "name": "pizzadojuca-api",
+  "version": "1.0.0",
+  "description": "Backend API e Banco de Dados SQLite para Pizza do Juca",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2",
+    "better-sqlite3": "^11.8.1"
+  }
+}

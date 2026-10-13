@@ -58,3 +58,14 @@ Quando o contexto for criar roteiros, ideias ou direcionamentos específicos par
   - **Zero Legendas (Padrão Beto Chaves):** Não usar legendas nos vídeos. Manter a tela 100% limpa, focada na atuação e expressão, exibindo apenas o identificador fixo de assinatura `@Betochavesrj` no terço inferior.
   - **Trilhas Sonoras Locais:** Puxar as músicas do banco dedicado (`clientes/Beto/trilhas/`), mapeando o sentimento dramático do corte e aplicando *ducking* automático (volume equilibrado sob a voz).
 
+---
+
+## 7. Vídeos Comerciais 3D de Produtos, Gastronomia & Earth Zoom (Skill `/video-produto`)
+
+- **Formato Padrão:** Vertical 9:16 (1080x1920) otimizado para Reels, TikTok e YouTube Shorts.
+- **Visual Gastronômico & Produto:** Estética premium, lente macro, iluminação de contorno (*rim light*), fumaça/vapor quente subindo, queijo derretendo, gotas de condensação em latas de bebida e foco de apetite agressivo.
+- **Formato Earth to Shop Zoom:** Mergulho cinematográfico contínuo do satélite no espaço sideral até a fachada/balcão do estabelecimento comercial, com aceleração em hiperlapse pelas nuvens e frenagem suave na loja.
+- **Workflow Híbrido:** Prompts cinematográficos em inglês calibrados para Google Flow / Google Veo (`flow.google`) + geração de quadros-chave 4K e renderização local animada com FFmpeg (`zoompan`, `xfade`, áudio sincronizado).
+- **Nomenclatura Obrigatória:** Zero underline (`_`), nomes em português com hífen e espaço (ex: `vídeo - earth to shop zoom - pizza do juca - versão final.mp4`).
+
+
