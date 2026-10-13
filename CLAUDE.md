@@ -1,7 +1,7 @@
-# TeixoOS — Sistema operacional do negócio
+# TeixoAI (TeixoOS) — Sistema operacional do negócio
 
 Sua empresa roda em cima desse arquivo. Aqui ficam as regras de operação
-do TeixoOS — como o assistente lê o contexto, aprende com correções, mantém
+do TeixoAI (TeixoOS) — como o assistente lê o contexto, aprende com correções, mantém
 tudo atualizado e cria skills novas conforme a operação evolui.
 
 Esse arquivo é editável. Quando o `/instalar` rodar, ele complementa o
