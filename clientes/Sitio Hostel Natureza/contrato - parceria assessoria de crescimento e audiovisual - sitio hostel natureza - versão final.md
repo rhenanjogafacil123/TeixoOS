@@ -187,9 +187,9 @@ III - Por insolvência civil comprovada, recuperação judicial ou decretação 
 
 ### CLÁUSULA NONA — DO TÍTULO EXECUTIVO EXTRAJUDICIAL E VALIDADE DIGITAL
 
-9.1. **Eficácia de Título Executivo Extrajudicial:** As Partes reconhecem que este instrumento atende integralmente aos requisitos de certeza, liquidez e exigibilidade, constituindo **TÍTULO EXECUTIVO EXTRAJUDICIAL** para todos os efeitos de direito, nos exatos termos do **artigo 784, inciso III, do Código de Processo Civil (Lei Federal nº 13.105/2015)**, facultando a cobrança imediata de parcelas, taxas, reembolsos e multas em sede de execução forçada direta.
+9.1. **Eficácia de Título Executivo Extrajudicial:** As Partes reconhecem que este instrumento atende plenamente aos requisitos de certeza, liquidez e exigibilidade, constituindo **TÍTULO EXECUTIVO EXTRAJUDICIAL** para todos os fins de direito, nos exatos termos do **artigo 784, inciso III e § 4º, do Código de Processo Civil (Lei Federal nº 13.105/2015, com redação conferida pela Lei Federal nº 14.620/2023)**, facultando a cobrança imediata de parcelas, taxas operacionais, reembolsos e penalidades moratórias em sede de execução forçada direta.
 
-9.2. **Assinatura Eletrônica Válida:** As Partes convencionam como plenamente válida, legal e eficaz a manifestação de vontade e assinatura deste contrato em formato eletrônico (mediante plataformas como ClickSign, DocuSign, ZapSign, Gov.br ou similares), na forma do **art. 10, § 2º, da Medida Provisória nº 2.200-2/2001** e da **Lei Federal nº 14.063/2020**, reconhecendo como autênticas e inquestionáveis as assinaturas digitais aqui apostas.
+9.2. **Assinatura Eletrônica e Dispensa Legal de Testemunhas:** As Partes convencionam como plenamente válida, legal, autêntica e vinculante a celebração deste contrato em formato eletrônico (mediante assinatura digital via Gov.br, ZapSign, ClickSign, DocuSign, Autentique ou provedores similares), nos termos do **art. 10, § 2º, da Medida Provisória nº 2.200-2/2001**, da **Lei Federal nº 14.063/2020** e do **art. 784, § 4º, do CPC (Lei Federal nº 14.620/2023)**, **restando expressamente dispensada a interveniência de testemunhas instrumentárias**, cuja plena eficácia executiva e integridade probatória decorrem diretamente dos metadados e certificação conferidos pelo provedor de assinatura digital.
 
 ---
 
@@ -212,7 +212,7 @@ II - Correio eletrônico (e-mail) oficial das Partes especificado no preâmbulo.
 
 11.1. Para dirimir quaisquer litígios, dúvidas ou controvérsias oriundas do presente instrumento que não possam ser solucionadas amigavelmente pelas Partes, fica eleito com exclusividade o **Foro da Comarca da Capital do Estado do Rio de Janeiro / RJ**, com expressa renúncia a qualquer outro, por mais privilegiado que seja ou venha a ser.
 
-E, por estarem assim justas, acordadas e contratadas, as Partes firmam o presente instrumento em 2 (duas) vias de igual teor e forma para um só efeito de direito, na presença de 2 (duas) testemunhas instrumentárias abaixo qualificadas.
+E, por estarem assim justas, acordadas e contratadas, as Partes firmam o presente instrumento por meio de assinatura eletrônica qualificada/avançada para um só efeito de direito, com plena eficácia executiva imediata nos termos da lei.
 
 ---
 
@@ -255,26 +255,8 @@ ____________________________________________________________________
 
 ---
 
-### TESTEMUNHAS INSTRUMENTÁRIAS (Art. 784, III, do CPC):
+### VALIDAÇÃO DIGITAL E FORÇA EXECUTIVA (ART. 784, § 4º, DO CPC):
 
-<br>
-
-**1. Testemunha 1:**  
-Assinatura: __________________________________________________  
-Nome Completo: _____________________________________________  
-CPF/MF: ____________________________________________________  
-RG nº / Órgão: _______________________________________________  
-
-<br>
-
-**2. Testemunha 2:**  
-Assinatura: __________________________________________________  
-Nome Completo: _____________________________________________  
-CPF/MF: ____________________________________________________  
-RG nº / Órgão: _______________________________________________  
-
-<br>
-
----
-*Página de Validação e Rubricas Obrigatórias:*  
-`Rubrica CONTRATADA: _________________  |  Rubrica CONTRATANTE: _________________`
+> **DISPENSA LEGAL DE TESTEMUNHAS INSTRUMENTÁRIAS:**  
+> O presente contrato é celebrado integralmente em formato digital e assinado eletronicamente pelas Partes através de provedor de assinatura eletrônica (Gov.br / ZapSign / ClickSign / Autentique / ICP-Brasil), com fulcro no **artigo 784, § 4º, do Código de Processo Civil (Lei Federal nº 13.105/2015, com redação conferida pela Lei Federal nº 14.620/2023)**, na **Medida Provisória nº 2.200-2/2001** e na **Lei Federal nº 14.063/2020**.  
+> Em virtude da integridade e tempestividade eletronicamente atestadas pela plataforma certificadora, **resta expressamente dispensada a intervenção e assinatura de testemunhas**, preservando-se de forma líquida, certa e exigível a plena eficácia de **TÍTULO EXECUTIVO EXTRAJUDICIAL**.
