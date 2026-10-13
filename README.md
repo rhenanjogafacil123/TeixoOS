@@ -1,8 +1,8 @@
-# TeixoAI (TeixoOS) — Sistema Operacional de Negócios & IA
+# TeixoAI — Sistema Operacional de Negócios & IA
 
 > Sistema operacional, inteligência operacional e esteira de IA da **TeixoAI (Assessoria de Crescimento Teixo)**.
 
-O **TeixoAI** (TeixoOS) unifica tecnologia, inteligência artificial prática, infraestrutura web, tráfego pago local, automações de CRM, captação de campo e produção audiovisual cinematográfica em um ecossistema integrado para alavancar empresas e comércios locais (com foco inicial em gastronomia e food delivery na Zona Oeste do Rio de Janeiro).
+O **TeixoAI** unifica tecnologia, inteligência artificial prática, infraestrutura web, tráfego pago local, automações de CRM, captação de campo e produção audiovisual cinematográfica em um ecossistema integrado para alavancar empresas e comércios locais (com foco inicial em gastronomia e food delivery na Zona Oeste do Rio de Janeiro).
 
 ---
 
@@ -69,7 +69,7 @@ O **TeixoAI** (TeixoOS) unifica tecnologia, inteligência artificial prática, i
 ## Estrutura do Workspace
 
 ```
-TeixoOS/
+TeixoAI/
 ├── _memoria/            # Memória central permanente (empresa, preferências, estratégia)
 ├── identidade/          # Logo oficial, paleta Dark/Verde Teixo e guia de design
 ├── clientes/            # Pastas dedicadas por cliente (Pizza do Juca, Beto Chaves, etc.)

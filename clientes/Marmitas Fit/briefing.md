@@ -37,5 +37,12 @@
 3. **Escalar Pedidos Locais:**
    - Centralizar operação na Zona Norte/Oeste do Rio, gerando previsibilidade de produção e entrega em lote.
 4. **Painel Admin & Controle de Estoque Operacional (Eduardo Fiocchi):**
-   - Mapear e otimizar o fluxo de estoque de marmitas prontas/congeladas e insumos básicos.
-   - Vencer atritos e objeções de sistemas tradicionais pesados/burocráticos através de uma interface prática (1-clique) que poupa tempo do gerente.
+   - **Modelo de Produção:** Produção antecipada em lote (produz, congela e depois vende).
+   - **Porcionamento Padrão:** 150g proteína, 120g carboidratos, 70-80g legumes/vegetais.
+   - **Estrutura de Cardápio:** Base fixa + pratos rotativos que mudam a cada 15 dias para o cliente não enjoar.
+   - **Controle de Estoque (Curva ABC):**
+     - **Categoria A (Críticos/Alto Giro):** Frango, arroz branco/integral, ovos, creme de leite. Checagem diária.
+     - **Categorias B e C (Variáveis/Por Ciclo):** Dependem do cardápio quinzenal da cozinheira; cotação com fornecedores para melhor custo.
+   - **Rotina Semanal do Gerente:** Toda quinta-feira faz contagem física para apurar CMV, giro de estoque, compras e % de estoque sobre faturamento (já utiliza IA para análise dos dados).
+   - **Fatores de Cozinha:** Leva em conta índice de perda e fator de cocção (arroz quase dobra, feijão triplica, frango perde 20-30%, camarão perde ~60%).
+   - **Oportunidade Teixo:** Painel admin inteligente que conecta o giro das marmitas vendidas no site à sugestão automática de lote de produção e cálculo de compra de insumos, automatizando a rotina da quinta-feira.

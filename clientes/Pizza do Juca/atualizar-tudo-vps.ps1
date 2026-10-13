@@ -1,5 +1,5 @@
 # ====================================================================
-#   TEIXO OS - ATUALIZADOR DEFINITIVO DA VPS (PIZZA DO JUCA)
+#   TEIXO AI - ATUALIZADOR DEFINITIVO DA VPS (PIZZA DO JUCA)
 # ====================================================================
 
 Write-Host "🍕 [1/3] Autorizando chave SSH no servidor (para nunca mais pedir senha)..." -ForegroundColor Cyan
