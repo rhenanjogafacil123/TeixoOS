@@ -18,6 +18,8 @@ Cliente novo / Food Delivery Saudável & Gastronomia
 
 - Briefings e contexto: nesta pasta na raiz (`briefing.md`)
 - Entregas de site e cardápio: `site/`
+  - `site/index.html` — Cardápio digital oficial para os clientes (combos, frete por bairro, pedido mínimo de R$ 80, taxa de R$ 0,67 e checkout WhatsApp sincronizado).
+  - `site/painel.html` — Painel Operacional completo do Eduardo Fiocchi (Kanban de pedidos em tempo real, Monitor de freezer 48h, Calculadora de Cocção & Lotes, Fechamento de CMV e Checklist Curva A).
 
 ## Contexto que herda da raiz
 

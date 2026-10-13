@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marmitas Fit — Refeição Saudável e Prática | Delivery Oficial</title>
+  <meta name="description" content="Marmitas fitness e funcionais congeladas no Rio de Janeiro. Praticidade, sabor e saúde direto no seu freezer. Peça online!">
+  <link rel="icon" type="image/png" href="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png"/>
+  
+  <!-- Tailwind CSS & Font Awesome -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+          colors: {
+            fit: {
+              primary: '#015c34',
+              primaryHover: '#004727',
+              primaryLight: '#e6f3ec',
+              accent: '#fd4d00',
+              accentHover: '#e04400',
+              accentLight: '#fff2ec',
+              dark: '#0f172a',
+              card: '#ffffff'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #f8fafc; }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col font-sans">
+
+  <!-- Top Announcement Bar -->
+  <aside class="bg-gradient-to-r from-[#015c34] to-[#014727] text-white text-xs py-2 px-4 shadow-sm" aria-label="Aviso de Frete Grátis e Região">
+    <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1 text-center sm:text-left">
+      <div class="flex items-center space-x-2 font-medium">
+        <span class="bg-[#fd4d00] text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider animate-pulse">PROMOÇÃO</span>
+        <span>🔥 <b>Frete Grátis</b> para pedidos a partir de R$ 400,00 em todo o Grande Rio!</span>
+      </div>
+      <div class="flex items-center space-x-4 text-[11px] text-emerald-100">
+        <span><i class="fa-solid fa-location-dot mr-1 text-emerald-300"></i> Piedade — Rio de Janeiro / RJ</span>
+        <a href="painel.html" class="bg-white/15 hover:bg-white/25 px-2.5 py-0.5 rounded text-white font-bold transition flex items-center space-x-1 border border-white/20">
+          <i class="fa-solid fa-lock text-[10px]"></i>
+          <span>Painel Admin</span>
+        </a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Navigation Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center space-x-3">
+        <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/avatar.png" alt="Marmitas Fit" class="w-11 h-11 rounded-full object-cover border-2 border-[#015c34] shadow-sm">
+        <div>
+          <div class="flex items-center space-x-2">
+            <span class="font-extrabold text-lg text-[#015c34] tracking-tight leading-none">Marmitas Fit</span>
+            <span class="bg-emerald-100 text-[#015c34] text-[10px] font-bold px-2 py-0.5 rounded-full">ABERTO</span>
+          </div>
+          <p class="text-xs text-slate-500 font-medium">Refeição Saudável e Prática • Congelados Fit</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons & Cart Toggle -->
+      <div class="flex items-center space-x-3">
+        <a href="https://api.whatsapp.com/send?phone=5521970357153&text=Ol%C3%A1%2C%20gostaria%20de%20tirar%20uma%20d%C3%BAvida%20sobre%20as%20marmitas!" target="_blank" class="hidden md:flex items-center space-x-1.5 text-xs font-bold text-slate-600 hover:text-[#015c34] bg-slate-100 hover:bg-emerald-50 px-3 py-2 rounded-xl transition border border-slate-200">
+          <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i>
+          <span>WhatsApp da Loja</span>
+        </a>
+
+        <!-- Cart Button -->
+        <button onclick="toggleCart()" class="bg-[#015c34] hover:bg-[#004727] text-white px-4 py-2.5 rounded-xl font-bold text-sm shadow-md transition flex items-center space-x-2.5 relative group">
+          <i class="fa-solid fa-basket-shopping text-base group-hover:scale-110 transition-transform"></i>
+          <span class="hidden sm:inline">Meu Pedido</span>
+          <span id="cartCountBadge" class="bg-[#fd4d00] text-white text-xs font-black px-2 py-0.5 rounded-full">0</span>
+          <span id="cartTotalHeader" class="hidden sm:inline font-extrabold text-emerald-200 pl-1 border-l border-emerald-700/60">R$ 0,00</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- Hero Banner Section -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-5 pb-2">
+    <div class="relative rounded-3xl overflow-hidden shadow-lg bg-gradient-to-r from-[#015c34] to-[#0d3f29] text-white p-6 sm:p-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-3 z-10 max-w-xl">
+        <div class="inline-flex items-center space-x-2 bg-white/10 px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md border border-white/20">
+          <i class="fa-solid fa-utensils text-[#fd4d00]"></i>
+          <span>Padrão Nutricional: 150g Proteína • 120g Carbo • 80g Legumes</span>
+        </div>
+        <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+          Sua alimentação da semana pronta no freezer em 5 minutos.
+        </h1>
+        <p class="text-emerald-100 text-xs sm:text-sm leading-relaxed">
+          Sem conservantes, com tempero caseiro e gramatura exata. Peça combos econômicos com frete rápido em todo o Rio de Janeiro.
+        </p>
+        <div class="flex flex-wrap items-center gap-3 pt-2 text-xs">
+          <span class="bg-white/15 px-3 py-1.5 rounded-xl flex items-center space-x-1.5"><i class="fa-solid fa-check text-[#fd4d00]"></i><span>Pedido Mínimo R$ 80,00</span></span>
+          <span class="bg-white/15 px-3 py-1.5 rounded-xl flex items-center space-x-1.5"><i class="fa-solid fa-truck-fast text-[#fd4d00]"></i><span>Entrega Agendada ou Express</span></span>
+          <span class="bg-white/15 px-3 py-1.5 rounded-xl flex items-center space-x-1.5"><i class="fa-solid fa-snowflake text-[#fd4d00]"></i><span>Pronta para Micro-ondas</span></span>
+        </div>
+      </div>
+      <div class="hidden md:block w-72 shrink-0">
+        <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b1_08112024031714.webp" alt="Combos Marmitas Fit" class="rounded-2xl shadow-2xl border-2 border-white/20 object-cover w-full h-48">
+      </div>
+    </div>
+  </section>
+
+  <!-- Sticky Category Navigation Bar -->
+  <nav class="bg-white border-y border-slate-200 sticky top-[73px] z-30 shadow-sm" aria-label="Categorias do Cardápio">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex space-x-2 overflow-x-auto py-3 hide-scrollbar" id="categoryNav">
+        <button onclick="filterCategory('todos')" class="cat-pill active px-4 py-2 rounded-xl text-xs font-bold transition bg-[#015c34] text-white shrink-0">
+          🌟 Todos os Pratos
+        </button>
+        <button onclick="filterCategory('combos')" class="cat-pill px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition shrink-0">
+          🔥 Combos & Kits com Desconto
+        </button>
+        <button onclick="filterCategory('frango')" class="cat-pill px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition shrink-0">
+          🍗 Linha Frango
+        </button>
+        <button onclick="filterCategory('carne')" class="cat-pill px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition shrink-0">
+          🥩 Linha Carne Bovina
+        </button>
+        <button onclick="filterCategory('peixe')" class="cat-pill px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition shrink-0">
+          🐟 Pescados Nobres
+        </button>
+        <button onclick="filterCategory('lowcarb')" class="cat-pill px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition shrink-0">
+          🥗 Low Carb & Fit Leve
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Products Grid Section -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1">
+    
+    <div class="flex items-center justify-between mb-6">
+      <div>
+        <h2 class="text-xl font-extrabold text-slate-900" id="sectionTitle">Cardápio Completo</h2>
+        <p class="text-xs text-slate-500">Marmitas congeladas pesadas individualmente com selo hermético</p>
+      </div>
+      <span class="text-xs font-semibold text-[#015c34] bg-emerald-50 px-3 py-1.5 rounded-lg border border-emerald-200">
+        <i class="fa-solid fa-rotate mr-1"></i> Ciclo Quinzenal Ativo
+      </span>
+    </div>
+
+    <!-- Dynamic Product Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="productsGrid">
+      <!-- Populated via JavaScript -->
+    </div>
+
+  </main>
+
+  <!-- Slide-Over Shopping Cart Panel -->
+  <div id="cartDrawerOverlay" class="fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-50 hidden transition-opacity" onclick="toggleCart()"></div>
+  <aside id="cartDrawer" class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white z-50 shadow-2xl flex flex-col transform translate-x-full transition-transform duration-300 ease-in-out" aria-label="Carrinho de Compras">
+    
+    <!-- Drawer Header -->
+    <div class="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+      <div class="flex items-center space-x-2.5">
+        <div class="w-8 h-8 rounded-lg bg-[#015c34] text-white flex items-center justify-center font-bold text-sm">
+          <i class="fa-solid fa-basket-shopping"></i>
+        </div>
+        <div>
+          <h2 class="font-extrabold text-slate-900 text-base leading-none">Seu Carrinho</h2>
+          <span class="text-[11px] text-slate-500 font-medium">Marmitas Fit Oficial</span>
+        </div>
+      </div>
+      <button onclick="toggleCart()" class="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 text-slate-600 flex items-center justify-center transition">
+        <i class="fa-solid fa-xmark text-sm"></i>
+      </button>
+    </div>
+
+    <!-- Free Shipping & Minimum Order Progress Bar -->
+    <div class="p-4 bg-emerald-50 border-b border-emerald-100 text-xs">
+      <div class="flex justify-between font-bold text-emerald-900 mb-1.5">
+        <span id="freteStatusText">Faltam R$ 400,00 para Frete Grátis</span>
+        <span id="fretePercentText">0%</span>
+      </div>
+      <div class="w-full bg-emerald-200/70 rounded-full h-2 overflow-hidden">
+        <div id="freteProgressBar" class="bg-[#015c34] h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+      <p id="pedidoMinimoAlert" class="text-[11px] text-red-600 font-bold mt-2 flex items-center">
+        <i class="fa-solid fa-circle-exclamation mr-1"></i> Pedido mínimo da loja: R$ 80,00
+      </p>
+    </div>
+
+    <!-- Cart Items List (Scrollable) -->
+    <div class="flex-1 overflow-y-auto p-5 space-y-4" id="cartItemsContainer">
+      <div class="text-center py-12 text-slate-400">
+        <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-slate-300"></i>
+        <p class="text-sm font-semibold">Seu carrinho está vazio.</p>
+        <p class="text-xs mt-1">Adicione marmitas ou kits para continuar!</p>
+      </div>
+    </div>
+
+    <!-- Delivery Bairro Selection & Calculations -->
+    <div class="p-5 border-t border-slate-200 bg-slate-50/70 space-y-3">
+      <div>
+        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider mb-1.5">Opção de Entrega / Região</label>
+        <select id="selectBairro" onchange="calcularTotais()" class="w-full bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-[#015c34]">
+          <option value="5" data-nome="Piedade (Loja Base)">Piedade — R$ 5,00</option>
+          <option value="7" data-nome="Méier / Todos os Santos">Méier / Todos os Santos — R$ 7,00</option>
+          <option value="8" data-nome="Madureira / Cascadura">Madureira / Cascadura — R$ 8,00</option>
+          <option value="10" data-nome="Vila da Penha / Penha">Vila da Penha / Penha — R$ 10,00</option>
+          <option value="12" data-nome="Tijuca / Maracanã">Tijuca / Maracanã — R$ 12,00</option>
+          <option value="15" data-nome="Centro / Zona Sul">Centro / Zona Sul — R$ 15,00</option>
+          <option value="18" data-nome="Barra da Tijuca / Recreio">Barra da Tijuca / Recreio — R$ 18,00</option>
+          <option value="20" data-nome="Jacarepaguá / Freguesia">Jacarepaguá / Freguesia — R$ 20,00</option>
+          <option value="0" data-nome="Retirada no Local (Piedade)">Retirada no Balcão (Piedade) — Grátis</option>
+        </select>
+      </div>
+
+      <!-- Financial Breakdown -->
+      <div class="space-y-1.5 text-xs text-slate-600 pt-2 border-t border-slate-200">
+        <div class="flex justify-between">
+          <span>Subtotal das Marmitas:</span>
+          <span id="resumoSubtotal" class="font-bold text-slate-900">R$ 0,00</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Taxa de Entrega:</span>
+          <span id="resumoFrete" class="font-bold text-slate-900">R$ 5,00</span>
+        </div>
+        <div class="flex justify-between text-emerald-800">
+          <span>Taxa de Conveniência (Teixo):</span>
+          <span id="resumoTaxaTeixo" class="font-bold">R$ 0,67</span>
+        </div>
+        <div class="flex justify-between text-base font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+          <span>Total a Pagar:</span>
+          <span id="resumoTotal" class="text-xl text-[#015c34]">R$ 0,00</span>
+        </div>
+      </div>
+
+      <!-- Checkout Button -->
+      <button id="btnFinalizar" onclick="finalizarPedido()" class="w-full bg-[#015c34] hover:bg-[#004727] text-white py-3.5 px-4 rounded-xl font-bold text-sm shadow-md transition flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed">
+        <i class="fa-brands fa-whatsapp text-lg"></i>
+        <span>Confirmar Pedido no WhatsApp</span>
+      </button>
+    </div>
+
+  </aside>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-8 mt-12 text-slate-500 text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div>
+        <div class="flex items-center space-x-2 text-[#015c34] font-extrabold text-base mb-2">
+          <i class="fa-solid fa-leaf"></i>
+          <span>Marmitas Fit</span>
+        </div>
+        <p class="text-slate-500 leading-relaxed">
+          Refeição saudável, saborosa e prática. Produzida em lote e ultracongelada com o melhor padrão de qualidade.
+        </p>
+        <p class="mt-2 text-[11px] text-slate-400">CNPJ: 27.537.161/0001-75</p>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-slate-800 mb-2 uppercase tracking-wider text-[11px]">Endereço & Atendimento</h4>
+        <p>Rua José Mariano, 10 — Piedade</p>
+        <p>Rio de Janeiro / RJ — CEP 20756-190</p>
+        <p class="mt-1 font-semibold text-slate-700">WhatsApp: (21) 97035-7153</p>
+      </div>
+
+      <div class="flex flex-col justify-between">
+        <div>
+          <h4 class="font-bold text-slate-800 mb-2 uppercase tracking-wider text-[11px]">Segurança & Tecnologia</h4>
+          <p class="text-emerald-700 font-semibold">⚡ Plataforma Própria TeixoOS</p>
+          <p class="text-[11px] text-slate-400">Cardápio ultrarrápido sem quedas e checkout direto.</p>
+        </div>
+        <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
+          <span>© 2026 Marmitas Fit. Todos os direitos reservados.</span>
+          <a href="painel.html" class="text-[#015c34] hover:underline font-bold">Painel do Gerente</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- App State & Client-Side Scripts -->
+  <script>
+    // Base de Dados de Produtos Reais da Marmitas Fit
+    const PRODUTOS = [
+      {
+        id: 1,
+        nome: "Strogonoff de Frango Fit",
+        categoria: "frango",
+        preco: 24.90,
+        foto: "https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b1_08112024031714.webp",
+        descricao: "Cubos de frango com creme leve de castanhas e champignon, acompanhado de arroz integral e batata rústica assada.",
+        gramas: "350g",
+        proteina: "32g",
+        carbo: "38g",
+        kcal: "395 kcal",
+        estoqueFreezer: 8, // Lote crítico
+        tag: "Mais Vendido"
+      },
+      {
+        id: 2,
+        nome: "Patinho com Purê de Mandioquinha",
+        categoria: "carne",
+        preco: 26.90,
+        foto: "https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b2_08112024031720.webp",
+        descricao: "Patinho magro moído com tempero da casa, purê aveludado de mandioquinha e mix de brócolis cozido no vapor.",
+        gramas: "350g",
+        proteina: "35g",
+        carbo: "32g",
+        kcal: "410 kcal",
+        estoqueFreezer: 14,
+        tag: "Recomendado"
+      },
+      {
+        id: 3,
+        nome: "Frango com Batata Doce & Vagem",
+        categoria: "frango",
+        preco: 23.90,
+        foto: "https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b3_08112024031728.webp",
+        descricao: "Filé de peito de frango grelhado marinado no limão e ervas finas, rodelas de batata doce e vagem no vapor.",
+        gramas: "350g",
+        proteina: "36g",
+        carbo: "35g",
+        kcal: "370 kcal",
+        estoqueFreezer: 42,
+        tag: "Clássico Fit"
+      },
+      {
+        id: 4,
+        nome: "Tilápia Grelhada com Legumes",
+        categoria: "peixe",
+        preco: 28.90,
+        foto: "https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b1_09102026051550.webp",
+        descricao: "Filé de tilápia grelhada no azeite extravirgem com arroz branco temperado, cenoura e brócolis.",
+        gramas: "350g",
+        proteina: "30g",
+        carbo: "30g",
+        kcal: "340 kcal",
+        estoqueFreezer: 19,
+        tag: "Leveza"
+      },
+      {
+        id: 5,
+        nome: "Carne de Panela Desfiada",
+        categoria: "carne",
+        preco: 25.90,
+        foto: "https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b2_08112024031720.webp",
+        descricao: "Carne bovina magra cozida lentamente até desfiar com molho caseiro, arroz integral e feijão carioca.",
+        gramas: "350g",
+        proteina: "34g",
+        carbo: "40g",
+        kcal: "420 kcal",
+        estoqueFreezer: 25,
+        tag: "Conforto"
+      },
+      {
+        id: 6,
+        nome: "Salmão com Quinoa e Aspargos",
+        categoria: "peixe",
+        preco: 34.90,
+        foto: "https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b3_08112024031728.webp",
+        descricao: "Posta nobre de salmão grelhado, mix de quinoa tricolor e legumes salteados.",
+        gramas: "350g",
+        proteina: "32g",
+        carbo: "25g",
+        kcal: "430 kcal",
+        estoqueFreezer: 11,
+        tag: "Premium"
+      },
+      {
+        id: 7,
+        nome: "Frango ao Curry com Arroz de Couve-Flor",
+        categoria: "lowcarb",
+        preco: 24.90,
+        foto: "https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b1_08112024031714.webp",
+        descricao: "Iscas de frango com molho de curry aromático, acompanhado de arroz leve de couve-flor e abobrinha.",
+        gramas: "320g",
+        proteina: "34g",
+        carbo: "12g",
+        kcal: "280 kcal",
+        estoqueFreezer: 15,
+        tag: "Zero Carbo"
+      },
+      {
+        id: 8,
+        nome: "Combo 10 Marmitas (Escolha Livre)",
+        categoria: "combos",
+        preco: 229.00,
+        foto: "https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b1_08112024031714.webp",
+        descricao: "Kit com 10 marmitas à sua escolha. Ideal para a rotina de almoços da semana (economia de R$ 30,00).",
+        gramas: "10 x 350g",
+        proteina: "Alta",
+        carbo: "Equilibrado",
+        kcal: "Pacote",
+        estoqueFreezer: 30,
+        tag: "Super Econômico"
+      },
+      {
+        id: 9,
+        nome: "Combo 20 Marmitas Mensal (+ Frete Grátis)",
+        categoria: "combos",
+        preco: 429.00,
+        foto: "https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/b2_08112024031720.webp",
+        descricao: "Pacote para o mês inteiro. Escolha até 20 sabores variados e ganhe frete grátis na entrega!",
+        gramas: "20 x 350g",
+        proteina: "Alta",
+        carbo: "Equilibrado",
+        kcal: "Pacote",
+        estoqueFreezer: 20,
+        tag: "Frete Grátis"
+      }
+    ];
+
+    // Carrinho em Memória
+    let carrinho = JSON.parse(localStorage.getItem('marmitasfit_carrinho')) || [];
+
+    // Renderizar Produtos
+    function renderProdutos(filtro = 'todos') {
+      const grid = document.getElementById('productsGrid');
+      grid.innerHTML = '';
+
+      const filtrados = filtro === 'todos' 
+        ? PRODUTOS 
+        : PRODUTOS.filter(p => p.categoria === filtro);
+
+      filtrados.forEach(p => {
+        const itemNoCarrinho = carrinho.find(c => c.id === p.id);
+        const qtdNoCarrinho = itemNoCarrinho ? itemNoCarrinho.qtd : 0;
+
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm hover:shadow-md transition flex flex-col justify-between group";
+        card.innerHTML = `
+          <div>
+            <div class="relative h-44 overflow-hidden bg-slate-100">
+              <img src="${p.foto}" alt="${p.nome}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+              <span class="absolute top-3 left-3 bg-[#015c34] text-white text-[10px] font-extrabold px-2.5 py-1 rounded-lg uppercase tracking-wider shadow">
+                ${p.tag}
+              </span>
+              <span class="absolute bottom-2 right-2 bg-slate-950/70 text-white text-[10px] font-semibold px-2 py-0.5 rounded backdrop-blur-sm">
+                ${p.gramas}
+              </span>
+            </div>
+            <div class="p-4 space-y-2">
+              <div class="flex items-center justify-between text-[11px] text-slate-400 font-bold uppercase tracking-wider">
+                <span>${p.categoria}</span>
+                <span class="text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded">${p.kcal}</span>
+              </div>
+              <h3 class="font-extrabold text-slate-900 text-sm leading-snug">${p.nome}</h3>
+              <p class="text-xs text-slate-500 line-clamp-2">${p.descricao}</p>
+            </div>
+          </div>
+
+          <div class="p-4 pt-0 border-t border-slate-100 mt-2 flex items-center justify-between">
+            <div>
+              <span class="text-[10px] text-slate-400 block font-semibold">Valor unitário</span>
+              <span class="text-base font-black text-[#015c34]">R$ ${p.preco.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+            </div>
+            
+            <div class="flex items-center space-x-1.5">
+              ${qtdNoCarrinho > 0 ? `
+                <div class="flex items-center space-x-2 bg-emerald-50 border border-emerald-300 rounded-xl px-2 py-1">
+                  <button onclick="alterarQtd(${p.id}, -1)" class="w-6 h-6 rounded-md bg-white text-[#015c34] font-bold flex items-center justify-center hover:bg-emerald-100">-</button>
+                  <span class="font-bold text-xs text-[#015c34] px-1">${qtdNoCarrinho}</span>
+                  <button onclick="alterarQtd(${p.id}, 1)" class="w-6 h-6 rounded-md bg-[#015c34] text-white font-bold flex items-center justify-center hover:bg-[#004727]">+</button>
+                </div>
+              ` : `
+                <button onclick="adicionarAoCarrinho(${p.id})" class="bg-[#015c34] hover:bg-[#004727] text-white px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shadow-sm">
+                  <i class="fa-solid fa-plus text-[10px]"></i>
+                  <span>Adicionar</span>
+                </button>
+              `}
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // Filtrar Categoria
+    function filterCategory(cat) {
+      document.querySelectorAll('.cat-pill').forEach(btn => {
+        btn.classList.remove('bg-[#015c34]', 'text-white', 'active');
+        btn.classList.add('bg-slate-100', 'text-slate-600');
+      });
+      event.target.classList.remove('bg-slate-100', 'text-slate-600');
+      event.target.classList.add('bg-[#015c34]', 'text-white', 'active');
+
+      renderProdutos(cat);
+    }
+
+    // Carrinho Drawer
+    function toggleCart() {
+      const drawer = document.getElementById('cartDrawer');
+      const overlay = document.getElementById('cartDrawerOverlay');
+      const isOpen = !drawer.classList.contains('translate-x-full');
+
+      if (isOpen) {
+        drawer.classList.add('translate-x-full');
+        overlay.classList.add('hidden');
+      } else {
+        drawer.classList.remove('translate-x-full');
+        overlay.classList.remove('hidden');
+        renderCarrinhoItens();
+      }
+    }
+
+    // Adicionar item
+    function adicionarAoCarrinho(id) {
+      const prod = PRODUTOS.find(p => p.id === id);
+      const existe = carrinho.find(c => c.id === id);
+      if (existe) {
+        existe.qtd++;
+      } else {
+        carrinho.push({ ...prod, qtd: 1 });
+      }
+      salvarCarrinho();
+      renderProdutos();
+      calcularTotais();
+    }
+
+    // Alterar quantidade
+    function alterarQtd(id, delta) {
+      const item = carrinho.find(c => c.id === id);
+      if (!item) return;
+
+      item.qtd += delta;
+      if (item.qtd <= 0) {
+        carrinho = carrinho.filter(c => c.id !== id);
+      }
+      salvarCarrinho();
+      renderProdutos();
+      renderCarrinhoItens();
+      calcularTotais();
+    }
+
+    // Salvar Carrinho Local
+    function salvarCarrinho() {
+      localStorage.setItem('marmitasfit_carrinho', JSON.stringify(carrinho));
+    }
+
+    // Renderizar itens no drawer
+    function renderCarrinhoItens() {
+      const container = document.getElementById('cartItemsContainer');
+      if (carrinho.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-slate-400">
+            <i class="fa-solid fa-basket-shopping text-4xl mb-3 text-slate-300"></i>
+            <p class="text-sm font-semibold">Seu carrinho está vazio.</p>
+            <p class="text-xs mt-1">Adicione marmitas ou kits para continuar!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = '';
+      carrinho.forEach(item => {
+        const el = document.createElement('div');
+        el.className = "flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-xl";
+        el.innerHTML = `
+          <div class="flex items-center space-x-3">
+            <img src="${item.foto}" class="w-12 h-12 rounded-lg object-cover">
+            <div>
+              <h4 class="font-bold text-xs text-slate-800 leading-tight">${item.nome}</h4>
+              <span class="text-[11px] text-[#015c34] font-extrabold">R$ ${item.preco.toFixed(2)}</span>
+            </div>
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="alterarQtd(${item.id}, -1)" class="w-6 h-6 rounded bg-white text-slate-700 font-bold border border-slate-200 hover:bg-slate-100 text-xs flex items-center justify-center">-</button>
+            <span class="font-bold text-xs text-slate-800 px-1">${item.qtd}</span>
+            <button onclick="alterarQtd(${item.id}, 1)" class="w-6 h-6 rounded bg-[#015c34] text-white font-bold text-xs flex items-center justify-center hover:bg-[#004727]">+</button>
+          </div>
+        `;
+        container.appendChild(el);
+      });
+    }
+
+    // Calcular Totais e Regras
+    function calcularTotais() {
+      const subtotal = carrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
+      const totalItens = carrinho.reduce((acc, item) => acc + item.qtd, 0);
+
+      document.getElementById('cartCountBadge').innerText = totalItens;
+      document.getElementById('cartTotalHeader').innerText = 'R$ ' + subtotal.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+      document.getElementById('resumoSubtotal').innerText = 'R$ ' + subtotal.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+
+      // Frete Grátis regra: R$ 400
+      const metaFreteGratis = 400.00;
+      const selectBairro = document.getElementById('selectBairro');
+      let frete = parseFloat(selectBairro.value);
+
+      if (subtotal >= metaFreteGratis) {
+        frete = 0;
+        document.getElementById('freteStatusText').innerHTML = '🎉 <b>Parabéns!</b> Você ganhou Frete Grátis!';
+        document.getElementById('fretePercentText').innerText = '100%';
+        document.getElementById('freteProgressBar').style.width = '100%';
+        document.getElementById('resumoFrete').innerText = 'GRÁTIS';
+      } else {
+        const falta = metaFreteGratis - subtotal;
+        const percent = Math.min(100, Math.round((subtotal / metaFreteGratis) * 100));
+        document.getElementById('freteStatusText').innerText = `Faltam R$ ${falta.toFixed(2)} para Frete Grátis`;
+        document.getElementById('fretePercentText').innerText = percent + '%';
+        document.getElementById('freteProgressBar').style.width = percent + '%';
+        document.getElementById('resumoFrete').innerText = frete === 0 ? 'Grátis' : 'R$ ' + frete.toFixed(2);
+      }
+
+      // Taxa Teixo R$ 0,67
+      const taxaTeixo = subtotal > 0 ? 0.67 : 0.00;
+      document.getElementById('resumoTaxaTeixo').innerText = 'R$ ' + taxaTeixo.toFixed(2);
+
+      const totalFinal = subtotal + frete + taxaTeixo;
+      document.getElementById('resumoTotal').innerText = 'R$ ' + totalFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+
+      // Pedido Mínimo R$ 80
+      const btn = document.getElementById('btnFinalizar');
+      const alertaMinimo = document.getElementById('pedidoMinimoAlert');
+
+      if (subtotal < 80.00) {
+        alertaMinimo.classList.remove('hidden');
+        btn.disabled = true;
+      } else {
+        alertaMinimo.classList.add('hidden');
+        btn.disabled = false;
+      }
+    }
+
+    // Finalizar Pedido via WhatsApp e Salvar no Painel Admin
+    function finalizarPedido() {
+      if (carrinho.length === 0) return;
+
+      const subtotal = carrinho.reduce((acc, item) => acc + (item.preco * item.qtd), 0);
+      const selectBairro = document.getElementById('selectBairro');
+      const bairroNome = selectBairro.options[selectBairro.selectedIndex].getAttribute('data-nome');
+      const frete = subtotal >= 400 ? 0 : parseFloat(selectBairro.value);
+      const taxaTeixo = 0.67;
+      const total = subtotal + frete + taxaTeixo;
+
+      // Cria objeto de pedido com timestamp
+      const pedidoId = 'MF-' + Math.floor(1000 + Math.random() * 9000);
+      const novoPedido = {
+        id: pedidoId,
+        data: new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }),
+        itens: carrinho,
+        bairro: bairroNome,
+        subtotal: subtotal,
+        frete: frete,
+        taxaTeixo: taxaTeixo,
+        total: total,
+        status: 'novo' // 'novo', 'separando', 'rota', 'entregue'
+      };
+
+      // Grava no banco de pedidos do Painel Admin (localStorage compartilhado)
+      let pedidosExistentes = JSON.parse(localStorage.getItem('marmitasfit_pedidos')) || [];
+      pedidosExistentes.unshift(novoPedido);
+      localStorage.setItem('marmitasfit_pedidos', JSON.stringify(pedidosExistentes));
+
+      // Monta texto do WhatsApp
+      let texto = `*NOVO PEDIDO — MARMITAS FIT* 🥗\n`;
+      texto += `*Pedido:* #${pedidoId}\n\n`;
+      texto += `*ITENS ESCOLHIDOS:*\n`;
+      carrinho.forEach(item => {
+        texto += `• ${item.qtd}x ${item.nome} — R$ ${(item.preco * item.qtd).toFixed(2)}\n`;
+      });
+      texto += `\n📍 *Entrega:* ${bairroNome} (R$ ${frete.toFixed(2)})\n`;
+      texto += `⚡ *Taxa de Conveniência:* R$ 0,67\n`;
+      texto += `💰 *TOTAL DO PEDIDO:* R$ ${total.toFixed(2)}\n\n`;
+      texto += `_Pedido gerado pelo site oficial Marmitas Fit._`;
+
+      // Limpa carrinho
+      carrinho = [];
+      salvarCarrinho();
+      renderProdutos();
+      toggleCart();
+
+      // Redireciona WhatsApp
+      const url = `https://api.whatsapp.com/send?phone=5521970357153&text=${encodeURIComponent(texto)}`;
+      window.open(url, '_blank');
+    }
+
+    // Inicialização
+    window.onload = function() {
+      renderProdutos();
+      calcularTotais();
+    };
+  </script>
+</body>
+</html>
