@@ -45,7 +45,7 @@ Para superar a objeção de preço e a resistência inicial da contratante, o Ti
 ## 4. Condições Comerciais, Prazos e Salvaguardas Alinhadas
 
 - **Vigência:** Prazo inicial determinado de 3 meses, prorrogando-se automaticamente por prazo indeterminado (aviso prévio de 30 dias).
-- **Vencimento do Tráfego:** Todo dia 20 de cada mês na conta do gestor Tiago.
+- **Vencimento do Tráfego:** Todo dia 13 de cada mês na conta do gestor Tiago (data de aniversário do primeiro pagamento em 13/10 -> próximos em 13/11, 13/12...).
 - **Proteção de Deslocamento do PL:** Remarcação exige aviso prévio de 24h. Em caso de cancelamento com menos de 24h após deslocamento do profissional, 50% do custo de deslocamento do PL é devolvido (sendo os 50% restantes retidos para cobrir as despesas de transporte e logística).
 - **Fase de Aprendizado do Meta Ads:** Primeiros 14 dias úteis focados em calibração algorítmica e inteligência de público.
 - **Regularidade do Cartão:** A manutenção de saldo no cartão corporativo do Meta Ads é do cliente; eventual pausa de anúncios não suspende os honorários de R$ 1.200 do Tiago.

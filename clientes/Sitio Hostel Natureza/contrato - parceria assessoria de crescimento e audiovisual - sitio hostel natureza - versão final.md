@@ -78,7 +78,7 @@ III - Fornecimento de smartphones físicos, equipamentos de impressão, custos d
 
 a) **Honorários de Gestão de Tráfego Pago (Tiago Teixeira):**
 - **Valor Recorrente:** **R$ 1.200,00 (um mil e duzentos reais)** mensais fixos;
-- **Vencimento:** Todo dia **20 (vinte)** de cada mês subsequente;
+- **Vencimento das Mensalidades:** As mensalidades subsequentes vencerão sempre na mesma data de aniversário do primeiro pagamento. Tendo o pagamento inicial sido realizado no dia **13 de outubro**, os pagamentos subsequentes vencerão todo dia **13 (treze)** dos meses seguintes (13 de novembro, 13 de dezembro, e assim sucessivamente);
 - **Destino Bancário Individual:** Transferência bancária PIX para a conta do gestor Tiago Teixeira via Chave PIX (CNPJ): **`69.390.968/0001-78`**;
 - A verba de mídia consumida diretamente nas plataformas de anúncio (Meta Ads) será custeada pela CONTRATANTE via cartão de crédito corporativo cadastrado na conta de anúncios.
 

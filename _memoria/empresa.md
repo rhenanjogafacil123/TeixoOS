@@ -63,6 +63,7 @@ A Teixo opera com esteiras padronizadas de serviços, garantindo escalabilidade 
 
 2. **Gestão de Tráfego Pago Local (Tiago Teixeira):**
    - **Cobrança Padrão:** **R$ 1.200,00 mensais** para negócios locais.
+   - **Ciclo e Vencimento por Aniversário de Pagamento:** As mensalidades recorrentes de assessoria vencem sempre no mesmo dia civil em que ocorreu o primeiro pagamento da contratação (data de aniversário). Exemplo: primeiro pagamento efetuado em 13 de outubro -> próximas parcelas vencem rigorosamente em 13 de novembro, 13 de dezembro, e assim sucessivamente.
    - **Mídia:** Verba de anúncios custeada diretamente pelo cliente via cartão corporativo cadastrado nas plataformas (Meta/Google).
 
 3. **Produção Audiovisual e Captação de Campo (PL - Paulo Roberto):**
