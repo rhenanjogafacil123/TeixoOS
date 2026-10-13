@@ -130,8 +130,12 @@ function authorizeRoles(...allowedRoles) {
     if (!req.user) {
       return res.status(401).json({ success: false, error: 'Usuário não autenticado.' });
     }
+    // Superadmin possui acesso global irrestrito a qualquer recurso do sistema
+    if (req.user.role === 'superadmin') {
+      return next();
+    }
     if (!allowedRoles.includes(req.user.role)) {
-      console.warn(`[Segurança 403] Acesso negado: Usuário "${req.user.username}" (${req.user.role}) tentou acessar recurso restrito a [${allowedRoles.join(', ')}]`);
+      console.warn(`[Segurança 403] Acesso negado: Usuário "${req.user.email || req.user.login || req.user.username}" (${req.user.role}) tentou acessar recurso restrito a [${allowedRoles.join(', ')}]`);
       return res.status(403).json({ 
         success: false, 
         error: `403 Proibido: Seu perfil (${req.user.role}) não tem permissão para acessar este recurso.` 
@@ -145,41 +149,117 @@ function authorizeRoles(...allowedRoles) {
 // 0. AUTENTICAÇÃO & CONTROLE DE ACESSO (RBAC)
 // ===========================================
 
+// Cadastro público (Auto-registro de novos usuários/clientes)
+app.post('/api/auth/register', (req, res) => {
+  try {
+    const { nome_completo, nome, email, login, telefone, data_nascimento, senha, password } = req.body;
+    const finalNome = (nome_completo || nome || '').trim();
+    const finalEmail = (email || login || '').trim().toLowerCase();
+    const finalTelefone = (telefone || '').trim();
+    const finalDataNasc = (data_nascimento || '').trim();
+    const finalSenha = senha || password;
+
+    if (!finalNome || !finalEmail || !finalSenha) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Nome completo, e-mail e senha pessoal são obrigatórios.' 
+      });
+    }
+
+    if (finalSenha.length < 4) {
+      return res.status(400).json({
+        success: false,
+        error: 'A senha deve conter no mínimo 4 caracteres.'
+      });
+    }
+
+    // Verificar se e-mail já existe
+    const existing = db.getUserByUsernameOrEmail(finalEmail);
+    if (existing) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Este e-mail já está cadastrado. Faça login na sua conta.' 
+      });
+    }
+
+    // Regra: o e-mail oficial master recebe superadmin; todos os outros nascem como 'cliente'
+    const superAdminTarget = (config.SUPERADMIN_EMAIL || 'rhenanteixeira.rj@gmail.com').toLowerCase();
+    const isSuper = finalEmail === superAdminTarget;
+    const role = isSuper ? 'superadmin' : 'cliente';
+
+    const newUser = db.createUser({
+      nome_completo: finalNome,
+      email: finalEmail,
+      telefone: finalTelefone,
+      data_nascimento: finalDataNasc,
+      senha: finalSenha,
+      role
+    });
+
+    const payload = {
+      id: newUser.id,
+      nome_completo: newUser.nome_completo || newUser.nome,
+      nome: newUser.nome_completo || newUser.nome,
+      email: newUser.email,
+      login: newUser.email,
+      telefone: newUser.telefone || '',
+      data_nascimento: newUser.data_nascimento || '',
+      role: newUser.role,
+      status: newUser.status || 'ativo'
+    };
+
+    const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '12h' });
+
+    console.log(`[Auth Registro] Nova conta criada: ${payload.nome_completo} (${payload.email}) [Perfil: ${payload.role.toUpperCase()}]`);
+    res.status(201).json({
+      success: true,
+      message: 'Conta criada com sucesso!',
+      token,
+      user: payload
+    });
+  } catch (err) {
+    console.error('Erro no cadastro:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // Login com verificação de hash bcrypt e emissão de JWT
 app.post('/api/auth/login', (req, res) => {
   try {
-    const userLogin = req.body.login || req.body.username;
+    const userIdentifier = req.body.email || req.body.login || req.body.username;
     const userPassword = req.body.senha || req.body.password;
-    if (!userLogin || !userPassword) {
-      return res.status(400).json({ success: false, error: 'Login e senha são obrigatórios.' });
+    if (!userIdentifier || !userPassword) {
+      return res.status(400).json({ success: false, error: 'E-mail e senha são obrigatórios.' });
     }
 
-    const user = db.getUserByUsername(userLogin);
+    const user = db.getUserByUsernameOrEmail(userIdentifier);
     if (!user) {
-      console.warn(`[Auth Falhou] Usuário inexistente: "${userLogin}"`);
-      return res.status(401).json({ success: false, error: 'Usuário ou senha incorretos.' });
+      console.warn(`[Auth Falhou] Usuário inexistente: "${userIdentifier}"`);
+      return res.status(401).json({ success: false, error: 'E-mail ou senha incorretos.' });
     }
 
     const passwordOk = db.verifyUserPassword(user, userPassword);
     if (!passwordOk) {
-      console.warn(`[Auth Falhou] Senha incorreta para o usuário: "${userLogin}"`);
-      return res.status(401).json({ success: false, error: 'Usuário ou senha incorretos.' });
+      console.warn(`[Auth Falhou] Senha incorreta para o usuário: "${userIdentifier}"`);
+      return res.status(401).json({ success: false, error: 'E-mail ou senha incorretos.' });
     }
 
     // Gerar token assinado JWT válido por 12 horas
     const payload = {
       id: user.id,
-      nome: user.nome || user.name,
-      name: user.name || user.nome,
-      login: user.login || user.username,
-      username: user.username || user.login,
-      role: user.role,
+      nome_completo: user.nome_completo || user.nome,
+      nome: user.nome_completo || user.nome,
+      email: user.email || user.login,
+      login: user.email || user.login,
+      telefone: user.telefone || '',
+      data_nascimento: user.data_nascimento || '',
+      role: user.role || 'cliente',
       status: user.status || 'ativo'
     };
 
     const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '12h' });
 
-    console.log(`[Auth Sucesso] Login aprovado: ${payload.nome} (${payload.login}) [Perfil: ${payload.role.toUpperCase()}]`);
+    console.log(`[Auth Sucesso] Login aprovado: ${payload.nome_completo} (${payload.email}) [Perfil: ${payload.role.toUpperCase()}]`);
     res.json({
       success: true,
       token,
@@ -199,29 +279,122 @@ app.get('/api/auth/me', authenticateToken, (req, res) => {
   });
 });
 
-// Listar todos os usuários cadastrados (Apenas ADMIN)
-app.get('/api/auth/usuarios', authenticateToken, authorizeRoles('admin'), (req, res) => {
+// Listar membros e usuários para gestão de equipe e permissões
+app.get('/api/equipe', authenticateToken, (req, res) => {
   try {
-    const users = db.listUsers();
-    res.json({ success: true, count: users.length, users });
+    const requesterRole = req.user.role;
+    if (requesterRole !== 'superadmin' && requesterRole !== 'admin') {
+      return res.status(403).json({ 
+        success: false, 
+        error: '403 Proibido: Apenas o Gestor da Loja ou Superadmin Global podem visualizar a gestão de equipe.' 
+      });
+    }
+
+    const allUsers = db.listUsers();
+    res.json({
+      success: true,
+      requesterRole,
+      count: allUsers.length,
+      users: allUsers
+    });
   } catch (err) {
+    console.error('Erro ao listar equipe:', err);
     res.status(500).json({ success: false, error: err.message });
   }
 });
 
-// Cadastrar novo funcionário/usuário (Apenas ADMIN)
-app.post('/api/auth/usuarios', authenticateToken, authorizeRoles('admin'), (req, res) => {
+// Promover ou conceder permissão para um usuário por e-mail
+app.post('/api/equipe/promover', authenticateToken, (req, res) => {
   try {
-    const { name, username, password, role } = req.body;
-    if (!name || !username || !password) {
-      return res.status(400).json({ success: false, error: 'Nome, login e senha são obrigatórios.' });
+    const requesterRole = req.user.role;
+    const { email, role: targetRole } = req.body;
+
+    if (!email || !targetRole) {
+      return res.status(400).json({ success: false, error: 'E-mail da pessoa e o cargo desejado são obrigatórios.' });
     }
-    const existing = db.getUserByUsername(username);
-    if (existing) {
-      return res.status(400).json({ success: false, error: 'Já existe um usuário com este login.' });
+
+    const cleanEmail = String(email).trim().toLowerCase();
+    const cleanRole = String(targetRole).trim().toLowerCase();
+
+    const targetUser = db.getUserByUsernameOrEmail(cleanEmail);
+    if (!targetUser) {
+      return res.status(404).json({ 
+        success: false, 
+        error: `Nenhuma conta encontrada com o e-mail "${cleanEmail}". Peça para a pessoa criar a conta dela primeiro no site com esse e-mail.` 
+      });
     }
-    const created = db.createUser({ name, username, password, role });
-    res.status(201).json({ success: true, user: created });
+
+    // Regras de Hierarquia:
+    // 1. Superadmin pode promover qualquer pessoa para: admin, atendente, motoboy, cliente ou superadmin
+    if (requesterRole === 'superadmin') {
+      const updated = db.updateUserRole(targetUser.id, cleanRole);
+      console.log(`[RBAC Global] Superadmin alterou cargo de "${cleanEmail}" para [${cleanRole.toUpperCase()}]`);
+      return res.json({
+        success: true,
+        message: `Cargo de ${targetUser.nome_completo || targetUser.nome} alterado com sucesso para ${cleanRole.toUpperCase()}.`,
+        user: updated
+      });
+    }
+
+    // 2. Gestor Geral da Loja (admin - ex: Juca)
+    if (requesterRole === 'admin') {
+      if (cleanRole !== 'atendente' && cleanRole !== 'motoboy' && cleanRole !== 'cliente') {
+        return res.status(403).json({
+          success: false,
+          error: 'Você só pode conceder permissões para Atendente, Motoboy ou retornar para Cliente.'
+        });
+      }
+
+      if (targetUser.role === 'superadmin' || targetUser.role === 'admin') {
+        return res.status(403).json({
+          success: false,
+          error: 'Você não tem permissão para alterar contas de administradores ou da gestão global.'
+        });
+      }
+
+      const updated = db.updateUserRole(targetUser.id, cleanRole);
+      console.log(`[RBAC Loja] Gestor da Loja concedeu permissão de [${cleanRole.toUpperCase()}] para "${cleanEmail}"`);
+      return res.json({
+        success: true,
+        message: `Permissão concedida: ${targetUser.nome_completo || targetUser.nome} agora é ${cleanRole.toUpperCase()} da equipe!`,
+        user: updated
+      });
+    }
+
+    return res.status(403).json({ success: false, error: 'Acesso negado para gerenciar equipe.' });
+  } catch (err) {
+    console.error('Erro ao promover usuário:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Remover permissão (retornar para cliente)
+app.post('/api/equipe/remover', authenticateToken, (req, res) => {
+  try {
+    const requesterRole = req.user.role;
+    const { email } = req.body;
+    if (!email) return res.status(400).json({ success: false, error: 'E-mail obrigatório.' });
+
+    const cleanEmail = String(email).trim().toLowerCase();
+    const targetUser = db.getUserByUsernameOrEmail(cleanEmail);
+    if (!targetUser) {
+      return res.status(404).json({ success: false, error: 'Usuário não encontrado.' });
+    }
+
+    if (requesterRole === 'superadmin') {
+      const updated = db.updateUserRole(targetUser.id, 'cliente');
+      return res.json({ success: true, message: 'Usuário retornado ao perfil de Cliente.', user: updated });
+    }
+
+    if (requesterRole === 'admin') {
+      if (targetUser.role === 'superadmin' || targetUser.role === 'admin') {
+        return res.status(403).json({ success: false, error: 'Você não pode alterar administradores.' });
+      }
+      const updated = db.updateUserRole(targetUser.id, 'cliente');
+      return res.json({ success: true, message: 'Acesso revogado da equipe. Usuário retornou a Cliente.', user: updated });
+    }
+
+    return res.status(403).json({ success: false, error: 'Acesso negado.' });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }

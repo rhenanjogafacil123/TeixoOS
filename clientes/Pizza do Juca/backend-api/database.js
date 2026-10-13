@@ -6,6 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const config = require('./config');
 
 const DB_DIR = __dirname;
 const SQLITE_FILE = path.join(DB_DIR, 'juca-database.sqlite');
@@ -134,10 +135,14 @@ function initSqliteTables() {
 
     CREATE TABLE IF NOT EXISTS usuarios (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
+      nome_completo TEXT,
       nome TEXT NOT NULL,
+      email TEXT UNIQUE,
       login TEXT UNIQUE NOT NULL,
+      telefone TEXT,
+      data_nascimento TEXT,
       senha_hash TEXT NOT NULL,
-      role TEXT NOT NULL,
+      role TEXT DEFAULT 'cliente',
       status TEXT DEFAULT 'ativo',
       criado_em DATETIME DEFAULT CURRENT_TIMESTAMP,
       name TEXT,
@@ -148,47 +153,86 @@ function initSqliteTables() {
     );
   `);
 
-  seedDefaultUsers();
+  // Migrações dinâmicas seguras de colunas
+  const migrations = [
+    'ALTER TABLE usuarios ADD COLUMN nome_completo TEXT',
+    'ALTER TABLE usuarios ADD COLUMN email TEXT',
+    'ALTER TABLE usuarios ADD COLUMN telefone TEXT',
+    'ALTER TABLE usuarios ADD COLUMN data_nascimento TEXT'
+  ];
+  for (const sql of migrations) {
+    try { sqliteDb.exec(sql); } catch (e) {}
+  }
+  try { sqliteDb.exec('CREATE UNIQUE INDEX IF NOT EXISTS idx_usuarios_email ON usuarios(email);'); } catch (e) {}
+
+  seedSuperAdmin();
 }
 
-function seedDefaultUsers() {
-  const defaultUsers = [
-    { nome: 'Gestor Geral', login: 'admin', senha: 'juca@admin2026', role: 'admin' },
-    { nome: 'Atendente Balcão', login: 'balcao', senha: 'balcao@juca', role: 'atendente' },
-    { nome: 'Rafael Lima', login: 'rafael', senha: 'moto@rafael', role: 'motoboy' },
-    { nome: 'Diego Souza', login: 'diego', senha: 'moto@diego', role: 'motoboy' }
-  ];
+function seedSuperAdmin() {
+  const superAdminEmail = (config.SUPERADMIN_EMAIL || 'rhenanteixeira.rj@gmail.com').toLowerCase();
+  const superAdminPass = 'teixo@global2026';
 
   if (dbDriver === 'sqlite') {
-    const row = sqliteDb.prepare('SELECT count(*) as count FROM usuarios').get();
-    if (row && row.count === 0) {
-      console.log('[Banco de Dados] Criando contas de acesso padrão blindadas (bcrypt)...');
-      const insert = sqliteDb.prepare(`
-        INSERT INTO usuarios (nome, login, senha_hash, role, status, name, username, password_hash, active)
-        VALUES (?, ?, ?, ?, 'ativo', ?, ?, ?, 1)
-      `);
-      for (const u of defaultUsers) {
-        const hash = bcrypt.hashSync(u.senha, 10);
-        insert.run(u.nome, u.login, hash, u.role, u.nome, u.login, hash);
-      }
-      console.log('[Banco de Dados] Contas padrão ativadas: admin, balcao, rafael, diego');
+    const existing = sqliteDb.prepare(`
+      SELECT id, role FROM usuarios 
+      WHERE LOWER(email) = ? OR LOWER(login) = ? OR LOWER(username) = ?
+    `).get(superAdminEmail, superAdminEmail, 'rhenan');
+
+    if (!existing) {
+      console.log('[Banco de Dados] Inicializando Conta Master Global Teixo (Superadmin)...');
+      const hash = bcrypt.hashSync(superAdminPass, 10);
+      sqliteDb.prepare(`
+        INSERT INTO usuarios (
+          nome_completo, nome, email, login, telefone, data_nascimento,
+          senha_hash, role, status, name, username, password_hash, active
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, 'superadmin', 'ativo', ?, ?, ?, 1)
+      `).run(
+        'Rhenan Teixeira (Teixo Growth)',
+        'Rhenan Teixeira',
+        superAdminEmail,
+        superAdminEmail,
+        '(21) 99999-9999',
+        '2007-05-10',
+        hash,
+        'Rhenan Teixeira',
+        superAdminEmail,
+        hash
+      );
+      console.log('[Banco de Dados] Conta Global Superadmin ativada:', superAdminEmail);
+    } else if (existing.role !== 'superadmin') {
+      sqliteDb.prepare("UPDATE usuarios SET role = 'superadmin' WHERE id = ?").run(existing.id);
+      console.log('[Banco de Dados] Conta do Rhenan promovida para SUPERADMIN global.');
     }
   } else {
-    if (!jsonStore.usuarios || jsonStore.usuarios.length === 0) {
-      jsonStore.usuarios = defaultUsers.map((u, idx) => ({
-        id: idx + 1,
-        nome: u.nome,
-        name: u.nome,
-        login: u.login,
-        username: u.login,
-        senha_hash: bcrypt.hashSync(u.senha, 10),
-        password_hash: bcrypt.hashSync(u.senha, 10),
-        role: u.role,
+    if (!jsonStore.usuarios) jsonStore.usuarios = [];
+    let found = jsonStore.usuarios.find(u => 
+      (u.email && u.email.toLowerCase() === superAdminEmail) || 
+      (u.login && u.login.toLowerCase() === superAdminEmail) ||
+      u.username === 'rhenan'
+    );
+    if (!found) {
+      const hash = bcrypt.hashSync(superAdminPass, 10);
+      jsonStore.usuarios.push({
+        id: jsonStore.usuarios.length + 1,
+        nome_completo: 'Rhenan Teixeira (Teixo Growth)',
+        nome: 'Rhenan Teixeira',
+        name: 'Rhenan Teixeira',
+        email: superAdminEmail,
+        login: superAdminEmail,
+        username: superAdminEmail,
+        telefone: '(21) 99999-9999',
+        data_nascimento: '2007-05-10',
+        senha_hash: hash,
+        password_hash: hash,
+        role: 'superadmin',
         status: 'ativo',
         active: 1,
         criado_em: new Date().toISOString(),
         created_at: new Date().toISOString()
-      }));
+      });
+      persistJsonStore();
+    } else {
+      found.role = 'superadmin';
       persistJsonStore();
     }
   }
@@ -200,13 +244,13 @@ function initJsonStore() {
       jsonStore = JSON.parse(fs.readFileSync(JSON_FILE, 'utf8'));
       if (!jsonStore.usuarios) {
         jsonStore.usuarios = [];
-        seedDefaultUsers();
+        seedSuperAdmin();
       }
     } catch (e) {
       console.error('[Banco de Dados] Erro ao ler JSON store, criando novo:', e.message);
     }
   } else {
-    seedDefaultUsers();
+    seedSuperAdmin();
     persistJsonStore();
   }
 }
@@ -591,45 +635,59 @@ const dbService = {
     }
   },
 
-  // --- USUÁRIOS & AUTENTICAÇÃO (RBAC BLINDADO) ---
-  getUserByUsername: (loginOrUser) => {
-    if (!loginOrUser) return null;
-    const cleanUser = String(loginOrUser).trim().toLowerCase();
+  // --- USUÁRIOS & AUTENTICAÇÃO (RBAC BLINDADO HIERÁRQUICO) ---
+  getUserByUsernameOrEmail: (identifier) => {
+    if (!identifier) return null;
+    const clean = String(identifier).trim().toLowerCase();
     if (dbDriver === 'sqlite') {
       const u = sqliteDb.prepare(`
         SELECT * FROM usuarios 
-        WHERE (LOWER(login) = ? OR LOWER(username) = ?) 
+        WHERE (LOWER(email) = ? OR LOWER(login) = ? OR LOWER(username) = ?) 
           AND (active = 1 OR status = 'ativo')
-      `).get(cleanUser, cleanUser);
+      `).get(clean, clean, clean);
       if (!u) return null;
       return {
         ...u,
-        nome: u.nome || u.name,
-        name: u.name || u.nome,
-        login: u.login || u.username,
-        username: u.username || u.login,
+        nome_completo: u.nome_completo || u.nome || u.name,
+        nome: u.nome || u.nome_completo || u.name,
+        name: u.name || u.nome_completo || u.nome,
+        email: u.email || u.login,
+        login: u.login || u.email || u.username,
+        username: u.username || u.email || u.login,
+        telefone: u.telefone || '',
+        data_nascimento: u.data_nascimento || '',
         senha_hash: u.senha_hash || u.password_hash,
         password_hash: u.password_hash || u.senha_hash,
+        role: u.role || 'cliente',
         status: u.status || 'ativo'
       };
     } else {
       const list = jsonStore.usuarios || [];
-      const u = list.find(x => ((x.login && x.login.toLowerCase() === cleanUser) || (x.username && x.username.toLowerCase() === cleanUser)) && (x.active || x.status === 'ativo'));
+      const u = list.find(x => 
+        ((x.email && x.email.toLowerCase() === clean) ||
+         (x.login && x.login.toLowerCase() === clean) ||
+         (x.username && x.username.toLowerCase() === clean)) &&
+        (x.active || x.status === 'ativo')
+      );
       return u || null;
     }
+  },
+
+  getUserByUsername: (identifier) => {
+    return dbService.getUserByUsernameOrEmail(identifier);
   },
 
   getUserById: (id) => {
     if (!id) return null;
     if (dbDriver === 'sqlite') {
-      const u = sqliteDb.prepare('SELECT id, nome, login, role, status, criado_em, name, username, active, created_at FROM usuarios WHERE id = ?').get(id);
+      const u = sqliteDb.prepare('SELECT id, nome_completo, nome, email, login, telefone, data_nascimento, role, status, criado_em, name, username, active, created_at FROM usuarios WHERE id = ?').get(id);
       if (!u) return null;
       return {
         ...u,
-        nome: u.nome || u.name,
-        name: u.name || u.nome,
-        login: u.login || u.username,
-        username: u.username || u.login,
+        nome_completo: u.nome_completo || u.nome || u.name,
+        nome: u.nome || u.nome_completo || u.name,
+        email: u.email || u.login,
+        role: u.role || 'cliente',
         status: u.status || 'ativo'
       };
     } else {
@@ -643,36 +701,56 @@ const dbService = {
 
   listUsers: () => {
     if (dbDriver === 'sqlite') {
-      return sqliteDb.prepare('SELECT id, nome, login, role, status, criado_em, name, username FROM usuarios ORDER BY id ASC').all();
+      return sqliteDb.prepare(`
+        SELECT id, nome_completo, nome, email, login, telefone, data_nascimento, role, status, criado_em 
+        FROM usuarios 
+        ORDER BY id DESC
+      `).all().map(u => ({
+        ...u,
+        nome_completo: u.nome_completo || u.nome,
+        email: u.email || u.login
+      }));
     } else {
       const list = jsonStore.usuarios || [];
       return list.map(({ password_hash, senha_hash, ...safe }) => safe);
     }
   },
 
-  createUser: ({ nome, login, name, username, senha, password, role = 'atendente' }) => {
-    const finalNome = nome || name || 'Usuário';
-    const finalLogin = String(login || username || '').trim().toLowerCase();
+  createUser: ({ nome_completo, nome, email, login, telefone, data_nascimento, senha, password, role = 'cliente' }) => {
+    const finalNome = (nome_completo || nome || 'Usuário').trim();
+    const finalEmail = String(email || login || '').trim().toLowerCase();
+    const finalLogin = finalEmail;
+    const finalTelefone = String(telefone || '').trim();
+    const finalDataNasc = String(data_nascimento || '').trim();
     const finalSenha = senha || password;
     const hash = bcrypt.hashSync(finalSenha, 10);
-    const validRoles = ['admin', 'atendente', 'motoboy'];
-    const safeRole = validRoles.includes(role) ? role : 'atendente';
+    const validRoles = ['superadmin', 'admin', 'atendente', 'motoboy', 'cliente'];
+    const safeRole = validRoles.includes(role) ? role : 'cliente';
 
     if (dbDriver === 'sqlite') {
       const stmt = sqliteDb.prepare(`
-        INSERT INTO usuarios (nome, login, senha_hash, role, status, name, username, password_hash, active)
-        VALUES (?, ?, ?, ?, 'ativo', ?, ?, ?, 1)
+        INSERT INTO usuarios (
+          nome_completo, nome, email, login, telefone, data_nascimento,
+          senha_hash, role, status, name, username, password_hash, active
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 'ativo', ?, ?, ?, 1)
       `);
-      const info = stmt.run(finalNome, finalLogin, hash, safeRole, finalNome, finalLogin, hash);
+      const info = stmt.run(
+        finalNome, finalNome, finalEmail, finalLogin, finalTelefone, finalDataNasc,
+        hash, safeRole, finalNome, finalLogin, hash
+      );
       return dbService.getUserById(info.lastInsertRowid);
     } else {
       if (!jsonStore.usuarios) jsonStore.usuarios = [];
       const newUser = {
         id: jsonStore.usuarios.length + 1,
+        nome_completo: finalNome,
         nome: finalNome,
         name: finalNome,
+        email: finalEmail,
         login: finalLogin,
         username: finalLogin,
+        telefone: finalTelefone,
+        data_nascimento: finalDataNasc,
         senha_hash: hash,
         password_hash: hash,
         role: safeRole,
@@ -685,6 +763,36 @@ const dbService = {
       persistJsonStore();
       const { password_hash, senha_hash, ...safe } = newUser;
       return safe;
+    }
+  },
+
+  updateUserRole: (emailOrId, newRole) => {
+    const validRoles = ['superadmin', 'admin', 'atendente', 'motoboy', 'cliente'];
+    if (!validRoles.includes(newRole)) throw new Error('Cargo inválido: ' + newRole);
+
+    if (dbDriver === 'sqlite') {
+      if (typeof emailOrId === 'number' || (!isNaN(Number(emailOrId)) && String(emailOrId).indexOf('@') === -1)) {
+        sqliteDb.prepare('UPDATE usuarios SET role = ? WHERE id = ?').run(newRole, Number(emailOrId));
+        return dbService.getUserById(Number(emailOrId));
+      } else {
+        const clean = String(emailOrId).trim().toLowerCase();
+        sqliteDb.prepare('UPDATE usuarios SET role = ? WHERE LOWER(email) = ? OR LOWER(login) = ?').run(newRole, clean, clean);
+        return dbService.getUserByUsernameOrEmail(clean);
+      }
+    } else {
+      const list = jsonStore.usuarios || [];
+      const user = list.find(u => 
+        u.id === Number(emailOrId) || 
+        (u.email && u.email.toLowerCase() === String(emailOrId).toLowerCase()) ||
+        (u.login && u.login.toLowerCase() === String(emailOrId).toLowerCase())
+      );
+      if (user) {
+        user.role = newRole;
+        persistJsonStore();
+        const { password_hash, senha_hash, ...safe } = user;
+        return safe;
+      }
+      return null;
     }
   },
 

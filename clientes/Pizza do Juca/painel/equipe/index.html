@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de Equipe & Permissões | Pizza do Juca</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/assets/juca-api.js"></script>
+  <script src="/assets/auth-guard.js"></script>
+  <script>
+    if (!window.JucaAuthGuard) {
+      document.write('<script src="../../assets/auth-guard.js"><\/script>');
+    }
+  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased selection:bg-orange-500 selection:text-white p-4 sm:p-6 lg:p-8">
+
+  <div class="mx-auto max-w-6xl">
+    
+    <!-- Topo / Cabeçalho -->
+    <header class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-800/80">
+      <div class="flex items-center gap-3.5">
+        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-md shadow-orange-500/20 p-2">
+          <img src="/logo_juca.png" alt="Pizza do Juca" class="h-10 w-10 object-contain" onerror="this.src='/logo.png'">
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-lg font-black text-white sm:text-xl">Gestão de Equipe & Permissões</h1>
+            <span id="role-pill-badge" class="rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider bg-orange-500/20 text-orange-400 border border-orange-500/30">
+              Carregando...
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 mt-0.5">Controle de acessos operacionais por e-mail</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+        <a 
+          href="../pedidos/" 
+          class="inline-flex items-center gap-1.5 rounded-xl border border-slate-800 bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-300 hover:text-white hover:border-slate-700 transition"
+        >
+          <i data-lucide="layout-dashboard" class="h-4 w-4 text-orange-400"></i>
+          <span>Central de Pedidos</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Alertas Globais -->
+    <div id="team-alert" class="hidden mt-6 rounded-2xl border p-4 text-xs flex items-center gap-3 transition">
+      <i id="team-alert-icon" data-lucide="info" class="h-5 w-5 shrink-0"></i>
+      <span id="team-alert-msg" class="font-medium">Mensagem</span>
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- ÁREA 1: FORMULÁRIO DE CONCESSÃO DE ACESSO                -->
+    <!-- ======================================================== -->
+    <section class="mt-6 rounded-3xl border border-slate-800/80 bg-slate-900/70 p-6 sm:p-7 shadow-xl backdrop-blur-md">
+      
+      <!-- Cabeçalho do Card dependendo do papel -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-5 border-b border-slate-800/60">
+        <div>
+          <h2 id="grant-card-title" class="text-base font-extrabold text-white flex items-center gap-2">
+            <i data-lucide="user-check" class="h-5 w-5 text-emerald-400"></i>
+            <span>Liberar Permissão de Acesso</span>
+          </h2>
+          <p id="grant-card-desc" class="text-xs text-slate-400 mt-0.5">
+            Digite o e-mail da pessoa cadastrada e escolha a função correspondente.
+          </p>
+        </div>
+        <div class="text-[11px] font-bold text-slate-500 bg-slate-950 px-3 py-1.5 rounded-xl border border-slate-800 inline-flex items-center gap-1.5">
+          <i data-lucide="info" class="h-3.5 w-3.5 text-blue-400"></i>
+          <span>O usuário precisa criar a conta dele no site primeiro</span>
+        </div>
+      </div>
+
+      <form id="form-grant-role" onsubmit="handleGrantRoleSubmit(event)" class="mt-5 grid grid-cols-1 sm:grid-cols-12 gap-3.5 items-end">
+        
+        <div class="sm:col-span-6">
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">E-mail da Pessoa Cadastrada</label>
+          <div class="relative">
+            <i data-lucide="mail" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+            <input 
+              type="email" 
+              id="grant-email" 
+              required 
+              placeholder="ex: atendente@gmail.com ou motoboy@gmail.com"
+              class="w-full rounded-2xl border border-slate-800 bg-slate-950 py-3 pl-10 pr-4 text-xs sm:text-sm font-semibold text-white placeholder-slate-600 outline-none focus:border-orange-500 transition"
+            >
+          </div>
+        </div>
+
+        <div class="sm:col-span-3">
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">Função a Liberar</label>
+          <select 
+            id="grant-role-select" 
+            class="w-full rounded-2xl border border-slate-800 bg-slate-950 py-3 px-3 text-xs sm:text-sm font-semibold text-white outline-none focus:border-orange-500 transition cursor-pointer"
+          >
+            <option value="atendente">🍕 Atendente (Balcão / KDS)</option>
+            <option value="motoboy">🛵 Motoboy (Entregas)</option>
+            <!-- Opção de Gestor adicionada dinamicamente para superadmin -->
+          </select>
+        </div>
+
+        <div class="sm:col-span-3">
+          <button 
+            type="submit" 
+            id="btn-grant-submit"
+            class="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-600 to-amber-600 py-3 text-xs sm:text-sm font-black text-white hover:brightness-110 shadow-lg shadow-orange-600/25 transition active:scale-[0.98]"
+          >
+            <i data-lucide="shield-check" class="h-4 w-4"></i>
+            <span>Liberar Acesso</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ======================================================== -->
+    <!-- ÁREA 2: LISTAGEM DE USUÁRIOS / EQUIPE                    -->
+    <!-- ======================================================== -->
+    <section class="mt-8 rounded-3xl border border-slate-800/80 bg-slate-900/70 p-6 sm:p-7 shadow-xl backdrop-blur-md">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-5 border-b border-slate-800/60">
+        <div>
+          <h2 id="list-title" class="text-base font-extrabold text-white flex items-center gap-2">
+            <i data-lucide="users" class="h-5 w-5 text-orange-400"></i>
+            <span>Membros e Acessos Ativos</span>
+          </h2>
+          <p id="list-desc" class="text-xs text-slate-400 mt-0.5">
+            Gerencie as permissões e veja quem está habilitado para atuar no sistema.
+          </p>
+        </div>
+
+        <div class="relative w-full sm:w-64">
+          <i data-lucide="search" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-slate-500"></i>
+          <input 
+            type="text" 
+            id="search-users-input" 
+            oninput="filterUsersList()"
+            placeholder="Buscar por nome ou e-mail..."
+            class="w-full rounded-xl border border-slate-800 bg-slate-950 py-2 pl-9 pr-3 text-xs font-medium text-white placeholder-slate-600 outline-none focus:border-orange-500 transition"
+          >
+        </div>
+      </div>
+
+      <!-- Tabela Responsiva de Usuários -->
+      <div class="mt-4 overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="border-b border-slate-800 text-[11px] font-extrabold uppercase tracking-wider text-slate-400">
+              <th class="py-3 px-3">Nome Completo</th>
+              <th class="py-3 px-3">E-mail</th>
+              <th class="py-3 px-3">Telefone</th>
+              <th class="py-3 px-3">Função Atual</th>
+              <th class="py-3 px-3 text-right">Ação</th>
+            </tr>
+          </thead>
+          <tbody id="users-table-body" class="divide-y divide-slate-800/50">
+            <tr>
+              <td colspan="5" class="py-8 text-center text-slate-500 font-medium">
+                <i data-lucide="loader-2" class="h-5 w-5 animate-spin mx-auto mb-2 text-orange-400"></i>
+                Carregando lista de acessos...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </div>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+
+    let currentLoggedUser = null;
+    let allUsersCache = [];
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      currentLoggedUser = (window.JucaAuthGuard && window.JucaAuthGuard.getUser()) || 
+                          (window.JucaAPI && window.JucaAPI.getCurrentUser());
+
+      if (!currentLoggedUser) {
+        window.location.replace('../login/');
+        return;
+      }
+
+      setupPageByRole(currentLoggedUser.role);
+      await loadTeamData();
+    });
+
+    function setupPageByRole(role) {
+      const r = (role || '').toLowerCase();
+      const rolePill = document.getElementById('role-pill-badge');
+      const select = document.getElementById('grant-role-select');
+
+      if (r === 'superadmin') {
+        rolePill.textContent = 'Master Global (Superadmin)';
+        rolePill.className = 'rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider bg-amber-500/20 text-amber-300 border border-amber-500/30';
+        
+        // Adicionar opção de Gestor Geral no select
+        const optAdmin = document.createElement('option');
+        optAdmin.value = 'admin';
+        optAdmin.textContent = '👑 Gestor Geral da Loja (Admin - Juca)';
+        select.prepend(optAdmin);
+        select.value = 'admin';
+
+        document.getElementById('grant-card-title').innerHTML = `
+          <i data-lucide="crown" class="h-5 w-5 text-amber-400"></i>
+          <span>Controle Global Teixo — Conceder Gestor ou Equipe</span>
+        `;
+        document.getElementById('grant-card-desc').textContent = 
+          'Como Superadmin, você pode nomear o Juca como Gestor Geral da Loja ou delegar qualquer outra função.';
+      } else {
+        rolePill.textContent = 'Gestor Geral da Pizzaria';
+        rolePill.className = 'rounded-full px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider bg-orange-500/20 text-orange-400 border border-orange-500/30';
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    async function loadTeamData() {
+      try {
+        const res = await window.JucaAPI.getEquipe();
+        if (res && res.success && Array.isArray(res.users)) {
+          allUsersCache = res.users;
+          renderUsersTable(allUsersCache);
+        } else {
+          showNotification((res && res.error) || 'Não foi possível carregar a equipe.', 'error');
+        }
+      } catch (err) {
+        showNotification(err.message || 'Erro ao consultar usuários.', 'error');
+      }
+    }
+
+    function renderUsersTable(users) {
+      const tbody = document.getElementById('users-table-body');
+      tbody.innerHTML = '';
+
+      if (!users || users.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="5" class="py-8 text-center text-slate-500">
+              Nenhum usuário cadastrado no momento.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      users.forEach(u => {
+        const tr = document.createElement('tr');
+        tr.className = 'hover:bg-slate-800/30 transition';
+
+        const roleBadges = {
+          superadmin: '<span class="rounded-lg bg-amber-500/10 px-2 py-0.5 font-bold text-amber-400 border border-amber-500/20">👑 Master Global</span>',
+          admin: '<span class="rounded-lg bg-orange-500/10 px-2 py-0.5 font-bold text-orange-400 border border-orange-500/20">🍕 Gestor Geral</span>',
+          atendente: '<span class="rounded-lg bg-blue-500/10 px-2 py-0.5 font-bold text-blue-400 border border-blue-500/20">📋 Atendente</span>',
+          motoboy: '<span class="rounded-lg bg-emerald-500/10 px-2 py-0.5 font-bold text-emerald-400 border border-emerald-500/20">🛵 Motoboy</span>',
+          cliente: '<span class="rounded-lg bg-slate-800 px-2 py-0.5 font-bold text-slate-400 border border-slate-700">👤 Cliente</span>'
+        };
+
+        const badgeHtml = roleBadges[u.role] || roleBadges.cliente;
+
+        // Ações disponíveis conforme hierarquia
+        let actionHtml = '';
+        const isSelf = currentLoggedUser && (currentLoggedUser.id === u.id || currentLoggedUser.email === u.email);
+        const myRole = (currentLoggedUser && currentLoggedUser.role || '').toLowerCase();
+
+        if (isSelf) {
+          actionHtml = `<span class="text-[10px] text-slate-500 font-bold uppercase">(Sua Conta)</span>`;
+        } else if (myRole === 'superadmin') {
+          // Superadmin pode promover a admin, atendente, motoboy ou voltar para cliente
+          actionHtml = `
+            <div class="flex items-center justify-end gap-1.5">
+              ${u.role !== 'admin' ? `
+                <button 
+                  onclick="changeRole('${u.email}', 'admin')" 
+                  class="rounded-lg border border-orange-500/30 bg-orange-500/10 px-2 py-1 text-[10px] font-black text-orange-300 hover:bg-orange-500/20 transition"
+                  title="Tornar Gestor Geral da Loja"
+                >
+                  👑 Tornar Gestor
+                </button>
+              ` : ''}
+              ${u.role !== 'cliente' ? `
+                <button 
+                  onclick="revokeAccess('${u.email}')" 
+                  class="rounded-lg border border-red-500/30 bg-red-500/10 px-2 py-1 text-[10px] font-black text-red-400 hover:bg-red-500/20 transition"
+                  title="Retornar para Cliente"
+                >
+                  Revogar
+                </button>
+              ` : `
+                <button 
+                  onclick="changeRole('${u.email}', 'atendente')" 
+                  class="rounded-lg border border-blue-500/30 bg-blue-500/10 px-2 py-1 text-[10px] font-black text-blue-300 hover:bg-blue-500/20 transition"
+                >
+                  + Atendente
+                </button>
+                <button 
+                  onclick="changeRole('${u.email}', 'motoboy')" 
+                  class="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-[10px] font-black text-emerald-300 hover:bg-emerald-500/20 transition"
+                >
+                  + Motoboy
+                </button>
+              `}
+            </div>
+          `;
+        } else if (myRole === 'admin') {
+          // Gestor da loja só pode mexer em atendente e motoboy (não pode mexer em admin nem superadmin)
+          if (u.role === 'admin' || u.role === 'superadmin') {
+            actionHtml = `<span class="text-[10px] text-slate-600 font-bold">Protegido</span>`;
+          } else if (u.role === 'atendente' || u.role === 'motoboy') {
+            actionHtml = `
+              <button 
+                onclick="revokeAccess('${u.email}')" 
+                class="rounded-lg border border-red-500/30 bg-red-500/10 px-2.5 py-1 text-[10px] font-black text-red-400 hover:bg-red-500/20 transition"
+              >
+                Remover da Equipe
+              </button>
+            `;
+          } else {
+            // É cliente: pode promover para atendente ou motoboy
+            actionHtml = `
+              <div class="flex items-center justify-end gap-1.5">
+                <button 
+                  onclick="changeRole('${u.email}', 'atendente')" 
+                  class="rounded-lg border border-blue-500/30 bg-blue-500/10 px-2 py-1 text-[10px] font-black text-blue-300 hover:bg-blue-500/20 transition"
+                >
+                  + Atendente
+                </button>
+                <button 
+                  onclick="changeRole('${u.email}', 'motoboy')" 
+                  class="rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-2 py-1 text-[10px] font-black text-emerald-300 hover:bg-emerald-500/20 transition"
+                >
+                  + Motoboy
+                </button>
+              </div>
+            `;
+          }
+        }
+
+        tr.innerHTML = `
+          <td class="py-3 px-3">
+            <div class="font-extrabold text-white text-xs">${u.nome_completo || u.nome || '-'}</div>
+            ${u.data_nascimento ? `<div class="text-[10px] text-slate-500">Nasc: ${u.data_nascimento}</div>` : ''}
+          </td>
+          <td class="py-3 px-3 font-mono text-[11px] text-slate-300">
+            ${u.email || u.login}
+          </td>
+          <td class="py-3 px-3 text-slate-400 font-medium text-[11px]">
+            ${u.telefone || '-'}
+          </td>
+          <td class="py-3 px-3">
+            ${badgeHtml}
+          </td>
+          <td class="py-3 px-3 text-right">
+            ${actionHtml}
+          </td>
+        `;
+
+        tbody.appendChild(tr);
+      });
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function filterUsersList() {
+      const q = document.getElementById('search-users-input').value.toLowerCase().trim();
+      if (!q) {
+        renderUsersTable(allUsersCache);
+        return;
+      }
+      const filtered = allUsersCache.filter(u => 
+        (u.nome_completo && u.nome_completo.toLowerCase().includes(q)) ||
+        (u.nome && u.nome.toLowerCase().includes(q)) ||
+        (u.email && u.email.toLowerCase().includes(q)) ||
+        (u.telefone && u.telefone.toLowerCase().includes(q)) ||
+        (u.role && u.role.toLowerCase().includes(q))
+      );
+      renderUsersTable(filtered);
+    }
+
+    async function handleGrantRoleSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('grant-email').value.trim();
+      const role = document.getElementById('grant-role-select').value;
+      const btn = document.getElementById('btn-grant-submit');
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="h-4 w-4 animate-spin"></i><span>Liberando...</span>`;
+      if (window.lucide) lucide.createIcons();
+
+      try {
+        const res = await window.JucaAPI.promoverMembro(email, role);
+        if (res && res.success) {
+          showNotification(res.message || 'Permissão concedida com sucesso!', 'success');
+          document.getElementById('grant-email').value = '';
+          await loadTeamData();
+        } else {
+          showNotification((res && res.error) || 'Não foi possível conceder permissão.', 'error');
+        }
+      } catch (err) {
+        showNotification(err.message || 'Erro ao conectar à API.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<i data-lucide="shield-check" class="h-4 w-4"></i><span>Liberar Acesso</span>`;
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
+    async function changeRole(email, newRole) {
+      if (!confirm(`Deseja alterar a função de "${email}" para [${newRole.toUpperCase()}]?`)) return;
+      try {
+        const res = await window.JucaAPI.promoverMembro(email, newRole);
+        if (res && res.success) {
+          showNotification(res.message || 'Função atualizada com sucesso!', 'success');
+          await loadTeamData();
+        } else {
+          showNotification((res && res.error) || 'Erro ao alterar função.', 'error');
+        }
+      } catch (err) {
+        showNotification(err.message || 'Erro de conexão.', 'error');
+      }
+    }
+
+    async function revokeAccess(email) {
+      if (!confirm(`Deseja revogar o acesso da equipe de "${email}" e retorná-lo para Cliente?`)) return;
+      try {
+        const res = await window.JucaAPI.removerMembro(email);
+        if (res && res.success) {
+          showNotification(res.message || 'Acesso revogado com sucesso.', 'success');
+          await loadTeamData();
+        } else {
+          showNotification((res && res.error) || 'Erro ao revogar acesso.', 'error');
+        }
+      } catch (err) {
+        showNotification(err.message || 'Erro de conexão.', 'error');
+      }
+    }
+
+    function showNotification(msg, type = 'info') {
+      const box = document.getElementById('team-alert');
+      const text = document.getElementById('team-alert-msg');
+      const icon = document.getElementById('team-alert-icon');
+      box.classList.remove('hidden');
+      text.textContent = msg;
+
+      if (type === 'success') {
+        box.className = 'mt-6 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-xs text-emerald-300 flex items-center gap-3';
+        icon.setAttribute('data-lucide', 'check-circle-2');
+      } else if (type === 'error') {
+        box.className = 'mt-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-xs text-red-300 flex items-center gap-3';
+        icon.setAttribute('data-lucide', 'alert-circle');
+      } else {
+        box.className = 'mt-6 rounded-2xl border border-blue-500/30 bg-blue-500/10 p-4 text-xs text-blue-300 flex items-center gap-3';
+        icon.setAttribute('data-lucide', 'info');
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

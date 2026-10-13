@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Acesso Seguro ao Painel | Pizza do Juca</title>
+  <title>Acesso & Cadastro | Pizza do Juca</title>
   <link rel="icon" href="/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,54 +28,80 @@
     }
   </script>
 </head>
-<body class="min-h-screen bg-slate-950 flex items-center justify-center p-4 font-sans text-slate-100 antialiased selection:bg-orange-500 selection:text-white relative overflow-hidden">
+<body class="min-h-screen bg-slate-950 flex items-center justify-center p-4 font-sans text-slate-100 antialiased selection:bg-orange-500 selection:text-white relative overflow-x-hidden">
 
   <!-- Brilho de fundo ambiental -->
   <div class="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-orange-600/15 blur-3xl pointer-events-none"></div>
   <div class="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-blue-600/10 blur-3xl pointer-events-none"></div>
 
-  <main class="w-full max-w-md relative z-10">
-    <div class="rounded-3xl border border-slate-800/80 bg-slate-900/90 p-7 sm:p-8 shadow-2xl backdrop-blur-xl">
+  <main class="w-full max-w-lg relative z-10 my-8">
+    <div class="rounded-3xl border border-slate-800/80 bg-slate-900/90 p-6 sm:p-8 shadow-2xl backdrop-blur-xl">
       
       <!-- Cabeçalho -->
       <div class="text-center">
         <div class="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-lg shadow-orange-500/20 p-2">
           <img src="/logo_juca.png" alt="Pizza do Juca" class="h-12 w-12 object-contain" onerror="this.src='/logo.png'">
         </div>
-        <h1 class="text-xl font-black text-white sm:text-2xl">Acesso ao Painel Operacional</h1>
-        <p class="mt-1 text-xs text-slate-400">Entre com as suas credenciais para acessar o sistema</p>
+        <h1 class="text-xl font-black text-white sm:text-2xl">Pizza do Juca</h1>
+        <p class="mt-1 text-xs text-slate-400">Identificação segura da conta</p>
       </div>
 
-      <!-- Alerta de Erro -->
-      <div id="login-error-alert" class="hidden mt-4 rounded-2xl border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300 flex items-center gap-2">
-        <i data-lucide="alert-circle" class="h-4 w-4 shrink-0 text-red-400"></i>
-        <span id="login-error-msg">Usuário ou senha incorretos.</span>
+      <!-- Abas: Entrar / Criar Conta -->
+      <div class="mt-6 flex rounded-2xl bg-slate-950/80 p-1 border border-slate-800">
+        <button 
+          type="button" 
+          id="tab-btn-login" 
+          onclick="switchTab('login')" 
+          class="flex-1 rounded-xl py-2.5 text-xs font-black transition text-white bg-slate-800 shadow-sm flex items-center justify-center gap-2"
+        >
+          <i data-lucide="log-in" class="h-4 w-4 text-orange-400"></i>
+          <span>Entrar</span>
+        </button>
+        <button 
+          type="button" 
+          id="tab-btn-register" 
+          onclick="switchTab('register')" 
+          class="flex-1 rounded-xl py-2.5 text-xs font-bold transition text-slate-400 hover:text-white flex items-center justify-center gap-2"
+        >
+          <i data-lucide="user-plus" class="h-4 w-4"></i>
+          <span>Criar Minha Conta</span>
+        </button>
       </div>
 
-      <!-- Formulário de Login -->
-      <form id="login-form" onsubmit="handleLoginSubmit(event)" class="mt-6 space-y-4">
+      <!-- Alerta Geral (Erro ou Sucesso) -->
+      <div id="auth-alert" class="hidden mt-4 rounded-2xl border p-3.5 text-xs flex items-center gap-2.5 transition">
+        <i id="auth-alert-icon" data-lucide="alert-circle" class="h-4 w-4 shrink-0"></i>
+        <span id="auth-alert-msg">Mensagem de status</span>
+      </div>
+
+      <!-- ========================================== -->
+      <!-- ABA 1: FORMULÁRIO DE LOGIN                 -->
+      <!-- ========================================== -->
+      <form id="form-login" onsubmit="handleLoginSubmit(event)" class="mt-5 space-y-4">
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5">Usuário ou Login</label>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">E-mail ou Usuário</label>
           <div class="relative">
-            <i data-lucide="user" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+            <i data-lucide="mail" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
             <input 
               type="text" 
-              id="input-username" 
+              id="login-identifier" 
               required 
-              autocomplete="username"
-              placeholder="ex: admin, balcao ou rafael"
+              autocomplete="email"
+              placeholder="seuemail@exemplo.com"
               class="w-full rounded-2xl border border-slate-800 bg-slate-950/70 py-3 pl-10 pr-4 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-orange-500 transition"
             >
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1.5">Senha de Acesso</label>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-bold text-slate-300">Senha Pessoal</label>
+          </div>
           <div class="relative">
             <i data-lucide="lock" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
             <input 
               type="password" 
-              id="input-password" 
+              id="login-password" 
               required 
               autocomplete="current-password"
               placeholder="Digite sua senha"
@@ -83,11 +109,11 @@
             >
             <button 
               type="button" 
-              onclick="togglePasswordVisibility()" 
+              onclick="togglePasswordVisibility('login-password', 'login-eye')" 
               class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
               title="Mostrar/ocultar senha"
             >
-              <i data-lucide="eye" id="toggle-eye-icon" class="h-4 w-4"></i>
+              <i data-lucide="eye" id="login-eye" class="h-4 w-4"></i>
             </button>
           </div>
         </div>
@@ -97,49 +123,141 @@
           id="btn-login-submit"
           class="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-600 to-amber-600 py-3.5 text-sm font-black text-white hover:brightness-110 shadow-lg shadow-orange-600/25 transition active:scale-[0.98]"
         >
-          <span>Entrar no Painel</span>
+          <span>Acessar Conta</span>
           <i data-lucide="arrow-right" class="h-4 w-4"></i>
         </button>
       </form>
 
-      <!-- Acesso Rápido para Demonstração (Permissões RBAC) -->
-      <div class="mt-6 border-t border-slate-800/80 pt-5">
-        <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-2.5 text-center">
-          Credenciais Padrão de Homologação
+      <!-- ========================================== -->
+      <!-- ABA 2: FORMULÁRIO DE CADASTRO              -->
+      <!-- ========================================== -->
+      <form id="form-register" onsubmit="handleRegisterSubmit(event)" class="hidden mt-5 space-y-3.5">
+        
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Nome Completo</label>
+          <div class="relative">
+            <i data-lucide="user" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+            <input 
+              type="text" 
+              id="reg-nome" 
+              required 
+              placeholder="ex: João da Silva"
+              class="w-full rounded-2xl border border-slate-800 bg-slate-950/70 py-2.5 pl-10 pr-4 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-orange-500 transition"
+            >
+          </div>
         </div>
-        <div class="grid grid-cols-3 gap-2 text-center text-[11px]">
-          <button 
-            type="button"
-            onclick="fillCredentials('admin', 'juca@admin2026')"
-            class="rounded-xl border border-slate-800 bg-slate-950/60 p-2 hover:border-orange-500/40 hover:bg-slate-800/50 transition group"
-          >
-            <div class="font-black text-orange-400 group-hover:text-orange-300">Gestor</div>
-            <div class="text-[9px] text-slate-400 font-mono mt-0.5">admin</div>
-          </button>
 
-          <button 
-            type="button"
-            onclick="fillCredentials('balcao', 'balcao@juca')"
-            class="rounded-xl border border-slate-800 bg-slate-950/60 p-2 hover:border-blue-500/40 hover:bg-slate-800/50 transition group"
-          >
-            <div class="font-black text-blue-400 group-hover:text-blue-300">Atendente</div>
-            <div class="text-[9px] text-slate-400 font-mono mt-0.5">balcao</div>
-          </button>
-
-          <button 
-            type="button"
-            onclick="fillCredentials('rafael', 'moto@rafael')"
-            class="rounded-xl border border-slate-800 bg-slate-950/60 p-2 hover:border-emerald-500/40 hover:bg-slate-800/50 transition group"
-          >
-            <div class="font-black text-emerald-400 group-hover:text-emerald-300">Motoboy</div>
-            <div class="text-[9px] text-slate-400 font-mono mt-0.5">rafael</div>
-          </button>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">E-mail Pessoal</label>
+          <div class="relative">
+            <i data-lucide="mail" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+            <input 
+              type="email" 
+              id="reg-email" 
+              required 
+              placeholder="ex: joao@gmail.com"
+              class="w-full rounded-2xl border border-slate-800 bg-slate-950/70 py-2.5 pl-10 pr-4 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-orange-500 transition"
+            >
+          </div>
         </div>
-      </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">Telefone / WhatsApp</label>
+            <div class="relative">
+              <i data-lucide="phone" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+              <input 
+                type="tel" 
+                id="reg-telefone" 
+                required 
+                placeholder="(21) 99999-9999"
+                oninput="maskPhone(this)"
+                class="w-full rounded-2xl border border-slate-800 bg-slate-950/70 py-2.5 pl-10 pr-4 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-orange-500 transition"
+              >
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">Data de Nascimento</label>
+            <div class="relative">
+              <i data-lucide="calendar" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+              <input 
+                type="text" 
+                id="reg-nascimento" 
+                placeholder="DD/MM/AAAA"
+                maxlength="10"
+                oninput="maskDate(this)"
+                class="w-full rounded-2xl border border-slate-800 bg-slate-950/70 py-2.5 pl-10 pr-4 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-orange-500 transition"
+              >
+            </div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">Senha Pessoal</label>
+            <div class="relative">
+              <i data-lucide="lock" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+              <input 
+                type="password" 
+                id="reg-senha" 
+                required 
+                placeholder="Mínimo 4 caracteres"
+                class="w-full rounded-2xl border border-slate-800 bg-slate-950/70 py-2.5 pl-10 pr-10 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-orange-500 transition"
+              >
+              <button 
+                type="button" 
+                onclick="togglePasswordVisibility('reg-senha', 'reg-eye-1')" 
+                class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+              >
+                <i data-lucide="eye" id="reg-eye-1" class="h-4 w-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-300 mb-1">Confirmar Senha</label>
+            <div class="relative">
+              <i data-lucide="check" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+              <input 
+                type="password" 
+                id="reg-confirma" 
+                required 
+                placeholder="Repita a senha"
+                class="w-full rounded-2xl border border-slate-800 bg-slate-950/70 py-2.5 pl-10 pr-4 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-orange-500 transition"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Aviso transparente sobre o perfil de cliente -->
+        <div class="rounded-2xl border border-blue-500/20 bg-blue-500/5 p-3 text-[11px] text-blue-300 flex items-start gap-2">
+          <i data-lucide="info" class="h-4 w-4 shrink-0 text-blue-400 mt-0.5"></i>
+          <div>
+            Ao criar sua conta, ela é ativada no perfil de <strong>Cliente</strong>. Para atuar na equipe (Atendente ou Motoboy), o gestor da loja vinculará seu e-mail no painel dele.
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          id="btn-reg-submit"
+          class="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 py-3.5 text-sm font-black text-white hover:brightness-110 shadow-lg shadow-emerald-600/25 transition active:scale-[0.98]"
+        >
+          <span>Criar Minha Conta</span>
+          <i data-lucide="check-circle" class="h-4 w-4"></i>
+        </button>
+      </form>
 
       <!-- Rodapé -->
-      <div class="mt-5 text-center text-[10px] text-slate-500">
-        Plataforma protegida com criptografia <span class="font-mono text-slate-400">bcrypt</span> e tokens <span class="font-mono text-slate-400">JWT</span>
+      <div class="mt-6 border-t border-slate-800/80 pt-4 flex items-center justify-between text-[11px] text-slate-500">
+        <a href="/" class="hover:text-slate-300 transition flex items-center gap-1">
+          <i data-lucide="arrow-left" class="h-3 w-3"></i>
+          <span>Voltar ao Cardápio</span>
+        </a>
+        <div class="flex items-center gap-1.5 font-mono text-[10px] text-slate-400">
+          <i data-lucide="shield-check" class="h-3.5 w-3.5 text-emerald-400"></i>
+          <span>Segurança bcrypt + JWT</span>
+        </div>
       </div>
 
     </div>
@@ -159,14 +277,52 @@
       }
     })();
 
-    function fillCredentials(u, p) {
-      document.getElementById('input-username').value = u;
-      document.getElementById('input-password').value = p;
+    function switchTab(tab) {
+      clearAlert();
+      const loginTab = document.getElementById('tab-btn-login');
+      const regTab = document.getElementById('tab-btn-register');
+      const loginForm = document.getElementById('form-login');
+      const regForm = document.getElementById('form-register');
+
+      if (tab === 'login') {
+        loginTab.className = 'flex-1 rounded-xl py-2.5 text-xs font-black transition text-white bg-slate-800 shadow-sm flex items-center justify-center gap-2';
+        regTab.className = 'flex-1 rounded-xl py-2.5 text-xs font-bold transition text-slate-400 hover:text-white flex items-center justify-center gap-2';
+        loginForm.classList.remove('hidden');
+        regForm.classList.add('hidden');
+      } else {
+        regTab.className = 'flex-1 rounded-xl py-2.5 text-xs font-black transition text-white bg-slate-800 shadow-sm flex items-center justify-center gap-2';
+        loginTab.className = 'flex-1 rounded-xl py-2.5 text-xs font-bold transition text-slate-400 hover:text-white flex items-center justify-center gap-2';
+        regForm.classList.remove('hidden');
+        loginForm.classList.add('hidden');
+      }
+      if (window.lucide) lucide.createIcons();
     }
 
-    function togglePasswordVisibility() {
-      const input = document.getElementById('input-password');
-      const icon = document.getElementById('toggle-eye-icon');
+    function showAlert(msg, type = 'error') {
+      const box = document.getElementById('auth-alert');
+      const text = document.getElementById('auth-alert-msg');
+      const icon = document.getElementById('auth-alert-icon');
+      box.classList.remove('hidden');
+      text.textContent = msg;
+
+      if (type === 'success') {
+        box.className = 'mt-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-3.5 text-xs text-emerald-300 flex items-center gap-2.5';
+        icon.setAttribute('data-lucide', 'check-circle');
+      } else {
+        box.className = 'mt-4 rounded-2xl border border-red-500/30 bg-red-500/10 p-3.5 text-xs text-red-300 flex items-center gap-2.5';
+        icon.setAttribute('data-lucide', 'alert-circle');
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function clearAlert() {
+      const box = document.getElementById('auth-alert');
+      box.classList.add('hidden');
+    }
+
+    function togglePasswordVisibility(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
       if (input.type === 'password') {
         input.type = 'text';
         icon.setAttribute('data-lucide', 'eye-off');
@@ -177,50 +333,121 @@
       if (window.lucide) lucide.createIcons();
     }
 
+    function maskPhone(input) {
+      let v = input.value.replace(/\D/g, '');
+      if (v.length > 11) v = v.slice(0, 11);
+      if (v.length > 6) {
+        input.value = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
+      } else if (v.length > 2) {
+        input.value = `(${v.slice(0,2)}) ${v.slice(2)}`;
+      } else if (v.length > 0) {
+        input.value = `(${v}`;
+      } else {
+        input.value = '';
+      }
+    }
+
+    function maskDate(input) {
+      let v = input.value.replace(/\D/g, '');
+      if (v.length > 8) v = v.slice(0, 8);
+      if (v.length > 4) {
+        input.value = `${v.slice(0,2)}/${v.slice(2,4)}/${v.slice(4)}`;
+      } else if (v.length > 2) {
+        input.value = `${v.slice(0,2)}/${v.slice(2)}`;
+      } else {
+        input.value = v;
+      }
+    }
+
     function redirectByRole(role) {
-      if (role === 'motoboy') {
+      const r = (role || '').toLowerCase();
+      if (r === 'cliente') {
+        window.location.href = '../cliente/';
+      } else if (r === 'motoboy') {
         window.location.href = '../motoboy/';
-      } else if (role === 'atendente') {
+      } else if (r === 'atendente') {
         window.location.href = '../pedidos/';
       } else {
-        // Admin vai para pedidos ou visão geral
+        // admin ou superadmin
         window.location.href = '../pedidos/';
       }
     }
 
     async function handleLoginSubmit(e) {
       e.preventDefault();
-      const errBox = document.getElementById('login-error-alert');
-      const errMsg = document.getElementById('login-error-msg');
+      clearAlert();
       const btn = document.getElementById('btn-login-submit');
-
-      errBox.classList.add('hidden');
-
-      const username = document.getElementById('input-username').value.trim();
-      const password = document.getElementById('input-password').value;
+      const identifier = document.getElementById('login-identifier').value.trim();
+      const password = document.getElementById('login-password').value;
 
       btn.disabled = true;
-      btn.innerHTML = `<i data-lucide="loader-2" class="h-4 w-4 animate-spin"></i><span>Autenticando...</span>`;
+      btn.innerHTML = `<i data-lucide="loader-2" class="h-4 w-4 animate-spin"></i><span>Entrando...</span>`;
       if (window.lucide) lucide.createIcons();
 
       try {
-        if (!window.JucaAPI || !window.JucaAPI.login) {
-          throw new Error('Módulo de API não carregado.');
-        }
-
-        const res = await window.JucaAPI.login(username, password);
+        const res = await window.JucaAPI.login(identifier, password);
         if (res && res.success && res.user) {
           redirectByRole(res.user.role);
         } else {
-          errMsg.textContent = (res && res.error) || 'Usuário ou senha incorretos.';
-          errBox.classList.remove('hidden');
+          showAlert((res && res.error) || 'E-mail ou senha incorretos.', 'error');
         }
       } catch (err) {
-        errMsg.textContent = err.message || 'Erro ao conectar com o servidor.';
-        errBox.classList.remove('hidden');
+        showAlert(err.message || 'Erro ao conectar ao servidor.', 'error');
       } finally {
         btn.disabled = false;
-        btn.innerHTML = `<span>Entrar no Painel</span><i data-lucide="arrow-right" class="h-4 w-4"></i>`;
+        btn.innerHTML = `<span>Acessar Conta</span><i data-lucide="arrow-right" class="h-4 w-4"></i>`;
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+
+    async function handleRegisterSubmit(e) {
+      e.preventDefault();
+      clearAlert();
+
+      const btn = document.getElementById('btn-reg-submit');
+      const nome = document.getElementById('reg-nome').value.trim();
+      const email = document.getElementById('reg-email').value.trim();
+      const telefone = document.getElementById('reg-telefone').value.trim();
+      const nascimento = document.getElementById('reg-nascimento').value.trim();
+      const senha = document.getElementById('reg-senha').value;
+      const confirma = document.getElementById('reg-confirma').value;
+
+      if (senha !== confirma) {
+        showAlert('As senhas digitadas não coincidem.', 'error');
+        return;
+      }
+
+      if (senha.length < 4) {
+        showAlert('A senha deve ter no mínimo 4 caracteres.', 'error');
+        return;
+      }
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="h-4 w-4 animate-spin"></i><span>Criando sua conta...</span>`;
+      if (window.lucide) lucide.createIcons();
+
+      try {
+        const res = await window.JucaAPI.register({
+          nome_completo: nome,
+          email: email,
+          telefone: telefone,
+          data_nascimento: nascimento,
+          senha: senha
+        });
+
+        if (res && res.success && res.user) {
+          showAlert('Conta criada com sucesso! Redirecionando...', 'success');
+          setTimeout(() => {
+            redirectByRole(res.user.role);
+          }, 800);
+        } else {
+          showAlert((res && res.error) || 'Não foi possível criar a conta.', 'error');
+        }
+      } catch (err) {
+        showAlert(err.message || 'Erro ao registrar.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>Criar Minha Conta</span><i data-lucide="check-circle" class="h-4 w-4"></i>`;
         if (window.lucide) lucide.createIcons();
       }
     }

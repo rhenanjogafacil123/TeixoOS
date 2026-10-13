@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área do Cliente | Pizza do Juca</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/assets/juca-api.js"></script>
+  <script src="/assets/auth-guard.js"></script>
+  <script>
+    if (!window.JucaAuthGuard) {
+      document.write('<script src="../../assets/auth-guard.js"><\/script>');
+    }
+  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 flex items-center justify-center p-4 font-sans text-slate-100 antialiased selection:bg-orange-500 selection:text-white relative overflow-hidden">
+
+  <!-- Brilho ambiental -->
+  <div class="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-orange-600/15 blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-blue-600/10 blur-3xl pointer-events-none"></div>
+
+  <main class="w-full max-w-lg relative z-10">
+    <div class="rounded-3xl border border-slate-800/80 bg-slate-900/90 p-7 sm:p-9 shadow-2xl backdrop-blur-xl text-center">
+      
+      <!-- Ícone e Identidade -->
+      <div class="mx-auto mb-5 grid h-20 w-20 place-items-center rounded-3xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-xl shadow-orange-500/25 p-3">
+        <img src="/logo_juca.png" alt="Pizza do Juca" class="h-14 w-14 object-contain" onerror="this.src='/logo.png'">
+      </div>
+
+      <div class="inline-flex items-center gap-1.5 rounded-full border border-purple-500/30 bg-purple-500/10 px-3 py-1 text-xs font-black text-purple-300">
+        <i data-lucide="user" class="h-3.5 w-3.5"></i>
+        <span>Perfil: Cliente</span>
+      </div>
+
+      <h1 class="mt-4 text-2xl font-black text-white sm:text-3xl">
+        Olá, <span id="client-user-name" class="text-orange-400">Cliente</span>!
+      </h1>
+      
+      <p class="mt-2 text-xs sm:text-sm text-slate-400 max-w-md mx-auto leading-relaxed">
+        Sua conta pessoal foi criada com sucesso e está ativa para fazer pedidos com rapidez e acompanhar suas entregas.
+      </p>
+
+      <!-- Card com E-mail Cadastrado -->
+      <div class="mt-6 rounded-2xl border border-slate-800 bg-slate-950/60 p-4 text-left">
+        <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-500">Seu E-mail de Identificação</div>
+        <div id="client-user-email" class="mt-1 font-mono text-sm font-bold text-white break-all">
+          carregando...
+        </div>
+      </div>
+
+      <!-- Aviso para Membros de Equipe -->
+      <div class="mt-4 rounded-2xl border border-amber-500/20 bg-amber-500/5 p-4 text-left text-xs text-amber-200/90 flex items-start gap-3">
+        <i data-lucide="shield-alert" class="h-5 w-5 shrink-0 text-amber-400 mt-0.5"></i>
+        <div class="space-y-1">
+          <div class="font-bold text-white text-xs">Você faz parte da equipe da pizzaria?</div>
+          <p class="text-[11px] leading-relaxed text-slate-300">
+            Para acessar os módulos operacionais (<strong>Cozinha KDS</strong>, <strong>Balcão de Atendimento</strong> ou <strong>Rotas do Motoboy</strong>), informe seu e-mail acima para o gestor da loja. Ele liberará sua função de equipe imediatamente.
+          </p>
+        </div>
+      </div>
+
+      <!-- Botões de Ação -->
+      <div class="mt-6 space-y-2.5">
+        <a 
+          href="/" 
+          class="w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-600 to-amber-600 py-3.5 text-sm font-black text-white hover:brightness-110 shadow-lg shadow-orange-600/25 transition active:scale-[0.98]"
+        >
+          <i data-lucide="pizza" class="h-4 w-4"></i>
+          <span>Ir para o Cardápio & Fazer Pedido</span>
+        </a>
+
+        <button 
+          type="button" 
+          onclick="window.JucaAuthGuard.logout()"
+          class="w-full inline-flex items-center justify-center gap-2 rounded-2xl border border-slate-800 bg-slate-950/80 py-3 text-xs font-bold text-slate-400 hover:text-red-400 hover:border-red-500/30 transition"
+        >
+          <i data-lucide="log-out" class="h-3.5 w-3.5"></i>
+          <span>Encerrar Sessão / Trocar de Conta</span>
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+
+    // Carregar dados do usuário na tela
+    document.addEventListener('DOMContentLoaded', () => {
+      const u = (window.JucaAuthGuard && window.JucaAuthGuard.getUser()) || 
+                (window.JucaAPI && window.JucaAPI.getCurrentUser());
+      if (u) {
+        document.getElementById('client-user-name').textContent = u.nome_completo || u.nome || 'Cliente';
+        document.getElementById('client-user-email').textContent = u.email || u.login || '-';
+      }
+    });
+  </script>
+</body>
+</html>
