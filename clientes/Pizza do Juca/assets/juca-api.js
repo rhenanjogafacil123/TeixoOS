@@ -88,6 +88,22 @@ window.JucaAPI = (function() {
       });
     },
 
+    // 5.1 Buscar Carrinhos Abandonados
+    getAbandonedCarts: async function() {
+      const res = await request('/carrinho-abandonado');
+      if (res && res.success && Array.isArray(res.carts)) {
+        return res.carts;
+      }
+      return null;
+    },
+
+    // 5.2 Marcar Carrinho como Recuperado
+    markCartRecovered: async function(id) {
+      return await request(`/carrinho-abandonado/${id}/recuperado`, {
+        method: 'PATCH'
+      });
+    },
+
     // 6. Buscar Pedidos do Servidor
     fetchOrders: async function() {
       const res = await request('/pedidos');

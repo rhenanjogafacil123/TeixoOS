@@ -3,7 +3,9 @@
 > Memória central do negócio. O assistente lê esse arquivo antes de cada resposta.
 > Atualizado pelo `/instalar`.
 
-**Nome:** Teixo (Assessoria de Crescimento / Growth & Operações)  
+**Nome Fantasia:** Teixo (Assessoria de Crescimento / Growth & Operações)  
+**Razão Social / Nome Empresarial:** TIAGO TEIXEIRA DO NASCIMENTO SILVA  
+**CNPJ:** 69.390.968/0001-78  
 **Origem do nome:** Família Teixeira e o Teixo (árvore milenar resistente, que representa raízes fortes e crescimento contínuo).  
 **Localização:** Rio de Janeiro / RJ (foco de atuação presencial na Zona Oeste do Rio).  
 
@@ -11,9 +13,20 @@
 
 ## Sócios e Liderança
 
-- **Rhenan Teixeira (17 anos):** Sites, tecnologia, infraestrutura web, ecossistema de delivery, conteúdo orgânico e expansão operacional.
-- **Thiago Teixeira (21 anos):** Tráfego pago (Meta Ads e Google Ads), pioneiro na fundação da operação.
+- **Rhenan de Oliveira Teixeira (17 anos):** Sites, tecnologia, infraestrutura web, ecossistema de delivery, conteúdo orgânico e expansão operacional.
+- **Tiago Teixeira do Nascimento Silva (21 anos):** Tráfego pago (Meta Ads e Google Ads), titular do CNPJ da Teixo e pioneiro na fundação da operação.
 - **Erick Teixeira (19-20 anos):** Automações de processos, CRM e fluxos inteligentes de atendimento.
+
+---
+
+## Dados Bancários, CNPJ e Recebimentos Maleáveis
+
+- **Autoridade B2B Obrigatória:** Todos os contratos, propostas e apresentações exibem obrigatoriamente o CNPJ `69.390.968/0001-78` (TIAGO TEIXEIRA DO NASCIMENTO SILVA / TEIXO) no cabeçalho para transmitir solidez e credibilidade de empresa constituída perante qualquer cliente.
+- **Padrão de Assinatura:** Tiago Teixeira do Nascimento Silva (21 anos) assina como o titular e representante legal oficial da CONTRATADA (garantindo plena capacidade civil e validade jurídica de 100%, sem envolver pais ou responsáveis).
+- **Recebimentos Flexíveis por Serviço:** A conta bancária recebedora é maleável em cada contrato, adaptando-se à divisão interna dos sócios:
+  - **Opção Rhenan (Mercado Pago):** Chave PIX `rhenanteixeira.rj@gmail.com` (Titular: Rhenan de Oliveira Teixeira);
+  - **Opção Tiago / CNPJ:** Chave PIX do CNPJ `69.390.968/0001-78` ou conta jurídica do Tiago;
+  - O gerador de contratos `/contratos` permite escolher qual conta receberá aquele pagamento específico.
 
 ---
 
@@ -34,6 +47,10 @@ A Teixo atua como uma **Assessoria de Crescimento**, combinando tecnologia, trá
 3. **Automações & CRM:** Recuperação de clientes, atendimento automático e organização de pedidos.
 4. **Captação de Conteúdo Presencial:** Vídeos dinâmicos no comércio no formato repórter e filmagens aéreas de drone.
 5. **Produção Audiovisual & Vídeos Comerciais 3D:** Esteira de cortes verticais cinematográficos (Reels/Shorts), comerciais 3D de produtos/gastronomia e animações virais Earth to Shop Zoom (skill `/video-produto`).
+6. **Contratos & Segurança Jurídica Blindada:** Instrumentos contratuais de alto padrão advocatício empresarial para fechamento ágil de parcerias com lojistas (delivery R$ 0,67/pedido, cessão irrevogável de imagem/voz de campo e drone, termos de tráfego, LGPD e título executivo extrajudicial via skill `/contratos`).
+7. **Google Meu Negócio & Reputação Local:** Presença no Google Maps, otimização SEO local, fotos e gestão humanizada de avaliações (skills `/seo` e `/responder-avaliacoes`).
+8. **Consultoria Operacional de Estoque & CMV:** Rotina de quinta-feira de contagem física, Curva ABC de insumos e fatores de cocção para controle de custos e redução de desperdício em cozinhas.
+9. **Clonador de Lojas de Food Delivery (`/clonar-loja`):** Geração e setup instantâneo de novas operações completas (hamburgueria, pizzaria, pastelaria, açaí, marmitas) em segundos a partir da matriz validada da Teixo, com script nativo (`scripts/gerar-delivery.ps1`), presets de nicho e esteira de checkout integrada.
 
 ---
 
@@ -48,10 +65,26 @@ A Teixo atua como uma **Assessoria de Crescimento**, combinando tecnologia, trá
 ## Clientes Atendidos
 
 - **Foco principal:** Gastronomia e alimentação local (pizzarias, hamburguerias, confeitarias, açaiterias e lanchonetes).
-- **Pizza do Juca (Paciência, RJ):** Operação piloto completa do ecossistema de food delivery e atendimento presencial. Inclui cardápio digital, gestão de produtos e categorias, central de pedidos Kanban, despacho de motoboys (4 visões em tempo real), módulo de compras e insumos Ceasa-RJ (com impacto nas pizzas em tempo real), pedidos no balcão via NFC, cupom fiscal/térmico e integração multicanal (Site, Salão, iFood, 99Food) (`clientes/Pizza do Juca/`).
-- **Beto (@betochavesrj):** Produção audiovisual completa — garimpo de cortes em podcasts (1080p/4K), edição cinematográfica vertical para Reels (gancho inicial de retenção, transição rápida, acervo próprio de 10 trilhas com ducking, zero legendas e assinatura `@Betochavesrj`), e capas no estilo pôster de ação/cinema com safe zone central (`clientes/Beto/`).
-- **Marmitas Fit (Piedade, RJ):** Operação de marmitas fitness congeladas e refeições saudáveis em lote gerida por Eduardo Fiocchi. Migração da plataforma Prefiro Delivery para o ecossistema próprio TeixoAI (taxa de R$ 0,67 por pedido no checkout), cardápio digital porcionado (150g proteína, 120g carbo, 70-80g legumes) com pratos rotativos quinzenais, e painel inteligente de contagem física de estoque e cálculo de CMV (`clientes/Marmitas Fit/`).
+- **Pizza do Juca (Paciência, RJ):** Operação piloto completa do ecossistema de food delivery e atendimento presencial em produção no IP `143.95.174.216` (HostGator AlmaLinux 9). Inclui cardápio digital com Checkout Bricks do Mercado Pago (PIX e Cartão antes do envio pra cozinha), Clube de Aniversário 10% OFF, upsell inteligente, rastreio ao vivo para clientes (`/rastreio/`), gestão de produtos em massa, central Kanban com Notinhas Térmicas Dual (Cozinha sem valores e Balcão com endereço/cobrança), despacho de motoboys espelhado, backend REST Node.js com SQLite WAL nativo e fallback `localStorage`, pedidos via Balcão NFC e integração multicanal (`clientes/Pizza do Juca/`).
+- **Beto (@betochavesrj):** Produção audiovisual completa — garimpo de cortes em podcasts (1080p/4K), edição cinematográfica vertical para Reels (gancho inicial de retenção, transição rápida, acervo próprio de 10 trilhas com ducking, zero legendas e assinatura `@Betochavesrj`), e capas no estilo pôster de ação/cinema com safe zone central. Esteira ativa com 4 cortes e capas concluídos (`clientes/Beto/`).
+- **Marmitas Fit (Piedade, RJ):** Operação de marmitas fitness congeladas e refeições saudáveis em lote gerida por Eduardo Fiocchi. Migração da plataforma Prefiro Delivery para o ecossistema próprio TeixoAI (taxa de R$ 0,67 por pedido no checkout), cardápio digital porcionado (150g proteína, 120g carbo, 70-80g legumes) com pratos rotativos quinzenais ativo no GitHub Pages (`https://rhenanjogafacil123.github.io/marmitasfit/`), e painel inteligente de contagem física de estoque e cálculo de CMV (`clientes/Marmitas Fit/`).
 - **Geografia:** Zona Oeste, Zona Norte e Grande Rio.
+
+---
+
+## Maleabilidade Operacional — Modelos de Atendimento (Presencial vs. Digital)
+
+A Teixo atende com flexibilidade tanto comércios locais que demandam presença física quanto marcas, operações e criadores 100% digitais. O assistente adapta o fluxo, propostas e contratos conforme a modalidade do cliente:
+
+- **1. Clientes Presenciais (Campo / Comércio Físico):**
+  - **Perfil:** Restaurantes, pizzarias, hamburguerias, lanchonetes e lojas de rua na Zona Oeste e Zona Norte do Rio de Janeiro.
+  - **Operação:** Envolve captação de campo com drone (Patrick), entrevistas e gravações no balcão estilo repórter (PL & Mateus/Big), plaquinhas físicas NFC, impressoras térmicas no caixa/cozinha e despacho de motoboys locais.
+  - **Contratos & Propostas:** Incluem cláusulas de cessão de imagem de fachada/equipe, autorização de filmagem presencial, isenção sanitária de alimentos e regras de motoboys.
+
+- **2. Clientes 100% Digitais (Remotos):**
+  - **Perfil:** Criadores de conteúdo, canais de podcast, marcas digitais, infoprodutos, e-commerces ou clientes de tráfego/automação sem ponto comercial físico.
+  - **Operação:** Atendimento, entregas e esteiras 100% à distância — garimpo de cortes em nuvem (YouTube/Google Drive), edição cinematográfica vertical, gestão remota de Meta/Google Ads, fluxos de CRM e SEO.
+  - **Contratos & Propostas:** Enxutos e focados em SLA digital, confidencialidade (LGPD), propriedade intelectual e entrega em pastas na nuvem/GitHub, sem menções a loja física, vigilância sanitária ou motoboys.
 
 ---
 

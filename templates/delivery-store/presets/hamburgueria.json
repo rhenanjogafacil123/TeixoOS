@@ -1,0 +1,123 @@
+{
+  "niche": "hamburgueria",
+  "name": "Hamburgueria Artesanal",
+  "segment": "Hamburgueria",
+  "kitchenSector": "CHAPA / MONTAGEM",
+  "theme": {
+    "primary": "#dc2626",
+    "primaryHover": "#b91c1c",
+    "accent": "#f59e0b",
+    "bgLight": "#faf5ec",
+    "cardLight": "#ffffff",
+    "bgDark": "#14110f",
+    "cardDark": "#1f1a17",
+    "borderDark": "#332a24",
+    "textLight": "#2b1c14",
+    "textDark": "#f5ede4"
+  },
+  "categories": [
+    { "id": "burgers", "name": "Burgers Artesanais", "icon": "🍔" },
+    { "id": "smash", "name": "Smash Burgers", "icon": "🥩" },
+    { "id": "combos", "name": "Combos & Ofertas", "icon": "🍟" },
+    { "id": "porcoes", "name": "Porções & Batatas", "icon": "🥓" },
+    { "id": "bebidas", "name": "Bebidas & Shakes", "icon": "🥤" }
+  ],
+  "upsell": [
+    { "id": "upsell-batata-r", "name": "Batata Frita Rústica 150g", "price": 12.90, "desc": "Crocante, sequinha e com tempero da casa", "icon": "🍟" },
+    { "id": "upsell-maionese", "name": "Maionese Artesanal de Alho", "price": 4.50, "desc": "Pote 50g da famosa maionese verde", "icon": "🥣" },
+    { "id": "upsell-refri", "name": "Coca-Cola Zero Lata 350ml", "price": 7.00, "desc": "Trincando de gelada", "icon": "🥤" },
+    { "id": "upsell-shake", "name": "Milkshake de Nutella 400ml", "price": 18.90, "desc": "Com chantilly e calda extra", "icon": "🍨" }
+  ],
+  "products": [
+    {
+      "id": "burg-bacon-blast",
+      "name": "Bacon Blast Artesanal",
+      "category": "burgers",
+      "desc": "Pão brioche selado na manteiga, burger bovino 160g angus, queijo cheddar derretido, fatias crocantes de bacon e maionese defumada da casa.",
+      "price": 34.90,
+      "badge": "Mais Vendido",
+      "featured": true,
+      "image": "assets/produtos/bacon-blast.webp"
+    },
+    {
+      "id": "burg-double-cheddar",
+      "name": "Double Cheddar Monster",
+      "category": "burgers",
+      "desc": "Dois burgers 140g prensados na chapa, dobro de cheddar cremoso, cebola caramelizada e barbecue artesanal no brioche.",
+      "price": 39.90,
+      "badge": "Monstruoso",
+      "featured": true,
+      "image": "assets/produtos/double-cheddar.webp"
+    },
+    {
+      "id": "burg-classic-salada",
+      "name": "Classic Burger Salada",
+      "category": "burgers",
+      "desc": "Burger 150g, queijo prato especial, alface americana fresca, tomate italiano e maionese verde artesanal.",
+      "price": 29.90,
+      "badge": "Clássico",
+      "featured": false,
+      "image": "assets/produtos/classic-burger.webp"
+    },
+    {
+      "id": "smash-cheeseburger",
+      "name": "Smash Cheese Duplo",
+      "category": "smash",
+      "desc": "Dois smash de 90g com crostinha ultra caramelizada, queijo prato derretido e picles artesanais no pão fofinho de batata.",
+      "price": 27.90,
+      "badge": "Crostinha Perfeita",
+      "featured": true,
+      "image": "assets/produtos/smash-cheese.webp"
+    },
+    {
+      "id": "combo-individual-top",
+      "name": "Combo Solitário Perfeito",
+      "category": "combos",
+      "desc": "1 Burger Bacon Blast + 1 Batata Frita Individual crocante + 1 Refrigerante Lata a sua escolha.",
+      "price": 46.90,
+      "badge": "Combo Completo",
+      "featured": true,
+      "image": "assets/produtos/combo-individual.webp"
+    },
+    {
+      "id": "porcao-batata-cheddar-bacon",
+      "name": "Batata Turbinada Cheddar & Bacon",
+      "category": "porcoes",
+      "desc": "400g de batata frita ondulada coberta com piscina de cheddar cremoso e farofa de bacon crocante.",
+      "price": 29.90,
+      "badge": "Para Compartilhar",
+      "featured": false,
+      "image": "assets/produtos/batata-turbinada.webp"
+    },
+    {
+      "id": "porcao-onion-rings",
+      "name": "Onion Rings Empanadas (12 un)",
+      "category": "porcoes",
+      "desc": "Anéis de cebola gigantes empanados crocantes, acompanhados de molho barbecue defumado.",
+      "price": 24.90,
+      "badge": "",
+      "featured": false,
+      "image": "assets/produtos/onion-rings.webp"
+    },
+    {
+      "id": "bebida-coca-lata",
+      "name": "Coca-Cola Original 350ml",
+      "category": "bebidas",
+      "desc": "Lata 350ml gelada.",
+      "price": 7.00,
+      "badge": "",
+      "featured": false,
+      "image": "assets/produtos/coca-lata.webp"
+    },
+    {
+      "id": "bebida-shake-morango",
+      "name": "Milkshake Morango Trufado 400ml",
+      "category": "bebidas",
+      "desc": "Sorvete artesanal batido com geleia de morango em pedaços e calda de chocolate belga.",
+      "price": 18.90,
+      "badge": "Sobremesa",
+      "featured": false,
+      "image": "assets/produtos/shake-morango.webp"
+    }
+  ]
+}

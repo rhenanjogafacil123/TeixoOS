@@ -1,0 +1,103 @@
+{
+  "niche": "acaiteria",
+  "name": "Açaiteria & Sorveteria",
+  "segment": "Açaiteria & Sobremesas",
+  "kitchenSector": "MONTAGEM / COPOS",
+  "theme": {
+    "primary": "#7c3aed",
+    "primaryHover": "#6d28d9",
+    "accent": "#ec4899",
+    "bgLight": "#faf5ec",
+    "cardLight": "#ffffff",
+    "bgDark": "#15101f",
+    "cardDark": "#1e172e",
+    "borderDark": "#32274d",
+    "textLight": "#2b1c14",
+    "textDark": "#f5ede4"
+  },
+  "categories": [
+    { "id": "copos", "name": "Copos Tradicionais", "icon": "🍧" },
+    { "id": "barcas", "name": "Barcas & Roletas", "icon": "🚢" },
+    { "id": "especiais", "name": "Copos Especiais & Trufados", "icon": "👑" },
+    { "id": "sorvetes", "name": "Potes de Sorvete Artesanal", "icon": "🍨" },
+    { "id": "adicionais", "name": "Adicionais Extras", "icon": "🍓" }
+  ],
+  "upsell": [
+    { "id": "upsell-nutella-extra", "name": "Adicional Calda de Nutella Pura 50g", "price": 6.50, "desc": "Nutella original quentinha", "icon": "🍫" },
+    { "id": "upsell-leite-ninho", "name": "Porção Extra de Leite Ninho", "price": 3.50, "desc": "Pó bem farto por cima", "icon": "🥛" },
+    { "id": "upsell-morango-fresco", "name": "Morangos Frescos Picados", "price": 4.50, "desc": "Fruta selecionada", "icon": "🍓" },
+    { "id": "upsell-agua", "name": "Água Mineral Crystal 500ml", "price": 4.00, "desc": "Sem gás, bem gelada", "icon": "💧" }
+  ],
+  "products": [
+    {
+      "id": "acai-copo-500",
+      "name": "Copo de Açaí 500ml Completo",
+      "category": "copos",
+      "desc": "Açaí batido cremoso e sem cristais de gelo. Monte do seu jeito: inclui até 3 camadas de recheios (leite condensado, leite ninho, granola e banana).",
+      "price": 22.90,
+      "badge": "O Queridinho",
+      "featured": true,
+      "image": "assets/produtos/acai-500.webp"
+    },
+    {
+      "id": "acai-copo-700",
+      "name": "Copo de Açaí Turbinado 700ml",
+      "category": "copos",
+      "desc": "Copo gigante para quem ama açaí de verdade. Inclui até 4 acompanhamentos gratuitos à sua escolha.",
+      "price": 29.90,
+      "badge": "Tamanho Família",
+      "featured": true,
+      "image": "assets/produtos/acai-700.webp"
+    },
+    {
+      "id": "acai-copo-300",
+      "name": "Copo de Açaí 300ml Express",
+      "category": "copos",
+      "desc": "Açaí cremoso na medida certa para um lanche rápido. Inclui 2 acompanhamentos.",
+      "price": 16.90,
+      "badge": "Individual",
+      "featured": false,
+      "image": "assets/produtos/acai-300.webp"
+    },
+    {
+      "id": "acai-trufado-nutella-ninho",
+      "name": "Copo Vulcão Ninho & Nutella (500ml)",
+      "category": "especiais",
+      "desc": "Borda e camadas generosas de Nutella legítima, montanhas de Leite Ninho em pó, morangos frescos e açaí premium super denso.",
+      "price": 28.90,
+      "badge": "Mais Vendido",
+      "featured": true,
+      "image": "assets/produtos/copo-vulcao.webp"
+    },
+    {
+      "id": "acai-trufado-ouro-branco",
+      "name": "Copo Supremo Ouro Branco (500ml)",
+      "category": "especiais",
+      "desc": "Açaí batido cremoso, bombons Ouro Branco picados, ganache de chocolate branco e pedaços de amendoim torrado.",
+      "price": 27.90,
+      "badge": "Edição Especial",
+      "featured": false,
+      "image": "assets/produtos/copo-ouro-branco.webp"
+    },
+    {
+      "id": "acai-barca-media",
+      "name": "Barca de Açaí para Casal (800g)",
+      "category": "barcas",
+      "desc": "Barca recheada com açaí artesanal, rodeada por kiwi, morango, uva verde, banana, tubetes de waffer, brigadeiros e calda de chocolate.",
+      "price": 45.90,
+      "badge": "Para Dois",
+      "featured": true,
+      "image": "assets/produtos/barca-acai.webp"
+    },
+    {
+      "id": "acai-pote-1l",
+      "name": "Pote de Açaí Puro 1 Litro (Para Casa)",
+      "category": "sorvetes",
+      "desc": "1kg de polpa de açaí pura batida com xarope de guaraná natural. Ideal para guardar no freezer e servir a família.",
+      "price": 38.00,
+      "badge": "Econômico",
+      "featured": false,
+      "image": "assets/produtos/pote-1l.webp"
+    }
+  ]
+}

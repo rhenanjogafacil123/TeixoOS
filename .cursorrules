@@ -1,0 +1,7 @@
+# TeixoAI — Cursor / Codex Rules
+
+1. Leia sempre `_memoria/empresa.md`, `_memoria/preferencias.md` e `_memoria/estrategia.md` antes de qualquer resposta sobre clientes, copies ou campanhas.
+2. Para Tráfego Pago, siga estritamente o fluxo das skills em `.claude/skills/`:
+   - Google Ads: `.claude/skills/anuncio-google/SKILL.md` (exportar CSV para Google Ads Editor).
+   - Relatórios Semanais Meta & Google: `.claude/skills/relatorio-ads/SKILL.md` (analisar CSVs brutos em `dados/`).
+3. Zero underline (`_`) em arquivos gerados. Nomes limpos e legíveis com hífen e espaço.

@@ -139,6 +139,8 @@ Quando o usuário pedir skill nova:
 - `marketing/` — conteúdo institucional e posicionamento da Teixo
 - `saidas/` — arquivos finais, relatórios e entregas
 - `dados/` — relatórios, dados de clientes e métricas
+- `scripts/` — scripts utilitários e automações da operação (ex: gerador de delivery)
+- `templates/` — templates de delivery-store, presets gastronômicos e catálogo de skills
 - `.agent/skills/` — catálogo de skills e automações operacionais
 
 **Regra de Nomenclatura e Limpeza de Arquivos (Todos os Projetos):**

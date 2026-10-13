@@ -1,0 +1,112 @@
+{
+  "niche": "pizzaria",
+  "name": "Pizzaria Artesanal",
+  "segment": "Pizzas & Calzones",
+  "kitchenSector": "FORNO / COZINHA",
+  "theme": {
+    "primary": "#b23a26",
+    "primaryHover": "#8f2b1b",
+    "accent": "#2f4a32",
+    "bgLight": "#faf5ec",
+    "cardLight": "#ffffff",
+    "bgDark": "#1a1412",
+    "cardDark": "#251d18",
+    "borderDark": "#382b24",
+    "textLight": "#2f4a32",
+    "textDark": "#faf5ec"
+  },
+  "categories": [
+    { "id": "pizzas", "name": "Pizzas Salgadas", "icon": "🍕" },
+    { "id": "doces", "name": "Pizzas Doces", "icon": "🍫" },
+    { "id": "bordas", "name": "Bordas Recheadas", "icon": "🧀" },
+    { "id": "bebidas", "name": "Refrigerantes & Bebidas", "icon": "🥤" }
+  ],
+  "upsell": [
+    { "id": "upsell-coca-2l", "name": "Coca-Cola 2 Litros Gelada", "price": 14.00, "desc": "Garrafa 2L trincando", "icon": "🥤" },
+    { "id": "upsell-borda-catupiry", "name": "Borda Recheada de Catupiry", "price": 10.00, "desc": "Catupiry legítimo na borda inteira", "icon": "🧀" },
+    { "id": "upsell-pizza-broto-doce", "name": "Pizza Broto Chocolate com Morango", "price": 22.00, "desc": "Sobremesa quentinha perfeita", "icon": "🍫" },
+    { "id": "upsell-guarana-2l", "name": "Guaraná Antarctica 2 Litros", "price": 12.00, "desc": "Garrafa 2L", "icon": "🥤" }
+  ],
+  "products": [
+    {
+      "id": "pizza-calabresa",
+      "name": "Pizza Calabresa Especial",
+      "category": "pizzas",
+      "desc": "Mussarela farta, linguiça calabresa fatiada crocante, cebola fininha e orégano chileno sobre molho de tomate rústico.",
+      "price": 55.00,
+      "badge": "Mais Pedida",
+      "featured": true,
+      "image": "assets/produtos/calabresa.webp"
+    },
+    {
+      "id": "pizza-frango-catupiry",
+      "name": "Pizza Frango com Catupiry",
+      "category": "pizzas",
+      "desc": "Peito de frango desfiado artesanal suculento, coberto com requeijão Catupiry legítimo e azeitonas pretas.",
+      "price": 58.00,
+      "badge": "Favorita",
+      "featured": true,
+      "image": "assets/produtos/frango-catupiry.webp"
+    },
+    {
+      "id": "pizza-quatro-queijos",
+      "name": "Pizza Quatro Queijos Nobres",
+      "category": "pizzas",
+      "desc": "Mussarela de cura média, queijo provolone defumado, parmesão ralado na hora e gorgonzola cremoso.",
+      "price": 62.00,
+      "badge": "Especial",
+      "featured": true,
+      "image": "assets/produtos/quatro-queijos.webp"
+    },
+    {
+      "id": "pizza-portuguesa",
+      "name": "Pizza Portuguesa Tradicional",
+      "category": "pizzas",
+      "desc": "Presunto magro em cubos, mussarela, ovos cozidos fatiados, cebola roxa, ervilha e azeitonas pretas chilenas.",
+      "price": 58.00,
+      "badge": "Clássica",
+      "featured": false,
+      "image": "assets/produtos/portuguesa.webp"
+    },
+    {
+      "id": "pizza-nutella-morango",
+      "name": "Pizza Doce Nutella com Morangos Frescos",
+      "category": "doces",
+      "desc": "Massa levinha crocante coberta com camada espessa de creme de avelã Nutella e fatias de morangos selecionados.",
+      "price": 45.00,
+      "badge": "Sobremesa Top",
+      "featured": true,
+      "image": "assets/produtos/nutella-morango.webp"
+    },
+    {
+      "id": "pizza-banana-canela",
+      "name": "Pizza Banana com Canela & Doce de Leite",
+      "category": "doces",
+      "desc": "Fatias de banana prata caramelizadas no forno, doce de leite caseiro cremoso e polvilhado de canela.",
+      "price": 38.00,
+      "badge": "",
+      "featured": false,
+      "image": "assets/produtos/banana-canela.webp"
+    },
+    {
+      "id": "borda-vulcao-cheddar",
+      "name": "Borda Vulcão Cheddar Cremoso",
+      "category": "bordas",
+      "desc": "Borda vulcão transbordando cheddar cremoso derretido.",
+      "price": 12.00,
+      "badge": "",
+      "featured": false,
+      "image": "assets/produtos/borda-cheddar.webp"
+    },
+    {
+      "id": "refri-coca-2l",
+      "name": "Coca-Cola 2 Litros",
+      "category": "bebidas",
+      "desc": "Garrafa PET 2L super gelada.",
+      "price": 14.00,
+      "badge": "",
+      "featured": false,
+      "image": "assets/produtos/coca-2l.webp"
+    }
+  ]
+}

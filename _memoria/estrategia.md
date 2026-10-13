@@ -29,27 +29,30 @@ Expansão acelerada no nicho de **gastronomia, food delivery e alimentação loc
 ## 3. Gargalo Crítico Atual (Prioridade #1 Imediata)
 
 - **Infraestrutura, Backend e Produção Concluídos (Pizza do Juca):**
-  - [x] Servidor Nginx configurado e scripts de deploy 1-clique automatizados via SCP (`atualizar-tudo-vps.bat` e `.ps1`).
-  - [x] Backend REST em Node.js/Express e banco de dados SQLite implementados com persistência híbrida e fallback em `localStorage` (`clientes/Pizza do Juca/backend-api/`).
-  - [x] Central de despacho de motoboys espelhada e painel administrativo prontos.
+  - [x] Servidor Nginx configurado e deploy 100% no ar no IP `143.95.174.216` (AlmaLinux 9 com SELinux e proxy `/api/`).
+  - [x] Backend REST em Node.js/Express e banco SQLite WAL ativos via systemd (`pizzadojuca.service`).
+  - [x] Checkout Bricks do Mercado Pago integrado no site (modal dinâmico com PIX e Cartão, modo demonstração ativo).
+  - [x] Notinhas térmicas dual (Cozinha sem valores + Balcão com endereço/cobrança) e Clube de Aniversário 10% OFF no ar.
+  - [x] Chave SSH permanente do Rhenan configurada no servidor para deploys diretos.
   - [x] Primeiro vídeo viral comercial Earth to Shop Zoom concluído (`clientes/Pizza do Juca/videos/`).
 
 - **Marmitas Fit (Piedade, RJ — Eduardo Fiocchi):**
   - [x] Mapeamento completo de produção (lotes, porcionamento 150g/120g/70-80g, curva ABC e rotina de quinta-feira de estoque/CMV).
-  - [ ] Desenvolvimento e deploy do cardápio digital próprio para desmame do Prefiro Delivery.
+  - [x] Desenvolvimento e deploy do cardápio digital próprio para desmame do Prefiro Delivery (ativo em https://rhenanjogafacil123.github.io/marmitasfit/).
   - [ ] Implementação de sugestão inteligente de compras com fator de cocção na Ordem de Produção.
 
-- **Prioridades Imediatas de Infraestrutura & Escala:**
-  - **Domínio e SSL (HTTPS):** Configurar apontamento de DNS e certificado SSL na VPS HostGator (`143.95.174.216:22022`).
-  - **Validação de Fluxo de Ponta a Ponta:** Simular fechamento e impressão de pedidos da Pizza do Juca em ambiente real.
-  - **Template Modular ("Clonador de Lojas"):** Empacotar a estrutura validada do Juca como matriz para acelerar a meta de 30 lojas até 20/12/2026.
+  - [x] Template Modular ("Clonador de Lojas"): Empacotado via skill `/clonar-loja`, script nativo `scripts/gerar-delivery.ps1` e presets de nicho (`templates/delivery-store/presets/`).
+  - [x] Esteira Jurídica de Contratos Blindados (`/contratos`): Modelos completos, biblioteca de cláusulas (Delivery R$ 0,67, Tráfego, Audiovisual, GMB, CMV e Combo 360º), termos de responsabilidade com regresso processual, LGPD e título executivo extrajudicial prontos para assinatura eletrônica. Contratos individuais finalizados para os clientes ativos (`Pizza do Juca`, `Marmitas Fit` e `Beto`).
+  - [x] Ferramentas Operacionais de Alto Impacto: Rastreio ao vivo do pedido para clientes (`/rastreio/`), Fechamento Noturno de Motoboys com impressão térmica 80mm e WhatsApp, Economiômetro Teixo vs. iFood e Turbo Upsell de fechamento implementados e ativos na VPS.
+  - [ ] Credenciais de Produção Mercado Pago: Inserir `PUBLIC_KEY` e `ACCESS_TOKEN` do Juca em `backend-api/config.js` na VPS assim que ele disponibilizar.
+  - [ ] Domínio e SSL (HTTPS): Configurar apontamento Cloudflare e certificado SSL na VPS HostGator (`143.95.174.216`).
 
 ---
 
 ## 4. O que vem a seguir (Fase 2 de Escala)
 
-- **Repositório Modelo Replicável ("Clonador de Lojas"):**
-  - Estruturar o projeto de delivery como um template modular limpo, onde cadastrar uma nova loja seja apenas clonar e preencher um arquivo de variáveis (nome, logo, dados, cores, taxa de pagamento).
+- **Expansão Ativa com o Clonador de Lojas (`/clonar-loja`):**
+  - Clonador operacionalizado com template modular, script nativo e presets prontos. Foco em subir novas lojas em minutos na Zona Oeste e Zona Norte.
 - **Tração de Conteúdo e Visibilidade (PL & Mateus):**
   - Manter o ritmo de vídeos virais na rua no formato repórter e capitalizar os contratos com lojistas locais.
 - **Tráfego & Automação:**

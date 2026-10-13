@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acompanhe seu Pedido | Pizza do Juca</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/assets/juca-api.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-900 text-slate-100 font-sans antialiased selection:bg-orange-500 selection:text-white">
+
+  <!-- Header Mobile Minimalista -->
+  <header class="sticky top-0 z-20 border-b border-slate-800 bg-slate-900/90 backdrop-blur-md px-4 py-3.5">
+    <div class="mx-auto flex max-w-lg items-center justify-between">
+      <div class="flex items-center gap-2.5">
+        <div class="grid h-9 w-9 place-items-center rounded-xl bg-orange-500 text-white shadow-lg shadow-orange-500/30">
+          <i data-lucide="flame" class="h-5 w-5"></i>
+        </div>
+        <div>
+          <div class="text-xs font-black tracking-tight text-white uppercase">Pizza do Juca</div>
+          <div class="text-[10px] font-bold text-slate-400">Acompanhe seu Pedido</div>
+        </div>
+      </div>
+      <a href="/" class="rounded-xl border border-slate-700 bg-slate-800/80 px-3 py-1.5 text-xs font-extrabold text-slate-300 hover:text-white transition">
+        Cardápio
+      </a>
+    </div>
+  </header>
+
+  <!-- Container Principal -->
+  <main class="mx-auto max-w-lg px-4 py-6 space-y-5">
+
+    <!-- Card de Status do Pedido -->
+    <div class="overflow-hidden rounded-3xl border border-slate-800 bg-slate-850 bg-gradient-to-b from-slate-800/90 to-slate-900 p-6 shadow-2xl relative">
+      <div class="flex items-center justify-between border-b border-slate-800/80 pb-4">
+        <div>
+          <span class="text-[10px] font-extrabold uppercase tracking-widest text-orange-400">Status da cozinha</span>
+          <h1 id="order-id-title" class="text-xl font-black text-white mt-0.5">Pedido #1048</h1>
+        </div>
+        <div id="status-badge" class="rounded-full bg-orange-500/20 border border-orange-500/30 px-3 py-1 text-xs font-black text-orange-400 flex items-center gap-1.5">
+          <span class="h-2 w-2 rounded-full bg-orange-500 animate-ping"></span>
+          <span id="status-badge-text">No Forno</span>
+        </div>
+      </div>
+
+      <!-- Estimativa de Tempo -->
+      <div class="my-6 text-center py-4 rounded-2xl bg-slate-950/50 border border-slate-800/80">
+        <div class="text-xs font-semibold text-slate-400">Previsão estimada de entrega</div>
+        <div id="eta-text" class="text-3xl font-black text-white mt-1">30 - 45 min</div>
+        <div id="sub-eta-text" class="text-[11px] text-orange-400/90 font-bold mt-1">🔥 Massa assando no forno a lenha</div>
+      </div>
+
+      <!-- Stepper / Linha do Tempo Visual -->
+      <div class="space-y-6 relative pl-6 before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-slate-800">
+
+        <!-- Passo 1: Recebido -->
+        <div id="step-recebido" class="relative">
+          <div id="dot-recebido" class="absolute -left-[29px] top-0.5 grid h-6 w-6 place-items-center rounded-full bg-emerald-500 text-slate-950 shadow-md">
+            <i data-lucide="check" class="h-3.5 w-3.5 font-bold"></i>
+          </div>
+          <div>
+            <div class="text-xs font-extrabold text-white">Pedido Confirmado</div>
+            <div id="time-recebido" class="text-[11px] text-slate-400 mt-0.5">Pagamento aprovado na hora</div>
+          </div>
+        </div>
+
+        <!-- Passo 2: No Forno -->
+        <div id="step-preparando" class="relative">
+          <div id="dot-preparando" class="absolute -left-[29px] top-0.5 grid h-6 w-6 place-items-center rounded-full bg-orange-500 text-slate-950 shadow-md animate-pulse">
+            <i data-lucide="flame" class="h-3.5 w-3.5 font-bold"></i>
+          </div>
+          <div>
+            <div class="text-xs font-extrabold text-white">No Forno / Em Preparo</div>
+            <div id="time-preparando" class="text-[11px] text-slate-400 mt-0.5">Pizzaiolo abrindo a massa com molho artesanal</div>
+          </div>
+        </div>
+
+        <!-- Passo 3: Em Rota -->
+        <div id="step-entrega" class="relative">
+          <div id="dot-entrega" class="absolute -left-[29px] top-0.5 grid h-6 w-6 place-items-center rounded-full bg-slate-800 text-slate-500 border border-slate-700">
+            <i data-lucide="bike" class="h-3.5 w-3.5"></i>
+          </div>
+          <div>
+            <div class="text-xs font-extrabold text-slate-300">Saiu para Entrega</div>
+            <div id="time-entrega" class="text-[11px] text-slate-500 mt-0.5">Aguardando saída da pizzaria</div>
+          </div>
+        </div>
+
+        <!-- Passo 4: Entregue -->
+        <div id="step-concluido" class="relative">
+          <div id="dot-concluido" class="absolute -left-[29px] top-0.5 grid h-6 w-6 place-items-center rounded-full bg-slate-800 text-slate-500 border border-slate-700">
+            <i data-lucide="home" class="h-3.5 w-3.5"></i>
+          </div>
+          <div>
+            <div class="text-xs font-extrabold text-slate-400">Entregue no Destino</div>
+            <div id="time-concluido" class="text-[11px] text-slate-500 mt-0.5">Aproveite sua pizza quentinha!</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Card do Motoboy (Aparece quando status = entrega) -->
+    <div id="card-courier" class="hidden rounded-3xl border border-blue-500/30 bg-blue-950/30 p-5 backdrop-blur-md">
+      <div class="flex items-center gap-3.5">
+        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-blue-500/20 text-blue-400 border border-blue-500/40">
+          <i data-lucide="bike" class="h-6 w-6"></i>
+        </div>
+        <div class="flex-1">
+          <div class="text-[10px] font-black uppercase tracking-wider text-blue-400">Entregador em Rota</div>
+          <div id="courier-name" class="text-base font-extrabold text-white">Rafael Lima</div>
+          <div class="text-xs text-slate-400">Moto Honda Fan 160 • Bag Térmica Lacrada</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Detalhes do Pedido -->
+    <div class="rounded-3xl border border-slate-800 bg-slate-850 p-5 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h2 class="text-xs font-extrabold uppercase tracking-wider text-slate-400">Itens do Pedido</h2>
+        <span id="order-price" class="text-sm font-black text-white">R$ 68,90</span>
+      </div>
+
+      <div id="order-items-list" class="space-y-2 text-xs text-slate-300">
+        <!-- Injetado via JS -->
+      </div>
+
+      <div class="border-t border-slate-800 pt-3 text-xs space-y-1.5 text-slate-400">
+        <div class="flex justify-between">
+          <span>Endereço de Entrega:</span>
+          <span id="order-address" class="font-bold text-white text-right max-w-[200px] truncate">Campo Grande - RJ</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Forma de Pagamento:</span>
+          <span id="order-payment" class="font-bold text-emerald-400">Pix Online (Confirmado)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Botões de Ação -->
+    <div class="space-y-2.5 pt-2">
+      <button
+        type="button"
+        onclick="openWhatsAppHelp()"
+        class="flex w-full items-center justify-center gap-2 rounded-2xl bg-emerald-600 p-4 text-xs font-black text-white hover:bg-emerald-500 transition shadow-lg shadow-emerald-950/40"
+      >
+        <i data-lucide="message-circle" class="h-4 w-4"></i>
+        <span>Falar com a Pizzaria no WhatsApp</span>
+      </button>
+
+      <button
+        type="button"
+        onclick="shareTrackingLink()"
+        class="flex w-full items-center justify-center gap-2 rounded-2xl border border-slate-700 bg-slate-800/80 p-3 text-xs font-extrabold text-slate-300 hover:text-white transition"
+      >
+        <i data-lucide="share-2" class="h-4 w-4"></i>
+        <span>Copiar link de rastreio</span>
+      </button>
+    </div>
+
+  </main>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const orderId = urlParams.get('id') || urlParams.get('pedido') || '1048';
+
+    let currentOrder = null;
+
+    async function loadOrderStatus() {
+      // 1. Tentar carregar da API REST da VPS
+      try {
+        if (window.JucaAPI && window.JucaAPI.fetchOrders) {
+          const orders = await window.JucaAPI.fetchOrders();
+          if (Array.isArray(orders)) {
+            const found = orders.find(o => String(o.id) === String(orderId) || String(o.order_number) === String(orderId));
+            if (found) {
+              renderOrder(found);
+              return;
+            }
+          }
+        }
+      } catch (e) {
+        console.warn('API de pedidos indisponível:', e);
+      }
+
+      // 2. Fallback para localStorage
+      try {
+        const local = localStorage.getItem('juca-panel-orders');
+        if (local) {
+          const list = JSON.parse(local);
+          const found = list.find(o => String(o.id) === String(orderId));
+          if (found) {
+            renderOrder(found);
+            return;
+          }
+        }
+      } catch (e) {}
+
+      // 3. Fallback mock visual padrão caso seja demonstração
+      renderOrder({
+        id: orderId,
+        customer: "Cliente Juca",
+        status: "preparando",
+        price: "R$ 68,90",
+        items: ["1x Pizza Calabresa Especial Gigante (45cm)", "1x Coca-Cola 2L Trincando"],
+        address: "Av. Devanir José de Carvalho, 617 – Paciência, RJ",
+        payment: "PIX Aprovado (Mercado Pago)",
+        courier: "Rafael Lima"
+      });
+    }
+
+    function renderOrder(order) {
+      currentOrder = order;
+      document.getElementById('order-id-title').textContent = `Pedido #${order.id || order.order_number}`;
+      document.getElementById('order-price').textContent = order.price || (typeof order.total === 'number' ? `R$ ${order.total.toFixed(2).replace('.', ',')}` : 'R$ 0,00');
+      document.getElementById('order-address').textContent = order.address || order.neighborhood || 'Retirada no Balcão';
+      document.getElementById('order-payment').textContent = order.payment || 'Pagamento Online';
+
+      const itemsBox = document.getElementById('order-items-list');
+      const rawItems = Array.isArray(order.items) ? order.items : [order.items];
+      itemsBox.innerHTML = rawItems.map(it => `
+        <div class="flex items-center justify-between border-b border-slate-800/60 pb-1.5">
+          <span>🍕 ${typeof it === 'string' ? it : (it.name || it.title)}</span>
+          <span class="font-bold text-slate-400">1x</span>
+        </div>
+      `).join('');
+
+      // Atualizar Stepper
+      const status = (order.status || 'recebido').toLowerCase();
+      updateStepperUI(status, order.courier);
+    }
+
+    function updateStepperUI(status, courier) {
+      const badgeText = document.getElementById('status-badge-text');
+      const etaText = document.getElementById('eta-text');
+      const subEtaText = document.getElementById('sub-eta-text');
+      const courierCard = document.getElementById('card-courier');
+      const courierName = document.getElementById('courier-name');
+
+      // Reset dots
+      const setDotDone = (id) => {
+        const el = document.getElementById(`dot-${id}`);
+        if (!el) return;
+        el.className = "absolute -left-[29px] top-0.5 grid h-6 w-6 place-items-center rounded-full bg-emerald-500 text-slate-950 shadow-md";
+        el.innerHTML = '<i data-lucide="check" class="h-3.5 w-3.5 font-bold"></i>';
+      };
+
+      const setDotActive = (id, icon, color = 'orange') => {
+        const el = document.getElementById(`dot-${id}`);
+        if (!el) return;
+        el.className = `absolute -left-[29px] top-0.5 grid h-6 w-6 place-items-center rounded-full bg-${color}-500 text-slate-950 shadow-md animate-pulse`;
+        el.innerHTML = `<i data-lucide="${icon}" class="h-3.5 w-3.5 font-bold"></i>`;
+      };
+
+      const setDotPending = (id, icon) => {
+        const el = document.getElementById(`dot-${id}`);
+        if (!el) return;
+        el.className = "absolute -left-[29px] top-0.5 grid h-6 w-6 place-items-center rounded-full bg-slate-800 text-slate-500 border border-slate-700";
+        el.innerHTML = `<i data-lucide="${icon}" class="h-3.5 w-3.5"></i>`;
+      };
+
+      courierCard.classList.add('hidden');
+
+      if (status === 'recebido') {
+        badgeText.textContent = "Recebido";
+        etaText.textContent = "35 - 50 min";
+        subEtaText.textContent = "✅ Pedido confirmado, enviando para a bancada do pizzaiolo";
+        setDotActive('recebido', 'check', 'emerald');
+        setDotPending('preparando', 'flame');
+        setDotPending('entrega', 'bike');
+        setDotPending('concluido', 'home');
+      } else if (status === 'preparando') {
+        badgeText.textContent = "No Forno";
+        etaText.textContent = "25 - 35 min";
+        subEtaText.textContent = "🔥 Massa aberta e assando no forno a lenha bem crocante";
+        setDotDone('recebido');
+        setDotActive('preparando', 'flame', 'orange');
+        setDotPending('entrega', 'bike');
+        setDotPending('concluido', 'home');
+      } else if (status === 'pronto') {
+        badgeText.textContent = "Pronto / Embalando";
+        etaText.textContent = "15 - 25 min";
+        subEtaText.textContent = "📦 Pizza na caixa térmica, aguardando o motoboy carregar";
+        setDotDone('recebido');
+        setDotDone('preparando');
+        setDotActive('entrega', 'package', 'amber');
+        setDotPending('concluido', 'home');
+      } else if (status === 'entrega') {
+        badgeText.textContent = "Saiu pra Entrega";
+        etaText.textContent = "10 - 20 min";
+        subEtaText.textContent = `🛵 A caminho da sua casa com ${courier || 'o entregador'}!`;
+        setDotDone('recebido');
+        setDotDone('preparando');
+        setDotActive('entrega', 'bike', 'blue');
+        setDotPending('concluido', 'home');
+        
+        courierCard.classList.remove('hidden');
+        if (courierName && courier) courierName.textContent = courier;
+      } else if (status === 'concluido') {
+        badgeText.textContent = "Entregue";
+        etaText.textContent = "Bom apetite!";
+        subEtaText.textContent = "🎉 Pedido finalizado com sucesso. Aproveite cada fatia!";
+        setDotDone('recebido');
+        setDotDone('preparando');
+        setDotDone('entrega');
+        setDotDone('concluido');
+      }
+
+      lucide.createIcons();
+    }
+
+    function openWhatsAppHelp() {
+      const pNum = currentOrder ? (currentOrder.id || orderId) : orderId;
+      const text = encodeURIComponent(`Olá, Pizza do Juca! 🍕 Estou acompanhando meu pedido #${pNum} pelo rastreador e gostaria de tirar uma dúvida.`);
+      window.open(`https://api.whatsapp.com/send?phone=5521973142264&text=${text}`, '_blank');
+    }
+
+    function shareTrackingLink() {
+      navigator.clipboard.writeText(window.location.href);
+      alert('Link de rastreio copiado! Você pode colar no WhatsApp.');
+    }
+
+    loadOrderStatus();
+    setInterval(loadOrderStatus, 10000); // Polling a cada 10 segundos
+  </script>
+</body>
+</html>
