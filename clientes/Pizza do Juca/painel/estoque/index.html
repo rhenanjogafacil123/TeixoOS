@@ -125,7 +125,7 @@
 
       <!-- Rodapé Sidebar -->
       <div class="border-t border-slate-800 pt-4 text-[11px] text-slate-500">
-        <div class="font-bold text-slate-400">TeixoOS Gastronomia</div>
+        <div class="font-bold text-slate-400">TeixoAI Gastronomia</div>
         <div class="text-[10px]">Rotina de Quinta-feira</div>
       </div>
     </aside>
@@ -158,6 +158,11 @@
               <span class="text-slate-400">Contagem de</span>
               <input type="date" id="stock-date" class="bg-transparent font-bold text-white outline-none cursor-pointer">
             </div>
+
+            <button onclick="openBatchProductionModal()" class="inline-flex items-center gap-1.5 rounded-2xl border border-amber-500/30 bg-amber-500/10 px-3.5 py-2 text-xs font-extrabold text-amber-300 hover:bg-amber-500/20 transition shadow-sm" title="Produção antecipada em lote com cálculo de fator de cocção e rendimento!">
+              <i data-lucide="cooking-pot" class="h-3.5 w-3.5 text-amber-400"></i>
+              <span>Ordem de Produção (Cocção)</span>
+            </button>
 
             <button onclick="prefillTheoreticalStock()" class="inline-flex items-center gap-1.5 rounded-2xl border border-indigo-500/30 bg-indigo-500/10 px-3.5 py-2 text-xs font-extrabold text-indigo-300 hover:bg-indigo-500/20 transition shadow-sm" title="Preenche a contagem teórica esperada das vendas da semana para auditar só as diferenças!">
               <i data-lucide="zap" class="h-3.5 w-3.5 text-indigo-400"></i>
@@ -253,6 +258,9 @@
         <div class="flex items-center gap-1.5 rounded-2xl border border-slate-800 bg-[#16171d] p-1.5">
           <button onclick="setFilter('todos')" id="filter-btn-todos" class="rounded-xl px-4 py-1.5 text-xs font-black transition bg-emerald-600 text-white shadow">
             Todos
+          </button>
+          <button onclick="setFilter('classe_a')" id="filter-btn-classe_a" class="rounded-xl px-3 py-1.5 text-xs font-bold transition text-emerald-400 hover:text-white flex items-center gap-1">
+            <i data-lucide="shield-check" class="h-3 w-3"></i> Classe A (Diário)
           </button>
           <button onclick="setFilter('pendentes')" id="filter-btn-pendentes" class="rounded-xl px-4 py-1.5 text-xs font-bold transition text-slate-400 hover:text-white">
             Pendentes

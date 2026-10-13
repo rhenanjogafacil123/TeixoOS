@@ -1,7 +1,7 @@
 @echo off
 chcp 65001 >nul
 echo ====================================================================
-echo   TEIXO OS - ATUALIZADOR DEFINITIVO DA VPS (PIZZA DO JUCA)
+echo   TEIXO AI - ATUALIZADOR DEFINITIVO DA VPS (PIZZA DO JUCA)
 echo ====================================================================
 echo.
 echo [1/3] Autorizando chave SSH no servidor (digite sua senha do VPS pela ultima vez)...
