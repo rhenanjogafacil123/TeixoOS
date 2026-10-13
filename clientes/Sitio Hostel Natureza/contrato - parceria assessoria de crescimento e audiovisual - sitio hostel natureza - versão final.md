@@ -67,47 +67,43 @@ III - Fornecimento de smartphones físicos, equipamentos de impressão, custos d
 
 ---
 
-### CLÁUSULA SEGUNDA — DA REMUNERAÇÃO, CONTA DO MEI E CRONOGRAMA DE PAGAMENTOS
+### CLÁUSULA SEGUNDA — DA REMUNERAÇÃO, CONTAS BANCÁRIAS E CRONOGRAMA DE PAGAMENTOS
 
-2.1. Pelos serviços objeto deste instrumento, a CONTRATANTE pagará à CONTRATADA a remuneração estipulada de forma individualizada por núcleo, conforme os seguintes parâmetros comerciais:
+2.1. Pelos serviços objeto deste instrumento, a CONTRATANTE efetuará os pagamentos correspondentes diretamente nas contas bancárias individuais de cada responsável técnico da CONTRATADA, nos seguintes termos:
 
 a) **Honorários de Gestão de Tráfego Pago (Tiago Teixeira):**
 - **Valor Recorrente:** **R$ 1.200,00 (um mil e duzentos reais)** mensais fixos;
 - **Vencimento:** Todo dia [A DEFINIR / PREENCHER] de cada mês subsequente;
-- A verba de tráfego será custeada pela CONTRATANTE via cartão de crédito corporativo vinculado diretamente ao Gerenciador de Anúncios.
+- **Destino Bancário Individual:** Transferência bancária PIX para a conta do gestor Tiago Teixeira via Chave PIX (CNPJ): **`69.390.968/0001-78`**;
+- A verba de mídia consumida diretamente nas plataformas de anúncio (Meta/Google) será custeada pela CONTRATANTE via cartão de crédito corporativo cadastrado na conta de anúncios.
 
 b) **Honorários de Produção Audiovisual e Criação Orgânica (PL - Paulo Roberto):**
 - **Fase 1 — Apresentação Institucional de Lançamento (1º Mês):** **R$ 500,00 (quinhentos reais)** em taxa única, remunerando a entrega do vídeo longo horizontal para YouTube e do lote contratual de pelo menos 20 cortes verticais para distribuição multiplataforma;
 - **Fase 2 — Cobertura Presencial de Eventos:** **R$ 200,00 (duzentos reais)** por evento coberto presencialmente no hostel (rodas de pagode, programações temáticas e confraternizações), mediante agendamento prévio no calendário de eventos do estabelecimento;
-- **Liquidação:** Os valores referentes à cobertura de eventos serão faturados e quitados conforme a realização efetiva de cada evento coberto.
+- **Destino Bancário Individual:** Transferência bancária PIX direta para a conta individual de titularidade de **Paulo Roberto (PL)**, conforme chave PIX informada no ato da gravação presencial: `[CHAVE PIX DO PL: A PREENCHER NO ATO]`.
 
 c) **Implementação da Plataforma Web & Módulo Balcão/Mesa NFC (Rhenan Teixeira):**
 - **Taxa Única de Setup e Implementação Tecnológica:** **R$ 500,00 (quinhentos reais)**, devida no ato da contratação e estritamente subordinada à Cláusula Terceira de Garantia Condicional;
 - **Mensalidade Fixa de Manutenção:** **R$ 0,00 (zero reais)** — a CONTRATANTE usufrui de **100% DE ISENÇÃO** de taxas ou mensalidades fixas recorrentes para a operação básica do cardápio digital e storefront;
 - **Microtaxa Operacional de Manutenção:** **R$ 0,67 (sessenta e sete centavos)** por pedido processado e concluído na plataforma web, embutida e discriminada diretamente no checkout para pagamento pelo consumidor final, sem gerar desconto na margem líquida dos produtos da CONTRATANTE;
-- **Fechamento e Repasse Quinzenal:** A apuração e liquidação do saldo acumulado das microtaxas de R$ 0,67 por pedido ocorrerá **quinzenalmente, pontualmente em terças-feiras alternadas ("terça-feira sim, terça-feira não")**, com base no relatório consolidado de pedidos extraído diretamente da plataforma.
+- **Fechamento e Repasse Quinzenal:** A apuração e liquidação do saldo acumulado das microtaxas de R$ 0,67 por pedido ocorrerá **quinzenalmente, pontualmente em terças-feiras alternadas ("terça-feira sim, terça-feira não")**, com base no relatório consolidado de pedidos extraído diretamente da plataforma;
+- **Destino Bancário Individual:** Transferência bancária PIX direta para a conta de titularidade de **Rhenan de Oliveira Teixeira** (Mercado Pago), Chave PIX: **`rhenanteixeira.rj@gmail.com`**.
 
-2.2. **Dados Bancários Oficiais para Pagamento:** Para garantir transparência, blindagem contábil e credibilidade corporativa perante a CONTRATANTE, todos os pagamentos contratuais devidos (Honorários de Tráfego, Taxa de Setup de Tecnologia e Produções Audiovisuais) serão quitados formalmente na **conta do MEI** da CONTRATADA, via transferência eletrônica PIX:
-- **Titular / Favorecido:** TIAGO TEIXEIRA DO NASCIMENTO SILVA (MEI)
-- **Nome Empresarial / Fantasia:** TEIXO (Assessoria de Crescimento e Tecnologia)
-- **Chave PIX (CNPJ do MEI):** **`69.390.968/0001-78`**
+2.2. **Independência das Contas e Liquidação Direta:** A CONTRATANTE reconhece que cada pagamento será direcionado à respectiva conta do profissional executor (Tiago, PL ou Rhenan), servindo os comprovantes bancários de PIX como quitação plena de cada obrigação individual ajustada.
 
 2.3. **Mora e Encargos Financeiros:** O atraso injustificado no pagamento de qualquer parcela contratual sujeitará a CONTRATANTE, de pleno direito e independentemente de notificação judicial prévia, ao pagamento de multa moratória de **2% (dois por cento)** sobre o montante em atraso, juros moratórios de **1% (um por cento) ao mês** calculados *pro rata die*, acrescidos de correção monetária calculada pela variação positiva do IPCA/IBGE.
 
 ---
 
-### CLÁUSULA TERCEIRA — DA GARANTIA CONDICIONAL DE SATISFAÇÃO (RISCO ZERO E FRACIONAMENTO LIVRE)
+### CLÁUSULA TERCEIRA — DA GARANTIA CONDICIONAL DE SATISFAÇÃO (RISCO ZERO E CONVERSÃO EM TRÁFEGO)
 
-3.1. **Período de Validação e Teste em Campo:** Em demonstração da robustez técnica e eficácia do ecossistema de storefront web e plaquinhas NFC projetado pelo Diretor de Tecnologia Rhenan de Oliveira Teixeira, a CONTRATADA confere à CONTRATANTE um período de garantia condicional e teste operacional de **15 (quinze) dias corridos**, contados a partir da entrega e publicação oficial do sistema.
+3.1. **Período de Validação e Teste em Campo:** Em demonstração da robustez técnica e eficácia do ecossistema de storefront web e plaquinhas NFC desenvolvido pelo Diretor de Tecnologia Rhenan de Oliveira Teixeira, a CONTRATADA confere à CONTRATANTE um período de garantia condicional e teste operacional de **15 (quinze) dias corridos**, contados a partir da entrega e publicação oficial do sistema.
 
-3.2. **Opções em Caso de Descontinuidade:** Caso a CONTRATANTE, no decurso improrrogável dos 15 dias de teste, avalie a seu livre e exclusivo critério que não deseja manter o uso da plataforma web e das plaquinhas NFC, notificará formalmente a CONTRATADA por escrito via WhatsApp oficial, tendo o direito líquido e certo de eleger uma das seguintes alternativas:
-I - **Restituição Integral:** Devolução imediata e sem retenções de 100% da quantia paga a título de setup, no valor de **R$ 500,00 (quinhentos reais)**, via transferência bancária direta na conta indicada pela CONTRATANTE; **OU**
-II - **Conversão e Fracionamento Flexível em Crédito de Serviços:** O valor integral de R$ 500,00 (quinhentos reais) será convertido em crédito contratual de serviços com a equipe da CONTRATADA, podendo a CONTRATANTE optar por alocar o montante integralmente ou **fracioná-lo livremente entre os profissionais da equipe**, em qualquer proporção desejada, dentre as seguintes opções:
-   a) **Gestão de Tráfego Pago com Tiago Teixeira:** Abatimento de honorários vincendos de tráfego pago ou bonificação/extensão de serviços de anúncios patrocinados;
-   b) **Produção de Conteúdo Orgânico Adicional com o influenciador PL (Paulo Roberto):** Remuneração de nova sessão de gravação presencial e cortes para redes sociais;
-   c) **Captação Cinematográfica Aérea em 4K com Patrick Teixeira:** Sessão de filmagem aérea com drone em alta resolução destacando a topografia, natureza e instalações do hostel.
+3.2. **Opções em Caso de Descontinuidade:** Caso a CONTRATANTE, no decurso improrrogável dos 15 dias de teste, avalie a seu livre e exclusivo critério que não deseja manter o uso da plataforma web e das plaquinhas NFC, notificará formalmente a CONTRATADA por escrito via WhatsApp oficial, tendo o direito líquido e certo de escolher:
+I - **Restituição Integral:** Devolução imediata e sem retenções de 100% da quantia paga a título de setup, no valor de **R$ 500,00 (quinhentos reais)**, diretamente de volta para a conta bancária da CONTRATANTE; **OU**
+II - **Conversão em Crédito de Tráfego Pago com Tiago Teixeira:** O valor integral de **R$ 500,00 (quinhentos reais)** será convertido integralmente em crédito de serviços de gestão de tráfego pago, abatendo-se dos honorários vincendos devidos ao gestor Tiago Teixeira.
 
-3.3. **Consolidação de Titularidade:** Transcorrido o prazo decadencial de 15 (quinze) dias corridos sem qualquer manifestação em contrário da CONTRATANTE, ou caso esta continue utilizando ativamente o sistema web e as plaquinhas NFC, a taxa de setup de R$ 500,00 considerar-se-á definitivamente consolidada e quitada a título de implementação tecnológica em favor de Rhenan de Oliveira Teixeira, mantendo-se plenamente em vigor as regras de cobrança da microtaxa de R$ 0,67 por pedido.
+3.3. **Consolidação de Titularidade:** Transcorrido o prazo decadencial de 15 (quinze) dias corridos sem qualquer manifestação formal em contrário da CONTRATANTE, ou caso esta continue utilizando ativamente o sistema web e as plaquinhas NFC, a taxa de setup de R$ 500,00 considerar-se-á definitivamente consolidada e quitada a título de implementação tecnológica em favor de Rhenan de Oliveira Teixeira, mantendo-se plenamente em vigor as regras de apuração quinzenal da microtaxa de R$ 0,67 por pedido.
 
 ---
 
@@ -154,11 +150,9 @@ II - A CONTRATANTE ressarcirá integralmente à CONTRATADA, no prazo improrrogá
 
 ---
 
-### CLÁUSULA SÉTIMA — DA INEXISTÊNCIA DE VÍNCULO EMPREGATÍCIO E CLÁUSULA DE NÃO ALICIAMENTO
+### CLÁUSULA SÉTIMA — DA INEXISTÊNCIA DE VÍNCULO EMPREGATÍCIO
 
 7.1. **Inexistência de Vínculo Trabalhista:** O presente contrato possui natureza estritamente civil e mercantil, regido pelo art. 593 e seguintes do Código Civil e pela Lei nº 13.429/2017, inexistindo entre a CONTRATANTE e a CONTRATADA, seus sócios, prestadores de serviços, criadores audiovisuais ou assistentes técnicos qualquer relação de subordinação hierárquica, habitualidade empregatícia, pessoalidade obrigatória ou dependência econômica, estando cabalmente afastada a caracterização de vínculo de emprego sob a égide dos arts. 2º e 3º da CLT.
-
-7.2. **Proteção de Equipe e Não Aliciamento (*Non-Solicitation*):** A CONTRATANTE obriga-se a não aliciar, contratar diretamente ou intermediar contratação autônoma de qualquer profissional integrante da equipe da CONTRATADA (incluindo o influenciador Paulo Roberto "PL", o técnico Rhenan Teixeira, o gestor Erick Teixeira ou o filmmaker Patrick Teixeira) para serviços de mesma natureza durante a vigência deste instrumento e pelo prazo de **12 (doze) meses** após seu encerramento, sob pena de cominação de multa compensatória correspondente a **12 (doze) vezes** a média da remuneração mensal total deste contrato, sem prejuízo de perdas e danos.
 
 ---
 
