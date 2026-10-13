@@ -31,7 +31,6 @@ A negociação foi simplificada para **eliminar qualquer barreira de entrada té
 
 1. **Aquisição por Tráfego Pago (Tiago):** Foco em lotar as diárias e eventos do hostel via Meta Ads.
 2. **Autoridade e Viralização com Vídeos de Campo (PL):** Apresentação institucional completa no 1º mês para YouTube e redes, mais cobertura dinâmica nos eventos da casa.
-3. **Setup Tecnológico Futuro:** A plataforma web e plaquinhas NFC poderão ser ativadas em um segundo momento, após a esteira de conteúdo e tráfego gerar resultados consistentes de caixa para o estabelecimento.
 
 ---
 
