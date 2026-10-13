@@ -50,7 +50,8 @@ A Teixo atua como uma **Assessoria de Crescimento**, combinando tecnologia, trá
 - **Foco principal:** Gastronomia e alimentação local (pizzarias, hamburguerias, confeitarias, açaiterias e lanchonetes).
 - **Pizza do Juca (Paciência, RJ):** Operação piloto completa do ecossistema de food delivery e atendimento presencial. Inclui cardápio digital, gestão de produtos e categorias, central de pedidos Kanban, despacho de motoboys (4 visões em tempo real), módulo de compras e insumos Ceasa-RJ (com impacto nas pizzas em tempo real), pedidos no balcão via NFC, cupom fiscal/térmico e integração multicanal (Site, Salão, iFood, 99Food) (`clientes/Pizza do Juca/`).
 - **Beto (@betochavesrj):** Produção audiovisual completa — garimpo de cortes em podcasts (1080p/4K), edição cinematográfica vertical para Reels (gancho inicial de retenção, transição rápida, acervo próprio de 10 trilhas com ducking, zero legendas e assinatura `@Betochavesrj`), e capas no estilo pôster de ação/cinema com safe zone central (`clientes/Beto/`).
-- **Geografia:** Zona Oeste do Rio de Janeiro e Grande Rio.
+- **Marmitas Fit (Piedade, RJ):** Operação de marmitas fitness congeladas e refeições saudáveis em lote gerida por Eduardo Fiocchi. Migração da plataforma Prefiro Delivery para o ecossistema próprio TeixoAI (taxa de R$ 0,67 por pedido no checkout), cardápio digital porcionado (150g proteína, 120g carbo, 70-80g legumes) com pratos rotativos quinzenais, e painel inteligente de contagem física de estoque e cálculo de CMV (`clientes/Marmitas Fit/`).
+- **Geografia:** Zona Oeste, Zona Norte e Grande Rio.
 
 ---
 
@@ -85,3 +86,9 @@ Para todos os estabelecimentos gastronômicos e clientes de delivery atendidos p
 6. **Integração Multicanal Realista:**
    - O painel consolida pedidos de todos os canais: Cardápio Próprio, Balcão/Mesa NFC, iFood e 99Food.
    - Controle operacional unificado via Merchant API: pausar a loja quando a cozinha lotar, alterar tempo de entrega estimado e aceitar/despachar pedidos sem precisar alternar entre vários tablets.
+
+7. **Gestão de Estoque, Curva ABC & Fatores de Cocção:**
+   - **Rotina Semanal de Estoque (Quinta-feira):** Contagem física setorizada e rápida para apuração de CMV real, giro de insumos e % de estoque sobre faturamento.
+   - **Curva ABC Prática:** Classe A (alto giro / impacto crítico no CMV, ex: frango, arroz, ovos, queijos) auditados com alta frequência; Classes B e C calibrados pelo ciclo de cardápio.
+   - **Fator de Cocção & Rendimento na Ordem de Produção:** Cálculo automático das perdas e ganhos de peso no preparo (arroz quase dobra, feijão triplica, proteínas perdem 20-30%, frutos do mar perdem ~60%), conectando a projeção de vendas à quantidade real de insumo cru a ser comprado e descongelado.
+
