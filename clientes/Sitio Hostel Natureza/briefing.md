@@ -19,26 +19,21 @@
 | :--- | :--- | :--- | :--- | :--- |
 | **Tráfego Pago Local** | **Tiago Teixeira** | **100% Fechado** | R$ 1.200,00 / mês fixo | Conta do Tiago / MEI (`69.390.968/0001-78`) |
 | **Audiovisual e Conteúdo Orgânico** | **PL (Paulo Roberto)** | **100% Fechado** | • R$ 500 no 1º mês (apresentação horizontal no YouTube + lote de pelo menos 20 cortes verticais)<br>• R$ 200 por evento (vídeo no YouTube + cortes verticais, sem quantidade fixa estipulada) | Conta individual do PL (PIX direto para o PL) |
-| **Site Próprio & Balcão/Mesa NFC** | **Rhenan Teixeira** | **Oferta Risco Zero** | R$ 500 setup (com 1 plaquinha de balcão inclusa; adicionais R$ 40/cada; 15 dias de garantia) + R$ 0/mês + R$ 0,67/pedido (repasse quinzenal às terças alternadas, irrepetível no teste) | Conta individual do Rhenan (`rhenanteixeira.rj@gmail.com` - Mercado Pago) |
+| **Site Próprio & Balcão/Mesa NFC** | **Rhenan Teixeira** | Removido do escopo atual | Foco total inicial em aquisição e conteúdo orgânico (sem taxa de setup web) | N/A |
 | **Automações de CRM / WhatsApp** | **Erick Teixeira** | Em planejamento futuro | A definir no onboarding | Conta do Erick |
 
-*(Nota de Pagamentos: O cliente efetua os pagamentos diretamente para a conta individual de cada responsável técnico — Tiago, PL e Rhenan).*  
-*(Nota de Campo do PL: O PL repassará internamente parte do cachê para seu assistente/cinegrafista que estiver gravando com ele, sem menção disso no contrato).*  
-*(Demanda TeixoOS futura mapeada: Desenvolver skill/aplicativo ou script no TeixoOS/mobile para esteira de cortes em lote automáticos a partir de vídeos longos horizontais, estilo Maya/Opus Clip).*
+*(Nota de Pagamentos: O cliente efetua os pagamentos diretamente para a conta individual de cada responsável técnico — Tiago no MEI e PL no PIX).*  
+*(Nota de Representação do Cliente: O signatário atua como Gerente/Administrador Operacional de fato do hostel, respaldado pela Teoria da Aparência do Art. 1.015 do Código Civil e responsabilidade solidária).*  
 
 ---
 
-## 3. Estratégia Comercial: Risco Zero & Conversão em Tráfego
+## 3. Estratégia Comercial & Modelo Enxuto
 
-Para superar a objeção de preço e a resistência inicial da contratante, o Tiago entrará na mesa com a proposta de **Garantia de Satisfação Incondicional**:
+A negociação foi simplificada para **eliminar qualquer barreira de entrada técnica**, concentrando forças nas duas frentes de tração imediata:
 
-1. **Taxa de Implementação:** R$ 500,00 pagos no ato da contratação diretamente para o Rhenan para a criação e entrega do site/cardápio digital e 1 plaquinha NFC física inicial do balcão (plaquinhas adicionais a R$ 40 cada).
-2. **Microtaxa de Manutenção (Irrepetível):** R$ 0,67 por pedido aprovado na plataforma (paga no checkout pelo consumidor final). Devida desde o primeiro dia de operação inclusive no teste de 15 dias (pois cobre o custo real de servidores ativos e processamento de pedidos). O repasse é quinzenal às terças-feiras alternadas.
-3. **Aposta de Risco Zero:**
-   - Se o cliente testar por 15 dias e, por qualquer motivo, não quiser manter o site, a Teixo oferece duas opções diretas sobre a taxa de setup:
-     - **Opção 1:** Devolução imediata de 100% dos R$ 500,00 de setup de volta para o Sítio Hostel Natureza; **OU**
-     - **Opção 2:** Conversão integral dos R$ 500,00 de setup em crédito de tráfego pago para pagar o Tiago.
-4. **Resultado Previsto:** O cliente sente risco absolutamente zero para experimentar, o Rhenan entrega um storefront ultrarrápido com plaquinhas NFC que resolve o gargalo operacional do hostel, o cliente se apaixona pelo resultado prático e os R$ 500,00 se consolidam no bolso do Rhenan.
+1. **Aquisição por Tráfego Pago (Tiago):** Foco em lotar as diárias e eventos do hostel via Meta Ads.
+2. **Autoridade e Viralização com Vídeos de Campo (PL):** Apresentação institucional completa no 1º mês para YouTube e redes, mais cobertura dinâmica nos eventos da casa.
+3. **Setup Tecnológico Futuro:** A plataforma web e plaquinhas NFC poderão ser ativadas em um segundo momento, após a esteira de conteúdo e tráfego gerar resultados consistentes de caixa para o estabelecimento.
 
 ---
 
