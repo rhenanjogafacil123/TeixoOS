@@ -18,7 +18,7 @@
 | Pilar | Responsável Teixo | Status Comercial | Valores e Condições | Destino do Pagamento |
 | :--- | :--- | :--- | :--- | :--- |
 | **Tráfego Pago Local** | **Tiago Teixeira** | **100% Fechado** | R$ 1.200,00 / mês fixo | Conta do Tiago / MEI (`69.390.968/0001-78`) |
-| **Audiovisual e Conteúdo Orgânico** | **PL (Paulo Roberto)** | **100% Fechado** | • R$ 500 no 1º mês (apresentação horizontal no YouTube + lote de pelo menos 20 cortes verticais)<br>• R$ 200 por evento (vídeo no YouTube + cortes verticais, sem quantidade fixa estipulada) | Conta individual do PL (PIX direto para o PL) |
+| **Audiovisual e Conteúdo Orgânico** | **PL (Paulo Roberto)** | **100% Fechado** | • R$ 500 no 1º mês (apresentação horizontal no YouTube + lote de pelo menos 15 cortes verticais)<br>• R$ 200 por evento (vídeo no YouTube + cortes verticais, sem quantidade fixa estipulada) | Conta individual do PL (PIX direto para o PL) |
 
 *(Nota de Pagamentos: O cliente efetua os pagamentos diretamente para a conta individual de cada responsável técnico — Tiago no MEI e PL no PIX).*  
 *(Nota de Representação do Cliente: O signatário atua como Gerente/Administrador Operacional de fato do hostel, respaldado pela Teoria da Aparência do Art. 1.015 do Código Civil e responsabilidade solidária).*  
