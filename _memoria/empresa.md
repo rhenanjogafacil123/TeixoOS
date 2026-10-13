@@ -23,10 +23,8 @@
 
 - **Autoridade B2B Obrigatória:** Todos os contratos, propostas e apresentações exibem obrigatoriamente o CNPJ `69.390.968/0001-78` (TIAGO TEIXEIRA DO NASCIMENTO SILVA / TEIXO) no cabeçalho para transmitir solidez e credibilidade de empresa constituída perante qualquer cliente.
 - **Padrão de Assinatura:** Tiago Teixeira do Nascimento Silva (21 anos) assina como o titular e representante legal oficial da CONTRATADA (garantindo plena capacidade civil e validade jurídica de 100%, sem envolver pais ou responsáveis).
-- **Recebimentos Flexíveis por Serviço:** A conta bancária recebedora é maleável em cada contrato, adaptando-se à divisão interna dos sócios:
-  - **Opção Rhenan (Mercado Pago):** Chave PIX `rhenanteixeira.rj@gmail.com` (Titular: Rhenan de Oliveira Teixeira);
-  - **Opção Tiago / CNPJ:** Chave PIX do CNPJ `69.390.968/0001-78` ou conta jurídica do Tiago;
-  - O gerador de contratos `/contratos` permite escolher qual conta receberá aquele pagamento específico.
+- **Centralização de Pagamentos no MEI perante o Cliente:** Por padrão, todos os pagamentos contratuais (honorários de tráfego, taxa de setup do site, produções audiovisuais) são cobrados e quitados formalmente pelo cliente na conta jurídica do MEI do Tiago via PIX CNPJ `69.390.968/0001-78`. Isso transmite máxima autoridade corporativa e seriedade perante o contratante.
+- **Divisão Interna e Repasses:** A divisão das receitas entre os núcleos da Teixo é gerida internamente pela equipe (repasse da parte de tecnologia do Rhenan para seu Mercado Pago `rhenanteixeira.rj@gmail.com`, repasse de cachê do PL para sua conta, etc.), sem expor contas de pessoas físicas avulsas no contrato do cliente.
 
 ---
 
@@ -54,21 +52,41 @@ A Teixo atua como uma **Assessoria de Crescimento**, combinando tecnologia, trá
 
 ---
 
-## Modelo de Negócio & Oferta Irresistível (Food Delivery)
+## Modelos Comerciais, Padrões de Cobrança e Formas de Entrega
 
-- **Fricção zero para o lojista:** R$ 0 de taxa de implementação e R$ 0 de mensalidade fixa.
-- **Monetização da Teixo:** Microtaxa de conveniência de R$ 0,67 por pedido (paga pelo consumidor final no checkout, sem onerar o lojista).
-- **Escala:** Sistema pré-estruturado e replicável — subir um novo restaurante exige mínimo esforço manual com máximo retorno previsível.
+A Teixo opera com esteiras padronizadas de serviços, garantindo escalabilidade comercial e previsibilidade de caixa:
+
+1. **Food Delivery Próprio & Balcão NFC:**
+   - **Cobrança:** Fricção zero para o lojista — **R$ 0 de setup** e **R$ 0 de mensalidade fixa**.
+   - **Monetização:** Microtaxa de **R$ 0,67 por pedido** aprovado no checkout (paga pelo consumidor final).
+   - **Repasse Quinzenal às Terças-feiras:** O acerto e repasse do saldo acumulado das taxas de R$ 0,67 para o Rhenan é realizado quinzenalmente, pontualmente em terças-feiras alternadas ("terça-feira sim, terça-feira não"), dia de menor fluxo operacional.
+
+2. **Gestão de Tráfego Pago Local (Tiago Teixeira):**
+   - **Cobrança Padrão:** **R$ 1.200,00 mensais** para negócios locais.
+   - **Mídia:** Verba de anúncios custeada diretamente pelo cliente via cartão corporativo cadastrado nas plataformas (Meta/Google).
+
+3. **Produção Audiovisual e Captação de Campo (PL - Paulo Roberto):**
+   - **Apresentação Institucional (1º Mês):** **R$ 500,00** (taxa única). 1 vídeo completo horizontal (16:9) para o canal do YouTube + lote de pelo menos 20 cortes verticais (9:16) para YouTube Shorts, Instagram Reels, TikTok e Facebook.
+   - **Cobertura de Eventos:** **R$ 200,00 por evento** coberto presencialmente (rodas de pagode, festas e momentos de resenha/viralização de campo), gerando vídeo no YouTube e cortes verticais para redes sociais.
+
+4. **Tática Comercial de Risco Zero (Garantia Condicional de 15 Dias):**
+   - Utilizada para superar objeções de lojistas a custos iniciais de tecnologia (ex: setup de R$ 500 em sites ou módulo NFC).
+   - O cliente tem 15 dias de teste na prática; se não quiser continuar, escolhe entre **devolução de 100%** ou **conversão flexível em crédito de serviços** (podendo fracionar livremente o valor entre tráfego com Tiago, audiovisual com PL ou drone com Patrick).
+
+5. **Centralização Financeira no MEI:**
+   - Formalmente nos contratos e faturamento com os clientes, todos os valores são quitados centralizadamente na conta do MEI do Tiago (`69.390.968/0001-78`), transmitindo blindagem institucional. A divisão das receitas entre os núcleos é gerida internamente pela equipe.
 
 ---
 
-## Clientes Atendidos
+## Clientes e Portfólio Ativo
 
-- **Foco principal:** Gastronomia e alimentação local (pizzarias, hamburguerias, confeitarias, açaiterias e lanchonetes).
-- **Pizza do Juca (Paciência, RJ):** Operação piloto completa do ecossistema de food delivery e atendimento presencial em produção no IP `143.95.174.216` (HostGator AlmaLinux 9). Inclui cardápio digital com Checkout Bricks do Mercado Pago (PIX e Cartão antes do envio pra cozinha), Clube de Aniversário 10% OFF, upsell inteligente, rastreio ao vivo para clientes (`/rastreio/`), gestão de produtos em massa, central Kanban com Notinhas Térmicas Dual (Cozinha sem valores e Balcão com endereço/cobrança), despacho de motoboys espelhado, backend REST Node.js com SQLite WAL nativo e fallback `localStorage`, pedidos via Balcão NFC e integração multicanal (`clientes/Pizza do Juca/`).
-- **Beto (@betochavesrj):** Produção audiovisual completa — garimpo de cortes em podcasts (1080p/4K), edição cinematográfica vertical para Reels (gancho inicial de retenção, transição rápida, acervo próprio de 10 trilhas com ducking, zero legendas e assinatura `@Betochavesrj`), e capas no estilo pôster de ação/cinema com safe zone central. Esteira ativa com 4 cortes e capas concluídos (`clientes/Beto/`).
-- **Marmitas Fit (Piedade, RJ):** Operação de marmitas fitness congeladas e refeições saudáveis em lote gerida por Eduardo Fiocchi. Migração da plataforma Prefiro Delivery para o ecossistema próprio TeixoAI (taxa de R$ 0,67 por pedido no checkout), cardápio digital porcionado (150g proteína, 120g carbo, 70-80g legumes) com pratos rotativos quinzenais ativo no GitHub Pages (`https://rhenanjogafacil123.github.io/marmitasfit/`), e painel inteligente de contagem física de estoque e cálculo de CMV (`clientes/Marmitas Fit/`).
-- **Geografia:** Zona Oeste, Zona Norte e Grande Rio.
+> **Regra de Gestão de Memória:** Para manter a memória do sistema leve, ágil e escalável (mesmo com centenas de clientes), os detalhes contratuais específicos, valores fechados, briefings e entregas de cada cliente ficam isolados exclusivamente em suas respectivas pastas dentro de `clientes/<Nome do Cliente>/`. A memória global guarda apenas os padrões de operação e a lista de portfólio.
+
+- **Pizza do Juca** (`clientes/Pizza do Juca/`) — Gastronomia / Food delivery, KDS, motoboys e Balcão NFC (Paciência, RJ).
+- **Marmitas Fit** (`clientes/Marmitas Fit/`) — Refeições saudáveis congeladas, cardápio porcionado e controle de CMV/estoque (Piedade, RJ).
+- **Beto Chaves** (`clientes/Beto/`) — Produção audiovisual e esteira cinematográfica de cortes verticais (@betochavesrj).
+- **Sítio Hostel Natureza** (`clientes/Sitio Hostel Natureza/`) — Turismo e gastronomia / Tráfego, audiovisual com PL e plataforma web/NFC (Rio de Janeiro, RJ).
+- **Foco Geográfico:** Zona Oeste, Zona Norte e Grande Rio.
 
 ---
 

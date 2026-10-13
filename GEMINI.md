@@ -152,5 +152,9 @@ Quando o usuário pedir skill nova:
 - Proibido rodar processos em segundo plano (background tasks, daemons ou servidores locais) que deixem a tela do usuário travada com barras de carregamento contínuas.
 - Todas as ações e comandos devem ser diretos, rápidos e síncronos, liberando o prompt do usuário no mesmo instante.
 
+**Regra de Gestão de Memória vs. Pastas de Clientes:**
+- `_memoria/empresa.md` armazena exclusivamente **padrões gerais de serviços, modelos comerciais, regras de cobrança e a forma de trabalhar da Teixo**.
+- Detalhes de contratos, briefings, valores negociados e entregas individuais pertencem e ficam **isolados estritamente na pasta de cada cliente (`clientes/<Nome>/`)**, mantendo o sistema leve, ágil e escalável para dezenas ou centenas de clientes sem inchar a memória global.
+
 
 

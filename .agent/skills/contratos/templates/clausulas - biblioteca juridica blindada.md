@@ -41,7 +41,8 @@ Todos domiciliados na Cidade do Rio de Janeiro, Estado do Rio de Janeiro, com en
 **Parágrafo Quarto — Dos Repasses e Gateway de Pagamentos:**
 a) Todas as transações financeiras realizadas via Cartão de Crédito ou PIX no ambiente online do cardápio digital serão processadas via infraestrutura do gateway de pagamentos parceiro (Mercado Pago / Mercado Pago Bricks);
 b) Os valores líquidos das vendas dos produtos pertencerão integralmente à CONTRATANTE, cabendo a esta a titularidade da conta digital recebedora vinculada às suas credenciais operacionais, obedecendo às políticas de liquidação e prazos do próprio gateway bancário;
-c) A CONTRATADA não atua como instituição bancária ou financeira, limitando-se a fornecer a integração tecnológica de checkout transparente entre a interface do cardápio e a API de pagamentos.
+c) A CONTRATADA não atua como instituição bancária ou financeira, limitando-se a fornecer a integração tecnológica de checkout transparente entre a interface do cardápio e a API de pagamentos;
+d) O fechamento, apuração e liquidação do montante acumulado referente às microtaxas de tecnologia de R$ 0,67 por pedido ocorrerá **quinzenalmente, pontualmente em terças-feiras alternadas ("terça-feira sim, terça-feira não")**, com base no relatório oficial extraído diretamente do painel da plataforma.
 ```
 
 ---
