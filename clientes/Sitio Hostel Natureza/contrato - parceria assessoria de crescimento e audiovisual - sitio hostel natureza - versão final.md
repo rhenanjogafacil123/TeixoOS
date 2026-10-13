@@ -7,19 +7,17 @@ Pelo presente instrumento particular, celebrado com fulcro nos artigos 421, 421-
 ## 1. DAS PARTES CONTRATANTES
 
 ### 1.1. CONTRATADA:
-**TIAGO TEIXEIRA DO NASCIMENTO SILVA**, pessoa jurídica de direito privado sob a forma de empresário individual (Microempreendedor Individual — MEI), inscrita no CNPJ/MF sob o nº **`69.390.968/0001-78`**, operando sob o nome empresarial e fantasia **TEIXO (ASSESSORIA DE CRESCIMENTO E TECNOLOGIA)**, com domicílio na Cidade do Rio de Janeiro / RJ, e-mail de contato: `contato@teixo.com.br`, representada por seu titular e signatário:
-- **TIAGO TEIXEIRA DO NASCIMENTO SILVA**, gestor de aquisição de tráfego pago e estrategista de crescimento, titular do CPF/MF sob o nº [ARQUIVADO NA OPERAÇÃO / PREENCHIDO], plenamente capaz civilmente;
-- **Equipe Técnica e Copartícipe Operacional:** Contando para a execução dos serviços de captação de campo com **PAULO ROBERTO - "PL"** (Influenciador, Apresentador e Diretor de Criação Audiovisual de Campo).
+**TEIXO** (TIAGO TEIXEIRA DO NASCIMENTO SILVA), inscrita no CNPJ sob o nº **`69.390.968/0001-78`**, neste ato representada por seu titular **TIAGO TEIXEIRA DO NASCIMENTO SILVA**, com coparticipação operacional de **PAULO ROBERTO ("PL")** no audiovisual de campo.
+- **E-mail Oficial:** `contato@teixo.com.br`
 
 ### 1.2. CONTRATANTE:
-**SÍTIO HOSTEL NATUREZA** [Razão Social / Denominação Comercial / Titular: __________________________________________________], pessoa jurídica de direito privado [ou empreendimento econômico], inscrita no CNPJ/MF sob o nº ____________________________, situada na Cidade do Rio de Janeiro / RJ, neste ato formalmente representada por seu Gestor / Administrador Operacional de Fato:
-- **Nome do Responsável que Assina:** __________________________________________________
-- **Cargo / Função:** Gestor Geral / Administrador Operacional com plenos poderes de contratação
-- **Cadastro de Pessoas Físicas (CPF/MF):** ______________________________
-- **E-mail Oficial:** __________________________________________________
-- **Telefone Celular / WhatsApp Oficial:** _____________________________________________
+**SÍTIO HOSTEL NATUREZA**, inscrita no CNPJ sob o nº ____________________________, representada pelo gestor operacional signatário:
+- **Nome do Responsável:** __________________________________________________
+- **CPF:** ______________________________
+- **WhatsApp:** ______________________________
+- **E-mail:** __________________________________________________
 
-*Parágrafo Único (Poderes de Gestão e Teoria da Aparência — Art. 1.015 do Código Civil):* O signatário acima qualificado declara e assegura, sob as penas da lei civil e penal, que exerce a administração operacional e gestão comercial contínua do estabelecimento **SÍTIO HOSTEL NATUREZA**, possuindo plenos poderes para contrair obrigações e firmar parcerias em favor do empreendimento, vinculando a titularidade da empresa nos termos da Teoria da Aparência, respondendo solidariamente com a proprietária pelo fiel cumprimento das obrigações financeiras e operacionais assumidas neste contrato.
+*Parágrafo Único (Art. 1.015 do Código Civil):* O responsável declara administrar a operação do **SÍTIO HOSTEL NATUREZA**, assumindo solidariedade civil com a proprietária pelo cumprimento integral deste contrato.
 
 Doravante denominadas, de forma conjunta, como **"Partes"** ou, isoladamente, como **"Parte"**.
 
@@ -196,28 +194,17 @@ E, por estarem assim justas, acordadas e contratadas, as Partes firmam o present
 <br>
 
 ____________________________________________________________________  
-**CONTRATADA:**  
-**TIAGO TEIXEIRA DO NASCIMENTO SILVA**  
-**Nome Fantasia:** TEIXO (Assessoria de Crescimento e Tecnologia)  
-**CNPJ/MF:** 69.390.968/0001-78  
-**Representante Legal Signatário:** TIAGO TEIXEIRA DO NASCIMENTO SILVA  
-CPF: [ARQUIVADO / PREENCHIDO] | RG: [ARQUIVADO / PREENCHIDO]  
-*Chave PIX Oficial de Pagamento (CNPJ): `69.390.968/0001-78`*  
-
-`[ ESPAÇO PARA CHANCELA DIGITAL TEIXO ]`
+**CONTRATADA: TEIXO** (TIAGO TEIXEIRA DO NASCIMENTO SILVA)  
+**CNPJ:** 69.390.968/0001-78 | **Chave PIX:** `69.390.968/0001-78`  
+Assinatura Digital: TIAGO TEIXEIRA DO NASCIMENTO SILVA  
 
 <br><br>
 
 ____________________________________________________________________  
-**CONTRATANTE:**  
-**SÍTIO HOSTEL NATUREZA**  
-**Razão Social / Denominação:** __________________________________________________  
-**CNPJ/MF nº:** __________________________________________________  
-**Gestor / Representante Operacional:** __________________________________________________  
-**CPF/MF:** ________________________________________  
-**Cargo / Vínculo:** Gestor Operacional / Administrador de Fato  
-
-`[ ESPAÇO PARA CHANCELA DIGITAL DA CONTRATANTE ]`
+**CONTRATANTE: SÍTIO HOSTEL NATUREZA**  
+**CNPJ:** __________________________________________________  
+**Responsável:** __________________________________ | **CPF:** ________________________  
+Assinatura Digital do Responsável
 
 <br><br>
 
