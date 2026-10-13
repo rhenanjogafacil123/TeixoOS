@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Central de Pedidos | Marmitas Fit</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/assets/juca-api.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @media print {
+      body * { visibility: hidden !important; }
+      #receipt-print-area, #receipt-print-area * { visibility: visible !important; }
+      #receipt-print-area {
+        position: fixed !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 80mm !important;
+        max-width: 80mm !important;
+        margin: 0 !important;
+        padding: 4mm !important;
+        background: white !important;
+        color: black !important;
+        font-family: 'Courier New', Courier, monospace !important;
+        font-size: 13px !important;
+        line-height: 1.3 !important;
+      }
+      .no-print { display: none !important; }
+    }
+    .scrollbar-thin::-webkit-scrollbar { width: 5px; height: 5px; }
+    .scrollbar-thin::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 9999px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    .scrollbar-thin::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#f4f6fa] text-slate-950 font-sans antialiased">
+
+  <!-- Aviso Mobile / Tablet -->
+  <div class="grid min-h-screen place-items-center bg-[#f5f7fb] px-5 xl:hidden">
+    <div class="max-w-sm rounded-3xl border border-slate-200 bg-white p-7 text-center shadow-xl">
+      <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-orange-50 text-orange-600">
+        <i data-lucide="monitor" class="h-7 w-7"></i>
+      </div>
+      <h1 class="mt-5 text-xl font-extrabold tracking-tight text-slate-950">Painel feito para computador</h1>
+      <p class="mt-2 text-sm leading-6 text-slate-500">
+        A central de pedidos e gestão usa bastante informação ao mesmo tempo. Abra em uma tela de computador para manter o fluxo organizado.
+      </p>
+      <a href="../" class="mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-950 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-800">
+        Voltar aos painéis <i data-lucide="arrow-right" class="h-4 w-4"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Layout Desktop Principal -->
+  <div class="hidden min-h-screen xl:block">
+    
+    <!-- Barra Lateral Fixa (Idêntica ao Bora de Batata) -->
+    <aside class="fixed inset-y-0 left-0 z-40 flex w-[248px] flex-col border-r border-slate-200/80 bg-white px-4 py-5">
+      <a href="../" class="mb-7 flex items-center gap-3 px-2">
+        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-orange-50 border border-orange-100 shadow-sm">
+          <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png" alt="Marmitas Fit" class="h-9 w-9 object-contain" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+        </div>
+        <div class="leading-none">
+          <div class="text-[16px] font-extrabold tracking-tight text-slate-950">Marmitas Fit</div>
+          <div class="mt-1.5 text-[9px] font-extrabold uppercase tracking-[0.18em] text-orange-500">Painel de gestão</div>
+        </div>
+      </a>
+
+      <!-- Menu de Navegação -->
+      <div class="space-y-6 overflow-y-auto pr-1">
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Visão geral</div>
+          <nav class="space-y-1">
+            <a href="../admin/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="layout-dashboard" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Dashboard</span>
+            </a>
+            <a href="./" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-bold bg-orange-50 text-orange-600 transition">
+              <i data-lucide="clipboard-list" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Pedidos</span>
+              <span id="badge-sidebar-orders" class="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-extrabold text-white">10</span>
+            </a>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Operação</div>
+          <nav class="space-y-1">
+            <a href="../produtos/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="package" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Marmitas & Cardápio</span>
+            </a>
+            
+            
+            <a href="../promocoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="tag" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Promoções</span>
+            </a>
+            <a href="../canais/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="store" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Canais de Venda</span><span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-black text-emerald-800">Próprio</span>
+            </a>
+            <!-- Menu Interativo de Motoboys -->
+            <div class="space-y-1">
+              <div class="flex items-center gap-1 rounded-xl px-3 py-2 text-left text-[13px] font-semibold text-slate-700 hover:bg-slate-50 transition">
+                <a href="../motoboy/?gestor=true" class="flex flex-1 items-center gap-3 text-slate-700 hover:text-slate-950">
+                  <i data-lucide="bike" class="h-[17px] w-[17px] text-orange-500"></i>
+                  <span class="flex-1 font-bold">Motoboys</span>
+                  <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-extrabold text-emerald-700">4 online</span>
+                </a>
+                <button
+                  type="button"
+                  id="btn-sidebar-motoboys"
+                  onclick="toggleSidebarMotoboys()"
+                  class="rounded-lg p-1 text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition"
+                  title="Expandir/recolher motoboys"
+                >
+                  <i data-lucide="chevron-down" id="icon-sidebar-motoboys" class="h-3.5 w-3.5 transition-transform duration-200"></i>
+                </button>
+              </div>
+              <div id="sub-sidebar-motoboys" class="ml-3.5 space-y-1 border-l-2 border-orange-100 pl-2.5 text-xs">
+                <a
+                  href="../motoboy/?view=grid&gestor=true"
+                  class="flex items-center gap-2 rounded-lg px-2 py-1.5 font-bold text-orange-600 hover:bg-orange-50 transition"
+                >
+                  <i data-lucide="layout-grid" class="h-3.5 w-3.5 text-orange-500"></i>
+                  <span>4 Telas Lado a Lado</span>
+                </a>
+                <a
+                  href="../motoboy/?courier=rafael&gestor=true"
+                  class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 transition"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <span>Rafael Lima</span>
+                  </span>
+                  <span class="text-[10px] font-semibold text-slate-400">12 ent.</span>
+                </a>
+                <a
+                  href="../motoboy/?courier=diego&gestor=true"
+                  class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 transition"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <span>Diego Souza</span>
+                  </span>
+                  <span class="text-[10px] font-semibold text-slate-400">8 ent.</span>
+                </a>
+                <a
+                  href="../motoboy/?courier=matheus&gestor=true"
+                  class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 transition"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    <span>Matheus Alves</span>
+                  </span>
+                  <span class="rounded bg-amber-100 px-1 text-[9px] font-extrabold text-amber-700">Em rota</span>
+                </a>
+                <a
+                  href="../motoboy/?courier=bruno&gestor=true"
+                  class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 transition"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <span>Bruno Costa</span>
+                  </span>
+                  <span class="text-[10px] font-semibold text-slate-400">6 ent.</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Gestão</div>
+          <nav class="space-y-1">
+            <a href="../configuracoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="settings" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Configurações</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Rodapé Sidebar -->
+      <div class="mt-auto rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 via-white to-amber-50 p-4">
+        <div class="text-[11px] font-extrabold uppercase tracking-[0.12em] text-orange-600">Marmitas Fit</div>
+        <div class="mt-2 text-xs leading-5 text-slate-500">
+          Operação em Méier - RJ. Delivery e balcão integrados.
+        </div>
+        <a href="/" target="_blank" class="mt-3 inline-flex items-center text-xs font-extrabold text-slate-800 hover:text-orange-600 transition">
+          Ver cardápio <i data-lucide="arrow-right" class="ml-1 h-3.5 w-3.5"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Área de Conteúdo -->
+    <div class="pl-[248px]">
+      
+      <!-- Topbar Header -->
+      <header class="sticky top-0 z-30 border-b border-slate-200/70 bg-white/92 backdrop-blur-xl">
+        <div class="flex h-[70px] items-center gap-4 px-6 xl:px-8">
+          <div class="relative max-w-[620px] flex-1">
+            <i data-lucide="search" class="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400"></i>
+            <input
+              id="top-search"
+              oninput="handleSearch(this.value)"
+              placeholder="Buscar por cliente, pedido, pizza ou telefone..."
+              class="h-11 w-full rounded-xl border border-slate-200 bg-slate-50/70 pl-11 pr-4 text-sm outline-none transition focus:border-orange-300 focus:bg-white focus:ring-4 focus:ring-orange-100"
+            />
+          </div>
+
+          <div class="ml-auto flex items-center gap-3">
+            <button
+              type="button"
+              onclick="toggleSound()"
+              id="btn-sound"
+              title="Campainha de Novos Pedidos"
+              class="relative rounded-xl border border-slate-200 p-2.5 text-orange-500 hover:bg-slate-50 transition"
+            >
+              <i id="icon-sound" data-lucide="bell" class="h-5 w-5"></i>
+              <span id="badge-bell" class="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-red-500 px-1 text-[9px] font-extrabold text-white">3</span>
+            </button>
+
+            <button
+              type="button"
+              onclick="resetDemoOrders()"
+              title="Restaurar pedidos de exemplo do Juca"
+              class="rounded-xl border border-slate-200 p-2.5 text-slate-500 hover:text-slate-950 hover:bg-slate-50 transition"
+            >
+              <i data-lucide="rotate-ccw" class="h-5 w-5"></i>
+            </button>
+
+            <!-- Perfil Usuário -->
+            <div class="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-2.5 py-2 shadow-sm">
+              <div class="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-orange-500 to-amber-400 text-xs font-extrabold text-white">
+                EF
+              </div>
+              <div class="min-w-[112px] text-left">
+                <div class="text-xs font-extrabold text-slate-900">Eduardo Fiocchi</div>
+                <div class="text-[10px] text-slate-400">Administrador</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Conteúdo da Página -->
+      <main class="mx-auto w-full max-w-[1720px] p-6 2xl:p-8 space-y-6">
+
+        <!-- Banner Principal da Central -->
+        <section class="relative overflow-hidden rounded-[28px] border border-orange-100/80 bg-white p-6 shadow-[0_20px_55px_-42px_rgba(50,40,25,0.22)]">
+          <div aria-hidden="true" class="pointer-events-none absolute -right-20 -top-32 h-80 w-80 rounded-full bg-orange-100/50 blur-3xl"></div>
+          <div aria-hidden="true" class="pointer-events-none absolute right-64 top-2 h-32 w-32 rounded-full bg-amber-50 blur-3xl"></div>
+          
+          <div class="relative flex flex-wrap items-start justify-between gap-5">
+            <div>
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.13em] text-orange-600">
+                  <span class="h-1.5 w-1.5 rounded-full bg-orange-500"></span>
+                  Painel operacional
+                </span>
+                <span class="text-[11px] font-semibold text-slate-400">Marmitas Fit / Atendimento</span>
+              </div>
+              <h1 class="mt-4 text-[35px] font-extrabold leading-tight tracking-[-0.045em] text-slate-950">
+                Central de <span class="text-orange-500">Pedidos</span>
+              </h1>
+              <p class="mt-2 text-[13px] leading-6 text-slate-500">
+                Tudo o que está acontecendo na operação da pizzaria, organizado em tempo real.
+              </p>
+            </div>
+
+            <div class="flex flex-wrap gap-2 pt-1">
+              <button
+                type="button"
+                onclick="openConfigModal()"
+                class="inline-flex h-11 items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 text-xs font-extrabold text-slate-700 shadow-sm transition hover:border-orange-200 hover:bg-orange-50"
+              >
+                <i data-lucide="settings-2" class="h-4 w-4"></i> Personalizar etapas
+              </button>
+              <button
+                type="button"
+                onclick="openManualModal()"
+                class="inline-flex h-11 items-center gap-2 rounded-xl bg-orange-500 px-4 text-xs font-extrabold text-white shadow-[0_10px_24px_-12px_rgba(249,115,22,0.8)] transition hover:-translate-y-0.5 hover:bg-orange-600"
+              >
+                <i data-lucide="plus" class="h-4 w-4"></i> Novo pedido manual
+              </button>
+            </div>
+          </div>
+
+          <div class="relative mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-slate-100 pt-4 text-xs">
+            <span class="flex items-center gap-2 text-slate-500">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              <strong id="summary-total" class="font-extrabold text-slate-900">10</strong> pedidos ativos
+            </span>
+            <span class="flex items-center gap-2 text-slate-500">
+              <i data-lucide="clock-3" class="h-4 w-4 text-orange-500"></i>
+              <strong id="summary-waiting" class="font-extrabold text-slate-900">3</strong> aguardando confirmação
+            </span>
+            <span class="flex items-center gap-2 text-slate-500">
+              <i data-lucide="bike" class="h-4 w-4 text-blue-500"></i>
+              <strong id="summary-routes" class="font-extrabold text-slate-900">2</strong> em rota de entrega
+            </span>
+            <span class="ml-auto text-[10px] text-slate-400">Sincronizado localmente</span>
+          </div>
+        </section>
+
+
+        <!-- ======================================================== -->
+        <!-- BARRA DE SELEÇÃO DE PERÍODO & HISTÓRICO DE 6 MESES         -->
+        <!-- ======================================================== -->
+        <div class="rounded-2xl border border-slate-200/80 bg-white p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-1.5 text-xs font-bold">
+            <span class="mr-1 text-slate-400 font-extrabold uppercase text-[10px] tracking-wider flex items-center gap-1">
+              <i data-lucide="calendar" class="h-3.5 w-3.5 text-orange-500"></i> Período:
+            </span>
+            <button type="button" onclick="setOrdersPeriod('today')" id="btn-period-today" class="period-btn rounded-xl px-3 py-1.5 text-xs font-extrabold transition bg-orange-500 text-white shadow-sm">
+              Hoje (Ao vivo)
+            </button>
+            <button type="button" onclick="setOrdersPeriod('7d')" id="btn-period-7d" class="period-btn rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:bg-slate-100 transition">
+              1 semana
+            </button>
+            <button type="button" onclick="setOrdersPeriod('15d')" id="btn-period-15d" class="period-btn rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:bg-slate-100 transition">
+              15 dias
+            </button>
+            <button type="button" onclick="setOrdersPeriod('30d')" id="btn-period-30d" class="period-btn rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:bg-slate-100 transition">
+              30 dias
+            </button>
+            <button type="button" onclick="setOrdersPeriod('60d')" id="btn-period-60d" class="period-btn rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:bg-slate-100 transition">
+              60 dias
+            </button>
+            <button type="button" onclick="setOrdersPeriod('180d')" id="btn-period-180d" class="period-btn rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:bg-slate-100 transition">
+              Últimos 6 meses
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <div class="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs">
+              <i data-lucide="calendar-search" class="h-3.5 w-3.5 text-slate-400"></i>
+              <input type="date" id="custom-date-picker" onchange="handleCustomDate(this.value)" class="bg-transparent text-xs font-bold text-slate-700 outline-none" title="Selecionar data específica">
+            </div>
+            <button type="button" onclick="setOrdersPeriod('today')" id="btn-back-live" class="hidden rounded-xl bg-emerald-50 border border-emerald-200 px-3 py-1.5 text-xs font-bold text-emerald-700 hover:bg-emerald-100 transition flex items-center gap-1">
+              <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              Voltar ao vivo
+            </button>
+          </div>
+        </div>
+
+        <!-- Visualização Histórica (Quando período != 'today') -->
+        <section id="section-history-view" class="hidden space-y-4">
+          <div class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="grid h-7 w-7 place-items-center rounded-xl bg-orange-100 text-orange-600 text-xs font-bold">📜</span>
+                  <h2 id="history-period-title" class="text-base font-extrabold text-slate-900">Histórico de Pedidos • 1 semana</h2>
+                </div>
+                <p id="history-period-subtitle" class="text-xs text-slate-500 mt-0.5">Relatório consolidado de pedidos anteriores e clientes atendidos.</p>
+              </div>
+
+              <!-- Métricas Rápidas do Período -->
+              <div class="flex flex-wrap items-center gap-3">
+                <div class="rounded-xl bg-orange-50 px-3 py-2 border border-orange-100">
+                  <div class="text-[10px] font-bold uppercase text-orange-600">Total de Pedidos</div>
+                  <div id="hist-stat-orders" class="text-base font-black text-slate-900">412</div>
+                </div>
+                <div class="rounded-xl bg-emerald-50 px-3 py-2 border border-emerald-100">
+                  <div class="text-[10px] font-bold uppercase text-emerald-600">Faturamento</div>
+                  <div id="hist-stat-revenue" class="text-base font-black text-emerald-700">R$ 28.450,00</div>
+                </div>
+                <div class="rounded-xl bg-blue-50 px-3 py-2 border border-blue-100">
+                  <div class="text-[10px] font-bold uppercase text-blue-600">Ticket Médio</div>
+                  <div id="hist-stat-ticket" class="text-base font-black text-blue-700">R$ 69,05</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tabela de Pedidos do Histórico -->
+            <div class="mt-4 overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead>
+                  <tr class="border-b border-slate-100 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                    <th class="pb-3"># Pedido</th>
+                    <th class="pb-3">Data / Hora</th>
+                    <th class="pb-3">Cliente</th>
+                    <th class="pb-3">Bairro</th>
+                    <th class="pb-3">Itens</th>
+                    <th class="pb-3">Pagamento</th>
+                    <th class="pb-3">Valor</th>
+                    <th class="pb-3">Motoboy</th>
+                    <th class="pb-3 text-right">Ação</th>
+                  </tr>
+                </thead>
+                <tbody id="history-table-body" class="divide-y divide-slate-100 text-slate-700 font-medium">
+                  <!-- Renderizado via JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ======================================================== -->
+        <!-- O KANBAN COM AS 4 COLUNAS LADO A LADO (BORA DE BATATA)  -->
+        <!-- ======================================================== -->
+        <section id="section-kanban" class="mt-8">
+          <div class="mb-4 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-[20px] font-extrabold tracking-[-0.035em] text-slate-950">Fluxo de pedidos</h2>
+                <span id="kanban-screen-count" class="rounded-lg border border-orange-100 bg-orange-50 px-2 py-1 text-[10px] font-extrabold text-orange-700">10 na tela</span>
+              </div>
+              <p class="mt-1 text-xs text-slate-500">Acompanhe cada etapa e avance os pedidos com um clique.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-3">
+              <!-- Filtro por Canal no Kanban -->
+              <div class="flex items-center gap-1 rounded-xl bg-slate-100 p-1 text-[11px] font-extrabold border border-slate-200/60">
+                <button type="button" onclick="filterChannel('todos')" id="chan-btn-todos" class="chan-btn rounded-lg px-2.5 py-1 bg-white text-slate-900 shadow-sm transition">Todos</button>
+                <button type="button" onclick="filterChannel('whatsapp')" id="chan-btn-whatsapp" class="chan-btn rounded-lg px-2.5 py-1 text-slate-600 hover:text-slate-950 transition flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-emerald-600"></span> WhatsApp</button>
+                
+                <button type="button" onclick="filterChannel('site')" id="chan-btn-site" class="chan-btn rounded-lg px-2.5 py-1 text-slate-600 hover:text-slate-950 transition flex items-center gap-1.5"><span class="h-2 w-2 rounded-full bg-emerald-500"></span> Site/Whats</button>
+              </div>
+
+              <a href="../canais/" class="inline-flex items-center gap-1.5 rounded-xl border border-red-200 bg-red-50 px-2.5 py-1.5 text-[11px] font-black text-red-700 hover:bg-red-100 transition shadow-sm" title="Abrir Gestor Exclusivo de iFood & 99Food">
+                <i data-lucide="store" class="h-3.5 w-3.5"></i>
+                <span>Canais Oficiais</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto pb-4 scrollbar-thin">
+            <div id="kanban-board" class="grid min-h-[520px] gap-4" style="grid-template-columns: repeat(4, minmax(280px, 1fr));">
+              <!-- As 4 colunas são renderizadas dinamicamente via JS -->
+            </div>
+          </div>
+        </section>
+
+        <!-- Seção Inferior: Motoboys na Escala & Produtos Esgotados -->
+        <div class="pt-2 grid grid-cols-1 lg:grid-cols-3 gap-5">
+          <!-- Motoboys (2 colunas) -->
+          <section class="lg:col-span-2 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_12px_32px_-28px_rgba(15,23,42,0.28)]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div class="flex items-center gap-2.5">
+                <div class="grid h-9 w-9 place-items-center rounded-xl bg-blue-50 text-blue-600">
+                  <i data-lucide="bike" class="h-4 w-4"></i>
+                </div>
+                <div>
+                  <h2 class="text-sm font-extrabold text-slate-900">Motoboys na escala</h2>
+                  <p class="text-[10px] text-slate-400">Entregadores para despacho rápido</p>
+                </div>
+              </div>
+              <a href="../motoboy/" class="text-xs font-bold text-blue-600 hover:underline">Ver equipe</a>
+            </div>
+            <div id="couriers-list" class="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <!-- Renderizado via JS -->
+            </div>
+          </section>
+
+          <!-- Itens Esgotados / Pausados (1 coluna) -->
+          <section class="rounded-2xl border border-slate-200/80 bg-white p-5 shadow-[0_12px_32px_-28px_rgba(15,23,42,0.28)]">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+              <div class="flex items-center gap-2.5">
+                <div class="grid h-9 w-9 place-items-center rounded-xl bg-rose-50 text-rose-600">
+                  <i data-lucide="alert-octagon" class="h-4 w-4"></i>
+                </div>
+                <div>
+                  <h2 class="text-sm font-extrabold text-slate-900">Itens Esgotados</h2>
+                  <p class="text-[10px] text-slate-400">Pausados no cardápio</p>
+                </div>
+              </div>
+              <span id="badge-sold-out-count" class="rounded-full bg-rose-50 border border-rose-200 px-2 py-0.5 text-[10px] font-extrabold text-rose-700">0 itens</span>
+            </div>
+            <div id="sold-out-list" class="mt-3 divide-y divide-slate-100 max-h-[160px] overflow-y-auto">
+              <!-- Renderizado via JS -->
+            </div>
+          </section>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: DETALHES DO PEDIDO COM TODAS AS INFORMAÇÕES       -->
+  <!-- ======================================================== -->
+  <div id="modal-details" class="hidden fixed inset-0 z-[100] grid place-items-center bg-slate-950/50 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-[480px] rounded-[28px] bg-white p-6 shadow-2xl">
+      <div class="flex items-start justify-between gap-4 border-b pb-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="detail-channel-badge" class="rounded-md bg-orange-50 px-2 py-0.5 text-[10px] font-extrabold text-orange-600">WhatsApp</span>
+            <span id="detail-id" class="text-xs font-extrabold text-slate-400">#1048</span>
+          </div>
+          <h2 id="detail-customer" class="mt-1 text-lg font-extrabold text-slate-900">EFão Silva</h2>
+        </div>
+        <button type="button" onclick="closeDetailsModal()" class="rounded-xl p-2 text-slate-400 hover:bg-slate-100">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <div class="mt-4 space-y-4 text-xs">
+        <div>
+          <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">Itens do Pedido</div>
+          <div id="detail-items-list" class="mt-1.5 divide-y divide-slate-100 rounded-2xl border border-slate-100 bg-slate-50/70 p-3 text-slate-800 font-semibold space-y-1"></div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-[11px]">
+          <div class="rounded-xl border border-slate-100 bg-slate-50 p-2.5">
+            <span class="text-slate-400">Pagamento:</span>
+            <div id="detail-payment" class="font-extrabold text-slate-900">Pix</div>
+          </div>
+          <div class="rounded-xl border border-slate-100 bg-slate-50 p-2.5">
+            <span class="text-slate-400">Total:</span>
+            <div id="detail-price" class="text-sm font-extrabold text-orange-600">R$ 68,90</div>
+          </div>
+        </div>
+
+        <div id="detail-notes-box" class="rounded-xl border border-amber-200 bg-amber-50 p-2.5 text-amber-900">
+          <strong>Observação:</strong> <span id="detail-notes"></span>
+        </div>
+
+        <div class="space-y-1 text-slate-600 text-[11px]">
+          <div><i data-lucide="map-pin" class="inline h-3.5 w-3.5 text-slate-400 mr-1"></i> <span id="detail-address"></span></div>
+          <div><i data-lucide="phone" class="inline h-3.5 w-3.5 text-slate-400 mr-1"></i> <span id="detail-phone"></span></div>
+        </div>
+      </div>
+
+      <div class="mt-5 grid grid-cols-3 gap-2">
+        <button type="button" onclick="printReceiptFromDetail('cozinha')" class="flex flex-col items-center justify-center gap-1 rounded-xl bg-orange-600 hover:bg-orange-700 py-2.5 px-2 text-xs font-black text-white shadow transition">
+          <i data-lucide="chef-hat" class="h-4 w-4"></i>
+          <span>🍕 Cozinha</span>
+        </button>
+        <button type="button" onclick="printReceiptFromDetail('motoboy')" class="flex flex-col items-center justify-center gap-1 rounded-xl bg-blue-600 hover:bg-blue-700 py-2.5 px-2 text-xs font-black text-white shadow transition">
+          <i data-lucide="bike" class="h-4 w-4"></i>
+          <span>🛵 Motoboy</span>
+        </button>
+        <button type="button" onclick="printReceiptFromDetail('balcao')" class="flex flex-col items-center justify-center gap-1 rounded-xl border border-slate-200 py-2.5 px-2 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">
+          <i data-lucide="printer" class="h-4 w-4"></i>
+          <span>🧾 Balcão</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: IMPRESSÃO TÉRMICA 80MM (COZINHA, MOTOBOY & BALCÃO)-->
+  <!-- ======================================================== -->
+  <div id="modal-receipt" class="hidden fixed inset-0 z-[110] grid place-items-center bg-slate-950/50 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-[430px] rounded-[28px] bg-white p-6 shadow-2xl">
+      <div class="flex items-start justify-between gap-4 no-print">
+        <div>
+          <div class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-orange-500">Impressão de Comanda</div>
+          <h2 id="receipt-modal-title" class="mt-0.5 text-lg font-extrabold text-slate-900">Pedido #1048</h2>
+        </div>
+        <button type="button" onclick="closeReceiptModal()" class="rounded-xl p-2 text-slate-400 hover:bg-slate-100">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <!-- Abas de seleção de formato (Cozinha vs Motoboy vs Balcão) -->
+      <div class="mt-3 grid grid-cols-3 gap-1.5 p-1 rounded-xl bg-slate-100 no-print">
+        <button type="button" id="tab-receipt-kitchen" onclick="switchReceiptTab('cozinha')" class="py-2 rounded-lg text-xs font-black transition bg-white text-orange-600 shadow-sm flex items-center justify-center gap-1">
+          <span>🍕 Cozinha</span>
+        </button>
+        <button type="button" id="tab-receipt-motoboy" onclick="switchReceiptTab('motoboy')" class="py-2 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1">
+          <span>🛵 Motoboy</span>
+        </button>
+        <button type="button" id="tab-receipt-counter" onclick="switchReceiptTab('balcao')" class="py-2 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1">
+          <span>🧾 Balcão</span>
+        </button>
+      </div>
+
+      <!-- ÁREA DE IMPRESSÃO (COZINHA, MOTOBOY & BALCÃO) -->
+      <div id="receipt-print-area" class="mt-4 rounded-2xl border border-dashed border-slate-300 bg-slate-50 p-4 font-mono text-xs leading-relaxed text-slate-800">
+        <!-- VISÃO 1: VIA COZINHA (Fonte grande, só itens e observações, zero financeiro) -->
+        <div id="receipt-view-kitchen" class="space-y-3">
+          <div class="text-center border-b-2 border-dashed border-slate-800 pb-2">
+            <div class="text-xs font-black tracking-widest text-slate-900">*** Marmitas Fit • COZINHA ***</div>
+            <div id="kitchen-order-number" class="text-2xl font-black text-slate-950 my-1">PEDIDO #1048</div>
+            <div id="kitchen-order-time" class="text-[11px] font-bold text-slate-700">19:32 • Balcão / Delivery</div>
+            <div id="kitchen-customer-name" class="text-xs font-extrabold text-slate-900 mt-0.5">Cliente: Rodrigo Silva</div>
+          </div>
+
+          <div>
+            <div class="text-[11px] font-black uppercase text-slate-600 mb-1">--- ITENS PARA PRODUÇÃO ---</div>
+            <div id="kitchen-items-list" class="space-y-2 text-sm font-black text-slate-950">
+              <!-- Renderizado dinamicamente -->
+            </div>
+          </div>
+
+          <div id="kitchen-notes-box" class="border-t-2 border-dashed border-slate-800 pt-2 bg-amber-100/60 p-2 rounded">
+            <div class="text-[10px] font-black uppercase tracking-wider text-rose-800">⚠️ ATENÇÃO / OBSERVAÇÃO:</div>
+            <div id="kitchen-notes-text" class="text-xs font-black uppercase text-rose-950 mt-0.5">SEM CEBOLA! CAPRICHA NO CATUPIRY</div>
+          </div>
+
+          <div class="text-center text-[10px] font-bold text-slate-500 border-t border-dashed border-slate-400 pt-2">
+            VIA COZINHA • PREPARO & Freezer
+          </div>
+        </div>
+
+        <!-- VISÃO 2: VIA MOTOBOY / ENTREGA (Endereço gigante, cobrança e conferência na bag) -->
+        <div id="receipt-view-motoboy" class="hidden space-y-2.5 text-xs">
+          <div class="text-center border-b-2 border-dashed border-slate-800 pb-2">
+            <div class="text-[10px] font-black tracking-widest text-slate-900">*** VIA ENTREGA / MOTOBOY ***</div>
+            <div id="motoboy-order-number" class="text-2xl font-black text-slate-950 my-1">PEDIDO #1048</div>
+            <div id="motoboy-order-time" class="text-[11px] font-bold text-slate-700">19:32 • Piedade</div>
+          </div>
+
+          <!-- CLIENTE & CONTATO -->
+          <div class="border-b border-dashed border-slate-300 pb-1.5">
+            <div class="text-[10px] font-bold text-slate-500 uppercase">DESTINATÁRIO</div>
+            <div id="motoboy-customer-name" class="text-sm font-black text-slate-950">Rodrigo Silva</div>
+            <div id="motoboy-customer-phone" class="text-xs font-bold text-blue-700 mt-0.5">📱 (21) 98765-4321</div>
+          </div>
+
+          <!-- ENDEREÇO DE ENTREGA (DESTAQUE MÁXIMO) -->
+          <div class="rounded-xl border-2 border-dashed border-slate-800 p-2.5 bg-white">
+            <div class="text-[10px] font-black uppercase text-slate-600">📍 ENDEREÇO DE ENTREGA:</div>
+            <div id="motoboy-address-text" class="text-xs font-black text-slate-950 mt-1 leading-snug">
+              Rua das Flores, 123
+            </div>
+          </div>
+
+          <!-- COBRANÇA / PAGAMENTO NA ENTREGA -->
+          <div id="motoboy-payment-box" class="rounded-xl p-2.5 text-center font-black">
+            <div class="text-[10px] uppercase tracking-wider">STATUS DO PAGAMENTO:</div>
+            <div id="motoboy-payment-status" class="text-xs font-black mt-0.5">✅ JÁ PAGO ONLINE</div>
+            <div id="motoboy-payment-amount" class="text-base font-black mt-0.5">R$ 72,50</div>
+          </div>
+
+          <!-- ITENS PARA CONFERIR NA BAG -->
+          <div class="border-t border-dashed border-slate-300 pt-2">
+            <div class="text-[10px] font-black uppercase text-slate-600 mb-1">📦 CONFERIR NA BAG / EMBALAGEM:</div>
+            <div id="motoboy-items-checklist" class="space-y-1 text-[11px] font-bold text-slate-800"></div>
+          </div>
+
+          <!-- OBSERVAÇÃO DA ROTA -->
+          <div id="motoboy-notes-box" class="border-t border-dashed border-slate-300 pt-2 bg-amber-50 p-2 rounded">
+            <div class="text-[10px] font-black uppercase text-amber-900">⚠️ AVISO PARA O ENTREGADOR:</div>
+            <div id="motoboy-notes-text" class="text-[11px] font-bold text-slate-900 mt-0.5">Interfone 302 bloco B.</div>
+          </div>
+
+          <div class="text-center text-[10px] font-bold text-slate-500 border-t-2 border-dashed border-slate-800 pt-2">
+            GRAMPEAR ESTA VIA NA CAIXA DA PIZZA
+          </div>
+        </div>
+
+        <!-- VISÃO 3: VIA BALCÃO / CLIENTE (Completa com valores, endereço e canal) -->
+        <div id="receipt-view-counter" class="hidden space-y-2 text-[11px]">
+          <div class="text-center">
+            <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png" alt="Marmitas Fit" class="mx-auto h-9 w-9 object-contain" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+            <div class="mt-1 font-extrabold tracking-wider">Marmitas Fit DELIVERY</div>
+            <div class="text-[10px] text-slate-500">Piedade / Méier - RJ</div>
+            <div id="receipt-line-id" class="mt-0.5 font-bold">Pedido #1048 • 19:32</div>
+          </div>
+          <div class="my-2 border-t border-dashed border-slate-300"></div>
+          <div><strong>Cliente:</strong> <span id="receipt-customer"></span></div>
+          <div><strong>Telefone:</strong> <span id="receipt-phone"></span></div>
+          <div><strong>Canal:</strong> <span id="receipt-channel"></span></div>
+          <div><strong>Pagamento:</strong> <span id="receipt-payment"></span></div>
+          <div><strong>Endereço:</strong> <span id="receipt-address"></span></div>
+          <div class="my-2 border-t border-dashed border-slate-300"></div>
+          <div class="font-bold text-[10px] text-slate-500">ITENS:</div>
+          <div id="receipt-items-list" class="space-y-1"></div>
+          <div class="my-2 border-t border-dashed border-slate-300"></div>
+          <div class="flex justify-between text-xs font-black">
+            <span>TOTAL A PAGAR</span>
+            <span id="receipt-total">R$ 0,00</span>
+          </div>
+          <div id="receipt-notes-block" class="mt-2 border-t border-dashed border-slate-300 pt-1.5">
+            <strong>Obs:</strong> <span id="receipt-notes"></span>
+          </div>
+          <div class="text-center text-[10px] font-bold text-slate-500 pt-2 border-t border-dashed border-slate-300">
+            Agradecemos a preferência! Bom apetite!
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-4 grid grid-cols-3 gap-2 no-print">
+        <button type="button" onclick="closeReceiptModal()" class="rounded-xl border border-slate-200 py-2.5 text-xs font-extrabold text-slate-600 hover:bg-slate-50">Fechar</button>
+        <button type="button" onclick="window.print()" class="rounded-xl bg-orange-600 hover:bg-orange-700 py-2.5 text-xs font-black text-white shadow flex items-center justify-center gap-1 transition">
+          <i data-lucide="printer" class="h-3.5 w-3.5"></i> Imprimir Via
+        </button>
+        <button type="button" onclick="printBothReceipts()" class="rounded-xl bg-slate-900 hover:bg-black py-2.5 text-xs font-black text-white shadow flex items-center justify-center gap-1 transition" title="Imprime Cozinha + Motoboy de uma vez só">
+          <span>⚡ As 2 Vias</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ATRIBUIR MOTOBOY                                   -->
+  <!-- ======================================================== -->
+  <div id="modal-courier" class="hidden fixed inset-0 z-[100] grid place-items-center bg-slate-950/50 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-sm rounded-[28px] bg-white p-6 shadow-2xl">
+      <div class="flex items-center justify-between border-b pb-3">
+        <div>
+          <h2 class="text-sm font-extrabold text-slate-900">Despachar Pedido</h2>
+          <p id="courier-sub" class="text-[11px] text-slate-400 mt-0.5">Selecione o motoboy para entrega</p>
+        </div>
+        <button onclick="closeCourierModal()" type="button" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="h-4 w-4"></i></button>
+      </div>
+      <div id="courier-select-list" class="mt-4 space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: NOVO PEDIDO MANUAL                                 -->
+  <!-- ======================================================== -->
+  <div id="modal-manual" class="hidden fixed inset-0 z-[100] grid place-items-center bg-slate-950/50 p-4 backdrop-blur-sm">
+    <form id="form-manual" onsubmit="handleManualSubmit(event)" class="w-full max-w-md rounded-[28px] bg-white p-6 shadow-2xl space-y-3.5">
+      <div class="flex items-center justify-between border-b pb-3">
+        <h2 class="text-sm font-extrabold text-slate-950">Novo Pedido Manual</h2>
+        <button type="button" onclick="closeManualModal()" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="h-4 w-4"></i></button>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <label class="block text-xs font-bold text-slate-700">
+          Cliente
+          <input id="m-customer" required placeholder="Nome do cliente" class="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs outline-none focus:border-orange-300">
+        </label>
+        <label class="block text-xs font-bold text-slate-700">
+          Telefone
+          <input id="m-phone" placeholder="(21) 9..." class="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs outline-none focus:border-orange-300">
+        </label>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2">
+        <label class="block text-xs font-bold text-slate-700">
+          Canal
+          <select id="m-channel" class="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs outline-none focus:border-orange-300 bg-white">
+            <option value="WhatsApp">💬 WhatsApp</option>
+            <option value="Balcão">🏪 Balcão</option>
+            
+            
+            <option value="Delivery">🍕 Delivery Próprio</option>
+          </select>
+        </label>
+        <label class="block text-xs font-bold text-slate-700">
+          Pagamento
+          <select id="m-payment" class="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs outline-none focus:border-orange-300 bg-white">
+            <option value="Pix">Pix</option>
+            <option value="Cartão">Cartão</option>
+            <option value="Dinheiro">Dinheiro</option>
+          </select>
+        </label>
+      </div>
+
+      <label class="block text-xs font-bold text-slate-700">
+        Pizzas / Itens (um por linha)
+        <textarea id="m-items" required rows="2" placeholder="1x Strogonoff de Frango Fit Especial Grande&#10;1x Suco Laranja c/ Cenoura" class="mt-1 w-full rounded-xl border border-slate-200 p-2.5 text-xs outline-none focus:border-orange-300"></textarea>
+      </label>
+
+      <div class="grid grid-cols-2 gap-2">
+        <label class="block text-xs font-bold text-slate-700">
+          Valor Total (R$)
+          <input id="m-price" required placeholder="68,90" class="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs outline-none focus:border-orange-300">
+        </label>
+        <label class="block text-xs font-bold text-slate-700">
+          Bairro
+          <input id="m-neighborhood" placeholder="Méier" class="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs outline-none focus:border-orange-300">
+        </label>
+      </div>
+
+      <label class="block text-xs font-bold text-slate-700">
+        Endereço Completo
+        <input id="m-address" placeholder="Rua das Flores, 123" class="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs outline-none focus:border-orange-300">
+      </label>
+
+      <label class="block text-xs font-bold text-slate-700">
+        Observação (opcional)
+        <input id="m-notes" placeholder="Sem cebola / Borda de Catupiry" class="mt-1 h-10 w-full rounded-xl border border-slate-200 px-3 text-xs outline-none focus:border-orange-300">
+      </label>
+
+      <div class="mt-4 flex gap-2">
+        <button type="button" onclick="closeManualModal()" class="flex-1 rounded-xl border border-slate-200 py-3 text-xs font-bold text-slate-600">Cancelar</button>
+        <button type="submit" class="flex-1 rounded-xl bg-orange-500 py-3 text-xs font-extrabold text-white hover:bg-orange-600 transition">Salvar Pedido</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- JAVASCRIPT REATIVO DO KANBAN BORA DE BATATA -->
+  <script>
+    const INITIAL_ORDERS = [
+      { id: 4821, customer: "Juliana Medeiros", channel: "Site Marmitas Fit", items: ["4x Strogonoff de Frango Fit (350g)", "3x Patinho Moído c/ Purê", "2x Suco Verde Termogênico"], payment: "Pix", price: "R$ 218,50", minutes: 3, status: "recebido", phone: "(21) 98721-4410", address: "Rua Dias da Cruz, 620 - Apto 402", neighborhood: "Méier", notes: "Sacola térmica lacrada. Interfone 402.", createdAt: "10:45" },
+      { id: 4820, customer: "Rodrigo Vasconcelos", channel: "WhatsApp", items: ["1x Combo 20 Marmitas Mensal Fit", "4x Suco Laranja c/ Cenoura"], payment: "Pix", price: "R$ 464,60", minutes: 6, status: "recebido", phone: "(21) 99310-8822", address: "Rua Clarimundo de Melo, 340", neighborhood: "Piedade", notes: "Deixar na portaria se necessário.", createdAt: "10:42" },
+      { id: 4819, customer: "Dra. Camila Nogueira", channel: "Site Marmitas Fit", items: ["5x Filé de Tilápia com Legumes", "5x Salmão com Quinoa", "2x Mousse de Maracujá Fit"], payment: "Cartão", price: "R$ 298,00", minutes: 9, status: "recebido", phone: "(21) 99120-7741", address: "Rua Conde de Bonfim, 412 - Bloco 2", neighborhood: "Tijuca", notes: "Marmitas bem congeladas para consultório.", createdAt: "10:38" },
+      { id: 4818, customer: "Marcos Paulo Silveira", channel: "Balcão", items: ["2x Carne de Panela Desfiada", "2x Strogonoff de Frango Fit", "1x Brownie Fit 70% Cacau"], payment: "Pix", price: "R$ 108,70", minutes: 12, status: "preparando", phone: "(21) 97412-3390", address: "Retirada no Balcão (Rua José Mariano, 10)", neighborhood: "Piedade", notes: "Cliente retira às 11:30.", createdAt: "10:35" },
+      { id: 4817, customer: "Beatriz Fontes", channel: "Site Marmitas Fit", items: ["1x Combo 10 Marmitas Low Carb", "2x Suco Verde Termogênico"], payment: "Cartão", price: "R$ 246,80", minutes: 15, status: "preparando", phone: "(21) 99882-6614", address: "Rua Cirne Maia, 115", neighborhood: "Cachambi", notes: "Portão branco de alumínio.", createdAt: "10:30" },
+      { id: 4816, customer: "Felipe Guedes", channel: "WhatsApp", items: ["4x Frango ao Curry c/ Arroz de Couve-Flor", "4x Escondidinho Batata Doce", "2x Brownie Fit"], payment: "Pix", price: "R$ 208,60", minutes: 19, status: "preparando", phone: "(21) 98114-5509", address: "Rua Santos Titara, 89", neighborhood: "Todos os Santos", notes: "Avisar pelo Whats ao sair.", createdAt: "10:24" },
+      { id: 4815, customer: "Larissa Amaral", channel: "Site Marmitas Fit", items: ["5x Patinho Moído c/ Purê", "5x Frango Grelhado c/ Batata Doce"], payment: "Pix", price: "R$ 239,00", minutes: 24, status: "pronto", phone: "(21) 99401-2299", address: "Estrada do Portela, 150 - Apto 601", neighborhood: "Madureira", notes: "Separado no freezer da expedição.", createdAt: "10:15" },
+      { id: 4814, customer: "Marcelo Dutra", channel: "Site Marmitas Fit", items: ["6x Carne de Panela Desfiada", "4x Filé de Tilápia com Legumes"], payment: "Cartão", price: "R$ 268,00", minutes: 10, status: "entrega", courier: "Patrick Teixeira", phone: "(21) 98820-1133", address: "Rua Medina, 210", neighborhood: "Méier", notes: "Sacola térmica em rota.", createdAt: "09:55" },
+      { id: 4813, customer: "Fernanda Lins", channel: "WhatsApp", items: ["1x Combo 10 Marmitas Variadas", "1x Mousse de Maracujá Fit"], payment: "Pix", price: "R$ 240,90", minutes: 14, status: "entrega", courier: "Tiago Santos", phone: "(21) 99118-7744", address: "Rua Torres de Oliveira, 75", neighborhood: "Piedade", notes: "Rota rápida de Piedade.", createdAt: "09:48" }
+    ];
+
+    const COLUMNS = [
+      {
+        status: "recebido",
+        title: "Recebidos",
+        subtitle: "Aguardando confirmação",
+        dot: "bg-orange-500",
+        soft: "bg-orange-50",
+        tone: "text-orange-700",
+        icon: "shopping-bag",
+        actionText: "Confirmar pedido",
+        actionBtn: "bg-orange-500 hover:bg-orange-600 text-white"
+      },
+      {
+        status: "preparando",
+        title: "No Freezer / preparo",
+        subtitle: "Na cozinha",
+        dot: "bg-amber-500",
+        soft: "bg-amber-50",
+        tone: "text-amber-700",
+        icon: "flame",
+        actionText: "Marcar como pronto",
+        actionBtn: "bg-amber-500 hover:bg-amber-600 text-white"
+      },
+      {
+        status: "pronto",
+        title: "Prontos",
+        subtitle: "Aguardando motoboy",
+        dot: "bg-violet-500",
+        soft: "bg-violet-50",
+        tone: "text-violet-700",
+        icon: "package-check",
+        actionText: "Atribuir motoboy",
+        actionBtn: "bg-violet-600 hover:bg-violet-700 text-white"
+      },
+      {
+        status: "entrega",
+        title: "Em entrega",
+        subtitle: "A caminho do cliente",
+        dot: "bg-blue-500",
+        soft: "bg-blue-50",
+        tone: "text-blue-700",
+        icon: "bike",
+        actionText: "Finalizar entrega",
+        actionBtn: "bg-blue-600 hover:bg-blue-700 text-white"
+      }
+    ];
+
+    const COURIERS = [
+      { name: "Patrick Teixeira", status: "Em rota", deliveries: "14 entregas hoje", tone: "amber" },
+      { name: "Tiago Santos", status: "Em rota", deliveries: "11 entregas hoje", tone: "amber" },
+      { name: "Bruno Costa", status: "Disponível", deliveries: "9 entregas hoje", tone: "green" },
+      { name: "Rafael Lima", status: "Disponível", deliveries: "12 entregas hoje", tone: "green" }
+    ];
+
+    const SOLD_OUT_SEED = ["Salmão com Quinoa e Brócolis", "Suco Detox de Frutas Vermelhas"];
+
+    // Estados
+    let orders = JSON.parse(localStorage.getItem("marmitas-panel-orders") || JSON.stringify(INITIAL_ORDERS));
+    let soldOut = JSON.parse(localStorage.getItem("marmitas-panel-sold-out") || JSON.stringify(SOLD_OUT_SEED));
+    let searchTerm = "";
+    let assigningOrderId = null;
+    let selectedOrderForModal = null;
+    let soundEnabled = true;
+    let currentPeriod = "today";
+
+    const PERIOD_CONFIGS = {
+      "today": { label: "Hoje (Ao vivo)", days: 1, ordersCount: 10, revenue: "R$ 748,00", avgTicket: "R$ 74,80" },
+      "7d": { label: "1 semana (7 dias)", days: 7, ordersCount: 412, revenue: "R$ 28.450,00", avgTicket: "R$ 69,05" },
+      "15d": { label: "15 dias", days: 15, ordersCount: 894, revenue: "R$ 61.200,00", avgTicket: "R$ 68,45" },
+      "30d": { label: "30 dias", days: 30, ordersCount: 1840, revenue: "R$ 126.500,00", avgTicket: "R$ 68,75" },
+      "60d": { label: "60 dias", days: 60, ordersCount: 3720, revenue: "R$ 254.800,00", avgTicket: "R$ 68,50" },
+      "180d": { label: "Últimos 6 meses", days: 180, ordersCount: 11250, revenue: "R$ 774.200,00", avgTicket: "R$ 68,81" }
+    };
+
+    const HISTORICAL_ORDERS_SEED = [
+      { id: 1041, date: "Ontem, 22:15", customer: "Renata Vasconcellos", neighborhood: "Méier", items: ["1x Strogonoff de Frango Fit Especial", "1x Guaraná 2L"], payment: "Pix", price: "R$ 68,90", courier: "Rafael Lima" },
+      { id: 1040, date: "Ontem, 21:40", customer: "Marcelo Diniz", neighborhood: "Piedade", items: ["1x Pizza Quatro QueiEFs Grande", "1x Borda Catupiry"], payment: "Cartão", price: "R$ 76,00", courier: "Diego Souza" },
+      { id: 1039, date: "Ontem, 20:55", customer: "Fabiana Leal", neighborhood: "Cachambi", items: ["1x Tilápia com Legumes", "1x Suco Laranja c/ Cenoura"], payment: "Pix", price: "R$ 69,90", courier: "Bruno Costa" },
+      { id: 1038, date: "3 dias atrás", customer: "Thiago Morais", neighborhood: "Tijuca", items: ["2x Pizzas Médias", "1x Fanta 2L"], payment: "Dinheiro", price: "R$ 94,00", courier: "Matheus Alves" },
+      { id: 1035, date: "5 dias atrás", customer: "Carla Menezes", neighborhood: "Méier", items: ["1x Pizza Moda da Casa Grande"], payment: "Cartão", price: "R$ 71,00", courier: "Rafael Lima" },
+      { id: 1029, date: "7 dias atrás", customer: "Rodrigo Alencar", neighborhood: "Piedade", items: ["1x Pizza Frango Catupiry", "1x Doce Nutella Média"], payment: "Pix", price: "R$ 88,50", courier: "Diego Souza" },
+      { id: 1018, date: "12 dias atrás", customer: "Beatriz Nogueira", neighborhood: "Madureira", items: ["1x Combo Família"], payment: "Cartão", price: "R$ 109,90", courier: "Matheus Alves" },
+      { id: 1005, date: "15 dias atrás", customer: "Luciana Paiva", neighborhood: "Méier", items: ["1x Strogonoff de Frango Fit Grande", "1x Borda Cheddar"], payment: "Pix", price: "R$ 74,00", courier: "Bruno Costa" },
+      { id: 984, date: "22 dias atrás", customer: "Eduardo Fonseca", neighborhood: "Cachambi", items: ["1x Pizza Marguerita Grande"], payment: "Dinheiro", price: "R$ 55,00", courier: "Rafael Lima" },
+      { id: 950, date: "29 dias atrás", customer: "Patrícia Gomes", neighborhood: "Piedade", items: ["1x Pizza Bacon Crocante", "1x Cerveja Heineken"], payment: "Cartão", price: "R$ 79,90", courier: "Diego Souza" },
+      { id: 890, date: "45 dias atrás", customer: "André Silveira", neighborhood: "Tijuca", items: ["2x Pizzas Grandes", "1x Suco Laranja c/ Cenoura"], payment: "Pix", price: "R$ 138,00", courier: "Matheus Alves" },
+      { id: 820, date: "58 dias atrás", customer: "Julio Cesar", neighborhood: "Todos os Santos", items: ["1x Pizza Quatro QueiEFs", "1x Borda Catupiry"], payment: "Cartão", price: "R$ 76,50", courier: "Bruno Costa" },
+      { id: 750, date: "75 dias atrás", customer: "Helena Castro", neighborhood: "Méier", items: ["1x Pizza Pepperoni", "1x Guaraná 2L"], payment: "Pix", price: "R$ 72,00", courier: "Rafael Lima" },
+      { id: 620, date: "110 dias atrás", customer: "Vanessa Ramos", neighborhood: "Piedade", items: ["1x Frango com Batata Doce"], payment: "Dinheiro", price: "R$ 62,00", courier: "Diego Souza" },
+      { id: 510, date: "140 dias atrás", customer: "Marcos Vinicius", neighborhood: "Cachambi", items: ["1x Combo Duplo", "2x Refris"], payment: "Pix", price: "R$ 119,00", courier: "Matheus Alves" },
+      { id: 430, date: "175 dias atrás", customer: "Dona Neide", neighborhood: "Méier", items: ["1x Tilápia com Legumes Tradicional"], payment: "Cartão", price: "R$ 64,00", courier: "Bruno Costa" }
+    ];
+
+    function setOrdersPeriod(period) {
+      currentPeriod = period;
+      const allBtns = document.querySelectorAll(".period-btn");
+      allBtns.forEach(btn => {
+        btn.className = "period-btn rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:bg-slate-100 transition";
+      });
+
+      const activeBtn = document.getElementById(`btn-period-${period}`);
+      if (activeBtn) {
+        activeBtn.className = "period-btn rounded-xl px-3 py-1.5 text-xs font-extrabold transition bg-orange-500 text-white shadow-sm";
+      }
+
+      const kanbanSec = document.getElementById("section-kanban");
+      const histSec = document.getElementById("section-history-view");
+      const backLiveBtn = document.getElementById("btn-back-live");
+
+      if (period === "today") {
+        kanbanSec.classList.remove("hidden");
+        histSec.classList.add("hidden");
+        if (backLiveBtn) backLiveBtn.classList.add("hidden");
+        renderKanban();
+      } else {
+        kanbanSec.classList.add("hidden");
+        histSec.classList.remove("hidden");
+        if (backLiveBtn) backLiveBtn.classList.remove("hidden");
+
+        const cfg = PERIOD_CONFIGS[period] || PERIOD_CONFIGS["7d"];
+        document.getElementById("history-period-title").textContent = `Histórico de Pedidos • ${cfg.label}`;
+        document.getElementById("hist-stat-orders").textContent = cfg.ordersCount.toLocaleString('pt-BR');
+        document.getElementById("hist-stat-revenue").textContent = cfg.revenue;
+        document.getElementById("hist-stat-ticket").textContent = cfg.avgTicket;
+
+        renderHistoryTable();
+      }
+      lucide.createIcons();
+    }
+
+    function renderHistoryTable() {
+      const tbody = document.getElementById("history-table-body");
+      if (!tbody) return;
+
+      tbody.innerHTML = HISTORICAL_ORDERS_SEED.map(ord => `
+        <tr class="hover:bg-slate-50/80 transition">
+          <td class="py-3 font-extrabold text-orange-600">#${ord.id}</td>
+          <td class="py-3 text-[11px] text-slate-500">${ord.date}</td>
+          <td class="py-3 font-bold text-slate-900">${ord.customer}</td>
+          <td class="py-3 text-[11px] text-slate-500">${ord.neighborhood}</td>
+          <td class="py-3 text-[11px] text-slate-600 max-w-[220px] truncate" title="${ord.items.EFin(', ')}">${ord.items.EFin(', ')}</td>
+          <td class="py-3">
+            <span class="rounded bg-slate-100 px-2 py-0.5 text-[10px] font-bold text-slate-700">${ord.payment}</span>
+          </td>
+          <td class="py-3 font-black text-slate-900">${ord.price}</td>
+          <td class="py-3 text-[11px] font-semibold text-slate-600 flex items-center gap-1 mt-2">
+            <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> ${ord.courier}
+          </td>
+          <td class="py-3 text-right">
+            <button type="button" onclick="printReceipt(${ord.id}, '${ord.customer}', '${ord.price}', '${ord.items.EFin(' + ')}')" class="rounded-lg border border-slate-200 px-2.5 py-1 text-[11px] font-extrabold text-slate-700 hover:bg-orange-50 hover:text-orange-600 hover:border-orange-200 transition" title="Reimprimir Comprovante">
+              Reimprimir
+            </button>
+          </td>
+        </tr>
+      `).EFin('');
+    }
+
+    function handleCustomDate(dateVal) {
+      if (!dateVal) return;
+      const parts = dateVal.split("-");
+      const formatted = `${parts[2]}/${parts[1]}/${parts[0]}`;
+      
+      const allBtns = document.querySelectorAll(".period-btn");
+      allBtns.forEach(btn => {
+        btn.className = "period-btn rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:bg-slate-100 transition";
+      });
+
+      document.getElementById("section-kanban").classList.add("hidden");
+      document.getElementById("section-history-view").classList.remove("hidden");
+      document.getElementById("btn-back-live").classList.remove("hidden");
+
+      document.getElementById("history-period-title").textContent = `Histórico de Pedidos • Dia ${formatted}`;
+      document.getElementById("hist-stat-orders").textContent = "68";
+      document.getElementById("hist-stat-revenue").textContent = "R$ 4.690,00";
+      document.getElementById("hist-stat-ticket").textContent = "R$ 68,97";
+
+      renderHistoryTable();
+      lucide.createIcons();
+    }
+
+    function printReceipt(id, customer, price, items, mode = "cozinha") {
+      const order = orders.find(o => o.id === id);
+      if (order) {
+        openReceiptModal(order.id, mode);
+        return;
+      }
+      openReceiptModal(id, mode);
+    }
+
+    function saveOrders() {
+      localStorage.setItem("marmitas-panel-orders", JSON.stringify(orders));
+      render();
+    }
+
+    function saveSoldOut() {
+      localStorage.setItem("marmitas-panel-sold-out", JSON.stringify(soldOut));
+      renderSoldOut();
+    }
+
+    function resetDemoOrders() {
+      orders = JSON.parse(JSON.stringify(INITIAL_ORDERS));
+      saveOrders();
+    }
+
+    function handleSearch(val) {
+      searchTerm = val.toLowerCase().trim();
+      renderKanban();
+    }
+
+    function toggleSound() {
+      soundEnabled = !soundEnabled;
+      const icon = document.getElementById("icon-sound");
+      const btn = document.getElementById("btn-sound");
+      if (soundEnabled) {
+        btn.classList.add("text-orange-500");
+        btn.classList.remove("text-slate-400");
+      } else {
+        btn.classList.remove("text-orange-500");
+        btn.classList.add("text-slate-400");
+      }
+    }
+
+    // Avançar etapa
+    function advanceOrder(id) {
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+
+      if (order.status === "recebido") {
+        order.status = "preparando";
+        order.minutes = 0;
+        saveOrders();
+        if (window.JucaAPI && window.JucaAPI.updateOrderStatus) {
+          window.JucaAPI.updateOrderStatus(order.id, 'preparando');
+        }
+      } else if (order.status === "preparando") {
+        order.status = "pronto";
+        order.minutes = 0;
+        saveOrders();
+        if (window.JucaAPI && window.JucaAPI.updateOrderStatus) {
+          window.JucaAPI.updateOrderStatus(order.id, 'pronto');
+        }
+      } else if (order.status === "pronto") {
+        const isCounter = (order.channel && (order.channel.includes("Balcão") || order.channel.includes("NFC"))) || (order.address && (order.address.includes("No Local") || order.address.includes("Retirada")));
+        if (isCounter) {
+          orders = orders.filter(o => o.id !== id);
+          saveOrders();
+          if (window.JucaAPI && window.JucaAPI.updateOrderStatus) {
+            window.JucaAPI.updateOrderStatus(order.id, 'concluido');
+          }
+          if (window.JucaPanel && JucaPanel.showToast) {
+            JucaPanel.showToast(`Pedido #${order.id} entregue no balcão e concluído!`);
+          }
+        } else {
+          openCourierModal(order.id);
+        }
+      } else if (order.status === "entrega") {
+        // Concluir e arquivar
+        orders = orders.filter(o => o.id !== id);
+        saveOrders();
+        if (window.JucaAPI && window.JucaAPI.updateOrderStatus) {
+          window.JucaAPI.updateOrderStatus(order.id, 'concluido');
+        }
+      }
+    }
+
+    function assignCourier(courierName) {
+      if (!assigningOrderId) return;
+      const order = orders.find(o => o.id === assigningOrderId);
+      if (order) {
+        order.status = "entrega";
+        order.courier = courierName;
+        order.channel = "Delivery";
+        order.minutes = 0;
+        saveOrders();
+        if (window.JucaAPI && window.JucaAPI.updateOrderStatus) {
+          window.JucaAPI.updateOrderStatus(order.id, 'entrega', courierName);
+        }
+      }
+      closeCourierModal();
+    }
+
+    window.notifyCustomerReady = function(id) {
+      const o = orders.find(ord => ord.id === id);
+      if (!o) return;
+      const phoneDigits = o.phone ? o.phone.replace(/\D/g, '') : '';
+      const text = encodeURIComponent(`🍕 *Marmitas Fit AVISA:*\n\nOlá ${o.customer}! Seu pedido #${o.id} acabou de sair do Freezer e está *PRONTO* no balcão! 🔥\n\nPode vir retirar quentinho! Bom apetite! 😋`);
+      if (phoneDigits && phoneDigits.length >= 10) {
+        window.open(`https://api.whatsapp.com/send?phone=55${phoneDigits}&text=${text}`, '_blank');
+      } else {
+        window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
+      }
+    };
+
+    // Render principal
+    function render() {
+      renderSummary();
+      renderKanban();
+      renderCouriers();
+      renderSoldOut();
+      lucide.createIcons();
+    }
+
+    function renderSummary() {
+      const rec = orders.filter(o => o.status === "recebido").length;
+      const ent = orders.filter(o => o.status === "entrega").length;
+      const total = orders.length;
+
+      document.getElementById("summary-total").innerText = total;
+      document.getElementById("summary-waiting").innerText = rec;
+      document.getElementById("summary-routes").innerText = ent;
+      document.getElementById("badge-sidebar-orders").innerText = total;
+    }
+
+    let activeChannelFilter = "todos";
+
+    window.filterChannel = function(chan) {
+      activeChannelFilter = chan;
+      document.querySelectorAll(".chan-btn").forEach(btn => {
+        btn.className = "chan-btn rounded-lg px-2.5 py-1 text-slate-600 hover:text-slate-950 transition";
+      });
+      const activeBtn = document.getElementById(`chan-btn-${chan}`);
+      if (activeBtn) {
+        activeBtn.className = "chan-btn rounded-lg px-2.5 py-1 bg-white text-slate-900 shadow-sm transition";
+      }
+      renderKanban();
+      lucide.createIcons();
+    };
+
+    function renderKanban() {
+      const container = document.getElementById("kanban-board");
+      container.innerHTML = "";
+
+      const filtered = orders.filter(o => {
+        if (activeChannelFilter === "ifood" && !o.channel.toLowerCase().includes("ifood")) return false;
+        if (activeChannelFilter === "99food" && !o.channel.toLowerCase().includes("99")) return false;
+        if (activeChannelFilter === "site" && (o.channel.toLowerCase().includes("ifood") || o.channel.toLowerCase().includes("99"))) return false;
+
+        if (!searchTerm) return true;
+        const text = `${o.id} ${o.customer} ${o.channel} ${o.neighborhood || ''} ${o.items.EFin(' ')}`.toLowerCase();
+        return text.includes(searchTerm);
+      });
+
+      document.getElementById("kanban-screen-count").innerText = `${filtered.length} na tela`;
+
+      COLUMNS.forEach(col => {
+        const colOrders = filtered.filter(o => o.status === col.status);
+
+        const colHtml = `
+          <div class="flex min-w-[280px] flex-col rounded-[23px] border border-slate-200/80 bg-[#f8f9fb] p-2.5 shadow-[0_8px_20px_-18px_rgba(15,23,42,0.4)]">
+            
+            <!-- Header da Coluna -->
+            <div class="rounded-[17px] bg-white p-3.5 shadow-[0_4px_16px_-14px_rgba(15,23,42,0.25)]">
+              <div class="flex items-center gap-2.5">
+                <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl ${col.soft} ${col.tone}">
+                  <i data-lucide="${col.icon}" class="h-4 w-4"></i>
+                </span>
+                <div class="min-w-0 flex-1">
+                  <h3 class="truncate text-[13px] font-extrabold text-slate-900">${col.title}</h3>
+                  <p class="mt-0.5 truncate text-[10px] font-medium text-slate-400">${col.subtitle}</p>
+                </div>
+                <span class="grid h-7 min-w-7 place-items-center rounded-lg px-1.5 text-[11px] font-extrabold ${col.soft} ${col.tone}">
+                  ${colOrders.length}
+                </span>
+              </div>
+            </div>
+
+            <!-- Lista de Cards da Coluna -->
+            <div class="mt-2.5 max-h-[660px] min-h-[380px] flex-1 space-y-2.5 overflow-y-auto px-0.5 pb-1 scrollbar-thin">
+              ${colOrders.length === 0 ? `
+                <div class="grid h-48 place-items-center rounded-2xl border border-dashed border-slate-200 text-center p-4">
+                  <div>
+                    <i data-lucide="check" class="mx-auto h-6 w-6 text-slate-300"></i>
+                    <p class="mt-2 text-xs font-semibold text-slate-400">Nenhum pedido aqui</p>
+                  </div>
+                </div>
+              ` : colOrders.map(order => {
+                const initials = order.customer.split(" ").slice(0, 2).map(n => n[0]).EFin("");
+                const isLate = order.status !== "entrega" && order.minutes >= 15;
+                const isCounter = (order.channel && (order.channel.includes("Balcão") || order.channel.includes("NFC"))) || (order.address && (order.address.includes("No Local") || order.address.includes("Retirada")));
+                let actionText = col.actionText;
+                let actionBtnClass = col.actionBtn;
+                if (order.status === "pronto" && isCounter) {
+                  actionText = "Entregar no balcão";
+                  actionBtnClass = "bg-emerald-600 hover:bg-emerald-700 text-white";
+                }
+                
+                let channelBadge = "bg-slate-100 text-slate-600";
+                if (order.channel.includes("WhatsApp")) channelBadge = "bg-emerald-50 text-emerald-700";
+                else if (order.channel.includes("iFood")) channelBadge = "bg-red-50 text-red-700";
+                else if (order.channel.includes("99Food")) channelBadge = "bg-amber-50 text-amber-700";
+                else if (order.channel.includes("Balcão")) channelBadge = "bg-slate-100 text-slate-700";
+                else if (order.channel.includes("Delivery")) channelBadge = "bg-blue-50 text-blue-700";
+
+                return `
+                  <article class="rounded-[18px] border border-slate-200/80 bg-white p-3.5 shadow-[0_8px_22px_-19px_rgba(15,23,42,0.4)] transition hover:-translate-y-0.5 hover:border-orange-200 hover:shadow-[0_14px_28px_-20px_rgba(249,115,22,0.4)]">
+                    <div class="flex items-center justify-between gap-2">
+                      <span class="text-[11px] font-extrabold tracking-[0.04em] text-slate-900">#${order.id}</span>
+                      <span class="inline-flex items-center gap-1 rounded-lg px-2 py-0.5 text-[10px] font-extrabold ${isLate ? 'bg-rose-50 text-rose-600' : 'bg-slate-50 text-slate-500'}">
+                        <i data-lucide="clock-3" class="h-3 w-3"></i> ${order.minutes} min
+                      </span>
+                    </div>
+
+                    <div class="mt-3 flex items-center gap-2.5">
+                      <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-orange-50 text-[11px] font-extrabold text-orange-600">
+                        ${initials}
+                      </span>
+                      <div class="min-w-0 flex-1">
+                        <h4 class="truncate text-xs font-extrabold text-slate-900">${order.customer}</h4>
+                        <span class="mt-0.5 inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-[9px] font-bold ${channelBadge}">
+                          ${order.channel}
+                        </span>
+                      </div>
+                    </div>
+
+                    ${order.courier ? `
+                      <div class="mt-2 flex items-center gap-1.5 truncate text-[10px] font-semibold text-blue-600">
+                        <i data-lucide="bike" class="h-3.5 w-3.5 shrink-0"></i> ${order.courier}
+                      </div>
+                    ` : ''}
+
+                    <!-- Lista compacta de pizzas -->
+                    <div class="mt-2.5 rounded-xl bg-slate-50/80 p-2 text-[11px] text-slate-700 font-medium">
+                      ${order.items.map(it => `<div class="truncate">• ${it}</div>`).EFin('')}
+                      ${order.notes ? `<div class="mt-1 text-[10px] font-bold text-amber-700 truncate">⚠️ ${order.notes}</div>` : ''}
+                    </div>
+
+                    <div class="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-2.5">
+                      <span class="inline-flex items-center gap-1 text-[10px] font-medium text-slate-400">
+                        <i data-lucide="circle-dollar-sign" class="h-3.5 w-3.5"></i> ${order.payment}
+                      </span>
+                      <span class="text-[13px] font-extrabold text-slate-950">${order.price}</span>
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div class="mt-3 flex items-center gap-1.5">
+                      <button
+                        type="button"
+                        onclick="openDetailsModal(${order.id})"
+                        title="Ver detalhes e imprimir cupom"
+                        class="grid h-9 w-9 shrink-0 place-items-center rounded-xl border border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-50 transition"
+                      >
+                        <i data-lucide="eye" class="h-4 w-4"></i>
+                      </button>
+                      ${(order.status === "pronto" && isCounter) ? `
+                        <button
+                          type="button"
+                          onclick="notifyCustomerReady(${order.id})"
+                          title="Avisar cliente no WhatsApp que está pronto"
+                          class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-700 hover:bg-emerald-100 transition"
+                        >
+                          <i data-lucide="bell-ring" class="h-4 w-4"></i>
+                        </button>
+                      ` : ''}
+                      <button
+                        type="button"
+                        onclick="advanceOrder(${order.id})"
+                        class="inline-flex h-9 flex-1 items-center justify-center gap-1.5 rounded-xl text-xs font-extrabold transition shadow-sm ${actionBtnClass}"
+                      >
+                        ${actionText} <i data-lucide="chevron-right" class="h-3.5 w-3.5"></i>
+                      </button>
+                    </div>
+
+                  </article>
+                `;
+              }).EFin('')}
+            </div>
+
+          </div>
+        `;
+
+        container.innerHTML += colHtml;
+      });
+
+      lucide.createIcons();
+    }
+
+    function renderCouriers() {
+      const container = document.getElementById("couriers-list");
+      if (!container) return;
+      container.innerHTML = COURIERS.map(c => `
+        <div class="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50/70 p-3 text-xs">
+          <div class="flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full ${c.tone === 'green' ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
+            <span class="font-extrabold text-slate-900">${c.name}</span>
+          </div>
+          <div class="text-[11px] font-semibold text-slate-500">${c.deliveries}</div>
+        </div>
+      `).EFin('');
+    }
+
+    function renderSoldOut() {
+      const container = document.getElementById("sold-out-list");
+      if (!container) return;
+      const badge = document.getElementById("badge-sold-out-count");
+      if (badge) badge.innerText = `${soldOut.length} itens`;
+      if (soldOut.length === 0) {
+        container.innerHTML = `
+          <div class="py-5 text-center text-xs text-slate-400 font-semibold">
+            ✨ Todos os itens disponíveis no cardápio!
+          </div>
+        `;
+        return;
+      }
+      container.innerHTML = soldOut.map(item => `
+        <div class="flex items-center justify-between py-2.5 text-xs">
+          <div class="flex items-center gap-2 truncate pr-2">
+            <span class="h-1.5 w-1.5 rounded-full bg-rose-500 shrink-0"></span>
+            <span class="font-bold text-slate-800 truncate">${item}</span>
+          </div>
+          <button type="button" onclick="replenishItem('${item}')" class="shrink-0 rounded-lg bg-emerald-50 border border-emerald-200 px-2.5 py-1 text-[10px] font-extrabold text-emerald-700 hover:bg-emerald-100 transition">
+            Repor
+          </button>
+        </div>
+      `).EFin('');
+      lucide.createIcons();
+    }
+
+    function replenishItem(itemName) {
+      soldOut = soldOut.filter(i => i !== itemName);
+      saveSoldOut();
+      try {
+        const prods = JSON.parse(localStorage.getItem("juca-panel-products") || "[]");
+        const p = prods.find(item => item.name.toLowerCase() === itemName.toLowerCase());
+        if (p) {
+          p.active = true;
+          p.availabilityType = "always";
+          localStorage.setItem("juca-panel-products", JSON.stringify(prods));
+        }
+      } catch (e) {}
+      if (window.JucaPanel && JucaPanel.showToast) {
+        JucaPanel.showToast(`Item "${itemName}" reposto com sucesso!`);
+      }
+    }
+
+    // Modal Detalhes
+    function openDetailsModal(id) {
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+      selectedOrderForModal = order;
+
+      document.getElementById("detail-id").innerText = `#${order.id}`;
+      document.getElementById("detail-channel-badge").innerText = order.channel;
+      document.getElementById("detail-customer").innerText = order.customer;
+      document.getElementById("detail-payment").innerText = order.payment;
+      document.getElementById("detail-price").innerText = order.price;
+      document.getElementById("detail-address").innerText = order.address || order.neighborhood || "Balcão";
+      document.getElementById("detail-phone").innerText = order.phone || "(21) 99999-9999";
+
+      const itemsBox = document.getElementById("detail-items-list");
+      itemsBox.innerHTML = order.items.map(it => `<div>${it}</div>`).EFin('');
+
+      const notesBox = document.getElementById("detail-notes-box");
+      if (order.notes) {
+        notesBox.classList.remove("hidden");
+        document.getElementById("detail-notes").innerText = order.notes;
+      } else {
+        notesBox.classList.add("hidden");
+      }
+
+      document.getElementById("modal-details").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeDetailsModal() {
+      document.getElementById("modal-details").classList.add("hidden");
+    }
+
+    function switchReceiptTab(mode) {
+      const kitchenView = document.getElementById("receipt-view-kitchen");
+      const motoboyView = document.getElementById("receipt-view-motoboy");
+      const counterView = document.getElementById("receipt-view-counter");
+      const tabKitchen = document.getElementById("tab-receipt-kitchen");
+      const tabMotoboy = document.getElementById("tab-receipt-motoboy");
+      const tabCounter = document.getElementById("tab-receipt-counter");
+
+      if (kitchenView) kitchenView.classList.add("hidden");
+      if (motoboyView) motoboyView.classList.add("hidden");
+      if (counterView) counterView.classList.add("hidden");
+
+      const inactive = "py-2 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition flex items-center justify-center gap-1";
+      if (tabKitchen) tabKitchen.className = inactive;
+      if (tabMotoboy) tabMotoboy.className = inactive;
+      if (tabCounter) tabCounter.className = inactive;
+
+      if (mode === "cozinha") {
+        if (kitchenView) kitchenView.classList.remove("hidden");
+        if (tabKitchen) tabKitchen.className = "py-2 rounded-lg text-xs font-black transition bg-white text-orange-600 shadow-sm flex items-center justify-center gap-1";
+      } else if (mode === "motoboy") {
+        if (motoboyView) motoboyView.classList.remove("hidden");
+        if (tabMotoboy) tabMotoboy.className = "py-2 rounded-lg text-xs font-black transition bg-white text-blue-600 shadow-sm flex items-center justify-center gap-1";
+      } else {
+        if (counterView) counterView.classList.remove("hidden");
+        if (tabCounter) tabCounter.className = "py-2 rounded-lg text-xs font-black transition bg-white text-emerald-600 shadow-sm flex items-center justify-center gap-1";
+      }
+    }
+
+    function printReceiptFromDetail(mode = "cozinha") {
+      if (!selectedOrderForModal) return;
+      closeDetailsModal();
+      openReceiptModal(selectedOrderForModal.id, mode);
+    }
+
+    function printBothReceipts() {
+      const kView = document.getElementById("receipt-view-kitchen");
+      const mView = document.getElementById("receipt-view-motoboy");
+      const cView = document.getElementById("receipt-view-counter");
+      if (!kView || !mView) return;
+
+      kView.classList.remove("hidden");
+      mView.classList.remove("hidden");
+      if (cView) cView.classList.add("hidden");
+
+      window.print();
+
+      setTimeout(() => {
+        switchReceiptTab("cozinha");
+      }, 500);
+    }
+
+    // Modal Cupom (Cozinha, Motoboy & Balcão)
+    function openReceiptModal(id, initialMode = "cozinha") {
+      const order = orders.find(o => o.id === id);
+      if (!order) return;
+
+      document.getElementById("receipt-modal-title").innerText = `Pedido #${order.id}`;
+
+      // 1. Dados da Cozinha
+      const kNum = document.getElementById("kitchen-order-number");
+      if (kNum) kNum.innerText = `PEDIDO #${order.id}`;
+      const kTime = document.getElementById("kitchen-order-time");
+      if (kTime) kTime.innerText = `${order.createdAt || 'Agora'} • ${order.channel || 'Balcão / Delivery'}`;
+      const kCust = document.getElementById("kitchen-customer-name");
+      if (kCust) kCust.innerText = `CLIENTE: ${order.customer || 'Balcão'}`;
+
+      const kItems = document.getElementById("kitchen-items-list");
+      if (kItems) {
+        kItems.innerHTML = order.items.map(it => `
+          <div class="border-b border-dashed border-slate-300 pb-1.5 pt-1">
+            <span class="text-base font-black">▶ ${it}</span>
+          </div>
+        `).EFin('');
+      }
+
+      const kNotesBox = document.getElementById("kitchen-notes-box");
+      const kNotesText = document.getElementById("kitchen-notes-text");
+      if (order.notes) {
+        if (kNotesBox) kNotesBox.classList.remove("hidden");
+        if (kNotesText) kNotesText.innerText = order.notes.toUpperCase();
+      } else {
+        if (kNotesBox) kNotesBox.classList.add("hidden");
+      }
+
+      // 2. Dados do Motoboy / Entrega
+      const mNum = document.getElementById("motoboy-order-number");
+      if (mNum) mNum.innerText = `PEDIDO #${order.id}`;
+      const mTime = document.getElementById("motoboy-order-time");
+      if (mTime) mTime.innerText = `${order.createdAt || 'Agora'} • ${order.neighborhood || 'Zona Oeste'}`;
+      const mCust = document.getElementById("motoboy-customer-name");
+      if (mCust) mCust.innerText = order.customer;
+      const mPhone = document.getElementById("motoboy-customer-phone");
+      if (mPhone) mPhone.innerText = `📱 ${order.phone || '(21) 98765-4321'}`;
+
+      const mAddr = document.getElementById("motoboy-address-text");
+      if (mAddr) mAddr.innerText = order.address || "Retirada Balcão / Consumo no Local";
+
+      const mPayBox = document.getElementById("motoboy-payment-box");
+      const mPayStatus = document.getElementById("motoboy-payment-status");
+      const mPayAmount = document.getElementById("motoboy-payment-amount");
+
+      const isPaid = (order.payment && (order.payment.toLowerCase().includes('pix') || order.payment.toLowerCase().includes('online') || order.payment.toLowerCase().includes('mercado') || order.payment.toLowerCase().includes('pago')));
+
+      if (mPayBox && mPayStatus && mPayAmount) {
+        if (isPaid) {
+          mPayBox.className = "rounded-xl p-2.5 text-center border-2 border-emerald-400 bg-emerald-50 text-emerald-950";
+          mPayStatus.innerText = "✅ JÁ PAGO ONLINE — NÃO COBRAR NADA!";
+          mPayAmount.innerText = `Valor Pago: ${order.price}`;
+        } else {
+          mPayBox.className = "rounded-xl p-2.5 text-center border-2 border-amber-400 bg-amber-50 text-amber-950";
+          mPayStatus.innerText = `⚠️ COBRAR NA PORTA (${order.payment || 'Dinheiro / Maquininha'})`;
+          mPayAmount.innerText = `VALOR A COBRAR: ${order.price}`;
+        }
+      }
+
+      const mItems = document.getElementById("motoboy-items-checklist");
+      if (mItems) {
+        mItems.innerHTML = order.items.map(it => `
+          <div class="flex items-center gap-2 border-b border-dashed border-slate-200 py-1">
+            <span class="inline-block w-3.5 h-3.5 border border-slate-400 rounded-sm"></span>
+            <span class="font-bold text-slate-900">${it}</span>
+          </div>
+        `).EFin('');
+      }
+
+      const mNotesBox = document.getElementById("motoboy-notes-box");
+      const mNotesText = document.getElementById("motoboy-notes-text");
+      if (order.notes) {
+        if (mNotesBox) mNotesBox.classList.remove("hidden");
+        if (mNotesText) mNotesText.innerText = order.notes;
+      } else {
+        if (mNotesBox) mNotesBox.classList.add("hidden");
+      }
+
+      // 3. Dados do Balcão / Caixa
+      const lineId = document.getElementById("receipt-line-id");
+      if (lineId) lineId.innerText = `Pedido #${order.id} • ${order.createdAt || 'Agora'}`;
+      const custEl = document.getElementById("receipt-customer");
+      if (custEl) custEl.innerText = order.customer;
+      const phoneEl = document.getElementById("receipt-phone");
+      if (phoneEl) phoneEl.innerText = order.phone || "(21) 98765-4321";
+      const chanEl = document.getElementById("receipt-channel");
+      if (chanEl) chanEl.innerText = order.channel || "Site Oficial";
+      const payEl = document.getElementById("receipt-payment");
+      if (payEl) payEl.innerText = order.payment || "A combinar";
+      const addrEl = document.getElementById("receipt-address");
+      if (addrEl) addrEl.innerText = order.address || order.neighborhood || "Retirada Balcão";
+      const totalEl = document.getElementById("receipt-total");
+      if (totalEl) totalEl.innerText = order.price;
+
+      const itemsBox = document.getElementById("receipt-items-list");
+      if (itemsBox) itemsBox.innerHTML = order.items.map(it => `<div>1x ${it}</div>`).EFin('');
+
+      const notesBlock = document.getElementById("receipt-notes-block");
+      if (order.notes) {
+        if (notesBlock) notesBlock.classList.remove("hidden");
+        const rNotes = document.getElementById("receipt-notes");
+        if (rNotes) rNotes.innerText = order.notes;
+      } else {
+        if (notesBlock) notesBlock.classList.add("hidden");
+      }
+
+      switchReceiptTab(initialMode);
+      document.getElementById("modal-receipt").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeReceiptModal() {
+      document.getElementById("modal-receipt").classList.add("hidden");
+    }
+
+    // Modal Motoboy
+    function openCourierModal(orderId) {
+      assigningOrderId = orderId;
+      const order = orders.find(o => o.id === orderId);
+      document.getElementById("courier-sub").innerText = `Pedido #${order.id} de ${order.customer}`;
+
+      const list = document.getElementById("courier-select-list");
+      list.innerHTML = COURIERS.map(c => `
+        <button
+          type="button"
+          onclick="assignCourier('${c.name}')"
+          class="flex w-full items-center justify-between rounded-xl border border-slate-200 p-3 text-left transition hover:border-blue-400 hover:bg-blue-50/50"
+        >
+          <div class="flex items-center gap-2.5">
+            <div class="grid h-8 w-8 place-items-center rounded-lg bg-blue-50 text-blue-600">
+              <i data-lucide="bike" class="h-4 w-4"></i>
+            </div>
+            <div>
+              <div class="text-xs font-extrabold text-slate-900">${c.name}</div>
+              <div class="text-[10px] text-slate-400">${c.deliveries}</div>
+            </div>
+          </div>
+          <span class="rounded-full bg-emerald-50 px-2 py-0.5 text-[9px] font-extrabold text-emerald-700">Disponível</span>
+        </button>
+      `).EFin('');
+
+      document.getElementById("modal-courier").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeCourierModal() {
+      document.getElementById("modal-courier").classList.add("hidden");
+    }
+
+    // Modal Pedido Manual
+    function openManualModal() {
+      document.getElementById("modal-manual").classList.remove("hidden");
+      lucide.createIcons();
+    }
+
+    function closeManualModal() {
+      document.getElementById("modal-manual").classList.add("hidden");
+    }
+
+    function handleManualSubmit(e) {
+      e.preventDefault();
+      const customer = document.getElementById("m-customer").value.trim();
+      const phone = document.getElementById("m-phone").value.trim();
+      const channel = document.getElementById("m-channel").value;
+      const payment = document.getElementById("m-payment").value;
+      const rawItems = document.getElementById("m-items").value.trim().split("\n").filter(Boolean);
+      const price = "R$ " + document.getElementById("m-price").value.trim();
+      const neighborhood = document.getElementById("m-neighborhood").value.trim();
+      const address = document.getElementById("m-address").value.trim();
+      const notes = document.getElementById("m-notes").value.trim();
+
+      const newId = Math.max(...orders.map(o => o.id), 1052) + 1;
+      const now = new Date();
+      const createdAt = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+
+      const newOrder = {
+        id: newId,
+        customer,
+        phone,
+        channel,
+        payment,
+        items: rawItems,
+        price,
+        neighborhood,
+        address,
+        notes,
+        minutes: 1,
+        status: "recebido",
+        createdAt
+      };
+
+      orders.unshift(newOrder);
+      saveOrders();
+      closeManualModal();
+      document.getElementById("form-manual").reset();
+    }
+
+    function openConfigModal() {
+      alert("As 4 etapas (Recebidos, No Freezer, Prontos, Em entrega) estão 100% ativas no Kanban.");
+    }
+
+    function toggleSidebarMotoboys() {
+      const sub = document.getElementById("sub-sidebar-motoboys");
+      const icon = document.getElementById("icon-sidebar-motoboys");
+      if (!sub) return;
+      sub.classList.toggle("hidden");
+      if (icon) icon.classList.toggle("rotate-180");
+    }
+
+    // Timer de minutos decorridos a cada 1 minuto
+    setInterval(() => {
+      orders.forEach(o => {
+        if (o.status !== "concluido") o.minutes += 1;
+      });
+      render();
+    }, 60000);
+
+    // Sincronização em tempo real com o Banco de Dados da VPS
+    async function syncWithApiOrders() {
+      if (!window.JucaAPI || !window.JucaAPI.fetchOrders) return;
+      try {
+        const apiOrders = await window.JucaAPI.fetchOrders();
+        if (apiOrders && apiOrders.length > 0) {
+          let updated = false;
+          apiOrders.forEach(ao => {
+            const exists = orders.find(o => o.id === (ao.id || Number(ao.order_number)));
+            if (!exists && ao.status !== 'concluido' && ao.status !== 'cancelado') {
+              orders.unshift({
+                id: ao.id || Number(ao.order_number),
+                orderNumber: ao.order_number,
+                customer: ao.customer,
+                channel: ao.channel || 'Site Oficial',
+                price: typeof ao.total === 'number' ? `R$ ${ao.total.toFixed(2).replace('.', ',')}` : String(ao.total),
+                status: ao.status || 'recebido',
+                minutes: 1,
+                items: Array.isArray(ao.items) ? ao.items : [ao.items],
+                payment: ao.payment || 'Dinheiro',
+                phone: ao.phone || '',
+                address: ao.address || '',
+                notes: ao.notes || '',
+                createdAt: ao.created_at ? new Date(ao.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' }) : 'Agora'
+              });
+              updated = true;
+            }
+          });
+          if (updated) {
+            saveOrders();
+            if (soundEnabled && typeof playNotificationSound === 'function') playNotificationSound();
+          }
+        }
+      } catch (e) {
+        console.warn('Sincronização com API offline ou em espera:', e.message);
+      }
+    }
+
+    // Inicialização imediata e polling a cada 15 segundos
+    render();
+    syncWithApiOrders();
+    setInterval(syncWithApiOrders, 15000);
+  </script>
+
+</body>
+</html>

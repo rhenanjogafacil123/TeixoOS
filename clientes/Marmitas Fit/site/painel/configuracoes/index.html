@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configurações | Marmitas Fit</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../panel-data.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-[#f4f6fa] text-slate-950 font-sans antialiased">
+  <div class="flex min-h-screen">
+
+    <!-- ========================================== -->
+    <!-- SIDEBAR DE NAVEGAÇÃO                       -->
+    <!-- ========================================== -->
+    <aside class="fixed inset-y-0 left-0 z-40 flex w-[248px] flex-col border-r border-slate-200/80 bg-white px-4 py-5 shadow-sm">
+      <!-- Logo do Juca -->
+      <a href="../admin/" class="mb-6 flex items-center gap-3 px-2">
+        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-orange-50 p-1 border border-orange-100">
+          <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png" alt="Marmitas Fit" class="h-9 w-9 object-contain" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+        </div>
+        <div class="leading-none">
+          <div class="text-[16px] font-extrabold tracking-tight text-slate-950">Marmitas Fit</div>
+          <div class="mt-1.5 text-[9px] font-extrabold uppercase tracking-[0.18em] text-orange-500">Painel de gestão</div>
+        </div>
+      </a>
+
+      <!-- Menu de Navegação -->
+      <div class="space-y-6 overflow-y-auto pr-1">
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Visão geral</div>
+          <nav class="space-y-1">
+            <a href="../admin/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="layout-dashboard" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Dashboard</span>
+            </a>
+            <a href="../pedidos/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="clipboard-list" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Pedidos</span>
+              <span class="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-extrabold text-white">10</span>
+            </a>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Operação</div>
+          <nav class="space-y-1">
+            <a href="../produtos/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="package" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Marmitas & Cardápio</span>
+            </a>
+            
+            
+            <a href="../promocoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="tag" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Promoções</span>
+            </a>
+            <a href="../canais/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="store" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Canais de Venda</span><span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-black text-emerald-800">Próprio</span>
+            </a>
+
+            <!-- Submenu Motoboys -->
+            <div class="space-y-1">
+              <div class="flex items-center gap-1 rounded-xl px-3 py-2 text-left text-[13px] font-semibold text-slate-700 hover:bg-slate-50 transition">
+                <a href="../motoboy/?gestor=true" class="flex flex-1 items-center gap-3 text-slate-700 hover:text-slate-950">
+                  <i data-lucide="bike" class="h-[17px] w-[17px] text-orange-500"></i>
+                  <span class="flex-1 font-bold">Motoboys</span>
+                  <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-extrabold text-emerald-700">4 online</span>
+                </a>
+                <button
+                  type="button"
+                  id="btn-sidebar-motoboys"
+                  onclick="toggleSidebarMotoboys()"
+                  class="rounded-lg p-1 text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition"
+                >
+                  <i data-lucide="chevron-down" id="icon-sidebar-motoboys" class="h-3.5 w-3.5 transition-transform duration-200"></i>
+                </button>
+              </div>
+              <div id="sub-sidebar-motoboys" class="ml-3.5 space-y-1 border-l-2 border-orange-100 pl-2.5 text-xs">
+                <a href="../motoboy/?view=grid&gestor=true" class="flex items-center gap-2 rounded-lg px-2 py-1.5 font-bold text-orange-600 hover:bg-orange-50 transition">
+                  <i data-lucide="layout-grid" class="h-3.5 w-3.5 text-orange-500"></i>
+                  <span>4 Telas Lado a Lado</span>
+                </a>
+                <a href="../motoboy/?courier=rafael&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Rafael Lima</span>
+                  <span class="text-[10px] text-slate-400">12 ent.</span>
+                </a>
+                <a href="../motoboy/?courier=diego&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Diego Souza</span>
+                  <span class="text-[10px] text-slate-400">8 ent.</span>
+                </a>
+                <a href="../motoboy/?courier=matheus&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Matheus Alves</span>
+                  <span class="rounded bg-amber-100 px-1 text-[9px] font-extrabold text-amber-700">Em rota</span>
+                </a>
+                <a href="../motoboy/?courier=bruno&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Bruno Costa</span>
+                  <span class="text-[10px] text-slate-400">6 ent.</span>
+                </a>
+              </div>
+            </div>
+
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Gestão</div>
+          <nav class="space-y-1">
+            <a href="./" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-bold bg-orange-50 text-orange-600 transition">
+              <i data-lucide="settings" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Configurações</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Rodapé Sidebar -->
+      <div class="mt-auto rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 via-white to-amber-50 p-4">
+        <div class="text-[11px] font-extrabold uppercase tracking-[0.12em] text-orange-600">Marmitas Fit</div>
+        <div class="mt-2 text-xs leading-5 text-slate-500">
+          Operação em Piedade - RJ. Atendimento, delivery e balcão ativos.
+        </div>
+        <a href="/" class="mt-3 inline-flex items-center text-xs font-extrabold text-slate-800 hover:text-orange-600 transition">
+          Ver cardápio <i data-lucide="arrow-right" class="ml-1 h-3.5 w-3.5"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- ÁREA DE CONTEÚDO                           -->
+    <!-- ========================================== -->
+    <div class="pl-[248px] flex-1">
+      <!-- Header Superior -->
+      <header class="sticky top-0 z-30 flex h-[72px] items-center justify-between border-b border-slate-200/80 bg-white/95 px-6 backdrop-blur-xl">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-1.5 text-xs text-slate-500">
+            <i data-lucide="search" class="h-3.5 w-3.5 text-slate-400"></i>
+            <span>Buscar preferências...</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <!-- Status da marmitaria -->
+          <div class="flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs font-extrabold text-emerald-700">
+            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span>Loja Aberta • Recebendo pedidos</span>
+          </div>
+
+          <!-- Perfil do Juca -->
+          <div class="flex items-center gap-3 border-l border-slate-200 pl-4">
+            <div class="text-right">
+              <div class="text-xs font-extrabold text-slate-900">Seu Juca</div>
+              <div class="text-[10px] text-slate-400 font-semibold">Administrador Master</div>
+            </div>
+            <div class="grid h-9 w-9 place-items-center rounded-xl bg-orange-500 text-white font-black text-xs shadow-sm">
+              SJ
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Conteúdo Principal -->
+      <main class="mx-auto w-full max-w-[1400px] p-6 2xl:p-8">
+        <!-- Título e Subtítulo -->
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <p class="text-xs font-bold uppercase tracking-[0.16em] text-orange-500">Preferências da Operação</p>
+              <span class="rounded-full bg-slate-100 px-2 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">Salvo em tempo real</span>
+            </div>
+            <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-slate-950">Configurações</h1>
+            <p class="mt-1.5 text-sm text-slate-500">Controle de acessos e cargos da equipe, dados da marmitaria, taxas de frete e pagamentos.</p>
+          </div>
+
+          <button
+            type="button"
+            onclick="saveAllSettings()"
+            class="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-5 py-2.5 text-xs font-extrabold text-white shadow-lg shadow-orange-500/20 hover:bg-orange-600 transition"
+          >
+            <i data-lucide="save" class="h-4 w-4"></i>
+            <span>Salvar alterações</span>
+          </button>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SEÇÃO PRINCIPAL: SELEÇÃO DE EMAILS & ATRIBUIÇÃO DE CARGOS   -->
+        <!-- ============================================================ -->
+        <section class="mt-8 rounded-3xl border-2 border-orange-200 bg-white p-6 sm:p-7 shadow-sm">
+          <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 pb-5">
+            <div class="flex items-center gap-3">
+              <div class="grid h-12 w-12 place-items-center rounded-2xl bg-orange-100 text-orange-600 shadow-sm">
+                <i data-lucide="shield-check" class="h-6 w-6"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <h2 class="text-lg font-black text-slate-950">Equipe, E-mails & Atribuição de Cargos</h2>
+                  <span class="rounded-full bg-orange-50 border border-orange-200 px-2.5 py-0.5 text-[10px] font-extrabold text-orange-700">Controle de Acessos</span>
+                </div>
+                <p class="mt-1 text-xs text-slate-500">
+                  Adicione e-mails e atribua o cargo correspondente. Cada colaborador entra direto na interface da sua função (ex.: Motoboy no app de entregas, Atendente no Kanban de pedidos).
+                </p>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-slate-400">Total: <span id="count-team-total" class="font-black text-slate-900">7</span> colaboradores</span>
+          </div>
+
+          <!-- Formulário para Atribuir Cargo / Adicionar E-mail -->
+          <div class="mt-6 rounded-2xl bg-[#fafbfe] p-5 border border-slate-200/80">
+            <div class="text-xs font-extrabold uppercase tracking-wider text-slate-700 mb-3 flex items-center gap-2">
+              <i data-lucide="user-plus" class="h-4 w-4 text-orange-500"></i>
+              <span>Atribuir Cargo a um E-mail</span>
+            </div>
+
+            <form id="form-assign-role" onsubmit="handleAssignRole(event)" class="grid grid-cols-1 md:grid-cols-[1.5fr_1fr_1.2fr_auto] gap-3 items-end">
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1.5">E-mail do Colaborador</label>
+                <input
+                  type="email"
+                  id="input-staff-email"
+                  required
+                  placeholder="ex.: motoboy.rafael@gmail.com"
+                  class="h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-xs font-semibold text-slate-900 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1.5">Nome do Colaborador (opcional)</label>
+                <input
+                  type="text"
+                  id="input-staff-name"
+                  placeholder="ex.: Rafael Lima"
+                  class="h-11 w-full rounded-xl border border-slate-200 bg-white px-3.5 text-xs font-semibold text-slate-900 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-slate-600 mb-1.5">Cargo / Nível de Acesso</label>
+                <select
+                  id="select-staff-role"
+                  class="h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-xs font-extrabold text-slate-800 outline-none focus:border-orange-500 focus:ring-2 focus:ring-orange-100"
+                >
+                  <option value="motoboy">🏍️ Motoboy / Entregador (App de Entregas)</option>
+                  <option value="atendente">📋 Atendente / Balcão (Pedidos & PDV)</option>
+                  <option value="cozinha">🍕 marmitaiolo / Cozinha (Kanban de Preparo)</option>
+                  <option value="admin">🛡️ Gerente / Administrador (Acesso Total)</option>
+                </select>
+              </div>
+
+              <div>
+                <button
+                  type="submit"
+                  class="h-11 px-5 rounded-xl bg-orange-500 text-xs font-extrabold text-white shadow-md shadow-orange-500/20 hover:bg-orange-600 transition flex items-center justify-center gap-1.5 w-full md:w-auto"
+                >
+                  <i data-lucide="check" class="h-4 w-4"></i>
+                  <span>Atribuir Cargo</span>
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <!-- Tabela de E-mails com Cargos Atribuídos -->
+          <div class="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-slate-50 border-b border-slate-200 text-slate-400 uppercase tracking-wider font-extrabold text-[10px]">
+                  <tr>
+                    <th class="py-3.5 px-4">Colaborador & E-mail</th>
+                    <th class="py-3.5 px-4">Cargo Atribuído</th>
+                    <th class="py-3.5 px-4">Acesso Permitido</th>
+                    <th class="py-3.5 px-4">Status</th>
+                    <th class="py-3.5 px-4 text-right">Ações</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody-staff-list" class="divide-y divide-slate-100 font-medium">
+                  <!-- Inserido dinamicamente via JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- ============================================================ -->
+        <!-- DEMAIS CONFIGURAÇÕES DA marmitaRIA                            -->
+        <!-- ============================================================ -->
+        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+
+          <!-- Card 1: Dados da Loja -->
+          <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center gap-2.5 pb-4 border-b border-slate-100">
+              <div class="grid h-9 w-9 place-items-center rounded-xl bg-orange-50 text-orange-600">
+                <i data-lucide="store" class="h-4.5 w-4.5"></i>
+              </div>
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-sm">Dados da marmitaria</h3>
+                <p class="text-[11px] text-slate-400">Informações exibidas no cardápio e nos comprovantes.</p>
+              </div>
+            </div>
+
+            <div class="mt-5 space-y-4 text-xs">
+              <div>
+                <label class="block font-bold text-slate-600 mb-1">Nome da marmitaria</label>
+                <input id="cfg-store-name" value="Marmitas Fit" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+              </div>
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block font-bold text-slate-600 mb-1">WhatsApp de Pedidos</label>
+                  <input id="cfg-whatsapp" value="(21) 99054-3204" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-600 mb-1">Bairro / Região</label>
+                  <input id="cfg-neighborhood" value="Piedade - RJ" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+                </div>
+              </div>
+              <div>
+                <label class="block font-bold text-slate-600 mb-1">Endereço da marmitaria (Ponto de Saída dos Motoboys)</label>
+                <input id="cfg-address" value="Rua Santa Cruz, 885 - Piedade, Rio de Janeiro" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+              </div>
+            </div>
+          </section>
+
+          <!-- Card 2: Horários e Funcionamento -->
+          <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center gap-2.5 pb-4 border-b border-slate-100">
+              <div class="grid h-9 w-9 place-items-center rounded-xl bg-blue-50 text-blue-600">
+                <i data-lucide="clock-3" class="h-4.5 w-4.5"></i>
+              </div>
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-sm">Horários & Operação</h3>
+                <p class="text-[11px] text-slate-400">Regras de recebimento de novos pedidos.</p>
+              </div>
+            </div>
+
+            <div class="mt-5 space-y-4 text-xs">
+              <div class="grid grid-cols-2 gap-3">
+                <div>
+                  <label class="block font-bold text-slate-600 mb-1">Abertura</label>
+                  <input type="time" value="18:00" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+                </div>
+                <div>
+                  <label class="block font-bold text-slate-600 mb-1">Fechamento</label>
+                  <input type="time" value="00:00" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+                </div>
+              </div>
+
+              <div class="pt-2 space-y-3">
+                <label class="flex items-center justify-between rounded-2xl border border-slate-100 p-3 bg-slate-50 cursor-pointer">
+                  <div>
+                    <div class="font-extrabold text-slate-900 text-xs">Receber novos pedidos</div>
+                    <div class="text-[10px] text-slate-400">Permite que clientes enviem pedidos pelo cardápio digital.</div>
+                  </div>
+                  <input type="checkbox" checked class="h-4 w-4 accent-orange-500 rounded" />
+                </label>
+
+                <label class="flex items-center justify-between rounded-2xl border border-slate-100 p-3 bg-slate-50 cursor-pointer">
+                  <div>
+                    <div class="font-extrabold text-slate-900 text-xs">Som de alerta em novos pedidos</div>
+                    <div class="text-[10px] text-slate-400">Toca bipe sonoro quando um pedido entra na cozinha.</div>
+                  </div>
+                  <input type="checkbox" checked class="h-4 w-4 accent-orange-500 rounded" />
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <!-- Card 3: Taxas de Entrega & Motoboys -->
+          <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center gap-2.5 pb-4 border-b border-slate-100">
+              <div class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+                <i data-lucide="bike" class="h-4.5 w-4.5"></i>
+              </div>
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-sm">Entrega & Taxas dos Motoboys</h3>
+                <p class="text-[11px] text-slate-400">Cálculo de repasse por corrida e raio de atendimento.</p>
+              </div>
+            </div>
+
+            <div class="mt-5 grid grid-cols-2 gap-3 text-xs">
+              <div>
+                <label class="block font-bold text-slate-600 mb-1">Taxa fixa até 2 km</label>
+                <input value="R$ 7,00" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+              </div>
+              <div>
+                <label class="block font-bold text-slate-600 mb-1">Valor por km adicional</label>
+                <input value="R$ 1,50 / km" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+              </div>
+              <div>
+                <label class="block font-bold text-slate-600 mb-1">Taxa mínima de entrega</label>
+                <input value="R$ 6,00" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+              </div>
+              <div>
+                <label class="block font-bold text-slate-600 mb-1">Raio máximo de entrega</label>
+                <input value="12 km" class="h-10 w-full rounded-xl border border-slate-200 px-3 font-semibold text-slate-900 outline-none focus:border-orange-500" />
+              </div>
+            </div>
+          </section>
+
+          <!-- Card 4: Formas de Pagamento -->
+          <section class="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
+            <div class="flex items-center gap-2.5 pb-4 border-b border-slate-100">
+              <div class="grid h-9 w-9 place-items-center rounded-xl bg-violet-50 text-violet-600">
+                <i data-lucide="wallet-cards" class="h-4.5 w-4.5"></i>
+              </div>
+              <div>
+                <h3 class="font-extrabold text-slate-900 text-sm">Formas de Pagamento Aceitas</h3>
+                <p class="text-[11px] text-slate-400">Opções disponíveis para o cliente finalizar o pedido.</p>
+              </div>
+            </div>
+
+            <div class="mt-5 space-y-2.5 text-xs">
+              <label class="flex items-center justify-between rounded-xl border border-slate-100 p-3 hover:bg-slate-50 transition cursor-pointer">
+                <span class="flex items-center gap-2.5 font-bold text-slate-800">
+                  <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span> Pix Online com QR Code Instantâneo
+                </span>
+                <input type="checkbox" checked class="h-4 w-4 accent-orange-500 rounded" />
+              </label>
+
+              <label class="flex items-center justify-between rounded-xl border border-slate-100 p-3 hover:bg-slate-50 transition cursor-pointer">
+                <span class="flex items-center gap-2.5 font-bold text-slate-800">
+                  <span class="h-2.5 w-2.5 rounded-full bg-blue-500"></span> Cartão de Crédito / Débito na Maquininha (com motoboy)
+                </span>
+                <input type="checkbox" checked class="h-4 w-4 accent-orange-500 rounded" />
+              </label>
+
+              <label class="flex items-center justify-between rounded-xl border border-slate-100 p-3 hover:bg-slate-50 transition cursor-pointer">
+                <span class="flex items-center gap-2.5 font-bold text-slate-800">
+                  <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span> Dinheiro em Espécie (com cálculo de troco)
+                </span>
+                <input type="checkbox" checked class="h-4 w-4 accent-orange-500 rounded" />
+              </label>
+            </div>
+          </section>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Script Lógico de Configurações & Atribuição de Cargos -->
+  <script>
+    lucide.createIcons();
+
+    // Toggle Submenu Motoboys na Sidebar
+    window.toggleSidebarMotoboys = function() {
+      const sub = document.getElementById("sub-sidebar-motoboys");
+      const icon = document.getElementById("icon-sidebar-motoboys");
+      if (sub) {
+        const isHidden = sub.classList.toggle("hidden");
+        if (icon) {
+          icon.style.transform = isHidden ? "rotate(0deg)" : "rotate(180deg)";
+        }
+      }
+    };
+
+    // Dados de Membros da Equipe & Cargos
+    const DEFAULT_STAFF = [
+      { email: "juca@marmitadojuca.com.br", name: "Seu Juca", role: "admin", access: "Total (Dashboard, Configurações, Cardápio)", date: "Criador" },
+      { email: "rafael.lima@gmail.com", name: "Rafael Lima", role: "motoboy", access: "App de Entregas (/painel/motoboy)", date: "10/10/2026" },
+      { email: "diego.souza@gmail.com", name: "Diego Souza", role: "motoboy", access: "App de Entregas (/painel/motoboy)", date: "10/10/2026" },
+      { email: "matheus.alves@gmail.com", name: "Matheus Alves", role: "motoboy", access: "App de Entregas (/painel/motoboy)", date: "10/10/2026" },
+      { email: "bruno.costa@gmail.com", name: "Bruno Costa", role: "motoboy", access: "App de Entregas (/painel/motoboy)", date: "10/10/2026" },
+      { email: "camila.atendente@gmail.com", name: "Camila Guimarães", role: "atendente", access: "Central de Pedidos (/painel/pedidos)", date: "09/10/2026" },
+      { email: "tiago.marmitaiolo@gmail.com", name: "Tiago Ferreira", role: "cozinha", access: "Kanban da Cozinha (Preparo de marmitas)", date: "08/10/2026" }
+    ];
+
+    const ROLE_META = {
+      motoboy: {
+        label: "Motoboy / Entregador",
+        badge: "bg-emerald-50 text-emerald-700 border-emerald-200",
+        icon: "🏍️",
+        access: "App de Entregas (/painel/motoboy)"
+      },
+      atendente: {
+        label: "Atendente / Balcão",
+        badge: "bg-blue-50 text-blue-700 border-blue-200",
+        icon: "📋",
+        access: "Central de Pedidos (/painel/pedidos)"
+      },
+      cozinha: {
+        label: "marmitaiolo / Cozinha",
+        badge: "bg-amber-50 text-amber-800 border-amber-200",
+        icon: "🍕",
+        access: "Kanban da Cozinha (Preparo)"
+      },
+      admin: {
+        label: "Gerente / Administrador",
+        badge: "bg-purple-50 text-purple-700 border-purple-200",
+        icon: "🛡️",
+        access: "Acesso Total ao Sistema"
+      }
+    };
+
+    let staffList = JucaPanel.getStorage("juca-staff-permissions", DEFAULT_STAFF);
+
+    function renderStaffTable() {
+      const tbody = document.getElementById("tbody-staff-list");
+      document.getElementById("count-team-total").textContent = staffList.length;
+
+      tbody.innerHTML = staffList.map((m, idx) => {
+        const meta = ROLE_META[m.role] || ROLE_META.motoboy;
+        const isMaster = m.email === "juca@marmitadojuca.com.br";
+        return `
+          <tr class="hover:bg-slate-50/70 transition">
+            <td class="py-3 px-4">
+              <div class="flex items-center gap-3">
+                <div class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-slate-100 font-extrabold text-xs text-slate-700 uppercase">
+                  ${m.name ? m.name.substring(0, 2) : m.email.substring(0, 2)}
+                </div>
+                <div>
+                  <div class="font-extrabold text-slate-900">${m.name || 'Colaborador'}</div>
+                  <div class="text-[11px] text-slate-400 font-mono">${m.email}</div>
+                </div>
+              </div>
+            </td>
+            <td class="py-3 px-4">
+              <div class="flex items-center gap-1.5">
+                <span class="inline-flex items-center gap-1 rounded-full border px-2.5 py-1 text-[11px] font-extrabold ${meta.badge}">
+                  <span>${meta.icon}</span>
+                  <span>${meta.label}</span>
+                </span>
+              </div>
+            </td>
+            <td class="py-3 px-4 text-[11px] text-slate-500 font-medium">
+              ${m.access || meta.access}
+            </td>
+            <td class="py-3 px-4">
+              <span class="inline-flex items-center gap-1.5 text-[11px] font-extrabold text-emerald-600">
+                <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Ativo
+              </span>
+            </td>
+            <td class="py-3 px-4 text-right">
+              ${isMaster ? `
+                <span class="text-[10px] font-bold text-slate-400 italic">Proprietário</span>
+              ` : `
+                <div class="flex items-center justify-end gap-2">
+                  <select onchange="updateStaffRole(${idx}, this.value)" class="rounded-lg border border-slate-200 bg-white px-2 py-1 text-[10px] font-bold text-slate-700 outline-none">
+                    <option value="motoboy" ${m.role === 'motoboy' ? 'selected' : ''}>Mudar p/ Motoboy</option>
+                    <option value="atendente" ${m.role === 'atendente' ? 'selected' : ''}>Mudar p/ Atendente</option>
+                    <option value="cozinha" ${m.role === 'cozinha' ? 'selected' : ''}>Mudar p/ Cozinha</option>
+                    <option value="admin" ${m.role === 'admin' ? 'selected' : ''}>Mudar p/ Admin</option>
+                  </select>
+                  <button type="button" onclick="removeStaff(${idx})" class="p-1 rounded-lg text-slate-400 hover:bg-red-50 hover:text-red-600 transition" title="Remover acesso">
+                    <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
+                  </button>
+                </div>
+              `}
+            </td>
+          </tr>
+        `;
+      }).EFin("");
+
+      lucide.createIcons();
+    }
+
+    // Adicionar E-mail & Atribuir Cargo
+    window.handleAssignRole = function(e) {
+      e.preventDefault();
+      const emailInput = document.getElementById("input-staff-email");
+      const nameInput = document.getElementById("input-staff-name");
+      const roleSelect = document.getElementById("select-staff-role");
+
+      const email = emailInput.value.trim().toLowerCase();
+      const name = nameInput.value.trim() || email.split("@")[0];
+      const role = roleSelect.value;
+      const meta = ROLE_META[role];
+
+      if (!email) return;
+
+      const existingIdx = staffList.findIndex(s => s.email === email);
+      if (existingIdx !== -1) {
+        staffList[existingIdx].role = role;
+        staffList[existingIdx].name = name;
+        staffList[existingIdx].access = meta.access;
+        JucaPanel.showToast(`Cargo de ${email} atualizado para ${meta.label}!`);
+      } else {
+        staffList.unshift({
+          email,
+          name,
+          role,
+          access: meta.access,
+          date: "Hoje"
+        });
+        JucaPanel.showToast(`E-mail ${email} cadastrado como ${meta.label}!`);
+      }
+
+      JucaPanel.setStorage("juca-staff-permissions", staffList);
+      renderStaffTable();
+
+      emailInput.value = "";
+      nameInput.value = "";
+    };
+
+    // Alterar cargo direto na tabela
+    window.updateStaffRole = function(idx, newRole) {
+      if (!staffList[idx]) return;
+      staffList[idx].role = newRole;
+      staffList[idx].access = ROLE_META[newRole].access;
+      JucaPanel.setStorage("juca-staff-permissions", staffList);
+      renderStaffTable();
+      JucaPanel.showToast(`Cargo de ${staffList[idx].name} alterado para ${ROLE_META[newRole].label}!`);
+    };
+
+    // Remover colaborador
+    window.removeStaff = function(idx) {
+      if (!staffList[idx]) return;
+      const removed = staffList.splice(idx, 1)[0];
+      JucaPanel.setStorage("juca-staff-permissions", staffList);
+      renderStaffTable();
+      JucaPanel.showToast(`Acesso de ${removed.name} (${removed.email}) revogado.`);
+    };
+
+    // Salvar todas as configurações
+    window.saveAllSettings = function() {
+      JucaPanel.setStorage("juca-staff-permissions", staffList);
+      JucaPanel.showToast("Configurações e cargos salvos com sucesso!");
+    };
+
+    renderStaffTable();
+  </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Gestão | Marmitas Fit Saudável</title>
+  <link rel="icon" type="image/png" href="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            fit: {
+              primary: '#015c34',
+              primaryHover: '#004727',
+              accent: '#fd4d00'
+            }
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-[#f6f7fb] px-4 py-10 sm:px-6 font-sans antialiased text-slate-950">
+  <div class="mx-auto max-w-6xl">
+    <!-- Topo / Marca -->
+    <div class="flex items-center gap-3">
+      <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white shadow-sm border border-slate-200/80 p-1">
+        <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png" alt="Marmitas Fit" class="h-10 w-10 object-contain" onerror="this.src='../logo.png'">
+      </div>
+      <div>
+        <div class="text-sm font-extrabold text-slate-950">Marmitas Fit Saudável</div>
+        <div class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-emerald-700">Central Interna de Operação</div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="mt-14 max-w-2xl">
+      <div class="inline-flex items-center gap-2 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.13em] text-[#015c34]">
+        <i data-lucide="monitor-smartphone" class="h-3.5 w-3.5"></i>
+        Painéis especializados por função
+      </div>
+      <h1 class="mt-5 text-4xl font-extrabold tracking-[-0.04em] text-slate-950 sm:text-5xl">
+        Gestão integrada, sem misturar funções.
+      </h1>
+      <p class="mt-4 text-base leading-7 text-slate-500">
+        Administração e despacho em telas completas para desktop. O motoboy conta com central mobile direta para entregas no Rio de Janeiro.
+      </p>
+    </div>
+
+    <!-- Cards dos Painéis -->
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <!-- Admin -->
+      <a href="./admin/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-emerald-300">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-50 text-[#015c34]">
+            <i data-lucide="layout-dashboard" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+            Desktop
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Gerente / Administrador</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Visão geral com faturamento, volume de marmitas, ticket médio, canais próprios e indicadores diários.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-[#015c34]">
+          Abrir painel
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+
+      <!-- Atendente & Despacho -->
+      <a href="./pedidos/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-emerald-300">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-50 text-[#015c34]">
+            <i data-lucide="clipboard-list" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+            Desktop
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Atendente & Despacho</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Central operacional com Kanban em tempo real, separação de pedidos, impressão de comandas e motoboys.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-[#015c34]">
+          Abrir pedidos
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+
+      <!-- Marmitas & Cardápio -->
+      <a href="./produtos/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-emerald-300">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-amber-50 text-amber-700">
+            <i data-lucide="package" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+            Cardápio
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Marmitas & Cardápio</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Gestão de pratos de 350g, combos semanais, ingredientes, preços e controle de itens esgotados no site.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-amber-700">
+          Gerenciar cardápio
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+
+      <!-- Central do Motoboy -->
+      <a href="./motoboy/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-blue-300">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-blue-50 text-blue-600">
+            <i data-lucide="bike" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+            Mobile / Rota
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Central do Motoboy</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Visão mobile para os entregadores e modo gestor para acompanhar as 4 telas de rotas e WhatsApp do cliente.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-blue-600">
+          Abrir motoboy
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+
+      <!-- Canais de Venda Oficiais -->
+      <a href="./canais/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-emerald-300">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-50 text-emerald-700">
+            <i data-lucide="store" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-emerald-800">
+            Delivery Próprio
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Canais de Venda Oficiais</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Monitoramento do site oficial e WhatsApp direto. Zero taxas de marketplaces como iFood ou 99Food.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-[#015c34]">
+          Ver canais
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+
+      <!-- Configurações -->
+      <a href="./configuracoes/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-slate-400">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-slate-100 text-slate-700">
+            <i data-lucide="settings" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+            Loja
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Configurações & Loja</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Dados da loja de Piedade, taxas de entrega por bairro, horários de atendimento e regras de frete grátis.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-slate-700">
+          Configurações
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+    </div>
+
+    <!-- Rodapé -->
+    <div class="mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6 text-xs text-slate-400">
+      <span>Painel Operacional Marmitas Fit Saudável • Piedade, Rio de Janeiro</span>
+      <a href="../index.html" class="font-bold text-[#015c34] hover:underline transition">
+        ← Voltar para a loja de clientes
+      </a>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

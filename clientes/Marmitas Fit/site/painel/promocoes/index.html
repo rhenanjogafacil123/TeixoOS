@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Promoções & Cupons | Marmitas Fit</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../panel-data.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-[#f4f6fa] text-slate-950 font-sans antialiased">
+  <div class="flex min-h-screen">
+
+    <!-- ========================================== -->
+    <!-- SIDEBAR DE NAVEGAÇÃO                       -->
+    <!-- ========================================== -->
+    <aside class="fixed inset-y-0 left-0 z-40 flex w-[248px] flex-col border-r border-slate-200/80 bg-white px-4 py-5 shadow-sm">
+      <a href="../admin/" class="mb-6 flex items-center gap-3 px-2">
+        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-orange-50 p-1 border border-orange-100">
+          <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png" alt="Marmitas Fit" class="h-9 w-9 object-contain" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+        </div>
+        <div class="leading-none">
+          <div class="text-[16px] font-extrabold tracking-tight text-slate-950">Marmitas Fit</div>
+          <div class="mt-1.5 text-[9px] font-extrabold uppercase tracking-[0.18em] text-orange-500">Painel de gestão</div>
+        </div>
+      </a>
+
+      <div class="space-y-6 overflow-y-auto pr-1">
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Visão geral</div>
+          <nav class="space-y-1">
+            <a href="../admin/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="layout-dashboard" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Dashboard</span>
+            </a>
+            <a href="../pedidos/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="clipboard-list" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Pedidos</span>
+              <span class="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-extrabold text-white">10</span>
+            </a>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Operação</div>
+          <nav class="space-y-1">
+            <a href="../produtos/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="package" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Marmitas & Cardápio</span>
+            </a>
+            
+            
+            <a href="./" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-bold bg-orange-50 text-orange-600 transition">
+              <i data-lucide="tag" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Promoções</span>
+            </a>
+            <a href="../canais/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="store" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Canais de Venda</span><span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-black text-emerald-800">Próprio</span>
+            </a>
+
+            <!-- Submenu Motoboys -->
+            <div class="space-y-1">
+              <div class="flex items-center gap-1 rounded-xl px-3 py-2 text-left text-[13px] font-semibold text-slate-700 hover:bg-slate-50 transition">
+                <a href="../motoboy/?gestor=true" class="flex flex-1 items-center gap-3 text-slate-700 hover:text-slate-950">
+                  <i data-lucide="bike" class="h-[17px] w-[17px] text-orange-500"></i>
+                  <span class="flex-1 font-bold">Motoboys</span>
+                  <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-extrabold text-emerald-700">4 online</span>
+                </a>
+                <button
+                  type="button"
+                  id="btn-sidebar-motoboys"
+                  onclick="toggleSidebarMotoboys()"
+                  class="rounded-lg p-1 text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition"
+                >
+                  <i data-lucide="chevron-down" id="icon-sidebar-motoboys" class="h-3.5 w-3.5 transition-transform duration-200"></i>
+                </button>
+              </div>
+              <div id="sub-sidebar-motoboys" class="ml-3.5 space-y-1 border-l-2 border-orange-100 pl-2.5 text-xs">
+                <a href="../motoboy/?view=grid&gestor=true" class="flex items-center gap-2 rounded-lg px-2 py-1.5 font-bold text-orange-600 hover:bg-orange-50 transition">
+                  <i data-lucide="layout-grid" class="h-3.5 w-3.5 text-orange-500"></i>
+                  <span>4 Telas Lado a Lado</span>
+                </a>
+                <a href="../motoboy/?courier=rafael&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Rafael Lima</span>
+                  <span class="text-[10px] text-slate-400">12 ent.</span>
+                </a>
+                <a href="../motoboy/?courier=diego&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Diego Souza</span>
+                  <span class="text-[10px] text-slate-400">8 ent.</span>
+                </a>
+                <a href="../motoboy/?courier=matheus&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Matheus Alves</span>
+                  <span class="rounded bg-amber-100 px-1 text-[9px] font-extrabold text-amber-700">Em rota</span>
+                </a>
+                <a href="../motoboy/?courier=bruno&gestor=true" class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 transition">
+                  <span>Bruno Costa</span>
+                  <span class="text-[10px] text-slate-400">6 ent.</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Gestão</div>
+          <nav class="space-y-1">
+            <a href="../configuracoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="settings" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Configurações</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <div class="mt-auto rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 via-white to-amber-50 p-4">
+        <div class="text-[11px] font-extrabold uppercase tracking-[0.12em] text-orange-600">Marmitas Fit</div>
+        <div class="mt-2 text-xs leading-5 text-slate-500">
+          Operação em Piedade - RJ. Atendimento, delivery e balcão ativos.
+        </div>
+        <a href="/" class="mt-3 inline-flex items-center text-xs font-extrabold text-slate-800 hover:text-orange-600 transition">
+          Ver cardápio <i data-lucide="arrow-right" class="ml-1 h-3.5 w-3.5"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ========================================== -->
+    <!-- ÁREA DE CONTEÚDO                           -->
+    <!-- ========================================== -->
+    <div class="pl-[248px] flex-1">
+      <header class="sticky top-0 z-30 flex h-[72px] items-center justify-between border-b border-slate-200/80 bg-white/95 px-6 backdrop-blur-xl">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2 rounded-xl bg-slate-100 px-3 py-1.5 text-xs text-slate-500">
+            <i data-lucide="ticket-percent" class="h-3.5 w-3.5 text-orange-500"></i>
+            <span>Gerenciar cupons de desconto e combos promocionais</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <button
+            type="button"
+            onclick="openAddPromoModal()"
+            class="inline-flex items-center gap-2 rounded-xl bg-orange-500 px-4 py-2.5 text-xs font-extrabold text-white shadow-md shadow-orange-500/20 hover:bg-orange-600 transition"
+          >
+            <i data-lucide="plus" class="h-4 w-4"></i>
+            <span>Criar Cupom / Promoção</span>
+          </button>
+
+          <div class="flex items-center gap-3 border-l border-slate-200 pl-4">
+            <div class="text-right">
+              <div class="text-xs font-extrabold text-slate-900">Seu Juca</div>
+              <div class="text-[10px] text-slate-400 font-semibold">Administrador Master</div>
+            </div>
+            <div class="grid h-9 w-9 place-items-center rounded-xl bg-orange-500 text-white font-black text-xs shadow-sm">
+              SJ
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="mx-auto w-full max-w-[1400px] p-6 2xl:p-8">
+        <!-- Título -->
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <p class="text-xs font-bold uppercase tracking-[0.16em] text-orange-500">Incentivos & Vendas</p>
+              <span class="rounded-full bg-slate-100 px-2 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">Campanhas</span>
+            </div>
+            <h1 class="mt-1 text-3xl font-extrabold tracking-tight text-slate-950">Promoções & Cupons</h1>
+            <p class="mt-1.5 text-sm text-slate-500">Crie cupons de primeira compra, combos promocionais e descontos aplicados automaticamente no WhatsApp.</p>
+          </div>
+        </div>
+
+        <!-- Grade de Promoções -->
+        <div id="promo-list" class="mt-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <!-- Renderizado dinamicamente via JS -->
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Modal Criar Promoção -->
+  <div id="modal-promo" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-[480px] rounded-3xl bg-white p-6 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+        <div>
+          <h2 class="text-lg font-extrabold text-slate-900">Novo Cupom / Promoção</h2>
+          <p class="text-xs text-slate-400">Campanha de desconto no cardápio</p>
+        </div>
+        <button type="button" onclick="closePromoModal()" class="rounded-xl border border-slate-200 p-2 text-slate-400 hover:bg-slate-50">
+          <i data-lucide="x" class="h-4 w-4"></i>
+        </button>
+      </div>
+
+      <form id="form-promo" onsubmit="handleSavePromo(event)" class="mt-5 space-y-4 text-xs font-bold text-slate-700">
+        <div>
+          <label class="block mb-1">Título da Promoção</label>
+          <input id="promo-title" required placeholder="ex.: 10% OFF no Primeiro Pedido" class="h-10 w-full rounded-xl border border-slate-200 px-3 outline-none focus:border-orange-500" />
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">Código do Cupom</label>
+            <input id="promo-code" required placeholder="PRIMEIRA10" class="h-10 w-full rounded-xl border border-slate-200 px-3 uppercase font-mono tracking-wider outline-none focus:border-orange-500" />
+          </div>
+          <div>
+            <label class="block mb-1">Tipo de Desconto</label>
+            <select id="promo-type" class="h-10 w-full rounded-xl border border-slate-200 px-3 outline-none focus:border-orange-500 font-bold">
+              <option value="Percentual">Percentual (%)</option>
+              <option value="Valor fixo">Valor Fixo (R$)</option>
+              <option value="Combo">Combo / Brinde</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block mb-1">Benefício</label>
+            <input id="promo-benefit" required placeholder="10% OFF ou R$ 5,00" class="h-10 w-full rounded-xl border border-slate-200 px-3 outline-none focus:border-orange-500" />
+          </div>
+          <div>
+            <label class="block mb-1">Validade</label>
+            <input id="promo-expires" placeholder="31/10/2026" class="h-10 w-full rounded-xl border border-slate-200 px-3 outline-none focus:border-orange-500" />
+          </div>
+        </div>
+
+        <div class="pt-2 flex items-center justify-end gap-2">
+          <button type="button" onclick="closePromoModal()" class="rounded-xl border border-slate-200 px-4 py-2 text-xs text-slate-600 hover:bg-slate-50">Cancelar</button>
+          <button type="submit" class="rounded-xl bg-orange-500 px-5 py-2 text-xs text-white hover:bg-orange-600 shadow">Salvar Cupom</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    window.toggleSidebarMotoboys = function() {
+      const sub = document.getElementById("sub-sidebar-motoboys");
+      const icon = document.getElementById("icon-sidebar-motoboys");
+      if (sub) {
+        const isHidden = sub.classList.toggle("hidden");
+        if (icon) icon.style.transform = isHidden ? "rotate(0deg)" : "rotate(180deg)";
+      }
+    };
+
+    const DEFAULT_PROMOTIONS = [
+      { id: 1, title: "Primeiro Pedido", code: "PRIMEIRA10", type: "Percentual", benefit: "10% OFF", uses: 38, limit: 100, expires: "31/10/2026", active: true },
+      { id: 2, title: "Combo da Noite", code: "COMBODANOITE", type: "Combo", benefit: "Marmita + Guaraná 2L", uses: 24, limit: 80, expires: "15/10/2026", active: true },
+      { id: 3, title: "Cupom Juca Família", code: "JUCA5", type: "Valor fixo", benefit: "R$ 5,00 OFF", uses: 51, limit: 100, expires: "20/10/2026", active: true },
+      { id: 4, title: "Borda Grátis Terça", code: "BORDAGRATIS", type: "Combo", benefit: "Borda Catupiry Grátis", uses: 19, limit: 50, expires: "30/10/2026", active: true }
+    ];
+
+    let promotions = JucaPanel.getStorage("juca-panel-promotions", DEFAULT_PROMOTIONS);
+
+    function renderPromotions() {
+      const list = document.getElementById("promo-list");
+      list.innerHTML = promotions.map(p => `
+        <div class="flex flex-col justify-between rounded-2xl border ${p.active ? 'border-slate-200 bg-white' : 'border-slate-200 bg-slate-50 opacity-75'} p-5 shadow-sm transition hover:border-orange-300">
+          <div>
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-sm font-black tracking-wider text-orange-600 bg-orange-50 border border-orange-200 px-3 py-1 rounded-xl">
+                ${p.code}
+              </span>
+              <span class="rounded-full px-2.5 py-1 text-[9px] font-extrabold ${p.active ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-slate-200 text-slate-600'}">
+                ${p.active ? 'Ativo' : 'Pausado'}
+              </span>
+            </div>
+
+            <h3 class="mt-3.5 text-base font-extrabold text-slate-900">${p.title}</h3>
+            <div class="mt-1 text-xs font-black text-emerald-600">${p.benefit}</div>
+
+            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400 font-semibold">
+              <span>${p.uses} usados ${p.limit ? `/ máx. ${p.limit}` : ''}</span>
+              <span>Expira: ${p.expires}</span>
+            </div>
+          </div>
+
+          <div class="mt-5 flex items-center justify-end gap-2">
+            <button
+              type="button"
+              onclick="togglePromoActive(${p.id})"
+              class="w-full rounded-xl border border-slate-200 py-2 text-xs font-extrabold transition ${p.active ? 'text-amber-600 hover:bg-amber-50' : 'text-emerald-600 hover:bg-emerald-50'}"
+            >
+              ${p.active ? 'Pausar Cupom' : 'Ativar Cupom'}
+            </button>
+          </div>
+        </div>
+      `).EFin("");
+
+      lucide.createIcons();
+    }
+
+    window.togglePromoActive = function(id) {
+      const p = promotions.find(pr => pr.id === id);
+      if (!p) return;
+      p.active = !p.active;
+      JucaPanel.setStorage("juca-panel-promotions", promotions);
+      renderPromotions();
+      JucaPanel.showToast(`Cupom ${p.code} ${p.active ? 'ativado!' : 'pausado.'}`);
+    };
+
+    window.openAddPromoModal = function() {
+      document.getElementById("promo-title").value = "";
+      document.getElementById("promo-code").value = "";
+      document.getElementById("promo-benefit").value = "";
+      document.getElementById("promo-expires").value = "";
+      document.getElementById("modal-promo").classList.remove("hidden");
+    };
+
+    window.closePromoModal = function() {
+      document.getElementById("modal-promo").classList.add("hidden");
+    };
+
+    window.handleSavePromo = function(e) {
+      e.preventDefault();
+      const title = document.getElementById("promo-title").value.trim();
+      const code = document.getElementById("promo-code").value.trim().toUpperCase();
+      const type = document.getElementById("promo-type").value;
+      const benefit = document.getElementById("promo-benefit").value.trim();
+      const expires = document.getElementById("promo-expires").value.trim() || "Sem prazo";
+
+      promotions.unshift({
+        id: Date.now(),
+        title,
+        code,
+        type,
+        benefit,
+        uses: 0,
+        limit: 100,
+        expires,
+        active: true
+      });
+
+      JucaPanel.setStorage("juca-panel-promotions", promotions);
+      closePromoModal();
+      renderPromotions();
+      JucaPanel.showToast(`Cupom ${code} criado com sucesso!`);
+    };
+
+    renderPromotions();
+  </script>
+</body>
+</html>

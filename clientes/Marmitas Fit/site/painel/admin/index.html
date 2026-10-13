@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard do Administrador | Marmitas Fit</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-[#f4f6fa] text-slate-950 font-sans antialiased">
+  <!-- Aviso para telas menores que 1280px -->
+  <div class="grid min-h-screen place-items-center bg-[#f5f7fb] px-5 xl:hidden">
+    <div class="max-w-sm rounded-3xl border border-slate-200 bg-white p-7 text-center shadow-[0_24px_80px_-50px_rgba(15,23,42,.55)]">
+      <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-orange-50 text-orange-600">
+        <i data-lucide="monitor-smartphone" class="h-7 w-7"></i>
+      </div>
+      <h1 class="mt-5 text-xl font-extrabold tracking-tight text-slate-950">Painel feito para computador</h1>
+      <p class="mt-2 text-sm leading-6 text-slate-500">
+        A administração e a central de pedidos usam bastante informação ao mesmo tempo. Abra em uma tela desktop com pelo menos 1280px para manter tudo legível.
+      </p>
+      <a href="../" class="mt-5 inline-flex items-center gap-2 rounded-xl bg-slate-950 px-4 py-3 text-sm font-bold text-white transition hover:bg-slate-800">
+        Voltar para os painéis <i data-lucide="arrow-right" class="h-4 w-4"></i>
+      </a>
+    </div>
+  </div>
+
+  <!-- Layout Desktop Principal -->
+  <div class="hidden min-h-screen xl:block">
+    <!-- Barra Lateral Fixa -->
+    <aside class="fixed inset-y-0 left-0 z-40 flex w-[248px] flex-col border-r border-slate-200/80 bg-white px-4 py-5">
+      <a href="../" class="mb-7 flex items-center gap-3 px-2">
+        <div class="grid h-11 w-11 place-items-center rounded-2xl bg-orange-50 p-1 border border-orange-100 shadow-sm">
+          <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png" alt="Marmitas Fit" class="h-9 w-9 object-contain" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+        </div>
+        <div class="leading-none">
+          <div class="text-[16px] font-extrabold tracking-tight text-slate-950">Marmitas Fit</div>
+          <div class="mt-1.5 text-[9px] font-extrabold uppercase tracking-[0.18em] text-orange-500">Painel de gestão</div>
+        </div>
+      </a>
+
+      <!-- Menu de Navegação -->
+      <div class="space-y-6 overflow-y-auto pr-1">
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Visão geral</div>
+          <nav class="space-y-1">
+            <a href="./" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-bold bg-orange-50 text-orange-600 transition">
+              <i data-lucide="layout-dashboard" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Dashboard</span>
+            </a>
+            <a href="../pedidos/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="clipboard-list" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Pedidos</span>
+              <span class="rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-extrabold text-white">10</span>
+            </a>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Operação</div>
+          <nav class="space-y-1">
+            <a href="../produtos/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="package" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Marmitas & Cardápio</span>
+            </a>
+            
+            
+            <a href="../promocoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="tag" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Promoções</span>
+            </a>
+            <a href="../canais/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="store" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Canais de Venda</span><span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[9px] font-black text-emerald-800">Próprio</span>
+            </a>
+            <!-- Menu Interativo de Motoboys -->
+            <div class="space-y-1">
+              <div class="flex items-center gap-1 rounded-xl px-3 py-2 text-left text-[13px] font-semibold text-slate-700 hover:bg-slate-50 transition">
+                <a href="../motoboy/?gestor=true" class="flex flex-1 items-center gap-3 text-slate-700 hover:text-slate-950">
+                  <i data-lucide="bike" class="h-[17px] w-[17px] text-orange-500"></i>
+                  <span class="flex-1 font-bold">Motoboys</span>
+                  <span class="rounded-full bg-emerald-100 px-1.5 py-0.5 text-[9px] font-extrabold text-emerald-700">4 online</span>
+                </a>
+                <button
+                  type="button"
+                  id="btn-sidebar-motoboys"
+                  onclick="toggleSidebarMotoboys()"
+                  class="rounded-lg p-1 text-slate-400 hover:bg-slate-200/60 hover:text-slate-700 transition"
+                  title="Expandir/recolher motoboys"
+                >
+                  <i data-lucide="chevron-down" id="icon-sidebar-motoboys" class="h-3.5 w-3.5 transition-transform duration-200"></i>
+                </button>
+              </div>
+              <div id="sub-sidebar-motoboys" class="ml-3.5 space-y-1 border-l-2 border-orange-100 pl-2.5 text-xs">
+                <a
+                  href="../motoboy/?view=grid&gestor=true"
+                  class="flex items-center gap-2 rounded-lg px-2 py-1.5 font-bold text-orange-600 hover:bg-orange-50 transition"
+                >
+                  <i data-lucide="layout-grid" class="h-3.5 w-3.5 text-orange-500"></i>
+                  <span>4 Telas Lado a Lado</span>
+                </a>
+                <a
+                  href="../motoboy/?courier=rafael&gestor=true"
+                  class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 transition"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <span>Rafael Lima</span>
+                  </span>
+                  <span class="text-[10px] font-semibold text-slate-400">12 ent.</span>
+                </a>
+                <a
+                  href="../motoboy/?courier=diego&gestor=true"
+                  class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 transition"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <span>Diego Souza</span>
+                  </span>
+                  <span class="text-[10px] font-semibold text-slate-400">8 ent.</span>
+                </a>
+                <a
+                  href="../motoboy/?courier=matheus&gestor=true"
+                  class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 transition"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    <span>Matheus Alves</span>
+                  </span>
+                  <span class="rounded bg-amber-100 px-1 text-[9px] font-extrabold text-amber-700">Em rota</span>
+                </a>
+                <a
+                  href="../motoboy/?courier=bruno&gestor=true"
+                  class="flex items-center justify-between rounded-lg px-2 py-1.5 font-medium text-slate-600 hover:bg-slate-100 hover:text-slate-950 transition"
+                >
+                  <span class="flex items-center gap-2">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    <span>Bruno Costa</span>
+                  </span>
+                  <span class="text-[10px] font-semibold text-slate-400">6 ent.</span>
+                </a>
+              </div>
+            </div>
+          </nav>
+        </div>
+
+        <div>
+          <div class="mb-2 px-3 text-[10px] font-extrabold uppercase tracking-[0.16em] text-slate-400">Gestão</div>
+          <nav class="space-y-1">
+            <a href="../configuracoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
+              <i data-lucide="settings" class="h-[17px] w-[17px]"></i>
+              <span class="flex-1">Configurações</span>
+            </a>
+          </nav>
+        </div>
+      </div>
+
+      <!-- Rodapé Sidebar -->
+      <div class="mt-auto rounded-2xl border border-orange-100 bg-gradient-to-br from-orange-50 via-white to-amber-50 p-4">
+        <div class="text-[11px] font-extrabold uppercase tracking-[0.12em] text-orange-600">Marmitas Fit</div>
+        <div class="mt-2 text-xs leading-5 text-slate-500">
+          Operação em Piedade - RJ. Atendimento, delivery e balcão ativos.
+        </div>
+        <a href="/" class="mt-3 inline-flex items-center text-xs font-extrabold text-slate-800 hover:text-orange-600 transition">
+          Ver cardápio <i data-lucide="arrow-right" class="ml-1 h-3.5 w-3.5"></i>
+        </a>
+      </div>
+    </aside>
+
+    <!-- Área de Conteúdo -->
+    <div class="pl-[248px]">
+      <!-- Header Superior -->
+      <header class="sticky top-0 z-30 border-b border-slate-200/70 bg-white/92 backdrop-blur-xl">
+        <div class="flex h-[70px] items-center gap-4 px-6 xl:px-8">
+          <div class="flex items-center gap-2 text-xs font-semibold text-slate-400">
+            <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Operação interna • Marmitas Fit • Piedade - RJ
+          </div>
+
+          <!-- Ações Header Direito -->
+          <div class="ml-auto flex items-center gap-3">
+            <!-- Botão Notificações -->
+            <div class="relative">
+              <button id="btn-notif" type="button" class="relative rounded-xl border border-transparent p-2.5 text-slate-500 transition hover:border-slate-200 hover:bg-slate-50">
+                <i data-lucide="bell" class="h-5 w-5"></i>
+                <span class="absolute right-1 top-1 grid h-4 min-w-4 place-items-center rounded-full bg-red-500 px-1 text-[9px] font-extrabold text-white">3</span>
+              </button>
+
+              <!-- Dropdown Notificações -->
+              <div id="drop-notif" class="hidden absolute right-0 top-13 z-50 w-[330px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-2xl">
+                <div class="flex items-center justify-between border-b border-slate-100 px-4 py-3">
+                  <div>
+                    <div class="text-xs font-extrabold text-slate-900">Notificações</div>
+                    <div class="mt-0.5 text-[10px] text-slate-400">3 itens precisam de atenção</div>
+                  </div>
+                  <span class="rounded-full bg-orange-50 px-2 py-1 text-[9px] font-extrabold text-orange-600">Agora</span>
+                </div>
+                <div class="divide-y divide-slate-100">
+                  <a href="../pedidos/" class="flex w-full gap-3 px-4 py-3 text-left transition hover:bg-slate-50">
+                    <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-500"></span>
+                    <span>
+                      <span class="block text-xs font-extrabold text-slate-800">Pedido #1053</span>
+                      <span class="mt-1 block text-[10px] leading-4 text-slate-400">Novo pedido de marmita Calabresa recebido há 1 minuto.</span>
+                    </span>
+                  </a>
+                  <a href="../pedidos/" class="flex w-full gap-3 px-4 py-3 text-left transition hover:bg-slate-50">
+                    <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-amber-400"></span>
+                    <span>
+                      <span class="block text-xs font-extrabold text-slate-800">Item pausado</span>
+                      <span class="mt-1 block text-[10px] leading-4 text-slate-400">Salmão com Quinoa marcada como indisponível.</span>
+                    </span>
+                  </a>
+                  <a href="../motoboy/" class="flex w-full gap-3 px-4 py-3 text-left transition hover:bg-slate-50">
+                    <span class="mt-1.5 h-2.5 w-2.5 shrink-0 rounded-full bg-red-500"></span>
+                    <span>
+                      <span class="block text-xs font-extrabold text-slate-800">Entrega em rota</span>
+                      <span class="mt-1 block text-[10px] leading-4 text-slate-400">Pedido #1043 em entrega para Piedade há 18 minutos.</span>
+                    </span>
+                  </a>
+                </div>
+                <a href="../pedidos/" class="flex items-center justify-center border-t border-slate-100 px-4 py-3 text-[10px] font-extrabold text-orange-600 hover:bg-orange-50 transition">
+                  Abrir central de pedidos
+                </a>
+              </div>
+            </div>
+
+            <!-- Perfil Usuário -->
+            <div class="flex items-center gap-2.5 rounded-xl border border-slate-200 bg-white px-2.5 py-2 shadow-sm">
+              <div class="grid h-8 w-8 place-items-center rounded-full bg-gradient-to-br from-orange-500 to-amber-400 text-xs font-extrabold text-white">
+                EF
+              </div>
+              <div class="min-w-[112px] text-left">
+                <div class="text-xs font-extrabold text-slate-900">Eduardo Fiocchi</div>
+                <div class="text-[10px] text-slate-400">Administrador</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Conteúdo do Dashboard -->
+      <main class="mx-auto w-full max-w-[1680px] p-6 2xl:p-8">
+        <!-- Título e Subtítulo -->
+        <div class="flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <div class="flex items-center gap-2">
+              <p class="text-xs font-bold uppercase tracking-[0.16em] text-orange-500">Visão do negócio</p>
+              <span class="rounded-full bg-slate-100 px-2 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">Painel ativo</span>
+            </div>
+            <h1 class="mt-1 text-3xl font-extrabold tracking-tight sm:text-4xl text-slate-950">Dashboard</h1>
+            <p class="mt-2 text-sm text-slate-500">Acompanhe a operação e as vendas da Marmitas Fit em tempo real.</p>
+          </div>
+
+          <div class="flex items-center gap-2.5">
+            <!-- Seletor de Período -->
+            <div class="relative">
+              <button
+                id="btn-period"
+                type="button"
+                class="inline-flex items-center gap-2 rounded-xl border border-slate-200/90 bg-white px-3.5 py-2.5 text-xs font-extrabold text-slate-700 shadow-sm transition hover:border-orange-300 hover:text-orange-600 focus:outline-none"
+              >
+                <i data-lucide="calendar" class="h-4 w-4 text-orange-500"></i>
+                <span id="label-active-period">Hoje</span>
+                <i data-lucide="chevron-down" class="h-3.5 w-3.5 text-slate-400"></i>
+              </button>
+
+              <!-- Dropdown de Opções -->
+              <div
+                id="drop-period"
+                class="hidden absolute right-0 top-12 z-50 w-72 rounded-2xl border border-slate-200 bg-white p-3 shadow-2xl"
+              >
+                <div class="px-2 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                  Período da operação
+                </div>
+                <div class="mt-1 space-y-0.5">
+                  <button type="button" onclick="setPeriod('hoje')" class="period-item flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600 transition" data-key="hoje">
+                    <span class="flex items-center gap-2">
+                      <span class="h-2 w-2 rounded-full bg-emerald-500"></span> Hoje
+                    </span>
+                    <span class="text-[10px] font-semibold text-emerald-600">Ao vivo</span>
+                  </button>
+                  <button type="button" onclick="setPeriod('7d')" class="period-item flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600 transition" data-key="7d">
+                    <span>1 semana (7 dias)</span>
+                    <span class="text-[10px] font-semibold text-slate-400">Semana</span>
+                  </button>
+                  <button type="button" onclick="setPeriod('15d')" class="period-item flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600 transition" data-key="15d">
+                    <span>15 dias</span>
+                    <span class="text-[10px] font-semibold text-slate-400">Quinzena</span>
+                  </button>
+                  <button type="button" onclick="setPeriod('30d')" class="period-item flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600 transition" data-key="30d">
+                    <span>30 dias</span>
+                    <span class="text-[10px] font-semibold text-slate-400">1 mês</span>
+                  </button>
+                  <button type="button" onclick="setPeriod('60d')" class="period-item flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600 transition" data-key="60d">
+                    <span>60 dias</span>
+                    <span class="text-[10px] font-semibold text-slate-400">2 meses</span>
+                  </button>
+                  <button type="button" onclick="setPeriod('90d')" class="period-item flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600 transition" data-key="90d">
+                    <span>90 dias</span>
+                    <span class="text-[10px] font-semibold text-slate-400">3 meses</span>
+                  </button>
+                  <button type="button" onclick="setPeriod('180d')" class="period-item flex w-full items-center justify-between rounded-xl px-3 py-2 text-xs font-bold text-slate-700 hover:bg-orange-50 hover:text-orange-600 transition" data-key="180d">
+                    <span>Últimos 6 meses</span>
+                    <span class="text-[10px] font-semibold text-slate-400">Semestre</span>
+                  </button>
+                </div>
+
+                <div class="my-2 border-t border-slate-100"></div>
+
+                <!-- Intervalo de Datas Personalizado -->
+                <div class="rounded-xl bg-slate-50 p-2.5">
+                  <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400">
+                    Selecionar data / intervalo
+                  </div>
+                  <div class="mt-2 grid grid-cols-2 gap-2 text-left">
+                    <div>
+                      <label class="text-[9px] font-bold text-slate-500">De</label>
+                      <input id="input-date-start" type="date" class="mt-0.5 w-full rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-800 outline-none focus:border-orange-500" />
+                    </div>
+                    <div>
+                      <label class="text-[9px] font-bold text-slate-500">Até</label>
+                      <input id="input-date-end" type="date" class="mt-0.5 w-full rounded-lg border border-slate-200 bg-white px-2 py-1 text-[11px] font-semibold text-slate-800 outline-none focus:border-orange-500" />
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    onclick="applyCustomPeriod()"
+                    class="mt-2.5 w-full rounded-xl bg-orange-500 py-1.5 text-xs font-extrabold text-white shadow-sm transition hover:bg-orange-600"
+                  >
+                    Filtrar por data
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botão Ver Pedidos Ao Vivo -->
+            <a
+              href="../pedidos/"
+              class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200/90 bg-white px-3.5 py-2.5 text-xs font-extrabold text-slate-600 shadow-sm transition hover:border-orange-200 hover:text-orange-600"
+            >
+              <span class="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              Ver pedidos ao vivo →
+            </a>
+          </div>
+        </div>
+
+        <!-- 4 Cards de Métricas -->
+        <div class="mt-4 grid grid-cols-4 gap-4">
+          <section class="rounded-2xl border border-slate-200/75 bg-white p-5 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.30)]">
+            <div class="flex items-start gap-4">
+              <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-emerald-50 text-emerald-600">
+                <i data-lucide="trending-up" class="h-5 w-5"></i>
+              </div>
+              <div>
+                <p id="label-metric-revenue" class="text-sm font-medium text-slate-500">Faturamento hoje</p>
+                <p id="val-metric-revenue" class="mt-1 text-2xl font-extrabold tracking-tight text-slate-950">R$ 3.840,00</p>
+                <p id="comp-metric-revenue" class="mt-2 text-xs font-semibold text-emerald-600">↑ 14% em relação a ontem</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="rounded-2xl border border-slate-200/75 bg-white p-5 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.30)]">
+            <div class="flex items-start gap-4">
+              <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-blue-50 text-blue-600">
+                <i data-lucide="shopping-cart" class="h-5 w-5"></i>
+              </div>
+              <div>
+                <p id="label-metric-orders" class="text-sm font-medium text-slate-500">Pedidos hoje</p>
+                <p id="val-metric-orders" class="mt-1 text-2xl font-extrabold tracking-tight text-slate-950">74</p>
+                <p id="comp-metric-orders" class="mt-2 text-xs font-semibold text-emerald-600">↑ 18% em relação a ontem</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="rounded-2xl border border-slate-200/75 bg-white p-5 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.30)]">
+            <div class="flex items-start gap-4">
+              <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-violet-50 text-violet-600">
+                <i data-lucide="receipt-text" class="h-5 w-5"></i>
+              </div>
+              <div>
+                <p id="label-metric-ticket" class="text-sm font-medium text-slate-500">Ticket médio</p>
+                <p id="val-metric-ticket" class="mt-1 text-2xl font-extrabold tracking-tight text-slate-950">R$ 51,89</p>
+                <p id="comp-metric-ticket" class="mt-2 text-xs font-semibold text-emerald-600">↑ 8% em relação a ontem</p>
+              </div>
+            </div>
+          </section>
+
+          <section class="rounded-2xl border border-slate-200/75 bg-white p-5 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.30)]">
+            <div class="flex items-start gap-4">
+              <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-orange-50 text-orange-600">
+                <i data-lucide="clock-3" class="h-5 w-5"></i>
+              </div>
+              <div>
+                <p id="label-metric-progress" class="text-sm font-medium text-slate-500">Pedidos em andamento</p>
+                <p id="val-metric-progress" class="mt-1 text-2xl font-extrabold tracking-tight text-slate-950">14</p>
+                <p id="comp-metric-progress" class="mt-2 text-xs font-semibold text-emerald-600">Em preparo e entrega</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Gráfico Semanal e Formas de Pagamento -->
+        <div class="mt-4 grid grid-cols-[minmax(0,1.55fr)_minmax(310px,0.85fr)] gap-4">
+          <!-- Gráfico -->
+          <section class="rounded-2xl border border-slate-200/75 bg-white p-5 sm:p-6 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.30)]">
+            <div class="flex items-center justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2">
+                  <i data-lucide="trending-up" class="h-5 w-5 text-orange-500"></i>
+                  <h2 id="chart-title" class="font-extrabold text-slate-900">Faturamento da semana</h2>
+                </div>
+                <div class="mt-3 flex flex-wrap items-baseline gap-3">
+                  <span id="chart-total" class="text-3xl font-extrabold tracking-tight text-slate-950">R$ 18.940,00</span>
+                  <span id="chart-comp" class="text-xs font-bold text-emerald-600">↑ 26% na comparação anterior</span>
+                </div>
+              </div>
+              <span id="chart-badge" class="rounded-xl border border-slate-200 px-3 py-2 text-xs font-semibold text-slate-500">
+                Últimos 7 dias • Piedade - RJ
+              </span>
+            </div>
+
+            <div class="mt-7 overflow-hidden rounded-2xl bg-gradient-to-b from-orange-50/70 to-transparent px-2 pt-3">
+              <svg viewBox="0 0 700 240" class="h-[240px] w-full" role="img" aria-label="Gráfico de faturamento semanal">
+                <line x1="20" y1="40" x2="680" y2="40" stroke="#e2e8f0" stroke-width="1"></line>
+                <line x1="20" y1="90" x2="680" y2="90" stroke="#e2e8f0" stroke-width="1"></line>
+                <line x1="20" y1="140" x2="680" y2="140" stroke="#e2e8f0" stroke-width="1"></line>
+                <line x1="20" y1="190" x2="680" y2="190" stroke="#e2e8f0" stroke-width="1"></line>
+                <defs>
+                  <linearGradient id="admin-chart-fill" x1="0" x2="0" y1="0" y2="1">
+                    <stop offset="0%" stop-color="#fb923c" stop-opacity="0.28"></stop>
+                    <stop offset="100%" stop-color="#fb923c" stop-opacity="0"></stop>
+                  </linearGradient>
+                </defs>
+                <path d="M35,185 C90,170 115,145 145,148 C190,151 215,112 250,110 C300,107 320,143 355,136 C410,125 430,95 475,90 C530,84 555,58 610,56 C640,54 660,40 675,32 L675,220 L35,220 Z" fill="url(#admin-chart-fill)"></path>
+                <path d="M35,185 C90,170 115,145 145,148 C190,151 215,112 250,110 C300,107 320,143 355,136 C410,125 430,95 475,90 C530,84 555,58 610,56 C640,54 660,40 675,32" fill="none" stroke="#f97316" stroke-width="4" stroke-linecap="round"></path>
+                <circle cx="35" cy="185" r="5.5" fill="#fff" stroke="#f97316" stroke-width="3"></circle>
+                <circle cx="145" cy="148" r="5.5" fill="#fff" stroke="#f97316" stroke-width="3"></circle>
+                <circle cx="250" cy="110" r="5.5" fill="#fff" stroke="#f97316" stroke-width="3"></circle>
+                <circle cx="355" cy="136" r="5.5" fill="#fff" stroke="#f97316" stroke-width="3"></circle>
+                <circle cx="475" cy="90" r="5.5" fill="#fff" stroke="#f97316" stroke-width="3"></circle>
+                <circle cx="610" cy="56" r="5.5" fill="#fff" stroke="#f97316" stroke-width="3"></circle>
+                <circle cx="675" cy="32" r="5.5" fill="#fff" stroke="#f97316" stroke-width="3"></circle>
+              </svg>
+              <div id="chart-days" class="-mt-2 grid grid-cols-7 pb-3 text-center text-[11px] font-semibold text-slate-400">
+                <span>Seg</span>
+                <span>Ter</span>
+                <span>Qua</span>
+                <span>Qui</span>
+                <span>Sex</span>
+                <span>Sáb</span>
+                <span>Dom</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- Formas de Pagamento -->
+          <section class="rounded-2xl border border-slate-200/75 bg-white p-5 sm:p-6 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.30)]">
+            <div class="flex items-center gap-2">
+              <i data-lucide="wallet-cards" class="h-5 w-5 text-orange-500"></i>
+              <h2 class="font-extrabold text-slate-900">Formas de pagamento</h2>
+            </div>
+
+            <div class="mt-7 grid place-items-center">
+              <div class="relative grid h-44 w-44 place-items-center rounded-full" style="background: conic-gradient(#22c55e 0 54%, #3b82f6 54% 86%, #f59e0b 86% 100%)">
+                <div class="grid h-28 w-28 place-items-center rounded-full bg-white text-center shadow-inner">
+                  <div>
+                    <div class="text-base font-extrabold text-slate-950">R$ 3.840,00</div>
+                    <div class="mt-1 text-[11px] text-slate-400">total hoje</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 space-y-3 text-sm">
+              <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                <span class="h-2.5 w-2.5 rounded-full bg-emerald-500"></span>
+                <span class="font-semibold text-slate-700">Pix</span>
+                <span class="ml-auto text-xs font-bold text-slate-400">54%</span>
+                <span class="w-24 text-right text-xs font-bold text-slate-700">R$ 2.073,60</span>
+              </div>
+              <div class="flex items-center gap-3 border-b border-slate-100 pb-3">
+                <span class="h-2.5 w-2.5 rounded-full bg-blue-500"></span>
+                <span class="font-semibold text-slate-700">Cartão</span>
+                <span class="ml-auto text-xs font-bold text-slate-400">32%</span>
+                <span class="w-24 text-right text-xs font-bold text-slate-700">R$ 1.228,80</span>
+              </div>
+              <div class="flex items-center gap-3 pb-3">
+                <span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span>
+                <span class="font-semibold text-slate-700">Dinheiro</span>
+                <span class="ml-auto text-xs font-bold text-slate-400">14%</span>
+                <span class="w-24 text-right text-xs font-bold text-slate-700">R$ 537,60</span>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <!-- Produtos Mais Vendidos e Status dos Pedidos -->
+        <div class="mt-4 grid grid-cols-2 gap-4">
+          <!-- Produtos Mais Vendidos -->
+          <section class="rounded-2xl border border-slate-200/75 bg-white p-5 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.30)]">
+            <div class="flex items-center gap-2">
+              <i data-lucide="award" class="h-5 w-5 text-orange-500"></i>
+              <h2 class="font-extrabold text-slate-900">marmitas mais vendidas</h2>
+            </div>
+            <div class="mt-4 space-y-3">
+              <div class="flex items-center gap-3 rounded-xl p-2 transition hover:bg-slate-50">
+                <span class="grid h-7 w-7 place-items-center rounded-full bg-amber-50 text-[11px] font-extrabold text-amber-600">1</span>
+                <img src="/combo-calabresa-guarana.webp" alt="" class="h-10 w-10 rounded-xl bg-orange-50 object-cover border border-slate-100" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+                <div class="min-w-0 flex-1">
+                  <div class="truncate text-xs font-bold text-slate-900">marmita Calabresa Especial (Grande)</div>
+                  <div class="mt-0.5 text-[10px] text-slate-400">54 vendas</div>
+                </div>
+                <div class="text-xs font-extrabold text-slate-900">R$ 2.430,00</div>
+              </div>
+
+              <div class="flex items-center gap-3 rounded-xl p-2 transition hover:bg-slate-50">
+                <span class="grid h-7 w-7 place-items-center rounded-full bg-amber-50 text-[11px] font-extrabold text-amber-600">2</span>
+                <img src="/hero-marmita.webp" alt="" class="h-10 w-10 rounded-xl bg-orange-50 object-cover border border-slate-100" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+                <div class="min-w-0 flex-1">
+                  <div class="truncate text-xs font-bold text-slate-900">marmita Quatro QueiEFs (Grande)</div>
+                  <div class="mt-0.5 text-[10px] text-slate-400">46 vendas</div>
+                </div>
+                <div class="text-xs font-extrabold text-slate-900">R$ 2.208,00</div>
+              </div>
+
+              <div class="flex items-center gap-3 rounded-xl p-2 transition hover:bg-slate-50">
+                <span class="grid h-7 w-7 place-items-center rounded-full bg-amber-50 text-[11px] font-extrabold text-amber-600">3</span>
+                <img src="/fatia-calabresa-catupiry.webp" alt="" class="h-10 w-10 rounded-xl bg-orange-50 object-cover border border-slate-100" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+                <div class="min-w-0 flex-1">
+                  <div class="truncate text-xs font-bold text-slate-900">marmita Frango com Catupiry (Grande)</div>
+                  <div class="mt-0.5 text-[10px] text-slate-400">41 vendas</div>
+                </div>
+                <div class="text-xs font-extrabold text-slate-900">R$ 1.968,00</div>
+              </div>
+
+              <div class="flex items-center gap-3 rounded-xl p-2 transition hover:bg-slate-50">
+                <span class="grid h-7 w-7 place-items-center rounded-full bg-amber-50 text-[11px] font-extrabold text-amber-600">4</span>
+                <img src="/hero-calabresa-catupiry.webp" alt="" class="h-10 w-10 rounded-xl bg-orange-50 object-cover border border-slate-100" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+                <div class="min-w-0 flex-1">
+                  <div class="truncate text-xs font-bold text-slate-900">marmita Portuguesa Tradicional (Grande)</div>
+                  <div class="mt-0.5 text-[10px] text-slate-400">35 vendas</div>
+                </div>
+                <div class="text-xs font-extrabold text-slate-900">R$ 1.680,00</div>
+              </div>
+
+              <div class="flex items-center gap-3 rounded-xl p-2 transition hover:bg-slate-50">
+                <span class="grid h-7 w-7 place-items-center rounded-full bg-amber-50 text-[11px] font-extrabold text-amber-600">5</span>
+                <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png" alt="" class="h-10 w-10 rounded-xl bg-orange-50 object-cover border border-slate-100" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+                <div class="min-w-0 flex-1">
+                  <div class="truncate text-xs font-bold text-slate-900">Coca-Cola 2 Litros</div>
+                  <div class="mt-0.5 text-[10px] text-slate-400">52 vendas</div>
+                </div>
+                <div class="text-xs font-extrabold text-slate-900">R$ 676,00</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- Status dos Pedidos -->
+          <section class="rounded-2xl border border-slate-200/75 bg-white p-5 shadow-[0_18px_48px_-36px_rgba(15,23,42,0.30)]">
+            <div class="flex items-center gap-2">
+              <i data-lucide="credit-card" class="h-5 w-5 text-orange-500"></i>
+              <h2 class="font-extrabold text-slate-900">Status dos pedidos</h2>
+            </div>
+            <div class="mt-5 space-y-5">
+              <div>
+                <div class="mb-2 flex items-center text-xs">
+                  <span class="font-semibold text-slate-700">Concluído</span>
+                  <span id="status-concluido-val" class="ml-auto font-extrabold text-slate-900">36</span>
+                  <span id="status-concluido-pct" class="ml-3 w-8 text-right text-[10px] text-slate-400">48%</span>
+                </div>
+                <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+                  <div id="status-concluido-bar" class="h-full rounded-full bg-emerald-500" style="width: 48%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="mb-2 flex items-center text-xs">
+                  <span class="font-semibold text-slate-700">Em entrega</span>
+                  <span id="status-entrega-val" class="ml-auto font-extrabold text-slate-900">14</span>
+                  <span id="status-entrega-pct" class="ml-3 w-8 text-right text-[10px] text-slate-400">19%</span>
+                </div>
+                <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+                  <div id="status-entrega-bar" class="h-full rounded-full bg-blue-500" style="width: 19%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="mb-2 flex items-center text-xs">
+                  <span class="font-semibold text-slate-700">Em preparo</span>
+                  <span id="status-preparo-val" class="ml-auto font-extrabold text-slate-900">12</span>
+                  <span id="status-preparo-pct" class="ml-3 w-8 text-right text-[10px] text-slate-400">16%</span>
+                </div>
+                <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+                  <div id="status-preparo-bar" class="h-full rounded-full bg-amber-400" style="width: 16%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="mb-2 flex items-center text-xs">
+                  <span class="font-semibold text-slate-700">Recebido</span>
+                  <span id="status-recebido-val" class="ml-auto font-extrabold text-slate-900">8</span>
+                  <span id="status-recebido-pct" class="ml-3 w-8 text-right text-[10px] text-slate-400">11%</span>
+                </div>
+                <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+                  <div id="status-recebido-bar" class="h-full rounded-full bg-slate-400" style="width: 11%"></div>
+                </div>
+              </div>
+
+              <div>
+                <div class="mb-2 flex items-center text-xs">
+                  <span class="font-semibold text-slate-700">Cancelado</span>
+                  <span id="status-cancelado-val" class="ml-auto font-extrabold text-slate-900">4</span>
+                  <span id="status-cancelado-pct" class="ml-3 w-8 text-right text-[10px] text-slate-400">6%</span>
+                </div>
+                <div class="h-2 overflow-hidden rounded-full bg-slate-100">
+                  <div id="status-cancelado-bar" class="h-full rounded-full bg-red-500" style="width: 6%"></div>
+                </div>
+              </div>
+            </div>
+
+            <a href="../pedidos/" class="mt-6 flex items-center gap-2 text-xs font-bold text-orange-600 hover:text-orange-700 transition">
+              Acessar Kanban de pedidos <i data-lucide="arrow-up-right" class="h-3.5 w-3.5"></i>
+            </a>
+          </section>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+
+    // Toggle Submenu Motoboys na Sidebar
+    window.toggleSidebarMotoboys = function() {
+      const sub = document.getElementById("sub-sidebar-motoboys");
+      const icon = document.getElementById("icon-sidebar-motoboys");
+      if (sub) {
+        const isHidden = sub.classList.toggle("hidden");
+        if (icon) {
+          icon.style.transform = isHidden ? "rotate(0deg)" : "rotate(180deg)";
+        }
+      }
+    };
+
+    // Toggle Notificações
+    const btnNotif = document.getElementById("btn-notif");
+    const dropNotif = document.getElementById("drop-notif");
+    if (btnNotif && dropNotif) {
+      btnNotif.onclick = (e) => {
+        e.stopPropagation();
+        dropNotif.classList.toggle("hidden");
+        if (dropPeriod) dropPeriod.classList.add("hidden");
+      };
+    }
+
+    // Toggle Período
+    const btnPeriod = document.getElementById("btn-period");
+    const dropPeriod = document.getElementById("drop-period");
+    if (btnPeriod && dropPeriod) {
+      btnPeriod.onclick = (e) => {
+        e.stopPropagation();
+        dropPeriod.classList.toggle("hidden");
+        if (dropNotif) dropNotif.classList.add("hidden");
+      };
+    }
+
+    // Fechar ao clicar fora
+    document.addEventListener("click", () => {
+      if (dropNotif) dropNotif.classList.add("hidden");
+      if (dropPeriod) dropPeriod.classList.add("hidden");
+    });
+
+    if (dropPeriod) {
+      dropPeriod.addEventListener("click", (e) => e.stopPropagation());
+    }
+
+    // Dados estruturados para cada período
+    const PERIOD_DATA = {
+      hoje: {
+        label: "Hoje",
+        revLabel: "Faturamento hoje",
+        revVal: "R$ 3.840,00",
+        revComp: "↑ 14% em relação a ontem",
+        ordLabel: "Pedidos hoje",
+        ordVal: "74",
+        ordComp: "↑ 18% em relação a ontem",
+        tktLabel: "Ticket médio",
+        tktVal: "R$ 51,89",
+        tktComp: "↑ 8% em relação a ontem",
+        progLabel: "Pedidos em andamento",
+        progVal: "14",
+        progComp: "Em preparo e entrega",
+        chartTitle: "Faturamento por turno (Hoje)",
+        chartTotal: "R$ 3.840,00",
+        chartComp: "↑ 14% vs dia anterior",
+        chartBadge: "Hoje • Almoço e Jantar",
+        chartDays: ["18h", "19h", "20h", "21h", "22h", "23h", "00h"],
+        status: { conc: 36, concPct: "48%", ent: 14, entPct: "19%", prep: 12, prepPct: "16%", rec: 8, recPct: "11%", canc: 4, cancPct: "6%" }
+      },
+      "7d": {
+        label: "1 semana (7 dias)",
+        revLabel: "Faturamento (7 dias)",
+        revVal: "R$ 26.880,00",
+        revComp: "↑ 26% na comparação anterior",
+        ordLabel: "Pedidos (7 dias)",
+        ordVal: "518",
+        ordComp: "↑ 19% na comparação anterior",
+        tktLabel: "Ticket médio",
+        tktVal: "R$ 51,89",
+        tktComp: "↑ 6% na comparação anterior",
+        progLabel: "Média diária",
+        progVal: "74",
+        progComp: "Pedidos / dia",
+        chartTitle: "Faturamento dos últimos 7 dias",
+        chartTotal: "R$ 26.880,00",
+        chartComp: "↑ 26% vs semana anterior",
+        chartBadge: "Últimos 7 dias • Piedade - RJ",
+        chartDays: ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"],
+        status: { conc: 252, concPct: "49%", ent: 98, entPct: "19%", prep: 84, prepPct: "16%", rec: 56, recPct: "11%", canc: 28, cancPct: "5%" }
+      },
+      "15d": {
+        label: "15 dias",
+        revLabel: "Faturamento (15 dias)",
+        revVal: "R$ 57.600,00",
+        revComp: "↑ 22% vs quinzena anterior",
+        ordLabel: "Pedidos (15 dias)",
+        ordVal: "1.110",
+        ordComp: "↑ 16% vs quinzena anterior",
+        tktLabel: "Ticket médio",
+        tktVal: "R$ 51,89",
+        tktComp: "↑ 5% vs quinzena anterior",
+        progLabel: "Média diária",
+        progVal: "74",
+        progComp: "Pedidos / dia",
+        chartTitle: "Faturamento da quinzena",
+        chartTotal: "R$ 57.600,00",
+        chartComp: "↑ 22% vs quinzena anterior",
+        chartBadge: "Últimos 15 dias • Piedade - RJ",
+        chartDays: ["D1-D2", "D3-D4", "D5-D6", "D7-D8", "D9-D10", "D11-D12", "D13-D15"],
+        status: { conc: 540, concPct: "49%", ent: 210, entPct: "19%", prep: 180, prepPct: "16%", rec: 120, recPct: "11%", canc: 60, cancPct: "5%" }
+      },
+      "30d": {
+        label: "30 dias",
+        revLabel: "Faturamento (30 dias)",
+        revVal: "R$ 115.200,00",
+        revComp: "↑ 24% vs mês anterior",
+        ordLabel: "Pedidos (30 dias)",
+        ordVal: "2.220",
+        ordComp: "↑ 21% vs mês anterior",
+        tktLabel: "Ticket médio",
+        tktVal: "R$ 51,89",
+        tktComp: "↑ 4% vs mês anterior",
+        progLabel: "Média diária",
+        progVal: "74",
+        progComp: "Pedidos / dia",
+        chartTitle: "Faturamento mensal consolidado",
+        chartTotal: "R$ 115.200,00",
+        chartComp: "↑ 24% vs mês anterior",
+        chartBadge: "Últimos 30 dias • Piedade - RJ",
+        chartDays: ["Sem 1", "Sem 2", "Sem 3", "Sem 4", "Sem 5", "Recor.", "Fim"],
+        status: { conc: 1080, concPct: "49%", ent: 420, entPct: "19%", prep: 360, prepPct: "16%", rec: 240, recPct: "11%", canc: 120, cancPct: "5%" }
+      },
+      "60d": {
+        label: "60 dias",
+        revLabel: "Faturamento (60 dias)",
+        revVal: "R$ 230.400,00",
+        revComp: "↑ 28% no bimestre",
+        ordLabel: "Pedidos (60 dias)",
+        ordVal: "4.440",
+        ordComp: "↑ 25% no bimestre",
+        tktLabel: "Ticket médio",
+        tktVal: "R$ 51,89",
+        tktComp: "↑ 6% no bimestre",
+        progLabel: "Média diária",
+        progVal: "74",
+        progComp: "Pedidos / dia",
+        chartTitle: "Faturamento bimestral",
+        chartTotal: "R$ 230.400,00",
+        chartComp: "↑ 28% no bimestre",
+        chartBadge: "Últimos 60 dias • Piedade - RJ",
+        chartDays: ["Quin 1", "Quin 2", "Quin 3", "Quin 4", "Bimestre", "Cresc.", "Total"],
+        status: { conc: 2160, concPct: "49%", ent: 840, entPct: "19%", prep: 720, prepPct: "16%", rec: 480, recPct: "11%", canc: 240, cancPct: "5%" }
+      },
+      "90d": {
+        label: "90 dias",
+        revLabel: "Faturamento (90 dias)",
+        revVal: "R$ 345.600,00",
+        revComp: "↑ 31% no trimestre",
+        ordLabel: "Pedidos (90 dias)",
+        ordVal: "6.660",
+        ordComp: "↑ 27% no trimestre",
+        tktLabel: "Ticket médio",
+        tktVal: "R$ 51,89",
+        tktComp: "↑ 7% no trimestre",
+        progLabel: "Média diária",
+        progVal: "74",
+        progComp: "Pedidos / dia",
+        chartTitle: "Faturamento trimestral",
+        chartTotal: "R$ 345.600,00",
+        chartComp: "↑ 31% no trimestre",
+        chartBadge: "Últimos 90 dias • Piedade - RJ",
+        chartDays: ["Mês 1", "Mês 2", "Mês 3", "Trimestre", "Pico", "Recor.", "Total"],
+        status: { conc: 3240, concPct: "49%", ent: 1260, entPct: "19%", prep: 1080, prepPct: "16%", rec: 720, recPct: "11%", canc: 360, cancPct: "5%" }
+      },
+      "180d": {
+        label: "Últimos 6 meses",
+        revLabel: "Faturamento (6 meses)",
+        revVal: "R$ 691.200,00",
+        revComp: "↑ 35% no semestre",
+        ordLabel: "Pedidos (6 meses)",
+        ordVal: "13.320",
+        ordComp: "↑ 32% no semestre",
+        tktLabel: "Ticket médio",
+        tktVal: "R$ 51,89",
+        tktComp: "↑ 8% no semestre",
+        progLabel: "Média diária",
+        progVal: "74",
+        progComp: "Pedidos / dia",
+        chartTitle: "Faturamento semestral",
+        chartTotal: "R$ 691.200,00",
+        chartComp: "↑ 35% no semestre",
+        chartBadge: "Últimos 6 meses • Piedade - RJ",
+        chartDays: ["M1", "M2", "M3", "M4", "M5", "M6", "Total"],
+        status: { conc: 6480, concPct: "49%", ent: 2520, entPct: "19%", prep: 2160, prepPct: "16%", rec: 1440, recPct: "11%", canc: 720, cancPct: "5%" }
+      }
+    };
+
+    function setPeriod(key) {
+      const data = PERIOD_DATA[key];
+      if (!data) return;
+
+      document.getElementById("label-active-period").innerText = data.label;
+      document.getElementById("label-metric-revenue").innerText = data.revLabel;
+      document.getElementById("val-metric-revenue").innerText = data.revVal;
+      document.getElementById("comp-metric-revenue").innerText = data.revComp;
+
+      document.getElementById("label-metric-orders").innerText = data.ordLabel;
+      document.getElementById("val-metric-orders").innerText = data.ordVal;
+      document.getElementById("comp-metric-orders").innerText = data.ordComp;
+
+      document.getElementById("label-metric-ticket").innerText = data.tktLabel;
+      document.getElementById("val-metric-ticket").innerText = data.tktVal;
+      document.getElementById("comp-metric-ticket").innerText = data.tktComp;
+
+      document.getElementById("label-metric-progress").innerText = data.progLabel;
+      document.getElementById("val-metric-progress").innerText = data.progVal;
+      document.getElementById("comp-metric-progress").innerText = data.progComp;
+
+      document.getElementById("chart-title").innerText = data.chartTitle;
+      document.getElementById("chart-total").innerText = data.chartTotal;
+      document.getElementById("chart-comp").innerText = data.chartComp;
+      document.getElementById("chart-badge").innerText = data.chartBadge;
+
+      const chartDaysEl = document.getElementById("chart-days");
+      if (chartDaysEl && data.chartDays) {
+        chartDaysEl.innerHTML = data.chartDays.map(d => `<span>${d}</span>`).EFin('');
+      }
+
+      // Status
+      document.getElementById("status-concluido-val").innerText = data.status.conc.toLocaleString("pt-BR");
+      document.getElementById("status-concluido-pct").innerText = data.status.concPct;
+      document.getElementById("status-concluido-bar").style.width = data.status.concPct;
+
+      document.getElementById("status-entrega-val").innerText = data.status.ent.toLocaleString("pt-BR");
+      document.getElementById("status-entrega-pct").innerText = data.status.entPct;
+      document.getElementById("status-entrega-bar").style.width = data.status.entPct;
+
+      document.getElementById("status-preparo-val").innerText = data.status.prep.toLocaleString("pt-BR");
+      document.getElementById("status-preparo-pct").innerText = data.status.prepPct;
+      document.getElementById("status-preparo-bar").style.width = data.status.prepPct;
+
+      document.getElementById("status-recebido-val").innerText = data.status.rec.toLocaleString("pt-BR");
+      document.getElementById("status-recebido-pct").innerText = data.status.recPct;
+      document.getElementById("status-recebido-bar").style.width = data.status.recPct;
+
+      document.getElementById("status-cancelado-val").innerText = data.status.canc.toLocaleString("pt-BR");
+      document.getElementById("status-cancelado-pct").innerText = data.status.cancPct;
+      document.getElementById("status-cancelado-bar").style.width = data.status.cancPct;
+
+      if (dropPeriod) dropPeriod.classList.add("hidden");
+    }
+
+    function applyCustomPeriod() {
+      const start = document.getElementById("input-date-start").value;
+      const end = document.getElementById("input-date-end").value;
+      if (!start || !end) {
+        alert("Por favor selecione a data inicial e final.");
+        return;
+      }
+      const d1 = new Date(start);
+      const d2 = new Date(end);
+      const diffTime = Math.abs(d2 - d1);
+      const diffDays = Math.max(1, Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1);
+
+      const faturamento = diffDays * 3840;
+      const pedidos = diffDays * 74;
+      const fmtMoney = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(faturamento);
+      const fmtStart = start.split("-").reverse().slice(0, 2).EFin("/");
+      const fmtEnd = end.split("-").reverse().slice(0, 2).EFin("/");
+
+      document.getElementById("label-active-period").innerText = `${fmtStart} até ${fmtEnd} (${diffDays}d)`;
+      document.getElementById("label-metric-revenue").innerText = `Faturamento (${diffDays} dias)`;
+      document.getElementById("val-metric-revenue").innerText = fmtMoney;
+      document.getElementById("comp-metric-revenue").innerText = `Intervalo selecionado (${diffDays} dias)`;
+
+      document.getElementById("label-metric-orders").innerText = `Pedidos (${diffDays} dias)`;
+      document.getElementById("val-metric-orders").innerText = pedidos.toLocaleString("pt-BR");
+      document.getElementById("comp-metric-orders").innerText = `Média: 74 pedidos/dia`;
+
+      document.getElementById("chart-title").innerText = `Faturamento (${fmtStart} a ${fmtEnd})`;
+      document.getElementById("chart-total").innerText = fmtMoney;
+      document.getElementById("chart-comp").innerText = `${diffDays} dias de operação`;
+      document.getElementById("chart-badge").innerText = `${fmtStart} a ${fmtEnd} • Piedade - RJ`;
+
+      document.getElementById("status-concluido-val").innerText = Math.round(pedidos * 0.49).toLocaleString("pt-BR");
+      document.getElementById("status-entrega-val").innerText = Math.round(pedidos * 0.19).toLocaleString("pt-BR");
+      document.getElementById("status-preparo-val").innerText = Math.round(pedidos * 0.16).toLocaleString("pt-BR");
+      document.getElementById("status-recebido-val").innerText = Math.round(pedidos * 0.11).toLocaleString("pt-BR");
+      document.getElementById("status-cancelado-val").innerText = Math.round(pedidos * 0.05).toLocaleString("pt-BR");
+
+      if (dropPeriod) dropPeriod.classList.add("hidden");
+    }
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Área do Entregador & Gestão de Frota | Marmitas Fit</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="../panel-data.js"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="min-h-screen bg-[#edf0f5] text-slate-950 font-sans antialiased flex flex-col">
+
+  <!-- ========================================== -->
+  <!-- BARRA DO GESTOR (Visível no modo gestor)   -->
+  <!-- ========================================== -->
+  <header id="manager-bar" class="hidden sticky top-0 z-50 border-b border-slate-200/90 bg-white/95 px-4 py-2.5 backdrop-blur-xl shadow-sm">
+    <div class="mx-auto flex max-w-[1780px] flex-wrap items-center justify-between gap-3">
+      <!-- Lado Esquerdo: Voltar ao Admin + Título Frota -->
+      <div class="flex items-center gap-3">
+        <a href="../admin/" class="inline-flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-extrabold text-slate-700 hover:border-orange-300 hover:text-orange-600 transition shadow-sm">
+          <i data-lucide="arrow-left" class="h-4 w-4"></i>
+          <span>Voltar ao Admin</span>
+        </a>
+        <div class="hidden sm:block h-4 w-[1px] bg-slate-200"></div>
+        <div class="flex items-center gap-2">
+          <span class="grid h-7 w-7 place-items-center rounded-xl bg-orange-500 text-white text-xs font-black shadow-sm">🥗</span>
+          <div>
+            <div class="text-xs font-extrabold text-slate-900 leading-none">Frota de Motoboys</div>
+            <div class="mt-0.5 text-[10px] font-bold text-orange-600 leading-none">Painel do Gestor</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Centro / Direita: Switcher na Cara do Gestor -->
+      <div class="flex flex-wrap items-center gap-1.5 rounded-2xl bg-slate-100 p-1 border border-slate-200/60">
+        <!-- 4 Telas Lado a Lado -->
+        <button
+          type="button"
+          id="btn-nav-grid"
+          onclick="setGestorView('grid')"
+          class="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold transition shadow-sm bg-white text-orange-600"
+        >
+          <i data-lucide="layout-grid" class="h-3.5 w-3.5 text-orange-500"></i>
+          <span>4 Telas Lado a Lado</span>
+        </button>
+
+        <!-- Divisor -->
+        <div class="h-4 w-[1px] bg-slate-300 mx-0.5"></div>
+
+        <!-- Rafael Lima -->
+        <button
+          type="button"
+          id="btn-nav-rafael"
+          onclick="setGestorCourier('rafael')"
+          class="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:text-slate-950 transition"
+        >
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          <span>Rafael Lima <span class="text-[10px] font-bold opacity-70">(12)</span></span>
+        </button>
+
+        <!-- Diego Souza -->
+        <button
+          type="button"
+          id="btn-nav-diego"
+          onclick="setGestorCourier('diego')"
+          class="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:text-slate-950 transition"
+        >
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          <span>Diego Souza <span class="text-[10px] font-bold opacity-70">(8)</span></span>
+        </button>
+
+        <!-- Matheus Alves -->
+        <button
+          type="button"
+          id="btn-nav-matheus"
+          onclick="setGestorCourier('matheus')"
+          class="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:text-slate-950 transition"
+        >
+          <span class="h-2 w-2 rounded-full bg-amber-500 animate-pulse"></span>
+          <span>Matheus Alves <span class="rounded bg-amber-100 px-1 text-[9px] font-black text-amber-800">Em rota</span></span>
+        </button>
+
+        <!-- Bruno Costa -->
+        <button
+          type="button"
+          id="btn-nav-bruno"
+          onclick="setGestorCourier('bruno')"
+          class="inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:text-slate-950 transition"
+        >
+          <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+          <span>Bruno Costa <span class="text-[10px] font-bold opacity-70">(6)</span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- MODO 1: 4 TELAS LADO A LADO (Visão Multitelas da Frota)  -->
+  <!-- ======================================================== -->
+  <main id="container-grid-view" class="hidden flex-1 p-4 sm:p-6 lg:p-8">
+    <div class="mx-auto max-w-[1780px]">
+      <!-- Cabeçalho da Visão Geral (4 Telas dos Celulares) -->
+      <div class="mb-6 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="rounded-full bg-orange-100 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-orange-700">Central de Despacho Ao Vivo</span>
+            <span class="text-xs text-slate-500">• 4 telas dos celulares dos motoboys em tempo real</span>
+          </div>
+          <h1 class="mt-1 text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-950">4 Celulares dos Motoboys (Lado a Lado)</h1>
+          <p class="mt-1 text-xs text-slate-500">Exatamente o que cada entregador está vendo na tela do próprio celular — pedidos em espera, entregas em rota e faturamento do turno.</p>
+        </div>
+
+        <!-- Totalizadores Rápidos -->
+        <div class="flex items-center gap-3">
+          <div class="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 shadow-sm text-right">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Total de Entregas Hoje</div>
+            <div class="text-lg font-black text-slate-900">35 corridas</div>
+          </div>
+          <div class="rounded-2xl border border-slate-200 bg-white px-4 py-2.5 shadow-sm text-right">
+            <div class="text-[10px] font-bold text-slate-400 uppercase">Faturamento de Entregas</div>
+            <div class="text-lg font-black text-emerald-600">R$ 280,00</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- As 4 Telas Literais dos Celulares Lado a Lado -->
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 justify-items-center">
+
+        <!-- CELULAR 1: Rafael Lima -->
+        <div class="flex flex-col items-center w-full">
+          <!-- Moldura do Smartphone -->
+          <div id="grid-phone-rafael" class="w-full max-w-[340px] rounded-[44px] border-[7px] border-slate-900 bg-slate-900 p-1.5 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.45)] ring-1 ring-slate-800 transition hover:-translate-y-1 hover:shadow-orange-500/20">
+            <!-- Tela do Celular -->
+            <div class="overflow-hidden rounded-[36px] bg-[#f7f8fb] flex flex-col justify-between min-h-[700px]">
+              
+              <!-- Barra de Status do Celular -->
+              <div class="flex items-center justify-between px-5 pt-3 pb-1 text-[10px] font-bold text-slate-800 select-none">
+                <span>21:45</span>
+                <div class="h-3 w-16 rounded-full bg-slate-900 mx-auto"></div>
+                <div class="flex items-center gap-1 text-slate-700">
+                  <i data-lucide="signal" class="h-3 w-3"></i>
+                  <i data-lucide="wifi" class="h-3 w-3"></i>
+                  <i data-lucide="battery" class="h-3.5 w-3.5"></i>
+                </div>
+              </div>
+
+              <!-- Conteúdo do App do Motoboy -->
+              <div class="p-3.5 space-y-3 flex-1 flex flex-col justify-between">
+                <div>
+                  <!-- Cabeçalho do App -->
+                  <div class="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="grid h-7 w-7 place-items-center rounded-xl bg-orange-500 text-white font-black text-[10px] shadow-sm">
+                        🥗
+                      </div>
+                      <div>
+                        <div class="text-[11px] font-black text-slate-900 leading-none">Marmitas Fit</div>
+                        <div class="text-[9px] font-bold text-orange-600 leading-none mt-0.5">App Entregador</div>
+                      </div>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[9px] font-extrabold text-emerald-700">
+                      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Online
+                    </span>
+                  </div>
+
+                  <!-- Perfil do Motoboy no Celular -->
+                  <div class="mt-2.5 flex items-center gap-2.5 rounded-2xl bg-white p-2.5 border border-slate-200/70 shadow-sm">
+                    <div class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-black text-xs shadow">
+                      RL
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <div class="text-xs font-black text-slate-900 leading-tight">Rafael Lima</div>
+                      <div class="text-[9px] text-slate-500 truncate">Honda CG 160 Fan • Prata</div>
+                      <div class="text-[8px] font-bold text-slate-400">Placa RJ·K8L21</div>
+                    </div>
+                  </div>
+
+                  <!-- Métricas Rápidas do Dia -->
+                  <div class="mt-2.5 grid grid-cols-2 gap-2 text-center">
+                    <div class="rounded-xl bg-white p-2 border border-slate-200/70 shadow-sm">
+                      <div class="text-[8px] font-bold uppercase text-slate-400">Ganhos Hoje</div>
+                      <div class="text-sm font-black text-emerald-600 mt-0.5">R$ 96,00</div>
+                      <div class="text-[8px] text-slate-400">12 entregas</div>
+                    </div>
+                    <div class="rounded-xl bg-white p-2 border border-slate-200/70 shadow-sm">
+                      <div class="text-[8px] font-bold uppercase text-slate-400">Status</div>
+                      <div class="text-xs font-extrabold text-slate-800 mt-0.5">Disponível</div>
+                      <div class="text-[8px] text-emerald-600 font-bold">Aguardando saída</div>
+                    </div>
+                  </div>
+
+                  <!-- Pedidos em Espera no Balcão (Visão do Motoboy) -->
+                  <div class="mt-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-black uppercase tracking-wider text-slate-500">
+                        Pedidos em Espera (<span class="text-orange-600 font-black">2</span>)
+                      </span>
+                      <span class="rounded bg-orange-100 px-1.5 py-0.5 text-[8px] font-extrabold text-orange-700">No Balcão</span>
+                    </div>
+
+                    <!-- Lista de Pedidos Disponíveis -->
+                    <div class="mt-2 space-y-2">
+                      <!-- Pedido 1054 -->
+                      <div class="rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm">
+                        <div class="flex items-start justify-between gap-1">
+                          <div>
+                            <div class="text-[11px] font-black text-slate-900">#1054 • Rodrigo Almeida</div>
+                            <div class="text-[9px] text-slate-500">Méier • 3,2 km</div>
+                          </div>
+                          <div class="text-right">
+                            <span class="text-xs font-black text-emerald-600">R$ 9,50</span>
+                            <div class="text-[8px] font-bold text-slate-400">taxa</div>
+                          </div>
+                        </div>
+                        <div class="mt-1.5 text-[9px] text-slate-600 bg-slate-50 rounded-lg p-1.5 line-clamp-1">
+                          1x marmita Portuguesa (G) + Guaraná 2L
+                        </div>
+                        <div class="mt-1.5 flex items-center justify-between rounded-lg bg-emerald-50 border border-emerald-200 px-2 py-1 text-[8px] font-black text-emerald-800">
+                          <span>✓ JÁ PAGO NO IFOOD</span>
+                          <span class="uppercase">NÃO COBRAR</span>
+                        </div>
+                        <button type="button" onclick="setGestorCourier('rafael')" class="mt-2 w-full flex items-center justify-center gap-1 rounded-xl bg-orange-500 py-1.5 text-[10px] font-extrabold text-white shadow-sm hover:bg-orange-600 transition">
+                          <i data-lucide="bike" class="h-3 w-3"></i>
+                          <span>Aceitar Corrida</span>
+                        </button>
+                      </div>
+
+                      <!-- Pedido 1053 -->
+                      <div class="rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm">
+                        <div class="flex items-start justify-between gap-1">
+                          <div>
+                            <div class="text-[11px] font-black text-slate-900">#1053 • D. Maria das Graças</div>
+                            <div class="text-[9px] text-slate-500">Piedade • 1,6 km</div>
+                          </div>
+                          <div class="text-right">
+                            <span class="text-xs font-black text-emerald-600">R$ 7,50</span>
+                            <div class="text-[8px] font-bold text-slate-400">taxa</div>
+                          </div>
+                        </div>
+                        <div class="mt-1.5 text-[9px] text-slate-600 bg-slate-50 rounded-lg p-1.5 line-clamp-1">
+                          1x Calabresa Especial (G) + Nutella
+                        </div>
+                        <div class="mt-1.5 flex items-center justify-between rounded-lg bg-amber-50 border border-amber-300 px-2 py-1 text-[8px] font-black text-amber-950">
+                          <span>⚡ COBRAR: R$ 72,00</span>
+                          <span class="uppercase">DINHEIRO (TROCO P/ 100)</span>
+                        </div>
+                        <button type="button" onclick="setGestorCourier('rafael')" class="mt-2 w-full flex items-center justify-center gap-1 rounded-xl bg-orange-500 py-1.5 text-[10px] font-extrabold text-white shadow-sm hover:bg-orange-600 transition">
+                          <i data-lucide="bike" class="h-3 w-3"></i>
+                          <span>Aceitar Corrida</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Mini Histórico da Última Entrega -->
+                  <div class="mt-2.5 rounded-xl bg-slate-50 border border-slate-100 p-2 text-[9px] text-slate-500 flex items-center justify-between">
+                    <span>Última: #1045 Ana Paula</span>
+                    <span class="font-bold text-emerald-600">R$ 8,00 ✓</span>
+                  </div>
+                </div>
+
+                <!-- Barra de Navegação Inferior do Celular -->
+                <div class="pt-2 border-t border-slate-200/80">
+                  <div class="grid grid-cols-4 text-center text-[8px] font-bold">
+                    <div class="flex flex-col items-center gap-0.5 text-orange-600">
+                      <i data-lucide="home" class="h-3.5 w-3.5"></i>
+                      <span>Início</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="bike" class="h-3.5 w-3.5"></i>
+                      <span>Entregas</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="chart-column" class="h-3.5 w-3.5"></i>
+                      <span>Ganhos</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="user-round" class="h-3.5 w-3.5"></i>
+                      <span>Perfil</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão Exterior para o Gestor Interagir -->
+          <button
+            type="button"
+            onclick="setGestorCourier('rafael')"
+            class="mt-3.5 inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-extrabold text-slate-700 shadow-sm hover:border-orange-400 hover:text-orange-600 hover:bg-orange-50/50 transition"
+          >
+            <i data-lucide="maximize-2" class="h-3.5 w-3.5 text-orange-500"></i>
+            <span>Abrir Tela do Rafael</span>
+          </button>
+        </div>
+
+        <!-- CELULAR 2: Diego Souza -->
+        <div class="flex flex-col items-center w-full">
+          <!-- Moldura do Smartphone -->
+          <div id="grid-phone-diego" class="w-full max-w-[340px] rounded-[44px] border-[7px] border-slate-900 bg-slate-900 p-1.5 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.45)] ring-1 ring-slate-800 transition hover:-translate-y-1 hover:shadow-orange-500/20">
+            <!-- Tela do Celular -->
+            <div class="overflow-hidden rounded-[36px] bg-[#f7f8fb] flex flex-col justify-between min-h-[700px]">
+              
+              <!-- Barra de Status do Celular -->
+              <div class="flex items-center justify-between px-5 pt-3 pb-1 text-[10px] font-bold text-slate-800 select-none">
+                <span>21:45</span>
+                <div class="h-3 w-16 rounded-full bg-slate-900 mx-auto"></div>
+                <div class="flex items-center gap-1 text-slate-700">
+                  <i data-lucide="signal" class="h-3 w-3"></i>
+                  <i data-lucide="wifi" class="h-3 w-3"></i>
+                  <i data-lucide="battery" class="h-3.5 w-3.5"></i>
+                </div>
+              </div>
+
+              <!-- Conteúdo do App do Motoboy -->
+              <div class="p-3.5 space-y-3 flex-1 flex flex-col justify-between">
+                <div>
+                  <!-- Cabeçalho do App -->
+                  <div class="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="grid h-7 w-7 place-items-center rounded-xl bg-orange-500 text-white font-black text-[10px] shadow-sm">
+                        🥗
+                      </div>
+                      <div>
+                        <div class="text-[11px] font-black text-slate-900 leading-none">Marmitas Fit</div>
+                        <div class="text-[9px] font-bold text-orange-600 leading-none mt-0.5">App Entregador</div>
+                      </div>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[9px] font-extrabold text-emerald-700">
+                      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Online
+                    </span>
+                  </div>
+
+                  <!-- Perfil do Motoboy no Celular -->
+                  <div class="mt-2.5 flex items-center gap-2.5 rounded-2xl bg-white p-2.5 border border-slate-200/70 shadow-sm">
+                    <div class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-emerald-600 to-teal-700 text-white font-black text-xs shadow">
+                      DS
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <div class="text-xs font-black text-slate-900 leading-tight">Diego Souza</div>
+                      <div class="text-[9px] text-slate-500 truncate">Yamaha Fazer 150 • Preta</div>
+                      <div class="text-[8px] font-bold text-slate-400">Placa RJ·P4X90</div>
+                    </div>
+                  </div>
+
+                  <!-- Métricas Rápidas do Dia -->
+                  <div class="mt-2.5 grid grid-cols-2 gap-2 text-center">
+                    <div class="rounded-xl bg-white p-2 border border-slate-200/70 shadow-sm">
+                      <div class="text-[8px] font-bold uppercase text-slate-400">Ganhos Hoje</div>
+                      <div class="text-sm font-black text-emerald-600 mt-0.5">R$ 64,00</div>
+                      <div class="text-[8px] text-slate-400">8 entregas</div>
+                    </div>
+                    <div class="rounded-xl bg-white p-2 border border-slate-200/70 shadow-sm">
+                      <div class="text-[8px] font-bold uppercase text-slate-400">Status</div>
+                      <div class="text-xs font-extrabold text-slate-800 mt-0.5">Disponível</div>
+                      <div class="text-[8px] text-emerald-600 font-bold">Aguardando saída</div>
+                    </div>
+                  </div>
+
+                  <!-- Pedidos em Espera no Balcão (Visão do Motoboy) -->
+                  <div class="mt-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-black uppercase tracking-wider text-slate-500">
+                        Pedidos em Espera (<span class="text-orange-600 font-black">2</span>)
+                      </span>
+                      <span class="rounded bg-orange-100 px-1.5 py-0.5 text-[8px] font-extrabold text-orange-700">No Balcão</span>
+                    </div>
+
+                    <!-- Lista de Pedidos Disponíveis -->
+                    <div class="mt-2 space-y-2">
+                      <!-- Pedido 1054 -->
+                      <div class="rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm">
+                        <div class="flex items-start justify-between gap-1">
+                          <div>
+                            <div class="text-[11px] font-black text-slate-900">#1054 • Rodrigo Almeida</div>
+                            <div class="text-[9px] text-slate-500">Méier • 3,2 km</div>
+                          </div>
+                          <div class="text-right">
+                            <span class="text-xs font-black text-emerald-600">R$ 9,50</span>
+                            <div class="text-[8px] font-bold text-slate-400">taxa</div>
+                          </div>
+                        </div>
+                        <div class="mt-1.5 text-[9px] text-slate-600 bg-slate-50 rounded-lg p-1.5 line-clamp-1">
+                          1x marmita Portuguesa (G) + Guaraná 2L
+                        </div>
+                        <div class="mt-1.5 flex items-center justify-between rounded-lg bg-emerald-50 border border-emerald-200 px-2 py-1 text-[8px] font-black text-emerald-800">
+                          <span>✓ JÁ PAGO NO IFOOD</span>
+                          <span class="uppercase">NÃO COBRAR</span>
+                        </div>
+                        <button type="button" onclick="setGestorCourier('diego')" class="mt-2 w-full flex items-center justify-center gap-1 rounded-xl bg-orange-500 py-1.5 text-[10px] font-extrabold text-white shadow-sm hover:bg-orange-600 transition">
+                          <i data-lucide="bike" class="h-3 w-3"></i>
+                          <span>Aceitar Corrida</span>
+                        </button>
+                      </div>
+
+                      <!-- Pedido 1053 -->
+                      <div class="rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm">
+                        <div class="flex items-start justify-between gap-1">
+                          <div>
+                            <div class="text-[11px] font-black text-slate-900">#1053 • D. Maria das Graças</div>
+                            <div class="text-[9px] text-slate-500">Piedade • 1,6 km</div>
+                          </div>
+                          <div class="text-right">
+                            <span class="text-xs font-black text-emerald-600">R$ 7,50</span>
+                            <div class="text-[8px] font-bold text-slate-400">taxa</div>
+                          </div>
+                        </div>
+                        <div class="mt-1.5 text-[9px] text-slate-600 bg-slate-50 rounded-lg p-1.5 line-clamp-1">
+                          1x Calabresa Especial (G) + Nutella
+                        </div>
+                        <div class="mt-1.5 flex items-center justify-between rounded-lg bg-amber-50 border border-amber-300 px-2 py-1 text-[8px] font-black text-amber-950">
+                          <span>⚡ COBRAR: R$ 72,00</span>
+                          <span class="uppercase">DINHEIRO (TROCO P/ 100)</span>
+                        </div>
+                        <button type="button" onclick="setGestorCourier('diego')" class="mt-2 w-full flex items-center justify-center gap-1 rounded-xl bg-orange-500 py-1.5 text-[10px] font-extrabold text-white shadow-sm hover:bg-orange-600 transition">
+                          <i data-lucide="bike" class="h-3 w-3"></i>
+                          <span>Aceitar Corrida</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Mini Histórico da Última Entrega -->
+                  <div class="mt-2.5 rounded-xl bg-slate-50 border border-slate-100 p-2 text-[9px] text-slate-500 flex items-center justify-between">
+                    <span>Última: #1036 Bianca Santos</span>
+                    <span class="font-bold text-emerald-600">R$ 10,00 ✓</span>
+                  </div>
+                </div>
+
+                <!-- Barra de Navegação Inferior do Celular -->
+                <div class="pt-2 border-t border-slate-200/80">
+                  <div class="grid grid-cols-4 text-center text-[8px] font-bold">
+                    <div class="flex flex-col items-center gap-0.5 text-orange-600">
+                      <i data-lucide="home" class="h-3.5 w-3.5"></i>
+                      <span>Início</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="bike" class="h-3.5 w-3.5"></i>
+                      <span>Entregas</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="chart-column" class="h-3.5 w-3.5"></i>
+                      <span>Ganhos</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="user-round" class="h-3.5 w-3.5"></i>
+                      <span>Perfil</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão Exterior para o Gestor Interagir -->
+          <button
+            type="button"
+            onclick="setGestorCourier('diego')"
+            class="mt-3.5 inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-extrabold text-slate-700 shadow-sm hover:border-orange-400 hover:text-orange-600 hover:bg-orange-50/50 transition"
+          >
+            <i data-lucide="maximize-2" class="h-3.5 w-3.5 text-orange-500"></i>
+            <span>Abrir Tela do Diego</span>
+          </button>
+        </div>
+
+        <!-- CELULAR 3: Matheus Alves (EM ROTA AO VIVO!) -->
+        <div class="flex flex-col items-center w-full">
+          <!-- Moldura do Smartphone com Destaque de Rota Ativa -->
+          <div id="grid-phone-matheus" class="w-full max-w-[340px] rounded-[44px] border-[7px] border-amber-500 bg-slate-900 p-1.5 shadow-[0_25px_60px_-15px_rgba(245,158,11,0.35)] ring-2 ring-amber-400/50 transition hover:-translate-y-1">
+            <!-- Tela do Celular -->
+            <div class="overflow-hidden rounded-[36px] bg-[#f7f8fb] flex flex-col justify-between min-h-[700px]">
+              
+              <!-- Barra de Status do Celular -->
+              <div class="flex items-center justify-between px-5 pt-3 pb-1 text-[10px] font-bold text-slate-800 select-none">
+                <span>21:45</span>
+                <div class="h-3 w-16 rounded-full bg-slate-900 mx-auto"></div>
+                <div class="flex items-center gap-1 text-slate-700">
+                  <i data-lucide="signal" class="h-3 w-3"></i>
+                  <i data-lucide="wifi" class="h-3 w-3"></i>
+                  <i data-lucide="battery" class="h-3.5 w-3.5"></i>
+                </div>
+              </div>
+
+              <!-- Conteúdo do App do Motoboy (EM ROTA) -->
+              <div class="p-3.5 space-y-3 flex-1 flex flex-col justify-between">
+                <div>
+                  <!-- Cabeçalho do App -->
+                  <div class="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="grid h-7 w-7 place-items-center rounded-xl bg-orange-500 text-white font-black text-[10px] shadow-sm">
+                        🥗
+                      </div>
+                      <div>
+                        <div class="text-[11px] font-black text-slate-900 leading-none">Marmitas Fit</div>
+                        <div class="text-[9px] font-bold text-orange-600 leading-none mt-0.5">App Entregador</div>
+                      </div>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-amber-50 border border-amber-300 px-2 py-0.5 text-[9px] font-extrabold text-amber-700 animate-pulse">
+                      <span class="h-1.5 w-1.5 rounded-full bg-amber-500"></span> Em Rota
+                    </span>
+                  </div>
+
+                  <!-- Perfil do Motoboy no Celular -->
+                  <div class="mt-2.5 flex items-center gap-2.5 rounded-2xl bg-amber-50/70 p-2.5 border border-amber-200 shadow-sm">
+                    <div class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-amber-600 to-orange-700 text-white font-black text-xs shadow">
+                      MA
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <div class="text-xs font-black text-slate-900 leading-tight">Matheus Alves</div>
+                      <div class="text-[9px] text-slate-500 truncate">Honda Biz 125 • Vermelha</div>
+                      <div class="text-[8px] font-bold text-slate-400">Placa RJ·M2Q55</div>
+                    </div>
+                  </div>
+
+                  <!-- Métricas Rápidas do Dia -->
+                  <div class="mt-2.5 grid grid-cols-2 gap-2 text-center">
+                    <div class="rounded-xl bg-white p-2 border border-slate-200/70 shadow-sm">
+                      <div class="text-[8px] font-bold uppercase text-slate-400">Ganhos Hoje</div>
+                      <div class="text-sm font-black text-amber-800 mt-0.5">R$ 72,00</div>
+                      <div class="text-[8px] text-amber-600 font-bold">+ R$ 8,00 desta rota</div>
+                    </div>
+                    <div class="rounded-xl bg-amber-100/60 p-2 border border-amber-200 shadow-sm">
+                      <div class="text-[8px] font-bold uppercase text-amber-800">Status</div>
+                      <div class="text-xs font-black text-amber-900 mt-0.5">Corrida Ativa</div>
+                      <div class="text-[8px] text-amber-700 font-bold">~ 6 min restantes</div>
+                    </div>
+                  </div>
+
+                  <!-- CORRIDA EM ANDAMENTO NA TELA DO MATHEUS -->
+                  <div class="mt-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-black uppercase tracking-wider text-amber-700">
+                        Corrida em Andamento
+                      </span>
+                      <span class="rounded bg-blue-100 px-1.5 py-0.5 text-[8px] font-black text-blue-700">99Food</span>
+                    </div>
+
+                    <!-- Card da Rota Ativa -->
+                    <div class="mt-2 rounded-2xl border-2 border-amber-300 bg-amber-50/40 p-2.5 shadow-sm">
+                      <div class="flex items-start justify-between gap-1">
+                        <div>
+                          <div class="text-[11px] font-black text-slate-900">#1052 • Marcos Vinícius</div>
+                          <div class="text-[9px] font-bold text-slate-600">Estrada da Posse, 1200</div>
+                          <div class="text-[8px] text-slate-400">Santíssimo • 2,4 km</div>
+                        </div>
+                        <div class="text-right">
+                          <span class="text-xs font-black text-emerald-600">R$ 8,00</span>
+                          <div class="text-[8px] font-bold text-slate-400">ganho</div>
+                        </div>
+                      </div>
+
+                      <div class="mt-1.5 text-[9px] text-slate-700 bg-white/90 border border-amber-100 rounded-lg p-1.5 line-clamp-1">
+                        1x Frango Catupiry (G) + Coca 2L
+                      </div>
+
+                      <div class="mt-1 text-[8px] text-amber-800 italic bg-amber-100/50 rounded px-1.5 py-0.5">
+                        "Portão preto ao lado da padaria."
+                      </div>
+
+                      <div class="mt-1.5 flex items-center justify-between rounded-lg bg-emerald-100 border border-emerald-300 px-2 py-1 text-[8px] font-black text-emerald-950">
+                        <span class="flex items-center gap-1"><i data-lucide="shield-check" class="h-3 w-3 text-emerald-700"></i> JÁ PAGO NO 99FOOD</span>
+                        <span class="uppercase">NÃO COBRAR</span>
+                      </div>
+
+                      <!-- Etapa da Entrega -->
+                      <div class="mt-2 flex items-center justify-between text-[8px] font-black text-slate-600 border-t border-amber-100 pt-1.5">
+                        <span class="text-emerald-700 font-bold">1. Retirado ✓</span>
+                        <span class="text-blue-600 font-black animate-pulse">2. A caminho ●</span>
+                        <span class="text-slate-400">3. Entregar</span>
+                      </div>
+
+                      <!-- Botões de Ação na Rota -->
+                      <div class="mt-2 grid grid-cols-2 gap-1.5">
+                        <a href="tel:21991204491" class="flex items-center justify-center gap-1 rounded-lg border border-slate-200 bg-white py-1 text-[9px] font-extrabold text-slate-700">
+                          <i data-lucide="phone" class="h-2.5 w-2.5"></i> Ligar
+                        </a>
+                        <a href="https://wa.me/5521991204491" target="_blank" class="flex items-center justify-center gap-1 rounded-lg bg-emerald-500 py-1 text-[9px] font-extrabold text-white">
+                          <i data-lucide="message-circle" class="h-2.5 w-2.5"></i> WhatsApp
+                        </a>
+                      </div>
+
+                      <button type="button" onclick="setGestorCourier('matheus')" class="mt-1.5 w-full flex items-center justify-center gap-1 rounded-xl bg-amber-500 py-1.5 text-[10px] font-black text-white shadow-sm hover:bg-amber-600 transition">
+                        <i data-lucide="check-circle" class="h-3 w-3"></i>
+                        <span>Cheguei no Endereço / Finalizar</span>
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- Zero Pedidos em Espera (já está ocupado) -->
+                  <div class="mt-2 rounded-xl bg-slate-50 border border-slate-100 p-2 text-[9px] text-slate-400 text-center">
+                    0 pedidos em espera (em rota no momento)
+                  </div>
+                </div>
+
+                <!-- Barra de Navegação Inferior do Celular -->
+                <div class="pt-2 border-t border-slate-200/80">
+                  <div class="grid grid-cols-4 text-center text-[8px] font-bold">
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="home" class="h-3.5 w-3.5"></i>
+                      <span>Início</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-amber-600">
+                      <i data-lucide="bike" class="h-3.5 w-3.5"></i>
+                      <span>Entregas</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="chart-column" class="h-3.5 w-3.5"></i>
+                      <span>Ganhos</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="user-round" class="h-3.5 w-3.5"></i>
+                      <span>Perfil</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão Exterior para o Gestor Interagir -->
+          <button
+            type="button"
+            onclick="setGestorCourier('matheus')"
+            class="mt-3.5 inline-flex items-center gap-1.5 rounded-xl border border-amber-400 bg-amber-50 px-4 py-2 text-xs font-extrabold text-amber-800 shadow-sm hover:bg-amber-100 transition"
+          >
+            <i data-lucide="maximize-2" class="h-3.5 w-3.5 text-amber-600"></i>
+            <span>Abrir Tela do Matheus (Em Rota)</span>
+          </button>
+        </div>
+
+        <!-- CELULAR 4: Bruno Costa -->
+        <div class="flex flex-col items-center w-full">
+          <!-- Moldura do Smartphone -->
+          <div id="grid-phone-bruno" class="w-full max-w-[340px] rounded-[44px] border-[7px] border-slate-900 bg-slate-900 p-1.5 shadow-[0_25px_60px_-15px_rgba(15,23,42,0.45)] ring-1 ring-slate-800 transition hover:-translate-y-1 hover:shadow-orange-500/20">
+            <!-- Tela do Celular -->
+            <div class="overflow-hidden rounded-[36px] bg-[#f7f8fb] flex flex-col justify-between min-h-[700px]">
+              
+              <!-- Barra de Status do Celular -->
+              <div class="flex items-center justify-between px-5 pt-3 pb-1 text-[10px] font-bold text-slate-800 select-none">
+                <span>21:45</span>
+                <div class="h-3 w-16 rounded-full bg-slate-900 mx-auto"></div>
+                <div class="flex items-center gap-1 text-slate-700">
+                  <i data-lucide="signal" class="h-3 w-3"></i>
+                  <i data-lucide="wifi" class="h-3 w-3"></i>
+                  <i data-lucide="battery" class="h-3.5 w-3.5"></i>
+                </div>
+              </div>
+
+              <!-- Conteúdo do App do Motoboy -->
+              <div class="p-3.5 space-y-3 flex-1 flex flex-col justify-between">
+                <div>
+                  <!-- Cabeçalho do App -->
+                  <div class="flex items-center justify-between border-b border-slate-200/80 pb-2.5">
+                    <div class="flex items-center gap-2">
+                      <div class="grid h-7 w-7 place-items-center rounded-xl bg-orange-500 text-white font-black text-[10px] shadow-sm">
+                        🥗
+                      </div>
+                      <div>
+                        <div class="text-[11px] font-black text-slate-900 leading-none">Marmitas Fit</div>
+                        <div class="text-[9px] font-bold text-orange-600 leading-none mt-0.5">App Entregador</div>
+                      </div>
+                    </div>
+                    <span class="inline-flex items-center gap-1 rounded-full bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[9px] font-extrabold text-emerald-700">
+                      <span class="h-1.5 w-1.5 rounded-full bg-emerald-500"></span> Online
+                    </span>
+                  </div>
+
+                  <!-- Perfil do Motoboy no Celular -->
+                  <div class="mt-2.5 flex items-center gap-2.5 rounded-2xl bg-white p-2.5 border border-slate-200/70 shadow-sm">
+                    <div class="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-gradient-to-br from-purple-600 to-violet-700 text-white font-black text-xs shadow">
+                      BC
+                    </div>
+                    <div class="min-w-0 flex-1">
+                      <div class="text-xs font-black text-slate-900 leading-tight">Bruno Costa</div>
+                      <div class="text-[9px] text-slate-500 truncate">Yamaha Factor 125 • Azul</div>
+                      <div class="text-[8px] font-bold text-slate-400">Placa RJ·T9J34</div>
+                    </div>
+                  </div>
+
+                  <!-- Métricas Rápidas do Dia -->
+                  <div class="mt-2.5 grid grid-cols-2 gap-2 text-center">
+                    <div class="rounded-xl bg-white p-2 border border-slate-200/70 shadow-sm">
+                      <div class="text-[8px] font-bold uppercase text-slate-400">Ganhos Hoje</div>
+                      <div class="text-sm font-black text-emerald-600 mt-0.5">R$ 48,00</div>
+                      <div class="text-[8px] text-slate-400">6 entregas</div>
+                    </div>
+                    <div class="rounded-xl bg-white p-2 border border-slate-200/70 shadow-sm">
+                      <div class="text-[8px] font-bold uppercase text-slate-400">Status</div>
+                      <div class="text-xs font-extrabold text-slate-800 mt-0.5">Disponível</div>
+                      <div class="text-[8px] text-emerald-600 font-bold">Aguardando saída</div>
+                    </div>
+                  </div>
+
+                  <!-- Pedidos em Espera no Balcão (Visão do Motoboy) -->
+                  <div class="mt-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-[10px] font-black uppercase tracking-wider text-slate-500">
+                        Pedidos em Espera (<span class="text-orange-600 font-black">2</span>)
+                      </span>
+                      <span class="rounded bg-orange-100 px-1.5 py-0.5 text-[8px] font-extrabold text-orange-700">No Balcão</span>
+                    </div>
+
+                    <!-- Lista de Pedidos Disponíveis -->
+                    <div class="mt-2 space-y-2">
+                      <!-- Pedido 1054 -->
+                      <div class="rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm">
+                        <div class="flex items-start justify-between gap-1">
+                          <div>
+                            <div class="text-[11px] font-black text-slate-900">#1054 • Rodrigo Almeida</div>
+                            <div class="text-[9px] text-slate-500">Méier • 3,2 km</div>
+                          </div>
+                          <div class="text-right">
+                            <span class="text-xs font-black text-emerald-600">R$ 9,50</span>
+                            <div class="text-[8px] font-bold text-slate-400">taxa</div>
+                          </div>
+                        </div>
+                        <div class="mt-1.5 text-[9px] text-slate-600 bg-slate-50 rounded-lg p-1.5 line-clamp-1">
+                          1x marmita Portuguesa (G) + Guaraná 2L
+                        </div>
+                        <div class="mt-1.5 flex items-center justify-between rounded-lg bg-emerald-50 border border-emerald-200 px-2 py-1 text-[8px] font-black text-emerald-800">
+                          <span>✓ JÁ PAGO NO IFOOD</span>
+                          <span class="uppercase">NÃO COBRAR</span>
+                        </div>
+                        <button type="button" onclick="setGestorCourier('bruno')" class="mt-2 w-full flex items-center justify-center gap-1 rounded-xl bg-orange-500 py-1.5 text-[10px] font-extrabold text-white shadow-sm hover:bg-orange-600 transition">
+                          <i data-lucide="bike" class="h-3 w-3"></i>
+                          <span>Aceitar Corrida</span>
+                        </button>
+                      </div>
+
+                      <!-- Pedido 1053 -->
+                      <div class="rounded-2xl border border-slate-200 bg-white p-2.5 shadow-sm">
+                        <div class="flex items-start justify-between gap-1">
+                          <div>
+                            <div class="text-[11px] font-black text-slate-900">#1053 • D. Maria das Graças</div>
+                            <div class="text-[9px] text-slate-500">Piedade • 1,6 km</div>
+                          </div>
+                          <div class="text-right">
+                            <span class="text-xs font-black text-emerald-600">R$ 7,50</span>
+                            <div class="text-[8px] font-bold text-slate-400">taxa</div>
+                          </div>
+                        </div>
+                        <div class="mt-1.5 text-[9px] text-slate-600 bg-slate-50 rounded-lg p-1.5 line-clamp-1">
+                          1x Calabresa Especial (G) + Nutella
+                        </div>
+                        <div class="mt-1.5 flex items-center justify-between rounded-lg bg-amber-50 border border-amber-300 px-2 py-1 text-[8px] font-black text-amber-950">
+                          <span>⚡ COBRAR: R$ 72,00</span>
+                          <span class="uppercase">DINHEIRO (TROCO P/ 100)</span>
+                        </div>
+                        <button type="button" onclick="setGestorCourier('bruno')" class="mt-2 w-full flex items-center justify-center gap-1 rounded-xl bg-orange-500 py-1.5 text-[10px] font-extrabold text-white shadow-sm hover:bg-orange-600 transition">
+                          <i data-lucide="bike" class="h-3 w-3"></i>
+                          <span>Aceitar Corrida</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Mini Histórico da Última Entrega -->
+                  <div class="mt-2.5 rounded-xl bg-slate-50 border border-slate-100 p-2 text-[9px] text-slate-500 flex items-center justify-between">
+                    <span>Última: #1029 Larissa Melo</span>
+                    <span class="font-bold text-emerald-600">R$ 8,50 ✓</span>
+                  </div>
+                </div>
+
+                <!-- Barra de Navegação Inferior do Celular -->
+                <div class="pt-2 border-t border-slate-200/80">
+                  <div class="grid grid-cols-4 text-center text-[8px] font-bold">
+                    <div class="flex flex-col items-center gap-0.5 text-orange-600">
+                      <i data-lucide="home" class="h-3.5 w-3.5"></i>
+                      <span>Início</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="bike" class="h-3.5 w-3.5"></i>
+                      <span>Entregas</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="chart-column" class="h-3.5 w-3.5"></i>
+                      <span>Ganhos</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-0.5 text-slate-400">
+                      <i data-lucide="user-round" class="h-3.5 w-3.5"></i>
+                      <span>Perfil</span>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Botão Exterior para o Gestor Interagir -->
+          <button
+            type="button"
+            onclick="setGestorCourier('bruno')"
+            class="mt-3.5 inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2 text-xs font-extrabold text-slate-700 shadow-sm hover:border-orange-400 hover:text-orange-600 hover:bg-orange-50/50 transition"
+          >
+            <i data-lucide="maximize-2" class="h-3.5 w-3.5 text-orange-500"></i>
+            <span>Abrir Tela do Bruno</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODO 2: VISÃO INDIVIDUAL DO MOTOBOY (App Smartphone)    -->
+  <!-- ======================================================== -->
+  <main id="container-single-view" class="flex-1 py-0 sm:py-6">
+    <div class="mx-auto min-h-screen w-full max-w-full sm:max-w-[430px] overflow-hidden bg-[#f7f8fb] shadow-none sm:shadow-[0_24px_80px_-30px_rgba(15,23,42,.32)] rounded-none sm:rounded-[30px] flex flex-col justify-between">
+      <div class="px-4 pb-4 pt-4">
+        <!-- Topo do App Mobile -->
+        <div class="flex items-center justify-between">
+          <a href="../" class="flex items-center gap-2">
+            <div class="grid h-9 w-9 place-items-center rounded-xl bg-white shadow-sm border border-slate-200/80 p-0.5">
+              <img src="https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png" alt="Marmitas Fit" class="h-8 w-8 object-contain" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+            </div>
+            <div>
+              <span class="text-xs font-extrabold text-slate-900 leading-none block">Marmitas Fit</span>
+              <span class="text-[9px] font-bold text-orange-600 leading-none">Entregador</span>
+            </div>
+          </a>
+
+          <!-- Botão Trocar Motoboy (Login Rápido em 1 Clique) -->
+          <div class="flex items-center gap-2">
+            <button
+              id="btn-switch-courier"
+              type="button"
+              onclick="openLoginModal()"
+              class="inline-flex items-center gap-1 rounded-xl border border-slate-200 bg-white px-2.5 py-1.5 text-[10px] font-extrabold text-slate-700 shadow-sm hover:border-orange-300 hover:text-orange-600 transition"
+              title="Trocar entregador ou fazer login"
+            >
+              <i data-lucide="users" class="h-3 w-3 text-orange-500"></i>
+              <span id="label-active-courier-btn">Trocar</span>
+            </button>
+
+            <!-- Notificações -->
+            <div class="relative">
+              <button id="btn-notif" type="button" class="relative rounded-xl p-2 text-slate-500 hover:bg-slate-100">
+                <i data-lucide="bell" class="h-5 w-5"></i>
+                <span id="badge-notif-count" class="absolute right-0 top-0 grid h-4 min-w-4 place-items-center rounded-full bg-red-500 px-1 text-[9px] font-extrabold text-white">2</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card do Motoboy & Switch Online -->
+        <div class="mt-5 flex items-center gap-3 rounded-2xl bg-white p-3.5 border border-slate-200/70 shadow-sm">
+          <button id="btn-open-profile-avatar" type="button" class="relative grid h-12 w-12 shrink-0 place-items-center rounded-full text-white shadow font-extrabold text-sm" style="background: linear-gradient(135deg, #1e293b, #475569)">
+            <span id="courier-avatar-initials">RL</span>
+            <span id="dot-online-status" class="absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-emerald-500"></span>
+          </button>
+          <div class="min-w-0 flex-1">
+            <div id="courier-name" class="text-sm font-extrabold text-slate-900 truncate">Rafael Lima</div>
+            <div id="courier-vehicle" class="text-[10px] text-slate-500 truncate">Honda CG 160 Fan • Prata</div>
+            <button id="btn-open-profile-link" type="button" class="mt-0.5 text-[10px] font-bold text-orange-600 hover:underline">
+              Ver perfil completo →
+            </button>
+          </div>
+          <button id="btn-toggle-online" type="button" class="shrink-0 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-extrabold text-emerald-700 transition">
+            <span id="btn-dot-status" class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            <span id="btn-label-status">Online</span>
+          </button>
+        </div>
+
+        <!-- Título -->
+        <div class="mt-5">
+          <h1 class="text-2xl font-extrabold tracking-tight text-slate-950">Minhas Entregas</h1>
+          <p class="mt-0.5 text-xs text-slate-500">Aceite pedidos de marmita quentinha e acompanhe seus ganhos.</p>
+        </div>
+
+        <!-- 3 Métricas Rápidas -->
+        <div class="mt-4 grid grid-cols-3 gap-2.5">
+          <div class="rounded-2xl border border-slate-200/70 bg-white p-3 shadow-sm">
+            <div class="grid h-8 w-8 place-items-center rounded-xl bg-orange-50 text-orange-600">
+              <i data-lucide="wallet-cards" class="h-4 w-4"></i>
+            </div>
+            <div class="mt-2 text-[10px] font-semibold text-slate-500">Disponíveis</div>
+            <div id="count-available" class="mt-0.5 text-lg font-extrabold text-slate-900">2</div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200/70 bg-white p-3 shadow-sm">
+            <div class="grid h-8 w-8 place-items-center rounded-xl bg-blue-50 text-blue-600">
+              <i data-lucide="bike" class="h-4 w-4"></i>
+            </div>
+            <div class="mt-2 text-[10px] font-semibold text-slate-500">Em rota</div>
+            <div id="count-active" class="mt-0.5 text-lg font-extrabold text-slate-900">0</div>
+          </div>
+
+          <div class="rounded-2xl border border-slate-200/70 bg-white p-3 shadow-sm">
+            <div class="grid h-8 w-8 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+              <i data-lucide="circle-check" class="h-4 w-4"></i>
+            </div>
+            <div class="mt-2 text-[10px] font-semibold text-slate-500">Concluídas</div>
+            <div id="count-history" class="mt-0.5 text-lg font-extrabold text-slate-900">12</div>
+          </div>
+        </div>
+
+        <!-- Resumo Financeiro & Desempenho do Motoboy (Sem Mapa) -->
+        <div class="mt-3 grid grid-cols-2 gap-2.5">
+          <button id="btn-show-earnings" type="button" class="rounded-2xl border border-slate-200/70 bg-white p-3.5 text-left shadow-sm hover:border-slate-300 transition">
+            <div class="grid h-9 w-9 place-items-center rounded-xl bg-violet-50 text-violet-600">
+              <i data-lucide="chart-column" class="h-4 w-4"></i>
+            </div>
+            <div class="mt-2.5 text-[10px] font-semibold text-slate-500">Ganhos de hoje</div>
+            <div id="total-earnings" class="mt-0.5 text-lg font-extrabold text-slate-900">R$ 96,00</div>
+            <div class="mt-0.5 text-[9px] font-extrabold text-emerald-600">↑ 14% vs. ontem</div>
+          </button>
+
+          <div class="rounded-2xl border border-slate-200/70 bg-white p-3.5 text-left shadow-sm">
+            <div class="grid h-9 w-9 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+              <i data-lucide="zap" class="h-4 w-4"></i>
+            </div>
+            <div class="mt-2.5 text-[10px] font-semibold text-slate-500">Taxa Média / Corrida</div>
+            <div class="mt-0.5 text-lg font-extrabold text-slate-900">R$ 8,00</div>
+            <div class="mt-0.5 text-[9px] font-bold text-slate-400">~ 2,4 km por entrega</div>
+          </div>
+        </div>
+
+        <!-- Banner de Entrega Atual se houver -->
+        <div id="current-delivery-banner" class="mt-3"></div>
+
+        <!-- Abas [Disponíveis, Em andamento, Histórico] -->
+        <div class="mt-5 grid grid-cols-3 rounded-2xl bg-slate-200/60 p-1">
+          <button id="tab-btn-available" type="button" class="rounded-xl px-2 py-2.5 text-[10px] font-extrabold bg-white text-orange-600 shadow-sm transition">
+            Disponíveis (<span id="tab-count-avail">2</span>)
+          </button>
+          <button id="tab-btn-active" type="button" class="rounded-xl px-2 py-2.5 text-[10px] font-extrabold text-slate-500 transition">
+            Em rota (<span id="tab-count-act">0</span>)
+          </button>
+          <button id="tab-btn-history" type="button" class="rounded-xl px-2 py-2.5 text-[10px] font-extrabold text-slate-500 transition">
+            Histórico (<span id="tab-count-hist">12</span>)
+          </button>
+        </div>
+
+        <!-- Conteúdo da Aba: Disponíveis -->
+        <div id="tab-content-available" class="mt-3 space-y-3"></div>
+
+        <!-- Conteúdo da Aba: Em andamento -->
+        <div id="tab-content-active" class="hidden mt-3 space-y-3"></div>
+
+        <!-- Conteúdo da Aba: Histórico -->
+        <div id="tab-content-history" class="hidden mt-3 space-y-3"></div>
+      </div>
+
+      <!-- Navegação Inferior Fixa do Smartphone -->
+      <nav class="sticky bottom-0 z-40 border-t border-slate-200 bg-white/95 px-2 py-2 backdrop-blur-xl">
+        <div class="grid grid-cols-4">
+          <button id="nav-home" type="button" class="flex flex-col items-center gap-1 rounded-xl py-2 text-[9px] font-extrabold text-slate-500 hover:text-slate-900">
+            <i data-lucide="home" class="h-5 w-5"></i> Início
+          </button>
+          <button id="nav-deliveries" type="button" class="flex flex-col items-center gap-1 rounded-xl py-2 text-[9px] font-extrabold bg-orange-50 text-orange-600">
+            <i data-lucide="bike" class="h-5 w-5"></i> Entregas
+          </button>
+          <button id="nav-earnings" type="button" class="flex flex-col items-center gap-1 rounded-xl py-2 text-[9px] font-extrabold text-slate-500 hover:text-slate-900">
+            <i data-lucide="chart-column" class="h-5 w-5"></i> Ganhos
+          </button>
+          <button id="nav-profile" type="button" class="flex flex-col items-center gap-1 rounded-xl py-2 text-[9px] font-extrabold text-slate-500 hover:text-slate-900">
+            <i data-lucide="user-round" class="h-5 w-5"></i> Perfil
+          </button>
+        </div>
+      </nav>
+    </div>
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 1: LOGIN RÁPIDO DO MOTOBOY (1 CLIQUE NO NOME)      -->
+  <!-- ======================================================== -->
+  <div id="modal-courier-login" class="hidden fixed inset-0 z-[100] flex items-center justify-center bg-slate-950/60 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-[480px] overflow-hidden rounded-[30px] bg-white p-6 shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+      <div class="flex items-start justify-between">
+        <div>
+          <span class="rounded-full bg-orange-100 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-orange-700">Acesso Direto</span>
+          <h2 class="mt-2 text-xl font-extrabold text-slate-950">Quem está entregando hoje?</h2>
+          <p class="mt-1 text-xs text-slate-500">Toque no seu nome para entrar direto no seu app sem senha:</p>
+        </div>
+        <button type="button" onclick="closeLoginModal()" class="rounded-xl border border-slate-200 p-2 text-slate-400 hover:bg-slate-50 hover:text-slate-700">
+          <i data-lucide="x" class="h-4 w-4"></i>
+        </button>
+      </div>
+
+      <!-- 4 Cards de Login com 1 Clique -->
+      <div class="mt-5 space-y-2.5">
+        <!-- Rafael Lima -->
+        <button
+          type="button"
+          onclick="loginAsCourier('rafael')"
+          class="flex w-full items-center gap-3.5 rounded-2xl border border-slate-200 bg-white p-3.5 text-left transition hover:border-orange-500 hover:bg-orange-50/40 hover:shadow-md group"
+        >
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-700 text-white font-extrabold text-sm shadow">
+            RL
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-extrabold text-slate-900 group-hover:text-orange-600 transition">Rafael Lima</span>
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            </div>
+            <div class="text-[11px] text-slate-500">Honda CG 160 Fan • Prata (RJ·K8L21)</div>
+            <div class="text-[10px] font-semibold text-slate-400">12 entregas hoje • R$ 96,00</div>
+          </div>
+          <span class="rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-extrabold text-slate-700 group-hover:bg-orange-500 group-hover:text-white transition">
+            Entrar →
+          </span>
+        </button>
+
+        <!-- Diego Souza -->
+        <button
+          type="button"
+          onclick="loginAsCourier('diego')"
+          class="flex w-full items-center gap-3.5 rounded-2xl border border-slate-200 bg-white p-3.5 text-left transition hover:border-orange-500 hover:bg-orange-50/40 hover:shadow-md group"
+        >
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-700 text-white font-extrabold text-sm shadow">
+            DS
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-extrabold text-slate-900 group-hover:text-orange-600 transition">Diego Souza</span>
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            </div>
+            <div class="text-[11px] text-slate-500">Yamaha Fazer 150 • Preta (RJ·P4X90)</div>
+            <div class="text-[10px] font-semibold text-slate-400">8 entregas hoje • R$ 64,00</div>
+          </div>
+          <span class="rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-extrabold text-slate-700 group-hover:bg-orange-500 group-hover:text-white transition">
+            Entrar →
+          </span>
+        </button>
+
+        <!-- Matheus Alves -->
+        <button
+          type="button"
+          onclick="loginAsCourier('matheus')"
+          class="flex w-full items-center gap-3.5 rounded-2xl border border-amber-300 bg-amber-50/30 p-3.5 text-left transition hover:border-amber-500 hover:bg-amber-50 hover:shadow-md group"
+        >
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-amber-600 to-orange-700 text-white font-extrabold text-sm shadow">
+            MA
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-extrabold text-slate-900 group-hover:text-amber-700 transition">Matheus Alves</span>
+              <span class="rounded bg-amber-100 px-1 text-[9px] font-extrabold text-amber-800">Em rota</span>
+            </div>
+            <div class="text-[11px] text-slate-500">Honda Biz 125 • Vermelha (RJ·M2Q55)</div>
+            <div class="text-[10px] font-semibold text-amber-700">9 entregas hoje • Pedido #1052 ativo</div>
+          </div>
+          <span class="rounded-xl bg-amber-500 px-3 py-1.5 text-xs font-extrabold text-white group-hover:bg-amber-600 transition shadow">
+            Entrar →
+          </span>
+        </button>
+
+        <!-- Bruno Costa -->
+        <button
+          type="button"
+          onclick="loginAsCourier('bruno')"
+          class="flex w-full items-center gap-3.5 rounded-2xl border border-slate-200 bg-white p-3.5 text-left transition hover:border-orange-500 hover:bg-orange-50/40 hover:shadow-md group"
+        >
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-purple-600 to-violet-700 text-white font-extrabold text-sm shadow">
+            BC
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="flex items-center gap-2">
+              <span class="text-sm font-extrabold text-slate-900 group-hover:text-orange-600 transition">Bruno Costa</span>
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+            </div>
+            <div class="text-[11px] text-slate-500">Yamaha Factor 125 • Azul (RJ·T9J34)</div>
+            <div class="text-[10px] font-semibold text-slate-400">6 entregas hoje • R$ 48,00</div>
+          </div>
+          <span class="rounded-xl bg-slate-100 px-3 py-1.5 text-xs font-extrabold text-slate-700 group-hover:bg-orange-500 group-hover:text-white transition">
+            Entrar →
+          </span>
+        </button>
+      </div>
+
+      <!-- Link para o Modo Gestão -->
+      <div class="mt-5 border-t border-slate-100 pt-4 text-center">
+        <a href="../motoboy/?view=grid&gestor=true" class="text-xs font-bold text-orange-600 hover:underline">
+          Abrir modo gestor (4 Telas lado a lado) →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 2: DETALHES DA ENTREGA                             -->
+  <!-- ======================================================== -->
+  <div id="modal-delivery-details" class="hidden fixed inset-0 z-[80] flex items-end justify-center bg-slate-950/45 p-0 backdrop-blur-sm sm:items-center sm:p-5">
+    <div class="max-h-[92vh] w-full max-w-[430px] overflow-y-auto rounded-t-[30px] bg-white p-5 shadow-2xl sm:rounded-[30px]">
+      <div class="mx-auto mb-4 h-1 w-12 rounded-full bg-slate-200 sm:hidden"></div>
+      <div class="flex items-start gap-3">
+        <div class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-orange-50 text-orange-600">
+          <i data-lucide="bike" class="h-5 w-5"></i>
+        </div>
+        <div class="min-w-0 flex-1">
+          <div id="det-id" class="text-[10px] font-extrabold uppercase tracking-[0.12em] text-orange-500">Entrega #1052</div>
+          <div id="det-customer" class="mt-1 text-lg font-extrabold text-slate-900">Marcos Vinícius</div>
+          <div id="det-sub" class="mt-0.5 text-[10px] text-slate-400">Santíssimo • 2,4 km</div>
+        </div>
+        <button id="btn-close-details" type="button" class="rounded-xl border border-slate-200 p-2 text-slate-500 hover:bg-slate-50">
+          <i data-lucide="x" class="h-4 w-4"></i>
+        </button>
+      </div>
+
+      <!-- Endereço & Contatos -->
+      <div class="mt-5 rounded-2xl bg-slate-50 p-4 border border-slate-100">
+        <div class="flex items-start gap-3">
+          <i data-lucide="map-pin" class="mt-0.5 h-4 w-4 shrink-0 text-orange-500"></i>
+          <div>
+            <div id="det-address" class="text-xs font-extrabold text-slate-900">Estrada da Posse, 1200</div>
+            <div id="det-neighborhood" class="mt-0.5 text-[10px] text-slate-400">Santíssimo</div>
+          </div>
+        </div>
+        <div class="mt-4 grid grid-cols-2 gap-2">
+          <a id="det-link-tel" href="#" class="inline-flex items-center justify-center gap-2 rounded-xl bg-white px-3 py-2.5 text-[10px] font-extrabold text-slate-700 shadow-sm border border-slate-200/80">
+            <i data-lucide="phone" class="h-3.5 w-3.5"></i> Ligar
+          </a>
+          <a id="det-link-wa" href="#" target="_blank" rel="noreferrer" class="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-500 px-3 py-2.5 text-[10px] font-extrabold text-white shadow-sm hover:bg-emerald-600 transition">
+            <i data-lucide="message-circle" class="h-3.5 w-3.5"></i> WhatsApp
+          </a>
+        </div>
+      </div>
+
+      <!-- Itens do Pedido -->
+      <div class="mt-4 rounded-2xl border border-slate-100 p-4">
+        <div class="flex items-center gap-2">
+          <i data-lucide="package-check" class="h-4 w-4 text-orange-500"></i>
+          <div class="text-xs font-extrabold text-slate-900">Itens do pedido</div>
+        </div>
+        <div id="det-items" class="mt-3 space-y-2"></div>
+        <div id="det-notes" class="mt-3 rounded-xl bg-amber-50 px-3 py-2.5 text-[10px] font-semibold leading-5 text-amber-800"></div>
+      <!-- Banner de Cobrança / Já Pago em Destaque no Celular -->
+      <div id="det-payment-banner" class="mt-4"></div>
+
+      <!-- 3 Caixinhas de Resumo -->
+      <div class="mt-4 grid grid-cols-3 gap-2">
+        <div class="rounded-xl bg-slate-50 p-3 text-center border border-slate-100">
+          <i data-lucide="wallet-cards" class="mx-auto h-4 w-4 text-slate-400"></i>
+          <div class="mt-2 text-[9px] text-slate-400">Pagamento</div>
+          <div id="det-payment" class="mt-1 text-[10px] font-extrabold text-slate-900">99Food</div>
+        </div>
+        <div class="rounded-xl bg-slate-50 p-3 text-center border border-slate-100">
+          <i data-lucide="clock-3" class="mx-auto h-4 w-4 text-slate-400"></i>
+          <div class="mt-2 text-[9px] text-slate-400">Estimativa</div>
+          <div id="det-minutes" class="mt-1 text-[10px] font-extrabold text-slate-900">~ 6 min</div>
+        </div>
+        <div class="rounded-xl bg-slate-50 p-3 text-center border border-slate-100">
+          <i data-lucide="circle-check" class="mx-auto h-4 w-4 text-slate-400"></i>
+          <div class="mt-2 text-[9px] text-slate-400">Ganho</div>
+          <div id="det-fee" class="mt-1 text-[10px] font-extrabold text-emerald-600">R$ 8,00</div>
+        </div>
+      </div>
+
+      <!-- Ações Dinâmicas -->
+      <div id="det-actions" class="mt-5"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL 3: PERFIL DO MOTOBOY                               -->
+  <!-- ======================================================== -->
+  <div id="modal-profile" class="hidden fixed inset-0 z-[85] flex items-end justify-center bg-slate-950/45 p-0 backdrop-blur-sm sm:items-center sm:p-5">
+    <div class="w-full max-w-[430px] rounded-t-[30px] bg-white p-5 shadow-2xl sm:rounded-[30px]">
+      <div class="mx-auto mb-4 h-1 w-12 rounded-full bg-slate-200 sm:hidden"></div>
+      <div class="flex items-start justify-between">
+        <div>
+          <div class="text-[10px] font-extrabold uppercase tracking-[0.12em] text-orange-500">Perfil do Entregador</div>
+          <div id="prof-name" class="mt-1 text-lg font-extrabold text-slate-900">Rafael Lima</div>
+        </div>
+        <button id="btn-close-profile" type="button" class="rounded-xl border border-slate-200 p-2 text-slate-500 hover:bg-slate-50">
+          <i data-lucide="x" class="h-4 w-4"></i>
+        </button>
+      </div>
+
+      <div class="mt-5 space-y-3">
+        <div class="flex items-center justify-between rounded-xl bg-slate-50 p-3 text-xs">
+          <span class="text-slate-500">Veículo</span>
+          <span id="prof-vehicle" class="font-extrabold text-slate-900">Honda CG 160 Fan • Prata</span>
+        </div>
+        <div class="flex items-center justify-between rounded-xl bg-slate-50 p-3 text-xs">
+          <span class="text-slate-500">Telefone</span>
+          <span id="prof-phone" class="font-extrabold text-slate-900">(21) 98711-2233</span>
+        </div>
+        <div class="flex items-center justify-between rounded-xl bg-slate-50 p-3 text-xs">
+          <span class="text-slate-500">Avaliação média</span>
+          <span id="prof-rating" class="font-extrabold text-amber-600">4.9 ★★★★★</span>
+        </div>
+        <div class="flex items-center justify-between rounded-xl bg-slate-50 p-3 text-xs">
+          <span class="text-slate-500">Entregas no mês</span>
+          <span id="prof-month" class="font-extrabold text-slate-900">218 entregas</span>
+        </div>
+      </div>
+
+      <button
+        id="btn-toggle-online-profile"
+        type="button"
+        class="mt-5 w-full rounded-xl px-4 py-3 text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition"
+      >
+        Ficar offline
+      </button>
+
+      <button
+        type="button"
+        onclick="openLoginModal(); document.getElementById('modal-profile').classList.add('hidden');"
+        class="mt-2 w-full rounded-xl border border-slate-200 bg-white px-4 py-2.5 text-xs font-extrabold text-slate-700 hover:bg-slate-50 transition"
+      >
+        Trocar de motoboy / Sair
+      </button>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- JAVASCRIPT DO SISTEMA DE MOTOBOYS & GESTÃO               -->
+  <!-- ======================================================== -->
+  <script>
+    // 4 MOTOBOYS OFICIAIS DA Marmitas Fit
+    const COURIER_PROFILES = {
+      rafael: {
+        id: "rafael",
+        name: "Rafael Lima",
+        vehicle: "Honda CG 160 Fan • Prata",
+        plate: "RJ·K8L21",
+        phone: "(21) 98711-2233",
+        rating: "4.9 ★",
+        monthDeliveries: 218,
+        todayDeliveries: 12,
+        todayEarnings: "R$ 96,00",
+        online: true,
+        initials: "RL",
+        avatarGrad: "from-blue-600 to-indigo-700",
+        active: [],
+        history: [
+          { id: 1045, store: "Marmitas Fit", customer: "Ana Paula", phone: "(21) 97420-1188", address: "Rua Silva Cardoso, 91", neighborhood: "Cachambi", distance: "2,6 km", fee: "R$ 8,00", payment: "Pix", minutes: 8, image: "/hero-marmita.webp", items: ["1x marmita Portuguesa (Grande)", "1x Coca-Cola 2L"], deliveredAt: "21:14" },
+          { id: 1038, store: "Marmitas Fit", customer: "Rafael Gomes", phone: "(21) 98001-2291", address: "Rua Limites, 44", neighborhood: "Madureira", distance: "3,1 km", fee: "R$ 9,50", payment: "Pix", minutes: 14, image: "/combo-calabresa-guarana.webp", items: ["1x marmita Dois QueiEFs (Grande)"], deliveredAt: "20:30" }
+        ]
+      },
+      diego: {
+        id: "diego",
+        name: "Diego Souza",
+        vehicle: "Yamaha Fazer 150 • Preta",
+        plate: "RJ·P4X90",
+        phone: "(21) 97322-8811",
+        rating: "4.8 ★",
+        monthDeliveries: 184,
+        todayDeliveries: 8,
+        todayEarnings: "R$ 64,00",
+        online: true,
+        initials: "DS",
+        avatarGrad: "from-emerald-600 to-teal-700",
+        active: [],
+        history: [
+          { id: 1036, store: "Marmitas Fit", customer: "Bianca Santos", phone: "(21) 99731-3302", address: "Av. Brasil, 4120", neighborhood: "Tijuca", distance: "4,0 km", fee: "R$ 10,00", payment: "Cartão", minutes: 18, image: "/hero-marmita.webp", items: ["1x marmita Calabresa (Grande)", "1x Guaravita"], deliveredAt: "20:42" },
+          { id: 1030, store: "Marmitas Fit", customer: "Felipe Siqueira", phone: "(21) 98112-9903", address: "Estrada do Mendanha, 410", neighborhood: "Méier", distance: "2,5 km", fee: "R$ 8,00", payment: "Pix", minutes: 12, image: "/fatia-calabresa-catupiry.webp", items: ["1x Frango c/ Catupiry"], deliveredAt: "19:55" }
+        ]
+      },
+      matheus: {
+        id: "matheus",
+        name: "Matheus Alves",
+        vehicle: "Honda Biz 125 • Vermelha",
+        plate: "RJ·M2Q55",
+        phone: "(21) 99144-6655",
+        rating: "5.0 ★",
+        monthDeliveries: 260,
+        todayDeliveries: 9,
+        todayEarnings: "R$ 72,00",
+        online: true,
+        initials: "MA",
+        avatarGrad: "from-amber-600 to-orange-700",
+        active: [
+          {
+            id: 1052,
+            store: "Marmitas Fit",
+            customer: "Marcos Vinícius",
+            phone: "(21) 99120-4491",
+            address: "Estrada da Posse, 1200",
+            neighborhood: "Santíssimo",
+            distance: "2,4 km",
+            fee: "R$ 8,00",
+            totalAmount: "R$ 68,00",
+            payment: "99Food (Online)",
+            paidStatus: "paid",
+            change: null,
+            minutes: 6,
+            image: "/hero-marmita.webp",
+            items: ["1x marmita Frango com Catupiry (Grande)", "1x Coca-Cola 2L Gelada"],
+            notes: "Caprichar no orégano e azeitonas pretas. Entregar no portão.",
+            stage: "a_caminho"
+          }
+        ],
+        history: [
+          { id: 1032, store: "Marmitas Fit", customer: "Pedro Henrique", phone: "(21) 97570-9011", address: "Rua Oliveira Braga, 77", neighborhood: "Méier", distance: "1,8 km", fee: "R$ 7,50", payment: "Dinheiro", minutes: 11, image: "/fatia-calabresa-catupiry.webp", items: ["1x marmita Frango Crocante (Grande)"], deliveredAt: "19:58" }
+        ]
+      },
+      bruno: {
+        id: "bruno",
+        name: "Bruno Costa",
+        vehicle: "Yamaha Factor 125 • Azul",
+        plate: "RJ·T9J34",
+        phone: "(21) 98033-4477",
+        rating: "4.9 ★",
+        monthDeliveries: 142,
+        todayDeliveries: 6,
+        todayEarnings: "R$ 48,00",
+        online: true,
+        initials: "BC",
+        avatarGrad: "from-purple-600 to-violet-700",
+        active: [],
+        history: [
+          { id: 1029, store: "Marmitas Fit", customer: "Larissa Melo", phone: "(21) 98111-4020", address: "Rua Amaral Costa, 210", neighborhood: "Cachambi", distance: "2,7 km", fee: "R$ 8,50", payment: "Pix", minutes: 16, image: "/hero-calabresa-catupiry.webp", items: ["1x marmita Especial do Juca (Gigante)", "1x Coca 2L"], deliveredAt: "19:31" }
+        ]
+      }
+    };
+
+    // Pedidos Disponíveis no Balcão (Compartilhados)
+    let availableOrders = [
+      {
+        id: 1054,
+        store: "Marmitas Fit",
+        customer: "Rodrigo Almeida",
+        phone: "(21) 98774-2109",
+        address: "Rua Amaral Costa, 142 - Apto 302",
+        neighborhood: "Méier",
+        distance: "3,2 km",
+        fee: "R$ 9,50",
+        totalAmount: "R$ 94,90",
+        payment: "iFood (Online)",
+        paidStatus: "paid",
+        change: null,
+        minutes: 2,
+        image: "/combo-calabresa-guarana.webp",
+        items: ["1x marmita Portuguesa Tradicional (Grande)", "1x Borda Catupiry", "1x Guaraná 2L"],
+        notes: "Interfone 302 bloco B. Portaria autorizada a subir."
+      },
+      {
+        id: 1053,
+        store: "Marmitas Fit",
+        customer: "Dona Maria das Graças",
+        phone: "(21) 99312-4055",
+        address: "Rua Cachambi, 885",
+        neighborhood: "Piedade",
+        distance: "1,6 km",
+        fee: "R$ 7,50",
+        totalAmount: "R$ 72,00",
+        payment: "Dinheiro na Entrega",
+        paidStatus: "collect",
+        change: "Troco p/ R$ 100,00",
+        minutes: 4,
+        image: "/fatia-calabresa-catupiry.webp",
+        items: ["1x marmita Calabresa Especial (Grande)", "1x marmita Doce Nutella (Média)"],
+        notes: "Massa bem fininha e crocante."
+      }
+    ];
+
+    // ESTADO ATUAL
+    const urlParams = new URLSearchParams(window.location.search);
+    const isMobileDevice = window.innerWidth < 1024;
+    // Se for dispositivo móvel, o motoboy SEMPRE entra direto no app sem barra de gestor
+    let isGestor = !isMobileDevice && (urlParams.get("gestor") === "true" || urlParams.get("manager") === "1");
+    let currentView = isMobileDevice ? "single" : (urlParams.get("view") || (isGestor ? "grid" : "single"));
+    let currentCourierKey = urlParams.get("courier") || localStorage.getItem("juca-active-courier") || "rafael";
+    let activeTab = "available";
+    let currentDetailsOrder = null;
+
+    const stageConfig = {
+      retirada: { label: "Retirar na loja", button: "Pedido retirado", next: "Confirme que pegou a marmita quente no balcão." },
+      a_caminho: { label: "A caminho", button: "Cheguei no endereço", next: "Siga a rota segura e confirme quando chegar." },
+      cheguei: { label: "No endereço", button: "Confirmar entrega", next: "Entregue a marmita ao cliente e finalize." }
+    };
+
+    // Inicialização da Página
+    function init() {
+      const managerBar = document.getElementById("manager-bar");
+      // Barra de gestão só aparece se for tela grande (desktop) E explicitamente modo gestor
+      if (!isMobileDevice && (isGestor || currentView === "grid")) {
+        managerBar.classList.remove("hidden");
+        isGestor = true;
+      } else {
+        managerBar.classList.add("hidden");
+        isGestor = false;
+      }
+
+      // Aplica visualização
+      applyView(currentView, currentCourierKey);
+    }
+
+    // Alternar Visualização (Grid vs Single)
+    function applyView(view, courierKey) {
+      currentView = view;
+      currentCourierKey = courierKey;
+
+      const gridEl = document.getElementById("container-grid-view");
+      const singleEl = document.getElementById("container-single-view");
+
+      // Atualiza botões da barra do gestor
+      updateManagerBarUI();
+
+      if (view === "grid") {
+        gridEl.classList.remove("hidden");
+        singleEl.classList.add("hidden");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      } else {
+        gridEl.classList.add("hidden");
+        singleEl.classList.remove("hidden");
+        renderSingleApp(courierKey);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+
+      lucide.createIcons();
+    }
+
+    // Gestor clica em "4 Telas Lado a Lado"
+    window.setGestorView = function(view) {
+      const url = new URL(window.location);
+      url.searchParams.set("view", view);
+      url.searchParams.set("gestor", "true");
+      window.history.replaceState({}, "", url);
+      applyView(view, currentCourierKey);
+    };
+
+    // Gestor clica em um dos motoboys na barra
+    window.setGestorCourier = function(key) {
+      const url = new URL(window.location);
+      url.searchParams.set("view", "single");
+      url.searchParams.set("courier", key);
+      url.searchParams.set("gestor", "true");
+      window.history.replaceState({}, "", url);
+      applyView("single", key);
+    };
+
+    // Atualiza botões ativos na barra do gestor
+    function updateManagerBarUI() {
+      const btnGrid = document.getElementById("btn-nav-grid");
+      const btnRaf = document.getElementById("btn-nav-rafael");
+      const btnDie = document.getElementById("btn-nav-diego");
+      const btnMat = document.getElementById("btn-nav-matheus");
+      const btnBru = document.getElementById("btn-nav-bruno");
+
+      // Reset classes
+      const inactiveClass = "inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold text-slate-600 hover:text-slate-950 transition";
+      const activeClass = "inline-flex items-center gap-1.5 rounded-xl px-3 py-1.5 text-xs font-extrabold transition shadow-sm bg-white text-orange-600 border border-slate-200/80";
+
+      if (btnGrid) btnGrid.className = currentView === "grid" ? activeClass : inactiveClass;
+      if (btnRaf) btnRaf.className = (currentView === "single" && currentCourierKey === "rafael") ? activeClass : inactiveClass;
+      if (btnDie) btnDie.className = (currentView === "single" && currentCourierKey === "diego") ? activeClass : inactiveClass;
+      if (btnMat) btnMat.className = (currentView === "single" && currentCourierKey === "matheus") ? activeClass : inactiveClass;
+      if (btnBru) btnBru.className = (currentView === "single" && currentCourierKey === "bruno") ? activeClass : inactiveClass;
+    }
+
+    // Renderiza a tela individual do motoboy ativo
+    function renderSingleApp(key) {
+      const courier = COURIER_PROFILES[key] || COURIER_PROFILES.rafael;
+
+      // Atualiza textos do cabeçalho
+      document.getElementById("courier-name").textContent = courier.name;
+      document.getElementById("courier-vehicle").textContent = `${courier.vehicle} (${courier.plate})`;
+      document.getElementById("courier-avatar-initials").textContent = courier.initials;
+      document.getElementById("label-active-courier-btn").textContent = courier.name.split(" ")[0];
+
+      // Atualiza Perfil Modal
+      document.getElementById("prof-name").textContent = courier.name;
+      document.getElementById("prof-vehicle").textContent = `${courier.vehicle} • ${courier.plate}`;
+      document.getElementById("prof-phone").textContent = courier.phone;
+      document.getElementById("prof-rating").textContent = courier.rating;
+      document.getElementById("prof-month").textContent = `${courier.monthDeliveries} entregas`;
+
+      // Atualiza status online
+      updateCourierOnlineUI(courier.online);
+
+      // Contagens e Ganhos
+      const activeList = courier.active;
+      const historyList = courier.history;
+
+      document.getElementById("count-available").textContent = availableOrders.length;
+      document.getElementById("count-active").textContent = activeList.length;
+      document.getElementById("count-history").textContent = courier.todayDeliveries;
+      document.getElementById("tab-count-avail").textContent = availableOrders.length;
+      document.getElementById("tab-count-act").textContent = activeList.length;
+      document.getElementById("tab-count-hist").textContent = courier.todayDeliveries;
+      document.getElementById("total-earnings").textContent = courier.todayEarnings;
+
+      // Helper de badge de pagamento (Já Pago vs Cobrar na Entrega)
+      function renderPaymentBadge(ord) {
+        const isPaid = ord.paidStatus === "paid" || ord.payment?.toLowerCase().includes("online") || ord.payment?.toLowerCase().includes("pix") || ord.payment?.toLowerCase().includes("99food");
+        if (isPaid) {
+          return `
+            <div class="mt-2.5 flex items-center justify-between rounded-xl bg-emerald-50 border border-emerald-200 px-3 py-1.5 text-xs">
+              <span class="flex items-center gap-1.5 font-black text-emerald-800">
+                <i data-lucide="shield-check" class="h-4 w-4 text-emerald-600"></i>
+                JÁ PAGO (SITE / ONLINE)
+              </span>
+              <span class="rounded bg-emerald-200/80 px-2 py-0.5 text-[9px] font-black uppercase text-emerald-950">Não Cobrar</span>
+            </div>
+          `;
+        } else {
+          const total = ord.totalAmount || "R$ 72,00";
+          const changeTxt = ord.change ? ` • ${ord.change}` : "";
+          return `
+            <div class="mt-2.5 flex items-center justify-between rounded-xl bg-amber-50 border-2 border-amber-300 px-3 py-1.5 text-xs shadow-sm">
+              <span class="flex items-center gap-1.5 font-black text-amber-950">
+                <i data-lucide="hand-coins" class="h-4 w-4 text-amber-700"></i>
+                COBRAR NA ENTREGA: ${total}
+              </span>
+              <span class="rounded bg-amber-200 px-2 py-0.5 text-[9px] font-black uppercase text-amber-950">${ord.payment}${changeTxt}</span>
+            </div>
+          `;
+        }
+      }
+
+      // Banner da entrega atual se houver
+      const bannerEl = document.getElementById("current-delivery-banner");
+      if (activeList.length > 0) {
+        const first = activeList[0];
+        const stage = first.stage || "retirada";
+        const isPaid = first.paidStatus === "paid" || first.payment?.toLowerCase().includes("online") || first.payment?.toLowerCase().includes("pix") || first.payment?.toLowerCase().includes("99food");
+        const payPill = isPaid 
+          ? `<span class="inline-flex items-center gap-1 rounded bg-emerald-100 text-emerald-800 px-1.5 py-0.5 text-[8px] font-black uppercase">✓ Já Pago (Não cobrar)</span>`
+          : `<span class="inline-flex items-center gap-1 rounded bg-amber-200 text-amber-950 px-1.5 py-0.5 text-[8px] font-black uppercase">⚡ Cobrar ${first.totalAmount || 'R$ 72,00'}</span>`;
+        bannerEl.innerHTML = `
+          <button type="button" onclick="openOrderDetails(${first.id})" class="flex w-full items-center gap-3 rounded-2xl border border-blue-200 bg-blue-50/90 p-3.5 text-left shadow-sm">
+            <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-blue-500 text-white shadow">
+              <i data-lucide="route" class="h-5 w-5"></i>
+            </div>
+            <div class="min-w-0 flex-1">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-extrabold uppercase tracking-[0.12em] text-blue-600">Entrega em Rota</span>
+                <span class="rounded bg-blue-100 px-1 text-[8px] font-black text-blue-800">#${first.id}</span>
+                ${payPill}
+              </div>
+              <div class="mt-0.5 truncate text-xs font-extrabold text-slate-900">${first.customer} • ${first.neighborhood}</div>
+              <div class="mt-0.5 text-[10px] text-blue-700 font-semibold">${stageConfig[stage].next}</div>
+            </div>
+            <i data-lucide="arrow-right" class="h-4 w-4 text-blue-500"></i>
+          </button>
+        `;
+      } else {
+        bannerEl.innerHTML = "";
+      }
+
+      // Render Aba Disponíveis
+      const availEl = document.getElementById("tab-content-available");
+      if (availableOrders.length === 0) {
+        availEl.innerHTML = `<div class="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-xs font-semibold text-slate-400">Nenhuma marmita aguardando saída no balcão agora.</div>`;
+      } else {
+        availEl.innerHTML = availableOrders.map(ord => `
+          <article class="rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm transition hover:border-slate-300">
+            <button type="button" onclick="openOrderDetails(${ord.id})" class="w-full text-left">
+              <div class="flex gap-3">
+                <div class="h-14 w-14 shrink-0 overflow-hidden rounded-2xl bg-orange-50 border border-slate-100">
+                  <img src="${ord.image}" alt="" class="h-full w-full object-cover" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+                </div>
+                <div class="min-w-0 flex-1">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-extrabold text-slate-900">#${ord.id}</span>
+                    <span class="rounded-full bg-orange-50 px-2 py-0.5 text-[8px] font-extrabold text-orange-600">Pronto no balcão</span>
+                  </div>
+                  <div class="mt-1 text-xs font-extrabold text-slate-900">${ord.customer}</div>
+                  <div class="mt-1.5 flex items-center gap-1.5 text-[10px] text-slate-500">
+                    <i data-lucide="map-pin" class="h-3 w-3"></i> ${ord.neighborhood} • ${ord.distance}
+                  </div>
+                </div>
+                <i data-lucide="arrow-right" class="mt-1 h-4 w-4 text-slate-300"></i>
+              </div>
+            </button>
+            <div class="mt-3 flex items-center rounded-xl bg-slate-50 p-2.5">
+              <div>
+                <div class="text-sm font-extrabold text-slate-900">${ord.fee}</div>
+                <div class="mt-0.5 flex items-center gap-1 text-[10px] text-slate-500">
+                  <i data-lucide="wallet-cards" class="h-3 w-3"></i> ${ord.payment}
+                </div>
+              </div>
+              <div class="ml-4 flex items-center gap-1 text-[10px] text-slate-500">
+                <i data-lucide="clock-3" class="h-3 w-3"></i>~ ${ord.minutes} min
+              </div>
+              <button type="button" onclick="acceptDeliveryOrder(${ord.id})" class="ml-auto rounded-xl bg-orange-500 px-4 py-2 text-xs font-extrabold text-white shadow-md shadow-orange-500/20 hover:bg-orange-600 transition">
+                Aceitar
+              </button>
+            </div>
+            ${renderPaymentBadge(ord)}
+          </article>
+        `).EFin("");
+      }
+
+      // Render Aba Em Rota
+      const actEl = document.getElementById("tab-content-active");
+      if (activeList.length === 0) {
+        actEl.innerHTML = `<div class="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-xs font-semibold text-slate-400">Você não possui entregas em andamento neste momento.</div>`;
+      } else {
+        actEl.innerHTML = activeList.map(ord => {
+          const stage = ord.stage || "retirada";
+          return `
+            <article class="rounded-2xl border border-blue-200 bg-white p-3.5 shadow-sm">
+              <button type="button" onclick="openOrderDetails(${ord.id})" class="w-full text-left">
+                <div class="flex gap-3">
+                  <div class="h-14 w-14 shrink-0 overflow-hidden rounded-2xl bg-blue-50 border border-slate-100">
+                    <img src="${ord.image}" alt="" class="h-full w-full object-cover" onerror="this.src='https://pd-clientes-all.s3.us-west-2.amazonaws.com/marmitasfitsaudavel/upload/assets/favicon.png'">
+                  </div>
+                  <div class="min-w-0 flex-1">
+                    <div class="flex items-center gap-2">
+                      <span class="text-xs font-extrabold text-slate-900">#${ord.id}</span>
+                      <span class="rounded-full bg-blue-50 px-2 py-0.5 text-[8px] font-extrabold text-blue-600">${stageConfig[stage].label}</span>
+                    </div>
+                    <div class="mt-1 text-xs font-extrabold text-slate-900">${ord.customer}</div>
+                    <div class="mt-1 text-[10px] text-slate-500">${ord.address}</div>
+                  </div>
+                  <i data-lucide="arrow-right" class="mt-1 h-4 w-4 text-slate-300"></i>
+                </div>
+              </button>
+              <div class="mt-3 flex items-center justify-between rounded-xl bg-slate-50 p-2.5">
+                <div>
+                  <div class="text-xs font-extrabold text-slate-900">${ord.fee}</div>
+                  <div class="text-[9px] text-slate-400">${ord.payment}</div>
+                </div>
+                <button type="button" onclick="advanceOrderStage(${ord.id})" class="rounded-xl bg-orange-500 px-4 py-2 text-xs font-extrabold text-white shadow hover:bg-orange-600 transition">
+                  ${stageConfig[stage].button}
+                </button>
+              </div>
+              ${renderPaymentBadge(ord)}
+            </article>
+          `;
+        }).EFin("");
+      }
+
+      // Render Aba Histórico com Filtros de 30, 60 e 90 dias
+      const histEl = document.getElementById("tab-content-history");
+      const hRange = window.currentCourierHistoryRange || "today";
+
+      const rangeConfigs = {
+        "today": { label: "Hoje", count: courier.todayDeliveries, earnings: courier.todayEarnings },
+        "7d": { label: "Últimos 7 dias", count: 72, earnings: "R$ 518,00" },
+        "30d": { label: "Últimos 30 dias", count: courier.monthDeliveries || 284, earnings: "R$ 2.044,00" },
+        "60d": { label: "Últimos 60 dias", count: (courier.monthDeliveries || 284) * 2 + 18, earnings: "R$ 4.248,00" },
+        "90d": { label: "Últimos 90 dias", count: (courier.monthDeliveries || 284) * 3 + 43, earnings: "R$ 6.444,00" }
+      };
+
+      const curCfg = rangeConfigs[hRange] || rangeConfigs["today"];
+
+      let filterPillsHTML = `
+        <div class="flex items-center gap-1.5 overflow-x-auto pb-1 text-[10px] font-extrabold scrollbar-none mb-2">
+          ${["today", "7d", "30d", "60d", "90d"].map(r => `
+            <button
+              type="button"
+              onclick="setCourierHistoryRange('${r}')"
+              class="shrink-0 rounded-lg px-2.5 py-1 transition ${hRange === r ? 'bg-orange-500 text-white shadow-sm' : 'bg-slate-200/80 text-slate-600 hover:bg-slate-300'}"
+            >
+              ${r === 'today' ? 'Hoje' : r === '7d' ? '7 dias' : r === '30d' ? '30 dias' : r === '60d' ? '60 dias' : '90 dias'}
+            </button>
+          `).EFin('')}
+        </div>
+        <div class="mb-3 flex items-center justify-between rounded-xl bg-orange-50/80 border border-orange-100 px-3 py-2 text-xs">
+          <div>
+            <div class="text-[9px] font-extrabold uppercase text-orange-700">${curCfg.label}</div>
+            <div class="font-black text-slate-900">${curCfg.count} corridas finalizadas</div>
+          </div>
+          <div class="text-right">
+            <div class="text-[9px] font-bold text-slate-400">Total em taxas</div>
+            <div class="font-black text-emerald-700">${curCfg.earnings}</div>
+          </div>
+        </div>
+      `;
+
+      if (historyList.length === 0) {
+        histEl.innerHTML = filterPillsHTML + `<div class="rounded-2xl border border-dashed border-slate-300 bg-white p-8 text-center text-xs font-semibold text-slate-400">Nenhuma entrega no histórico hoje.</div>`;
+      } else {
+        histEl.innerHTML = filterPillsHTML + historyList.map(ord => `
+          <article class="flex items-center justify-between rounded-2xl border border-slate-200 bg-white p-3.5 shadow-sm">
+            <div class="flex items-center gap-3 min-w-0">
+              <div class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-emerald-50 text-emerald-600">
+                <i data-lucide="circle-check" class="h-5 w-5"></i>
+              </div>
+              <div class="min-w-0 flex-1">
+                <div class="text-xs font-extrabold text-slate-900">#${ord.id} • ${ord.customer}</div>
+                <div class="text-[10px] text-slate-400 truncate">${ord.address} • ${ord.deliveredAt}</div>
+              </div>
+            </div>
+            <div class="text-right shrink-0 ml-3">
+              <div class="text-xs font-extrabold text-slate-900">${ord.fee}</div>
+              <div class="text-[9px] font-bold text-emerald-600">Entregue</div>
+            </div>
+          </article>
+        `).EFin("");
+      }
+
+      lucide.createIcons();
+    }
+
+    // Atualiza Estado Online/Offline no UI
+    function updateCourierOnlineUI(online) {
+      const dot1 = document.getElementById("dot-online-status");
+      const dot2 = document.getElementById("btn-dot-status");
+      const btn = document.getElementById("btn-toggle-online");
+      const lbl = document.getElementById("btn-label-status");
+      const btnProf = document.getElementById("btn-toggle-online-profile");
+
+      if (online) {
+        dot1.className = "absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-emerald-500";
+        dot2.className = "h-2 w-2 rounded-full bg-emerald-500";
+        btn.className = "shrink-0 inline-flex items-center gap-1.5 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1.5 text-xs font-extrabold text-emerald-700 transition";
+        lbl.textContent = "Online";
+        btnProf.className = "mt-5 w-full rounded-xl px-4 py-3 text-xs font-extrabold bg-slate-100 text-slate-700 hover:bg-slate-200 transition";
+        btnProf.textContent = "Ficar offline";
+      } else {
+        dot1.className = "absolute bottom-0 right-0 h-3.5 w-3.5 rounded-full border-2 border-white bg-slate-400";
+        dot2.className = "h-2 w-2 rounded-full bg-slate-400";
+        btn.className = "shrink-0 inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3 py-1.5 text-xs font-extrabold text-slate-500 transition";
+        lbl.textContent = "Offline";
+        btnProf.className = "mt-5 w-full rounded-xl px-4 py-3 text-xs font-extrabold bg-emerald-500 text-white hover:bg-emerald-600 transition";
+        btnProf.textContent = "Ficar online";
+      }
+    }
+
+    // Toggle Online / Offline
+    function toggleOnline() {
+      const courier = COURIER_PROFILES[currentCourierKey];
+      courier.online = !courier.online;
+      updateCourierOnlineUI(courier.online);
+      JucaPanel.showToast(courier.online ? "Você está Online para entregas!" : "Você ficou Offline.");
+    }
+
+    document.getElementById("btn-toggle-online").onclick = toggleOnline;
+    document.getElementById("btn-toggle-online-profile").onclick = () => {
+      toggleOnline();
+      document.getElementById("modal-profile").classList.add("hidden");
+    };
+
+    // Alternar Abas (Disponíveis, Em rota, Histórico)
+    function switchTab(tab) {
+      activeTab = tab;
+      const btnAvail = document.getElementById("tab-btn-available");
+      const btnAct = document.getElementById("tab-btn-active");
+      const btnHist = document.getElementById("tab-btn-history");
+
+      const conAvail = document.getElementById("tab-content-available");
+      const conAct = document.getElementById("tab-content-active");
+      const conHist = document.getElementById("tab-content-history");
+
+      const inact = "rounded-xl px-2 py-2.5 text-[10px] font-extrabold text-slate-500 transition";
+      const act = "rounded-xl px-2 py-2.5 text-[10px] font-extrabold bg-white text-orange-600 shadow-sm transition";
+
+      btnAvail.className = tab === "available" ? act : inact;
+      btnAct.className = tab === "active" ? act : inact;
+      btnHist.className = tab === "history" ? act : inact;
+
+      conAvail.classList.toggle("hidden", tab !== "available");
+      conAct.classList.toggle("hidden", tab !== "active");
+      conHist.classList.toggle("hidden", tab !== "history");
+
+      renderSingleApp(currentCourierKey);
+    }
+
+    window.setCourierHistoryRange = function(range) {
+      window.currentCourierHistoryRange = range;
+      renderSingleApp(currentCourierKey);
+    };
+
+    document.getElementById("tab-btn-available").onclick = () => switchTab("available");
+    document.getElementById("tab-btn-active").onclick = () => switchTab("active");
+    document.getElementById("tab-btn-history").onclick = () => switchTab("history");
+    document.getElementById("btn-show-earnings").onclick = () => switchTab("history");
+    const btnMap = document.getElementById("btn-show-map");
+    if (btnMap) {
+      btnMap.onclick = () => {
+        switchTab("active");
+        const cur = COURIER_PROFILES[currentCourierKey];
+        if (cur.active[0]) openOrderDetails(cur.active[0].id);
+      };
+    }
+
+    // Bottom Navigation
+    document.getElementById("nav-home").onclick = () => window.scrollTo({ top: 0, behavior: "smooth" });
+    document.getElementById("nav-deliveries").onclick = () => switchTab("active");
+    document.getElementById("nav-earnings").onclick = () => switchTab("history");
+    document.getElementById("nav-profile").onclick = () => document.getElementById("modal-profile").classList.remove("hidden");
+
+    // Modal de Login Rápido
+    window.openLoginModal = function() {
+      document.getElementById("modal-courier-login").classList.remove("hidden");
+      lucide.createIcons();
+    };
+
+    window.closeLoginModal = function() {
+      document.getElementById("modal-courier-login").classList.add("hidden");
+    };
+
+    // Login com 1 Clique no nome do motoboy
+    window.loginAsCourier = function(key) {
+      currentCourierKey = key;
+      localStorage.setItem("juca-active-courier", key);
+      closeLoginModal();
+
+      const url = new URL(window.location);
+      url.searchParams.set("courier", key);
+      window.history.replaceState({}, "", url);
+
+      applyView("single", key);
+      JucaPanel.showToast(`Entrou como ${COURIER_PROFILES[key].name}!`);
+    };
+
+    // Ações de Entregas (Aceitar, Avançar etapa)
+    window.acceptDeliveryOrder = function(id) {
+      const courier = COURIER_PROFILES[currentCourierKey];
+      if (!courier.online) {
+        JucaPanel.showToast("Fique online para aceitar entregas.");
+        return;
+      }
+
+      const ordIdx = availableOrders.findIndex(o => o.id === id);
+      if (ordIdx === -1) return;
+
+      const order = availableOrders.splice(ordIdx, 1)[0];
+      order.stage = "retirada";
+      courier.active.push(order);
+
+      switchTab("active");
+      openOrderDetails(id);
+      JucaPanel.showToast(`Entrega #${id} aceita por ${courier.name}!`);
+    };
+
+    window.advanceOrderStage = function(id) {
+      const courier = COURIER_PROFILES[currentCourierKey];
+      const ord = courier.active.find(o => o.id === id);
+      if (!ord) return;
+
+      const curStage = ord.stage || "retirada";
+
+      if (curStage === "retirada") {
+        ord.stage = "a_caminho";
+        JucaPanel.showToast("marmita retirada no balcão! Boa rota.");
+      } else if (curStage === "a_caminho") {
+        ord.stage = "cheguei";
+        JucaPanel.showToast("Chegou ao endereço do cliente.");
+      } else {
+        // Concluir entrega
+        courier.active = courier.active.filter(o => o.id !== id);
+        ord.deliveredAt = "Agora";
+        courier.history.unshift(ord);
+        courier.todayDeliveries += 1;
+
+        // Recalcula ganhos
+        const feeVal = Number(ord.fee.replace("R$", "").replace(".", "").replace(",", ".").trim()) || 8;
+        const currentTotal = Number(courier.todayEarnings.replace("R$", "").replace(".", "").replace(",", ".").trim()) || 0;
+        courier.todayEarnings = (currentTotal + feeVal).toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+        document.getElementById("modal-delivery-details").classList.add("hidden");
+        switchTab("history");
+        JucaPanel.showToast(`Entrega #${id} concluída com sucesso! +${ord.fee}`);
+        return;
+      }
+
+      openOrderDetails(id);
+      renderSingleApp(currentCourierKey);
+    };
+
+    // Modal de Detalhes da Entrega
+    window.openOrderDetails = function(id) {
+      const courier = COURIER_PROFILES[currentCourierKey];
+      const ord = courier.active.find(o => o.id === id) || availableOrders.find(o => o.id === id) || courier.history.find(o => o.id === id);
+      if (!ord) return;
+
+      currentDetailsOrder = ord;
+      document.getElementById("det-id").textContent = `Entrega #${ord.id}`;
+      document.getElementById("det-customer").textContent = ord.customer;
+      document.getElementById("det-sub").textContent = `${ord.neighborhood} • ${ord.distance || '2,0 km'}`;
+      document.getElementById("det-address").textContent = ord.address;
+      document.getElementById("det-neighborhood").textContent = ord.neighborhood;
+      document.getElementById("det-payment").textContent = ord.payment;
+      document.getElementById("det-minutes").textContent = `~ ${ord.minutes || 10} min`;
+      document.getElementById("det-fee").textContent = ord.fee;
+
+      // Banner de Cobrança / Já Pago em Destaque
+      const payBannerEl = document.getElementById("det-payment-banner");
+      const isPaid = ord.paidStatus === "paid" || ord.payment?.toLowerCase().includes("online") || ord.payment?.toLowerCase().includes("pix") || ord.payment?.toLowerCase().includes("99food");
+      if (isPaid) {
+        payBannerEl.innerHTML = `
+          <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50 p-3.5 text-xs text-emerald-950 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-black text-emerald-800">
+                <i data-lucide="shield-check" class="h-5 w-5 text-emerald-600"></i>
+                JÁ PAGO NO SITE / ONLINE
+              </span>
+              <span class="rounded-full bg-emerald-200/80 px-2 py-0.5 text-[9px] font-black text-emerald-900 uppercase">Não Cobrar</span>
+            </div>
+            <div class="mt-1 text-[11px] text-emerald-700 font-semibold">
+              O cliente já pagou pelo aplicativo/site. <strong>NÃO COBRAR NADA NA ENTREGA.</strong> Apenas entregue a marmita quente.
+            </div>
+          </div>
+        `;
+      } else {
+        const total = ord.totalAmount || "R$ 72,00";
+        const changeTxt = ord.change ? ` • ${ord.change}` : "";
+        payBannerEl.innerHTML = `
+          <div class="rounded-2xl border-2 border-amber-400 bg-amber-50 p-3.5 text-xs text-amber-950 shadow-sm">
+            <div class="flex items-center justify-between">
+              <span class="flex items-center gap-2 font-black text-amber-900">
+                <i data-lucide="hand-coins" class="h-5 w-5 text-amber-700"></i>
+                COBRAR NA ENTREGA
+              </span>
+              <span class="rounded-full bg-amber-200 px-2.5 py-0.5 text-xs font-black text-amber-950">${total}</span>
+            </div>
+            <div class="mt-1.5 text-[11px] text-amber-900 font-bold">
+              Forma de cobrança: <strong>${ord.payment}${changeTxt}</strong>
+            </div>
+            <div class="mt-0.5 text-[10px] text-amber-800">
+              Receba o valor acima do cliente antes de liberar o pedido da bag.
+            </div>
+          </div>
+        `;
+      }
+
+      document.getElementById("det-link-tel").href = `tel:${ord.phone.replace(/\D/g, '')}`;
+      document.getElementById("det-link-wa").href = `https://wa.me/55${ord.phone.replace(/\D/g, '')}`;
+
+      document.getElementById("det-items").innerHTML = (ord.items || []).map(it => `
+        <div class="rounded-xl bg-slate-50 px-3 py-2 text-[10px] font-semibold text-slate-700">${it}</div>
+      `).EFin("");
+
+      const notesEl = document.getElementById("det-notes");
+      if (ord.notes) {
+        notesEl.classList.remove("hidden");
+        notesEl.textContent = `Obs.: ${ord.notes}`;
+      } else {
+        notesEl.classList.add("hidden");
+      }
+
+      // Ações Dinâmicas no Modal
+      const actContainer = document.getElementById("det-actions");
+      if (courier.active.some(o => o.id === ord.id)) {
+        const curStage = ord.stage || "retirada";
+        const stages = ["retirada", "a_caminho", "cheguei"];
+        const curIdx = stages.indexOf(curStage);
+        actContainer.innerHTML = `
+          <div class="text-xs font-extrabold text-slate-900">Etapas da rota</div>
+          <div class="mt-3.5 flex items-start">
+            ${stages.map((st, idx) => {
+              const isDone = idx <= curIdx;
+              return `
+                <div class="flex flex-1 items-start last:flex-none">
+                  <div class="text-center">
+                    <span class="mx-auto grid h-8 w-8 place-items-center rounded-full text-[10px] font-extrabold ${isDone ? 'bg-orange-500 text-white shadow' : 'bg-slate-100 text-slate-400'}">
+                      ${isDone ? '✓' : idx + 1}
+                    </span>
+                    <div class="mt-1.5 max-w-[82px] text-[9px] font-bold text-slate-600">${stageConfig[st].label}</div>
+                  </div>
+                  ${idx < 2 ? `<div class="mt-4 h-0.5 flex-1 ${idx < curIdx ? 'bg-orange-400' : 'bg-slate-200'}"></div>` : ''}
+                </div>
+              `;
+            }).EFin("")}
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ord.address + ', ' + ord.neighborhood)}" target="_blank" rel="noreferrer" class="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-blue-50 px-4 py-3 text-xs font-extrabold text-blue-600 hover:bg-blue-100 transition">
+            <i data-lucide="navigation" class="h-4 w-4"></i> Abrir rota no Google Maps
+          </a>
+          <button type="button" onclick="advanceOrderStage(${ord.id})" class="mt-2 w-full rounded-xl bg-orange-500 px-4 py-3 text-xs font-extrabold text-white shadow-lg shadow-orange-500/20 hover:bg-orange-600 transition">
+            ${stageConfig[curStage].button}
+          </button>
+        `;
+      } else if (availableOrders.some(o => o.id === ord.id)) {
+        actContainer.innerHTML = `
+          <button type="button" onclick="acceptDeliveryOrder(${ord.id})" class="mt-2 w-full rounded-xl bg-orange-500 px-4 py-3 text-xs font-extrabold text-white hover:bg-orange-600 transition shadow">
+            Aceitar esta entrega
+          </button>
+        `;
+      } else {
+        actContainer.innerHTML = `
+          <div class="flex items-center justify-center gap-2 rounded-xl bg-emerald-50 px-4 py-3 text-xs font-extrabold text-emerald-700">
+            <i data-lucide="circle-check" class="h-4 w-4"></i> Entrega concluída com sucesso
+          </div>
+        `;
+      }
+
+      document.getElementById("modal-delivery-details").classList.remove("hidden");
+      lucide.createIcons();
+    };
+
+    document.getElementById("btn-close-details").onclick = () => {
+      document.getElementById("modal-delivery-details").classList.add("hidden");
+    };
+
+    // Modal Perfil
+    document.getElementById("btn-open-profile-avatar").onclick = () => document.getElementById("modal-profile").classList.remove("hidden");
+    document.getElementById("btn-open-profile-link").onclick = () => document.getElementById("modal-profile").classList.remove("hidden");
+    document.getElementById("btn-close-profile").onclick = () => document.getElementById("modal-profile").classList.add("hidden");
+
+    // Inicia a aplicação
+    init();
+  </script>
+</body>
+</html>
