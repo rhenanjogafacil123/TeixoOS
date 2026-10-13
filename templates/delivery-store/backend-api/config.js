@@ -23,4 +23,7 @@ module.exports = {
 
   // Porta do servidor Node
   PORT: process.env.PORT || 3001,
+
+  // Segredo JWT para assinatura de tokens de sessão
+  JWT_SECRET: process.env.JWT_SECRET || 'teixo-pizzadojuca-jwt-blindado-2026-auth',
 };

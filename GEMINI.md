@@ -130,6 +130,7 @@ Quando o usuário pedir skill nova:
 - **Checkout Transparente & Pagamento Antecipado:** Pagamento 100% online integrado direto na tela via Mercado Pago Bricks (PIX dinâmico com QR Code e Cartão). O pedido só é despachado para a fila KDS da cozinha após confirmação/aprovação bancária, eliminando cobrança manual no WhatsApp ou fiado na entrega.
 - **Performance e Custo Zero:** Frontend estático ultrarrápido + API REST/SQLite com fallback local (`localStorage`), sem requisições caras ou dependência de nuvem pesada.
 - **Controle de Estoque & CMV Semanal (Quinta-feira):** Curva ABC (Classe A diário; B e C por cardápio), Ordem de Produção antecipada em lote com fatores de cocção (perdas e rendimento de insumos crus).
+- **Segurança & Controle de Acesso (RBAC Blindado):** 3 camadas obrigatórias: (1) Senhas criptografadas com Salt via `bcrypt` (zero texto puro no banco); (2) Tokens digitais assinados via `JWT` com expiração para sessões de atendentes e motoboys; (3) Bloqueio nativo no Backend (API REST): middleware valida permissões de perfil (`admin`, `atendente`, `motoboy`) e rejeita na raiz qualquer tentativa de invasão ou acesso indevido com HTTP 403 Forbidden.
 
 **Estrutura de Pastas:**
 - `_memoria/` — memória permanente (empresa, preferências, estratégia)

@@ -9,9 +9,11 @@ window.JucaAPI = (function() {
 
   async function request(endpoint, options = {}) {
     const url = `${API_BASE}${endpoint}`;
+    const token = localStorage.getItem('juca_auth_token');
     const defaultHeaders = {
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      ...(token ? { 'Authorization': `Bearer ${token}` } : {})
     };
 
     const config = {
@@ -168,6 +170,42 @@ window.JucaAPI = (function() {
       } catch (e) {
         return [];
       }
+    },
+
+    // 12. Autenticação & Gestão de Sessão (RBAC)
+    login: async function(username, password) {
+      const res = await request('/auth/login', {
+        method: 'POST',
+        body: JSON.stringify({ username, password })
+      });
+      if (res && res.success && res.token) {
+        localStorage.setItem('juca_auth_token', res.token);
+        localStorage.setItem('juca_auth_user', JSON.stringify(res.user));
+      }
+      return res;
+    },
+
+    logout: function() {
+      localStorage.removeItem('juca_auth_token');
+      localStorage.removeItem('juca_auth_user');
+      window.location.href = '/painel/login/';
+    },
+
+    getCurrentUser: function() {
+      try {
+        return JSON.parse(localStorage.getItem('juca_auth_user') || 'null');
+      } catch (e) {
+        return null;
+      }
+    },
+
+    getToken: function() {
+      return localStorage.getItem('juca_auth_token') || null;
+    },
+
+    // 13. Relatório de Faturamento Blindado (Apenas ADMIN)
+    getBillingSummary: async function() {
+      return await request('/admin/faturamento');
     }
   };
 })();

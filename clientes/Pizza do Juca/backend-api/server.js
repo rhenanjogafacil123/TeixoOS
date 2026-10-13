@@ -59,6 +59,170 @@ function mpRequest(method, path, body = null) {
   });
 }
 
+// Carregador seguro de JWT para tokens de sessão
+let jwt = null;
+try {
+  jwt = require('jsonwebtoken');
+} catch (e) {
+  const crypto = require('crypto');
+  jwt = {
+    sign: (payload, secret, options = {}) => {
+      const header = Buffer.from(JSON.stringify({ alg: 'HS256', typ: 'JWT' })).toString('base64url');
+      const now = Math.floor(Date.now() / 1000);
+      const exp = now + (12 * 3600); // 12h
+      const body = Buffer.from(JSON.stringify({ ...payload, iat: now, exp })).toString('base64url');
+      const sig = crypto.createHmac('sha256', secret).update(`${header}.${body}`).digest('base64url');
+      return `${header}.${body}.${sig}`;
+    },
+    verify: (token, secret) => {
+      const parts = token.split('.');
+      if (parts.length !== 3) throw new Error('Token inválido');
+      const [header, body, sig] = parts;
+      const expectedSig = crypto.createHmac('sha256', secret).update(`${header}.${body}`).digest('base64url');
+      if (sig !== expectedSig) throw new Error('Assinatura inválida');
+      const payload = JSON.parse(Buffer.from(body, 'base64url').toString('utf8'));
+      if (payload.exp && payload.exp < Math.floor(Date.now() / 1000)) throw new Error('Token expirado');
+      return payload;
+    }
+  };
+}
+
+// ===========================================
+// MIDDLEWARES DE SEGURANÇA & RBAC (3 CAMADAS)
+// ===========================================
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = (authHeader && authHeader.startsWith('Bearer ')) 
+    ? authHeader.slice(7) 
+    : req.query.token;
+
+  if (!token) {
+    return res.status(401).json({ success: false, error: 'Token de autenticação obrigatório. Faça login para continuar.' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, config.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).json({ success: false, error: 'Sessão inválida ou expirada. Faça login novamente.' });
+  }
+}
+
+function optionalAuth(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = (authHeader && authHeader.startsWith('Bearer ')) 
+    ? authHeader.slice(7) 
+    : req.query.token;
+
+  if (token) {
+    try {
+      req.user = jwt.verify(token, config.JWT_SECRET);
+    } catch (e) {
+      // Ignora erro no modo opcional
+    }
+  }
+  next();
+}
+
+function authorizeRoles(...allowedRoles) {
+  return (req, res, next) => {
+    if (!req.user) {
+      return res.status(401).json({ success: false, error: 'Usuário não autenticado.' });
+    }
+    if (!allowedRoles.includes(req.user.role)) {
+      console.warn(`[Segurança 403] Acesso negado: Usuário "${req.user.username}" (${req.user.role}) tentou acessar recurso restrito a [${allowedRoles.join(', ')}]`);
+      return res.status(403).json({ 
+        success: false, 
+        error: `403 Proibido: Seu perfil (${req.user.role}) não tem permissão para acessar este recurso.` 
+      });
+    }
+    next();
+  };
+}
+
+// ===========================================
+// 0. AUTENTICAÇÃO & CONTROLE DE ACESSO (RBAC)
+// ===========================================
+
+// Login com verificação de hash bcrypt e emissão de JWT
+app.post('/api/auth/login', (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username || !password) {
+      return res.status(400).json({ success: false, error: 'Usuário e senha são obrigatórios.' });
+    }
+
+    const user = db.getUserByUsername(username);
+    if (!user) {
+      console.warn(`[Auth Falhou] Usuário inexistente: "${username}"`);
+      return res.status(401).json({ success: false, error: 'Usuário ou senha incorretos.' });
+    }
+
+    const passwordOk = db.verifyUserPassword(user, password);
+    if (!passwordOk) {
+      console.warn(`[Auth Falhou] Senha incorreta para o usuário: "${username}"`);
+      return res.status(401).json({ success: false, error: 'Usuário ou senha incorretos.' });
+    }
+
+    // Gerar token assinado JWT válido por 12 horas
+    const payload = {
+      id: user.id,
+      name: user.name,
+      username: user.username,
+      role: user.role
+    };
+
+    const token = jwt.sign(payload, config.JWT_SECRET, { expiresIn: '12h' });
+
+    console.log(`[Auth Sucesso] Login aprovado: ${user.name} (${user.username}) [Perfil: ${user.role.toUpperCase()}]`);
+    res.json({
+      success: true,
+      token,
+      user: payload
+    });
+  } catch (err) {
+    console.error('Erro no endpoint de login:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Consultar dados da sessão atual
+app.get('/api/auth/me', authenticateToken, (req, res) => {
+  res.json({
+    success: true,
+    user: req.user
+  });
+});
+
+// Listar todos os usuários cadastrados (Apenas ADMIN)
+app.get('/api/auth/usuarios', authenticateToken, authorizeRoles('admin'), (req, res) => {
+  try {
+    const users = db.listUsers();
+    res.json({ success: true, count: users.length, users });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// Cadastrar novo funcionário/usuário (Apenas ADMIN)
+app.post('/api/auth/usuarios', authenticateToken, authorizeRoles('admin'), (req, res) => {
+  try {
+    const { name, username, password, role } = req.body;
+    if (!name || !username || !password) {
+      return res.status(400).json({ success: false, error: 'Nome, login e senha são obrigatórios.' });
+    }
+    const existing = db.getUserByUsername(username);
+    if (existing) {
+      return res.status(400).json({ success: false, error: 'Já existe um usuário com este login.' });
+    }
+    const created = db.createUser({ name, username, password, role });
+    res.status(201).json({ success: true, user: created });
+  } catch (err) {
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
 // ===========================================
 // ROTAS EXISTENTES
 // ===========================================
@@ -181,9 +345,12 @@ app.patch('/api/carrinho-abandonado/:id/recuperado', (req, res) => {
 // MOTOBOYS — FECHAMENTOS DE TURNO
 // ===========================================
 
-// 10. Salvar fechamento de turno do motoboy
-app.post('/api/motoboys/fechamentos', (req, res) => {
+// 10. Salvar fechamento de turno do motoboy (Protegido por RBAC)
+app.post('/api/motoboys/fechamentos', optionalAuth, (req, res) => {
   try {
+    if (req.user && req.user.role !== 'admin') {
+      return res.status(403).json({ success: false, error: '403 Proibido: Apenas administradores podem registrar fechamentos.' });
+    }
     const data = req.body;
     if (!data || !data.courier_name) {
       return res.status(400).json({ success: false, error: 'Nome do motoboy é obrigatório' });
@@ -197,14 +364,49 @@ app.post('/api/motoboys/fechamentos', (req, res) => {
   }
 });
 
-// 11. Listar histórico de fechamentos de motoboys
-app.get('/api/motoboys/fechamentos', (req, res) => {
+// 11. Listar histórico de fechamentos de motoboys (Filtra por motoboy se não for admin)
+app.get('/api/motoboys/fechamentos', optionalAuth, (req, res) => {
   try {
     const limit = parseInt(req.query.limit, 10) || 100;
-    const closings = db.getMotoboyClosings(limit);
+    let closings = db.getMotoboyClosings(limit);
+
+    // Se o usuário autenticado for perfil motoboy, restringe a visão exclusivamente às dele
+    if (req.user && req.user.role === 'motoboy') {
+      const myName = (req.user.name || '').toLowerCase();
+      const myUser = (req.user.username || '').toLowerCase();
+      closings = closings.filter(c => {
+        const cName = (c.courier_name || '').toLowerCase();
+        return cName.includes(myName) || cName.includes(myUser);
+      });
+    }
+
     res.json({ success: true, count: closings.length, closings });
   } catch (err) {
     console.error('Erro ao listar fechamentos de motoboys:', err);
+    res.status(500).json({ success: false, error: err.message });
+  }
+});
+
+// ===========================================
+// ADMIN — RELATÓRIOS FINANCEIROS BLINDADOS (RBAC CAMADA 3)
+// ===========================================
+app.get('/api/admin/faturamento', authenticateToken, authorizeRoles('admin'), (req, res) => {
+  try {
+    const orders = db.getAllOrders();
+    const totalRevenue = orders.reduce((sum, o) => sum + (parseFloat(o.total) || 0), 0);
+    const closings = db.getMotoboyClosings(500);
+    const totalMotoboyPaid = closings.reduce((sum, c) => sum + (parseFloat(c.total_earnings) || 0), 0);
+
+    res.json({
+      success: true,
+      empresa: 'Pizza do Juca',
+      total_pedidos: orders.length,
+      faturamento_bruto: totalRevenue,
+      repasses_motoboys: totalMotoboyPaid,
+      lucro_operacional_estimado: totalRevenue - totalMotoboyPaid,
+      consultado_por: req.user
+    });
+  } catch (err) {
     res.status(500).json({ success: false, error: err.message });
   }
 });

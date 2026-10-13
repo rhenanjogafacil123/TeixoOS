@@ -154,3 +154,8 @@ Para todos os estabelecimentos gastronômicos e clientes de delivery atendidos p
    - **Curva ABC Prática:** Classe A (alto giro / impacto crítico no CMV, ex: frango, arroz, ovos, queijos) auditados com alta frequência; Classes B e C calibrados pelo ciclo de cardápio.
    - **Fator de Cocção & Rendimento na Ordem de Produção:** Cálculo automático das perdas e ganhos de peso no preparo (arroz quase dobra, feijão triplica, proteínas perdem 20-30%, frutos do mar perdem ~60%), conectando a projeção de vendas à quantidade real de insumo cru a ser comprado e descongelado.
 
+8. **Segurança & Controle de Acesso (RBAC Blindado):**
+   - **Camada 1 — Senhas Criptografadas com Salt (`bcrypt`):** As senhas de administradores, atendentes e motoboys são armazenadas exclusivamente com hash salgado irreversível (mínimo de 10 rounds de salt). Zero senhas em texto puro no banco de dados.
+   - **Camada 2 — Tokens de Sessão Protegidos (`JWT`):** Cada login autenticado gera um token digital temporário assinado via HMAC-SHA256 (`Bearer Token`), contendo ID, usuário e perfil de acesso (`role`), com tempo de expiração e renovação segura.
+   - **Camada 3 — Bloqueio no Backend (API REST):** Proteção no nível da requisição. Middlewares dedicados (`requireAuth`, `requireRole(['admin'])`, `requireRole(['admin', 'atendente'])`) validam as permissões na raiz da API. Se um motoboy tentar acessar rotas financeiras ou de gestão (ex: `/api/admin/faturamento`), o servidor bloqueia instantaneamente com HTTP 403 Forbidden (*Acesso Negado*).
+
