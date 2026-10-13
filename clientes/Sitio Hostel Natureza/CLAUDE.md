@@ -1,21 +1,22 @@
 # Sítio Hostel Natureza
 
-> Projeto dedicado de Assessoria de Crescimento, Tráfego Pago, Produção Audiovisual e Ecossistema Web da Teixo.
+> Projeto dedicado de Assessoria de Crescimento, Tráfego Pago e Produção Audiovisual da Teixo.
 
 ## Sobre
 
-Operação híbrida de crescimento para o **Sítio Hostel Natureza**, combinando tráfego pago de aquisição (Meta Ads / Google Ads gerido pelo Tiago), captação de conteúdo dinâmico de campo com o influenciador PL, e implementação do storefront web próprio com pedidos presenciais via Plaquinhas NFC desenvolvido pelo Rhenan.
+Operação de crescimento para o **Sítio Hostel Natureza**, combinando tráfego pago de aquisição (Meta Ads gerido pelo Tiago) e captação de conteúdo dinâmico de campo com o influenciador PL.
 
 ## Tipo
 
-Cliente ativo / Parceria Comercial Híbrida (Tráfego + Audiovisual + Site com Garantia de Satisfação e Fracionamento Flexível)
+Cliente ativo / Parceria Comercial (Tráfego Pago + Audiovisual de Campo)
 
 ---
 
 ## Estrutura da Pasta do Cliente
 
-- `briefing.md` — Contexto da negociação, alocação de equipe e modelo de garantia condicional flexível.
+- `briefing.md` — Contexto da negociação, alocação de equipe e condições comerciais alinhadas.
 - `contrato - parceria assessoria de crescimento e audiovisual - sitio hostel natureza - versão final.md` — Instrumento jurídico blindado B2B com CNPJ.
+- `contrato - parceria assessoria de crescimento e audiovisual - sitio hostel natureza - versão final.pdf` — Versão em PDF pronta para assinatura digital.
 - `capas/`, `videos/`, `trilhas/` — Acervo de captação orgânica gravada pelo PL.
 
 ---
@@ -24,7 +25,6 @@ Cliente ativo / Parceria Comercial Híbrida (Tráfego + Audiovisual + Site com G
 
 - **Contratada Oficial:** TIAGO TEIXEIRA DO NASCIMENTO SILVA (MEI) — CNPJ: 69.390.968/0001-78, Nome Fantasia: TEIXO.
 - **Divisão Financeira:**
-  - Tiago recebe tráfego na conta do CNPJ;
-  - PL recebe valor de gravação em sua conta;
-  - Rhenan recebe implementação de R$ 500,00 no PIX Mercado Pago `rhenanteixeira.rj@gmail.com`.
-- **Cláusula de Risco Zero e Fracionamento:** Cláusula contratual clara de devolução ou conversão dos R$ 500 em crédito de serviços (podendo pagar o Tiago em tráfego, o PL em vídeo ou Patrick em drone, inclusive dividindo o valor entre várias pessoas) caso a cliente opte por não manter o site após os 15 dias de teste.
+  - Tiago recebe tráfego na conta do MEI (R$ 1.200,00/mês);
+  - PL recebe valor de gravação em sua conta individual (R$ 500 no 1º mês + R$ 200 por evento coberto).
+- **Escopo Exclusivo:** Tráfego Pago e Audiovisual de Campo (exclusivamente Meta Ads e Vídeos de Campo do PL).
