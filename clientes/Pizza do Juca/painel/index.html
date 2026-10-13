@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel de Gestão | Pizza do Juca</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-[#f6f7fb] px-4 py-10 sm:px-6 font-sans antialiased text-slate-950">
+  <div class="mx-auto max-w-6xl">
+    <!-- Topo / Marca -->
+    <div class="flex items-center gap-3">
+      <div class="grid h-12 w-12 place-items-center rounded-2xl bg-white shadow-sm border border-slate-200/80 p-1">
+        <img src="/logo_juca.png" alt="Pizza do Juca" class="h-10 w-10 object-contain" onerror="this.src='/logo.png'">
+      </div>
+      <div>
+        <div class="text-sm font-extrabold text-slate-950">Pizza do Juca</div>
+        <div class="text-[10px] font-extrabold uppercase tracking-[0.16em] text-orange-500">Área interna</div>
+      </div>
+    </div>
+
+    <!-- Hero -->
+    <div class="mt-16 max-w-2xl">
+      <div class="inline-flex items-center gap-2 rounded-full border border-orange-200 bg-orange-50 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.13em] text-orange-600">
+        <i data-lucide="monitor-smartphone" class="h-3.5 w-3.5"></i>
+        Painéis separados por função
+      </div>
+      <h1 class="mt-5 text-4xl font-extrabold tracking-[-0.04em] text-slate-950 sm:text-5xl">
+        Gestão organizada, sem misturar funções.
+      </h1>
+      <p class="mt-4 text-base leading-7 text-slate-500">
+        Administração e atendimento ficam em telas desktop. O motoboy usa uma experiência mobile própria, mais simples e direta.
+      </p>
+    </div>
+
+    <!-- Cards dos Painéis -->
+    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <!-- Admin -->
+      <a href="./admin/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-orange-200">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-violet-50 text-violet-600">
+            <i data-lucide="layout-dashboard" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+            Desktop
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Dono / Administrador</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Visão do negócio com faturamento, pedidos, ticket médio, pagamentos, produtos e indicadores.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-orange-600">
+          Abrir painel
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+
+      <!-- Atendente -->
+      <a href="./pedidos/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-orange-200">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-orange-50 text-orange-600">
+            <i data-lucide="chef-hat" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+            Desktop
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Atendente</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Central operacional com Kanban de pedidos, preparo, produtos esgotados e motoboys disponíveis.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-orange-600">
+          Abrir painel
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+
+      <!-- Ceasa & Insumos -->
+      <a href="./ceasa/index.html" class="group rounded-3xl border border-emerald-200/90 bg-gradient-to-br from-emerald-50/40 via-white to-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-emerald-400">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-100 text-emerald-700">
+            <i data-lucide="carrot" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-emerald-100 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-emerald-800">
+            Ceasa-RJ
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Lista Ceasa & Insumos</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Checklist tátil para compras na madrugada, ingredientes esgotados e pizzas afetadas no cardápio.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-emerald-700">
+          Abrir lista
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+
+      <!-- Motoboy -->
+      <a href="./motoboy/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-orange-200">
+        <div class="flex items-start justify-between">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-blue-50 text-blue-600">
+            <i data-lucide="bike" class="h-6 w-6"></i>
+          </div>
+          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+            Mobile
+          </span>
+        </div>
+        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Motoboy</h2>
+        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+          Aplicativo mobile com entregas disponíveis, rotas, ganhos, status online e pedidos em andamento.
+        </p>
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-orange-600">
+          Abrir painel
+          <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
+        </div>
+      </a>
+    </div>
+
+    <!-- Rodapé -->
+    <div class="mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-slate-200 pt-6 text-xs text-slate-400">
+      <span>Estrutura visual e operacional conectada ao cardápio da Pizza do Juca.</span>
+      <a href="../index.html" class="font-bold text-slate-600 hover:text-slate-950 transition">
+        ← Voltar para o cardápio
+      </a>
+    </div>
+  </div>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
+
