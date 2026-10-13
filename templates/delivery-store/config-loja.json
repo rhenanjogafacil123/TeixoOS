@@ -1,0 +1,35 @@
+{
+  "nomeLoja": "Nome do Estabelecimento",
+  "slogan": "O melhor sabor da região entregue na sua porta",
+  "niche": "hamburgueria",
+  "segmento": "Gastronomia & Delivery",
+  "cidade": "Rio de Janeiro, RJ",
+  "bairro": "Bairro",
+  "enderecoCompleto": "Rua Exemplo, 123 — Bairro, Rio de Janeiro - RJ",
+  "whatsapp": "5521999999999",
+  "whatsappFormatado": "(21) 99999-9999",
+  "taxaConvenienciaTeixo": 0.67,
+  "taxaEntregaPadrao": 0.00,
+  "horarioFuncionamento": "Terça a Domingo das 18:00 às 00:00",
+  "anoFundacao": "2024",
+  "cores": {
+    "primary": "#dc2626",
+    "primaryHover": "#b91c1c",
+    "accent": "#f59e0b",
+    "bgLight": "#faf5ec",
+    "cardLight": "#ffffff",
+    "bgDark": "#14110f",
+    "cardDark": "#1f1a17",
+    "borderDark": "#332a24"
+  },
+  "mercadopago": {
+    "publicKey": "COLE_AQUI_A_PUBLIC_KEY",
+    "accessToken": "COLE_AQUI_O_ACCESS_TOKEN",
+    "modo": "sandbox"
+  },
+  "vps": {
+    "portaNode": 3001,
+    "caminhoApi": "/api",
+    "serviceName": "delivery-api"
+  }
+}

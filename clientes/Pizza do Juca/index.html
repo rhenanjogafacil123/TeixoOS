@@ -387,8 +387,8 @@
           <span class="text-lg">🍕</span>
           <span>Tamanhos: <strong>Broto 18cm (R$ 20,00)</strong> • <strong>Média 30cm (R$ 35,00)</strong> • <strong>Gigante 45cm (R$ 55,00)</strong></span>
         </span>
-        <span class="rounded-full bg-[#2f4a32] px-3 py-1 text-[11px] font-bold text-white shadow-sm">
-          Até 4 sabores na Gigante!
+        <span class="rounded-full bg-[#2f4a32] px-3.5 py-1 text-[11px] font-bold text-white shadow-sm">
+          Opção Meio a Meio (2 sabores)
         </span>
       </div>
     </div>
@@ -660,6 +660,40 @@
           <div id="modal-variants-list" class="grid grid-cols-3 gap-2"></div>
         </div>
 
+        <!-- Escolha de Sabores (Pizza Inteira ou Meio a Meio) -->
+        <div id="modal-half-section" class="border-t border-[#dccdb2] pt-4 dark:border-[#382b24]">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <p class="text-xs font-bold uppercase tracking-wider text-[#6f6457] dark:text-[#c4b5a2]">Quantidade de Sabores:</p>
+              <p class="text-[11px] text-[#6f6457] dark:text-[#c4b5a2]">Divida sua pizza em até 2 sabores</p>
+            </div>
+            <span id="badge-half-status" class="text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold">2 Sabores Permitido</span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 mb-3">
+            <button type="button" id="btn-flavor-single" onclick="setFlavorMode('single')" class="p-2.5 rounded-xl border text-center transition border-[#2f4a32] bg-[#2f4a32] text-white shadow font-bold text-xs">
+              🍕 1 Sabor Inteiro
+            </button>
+            <button type="button" id="btn-flavor-half" onclick="setFlavorMode('half')" class="p-2.5 rounded-xl border text-center transition border-[#dccdb2] bg-[#faf5ec] text-[#4e3220] font-bold text-xs dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#faf5ec]">
+              🌓 Meio a Meio (2 Sabores)
+            </button>
+          </div>
+
+          <!-- Seleção do 2º Sabor (aparece quando 'half' está ativo) -->
+          <div id="modal-second-flavor-box" class="hidden p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200 dark:bg-amber-950/20 dark:border-amber-900/40 space-y-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-amber-950 dark:text-amber-200">Escolha o 2º sabor:</span>
+              <span class="text-[10px] text-amber-700 dark:text-amber-400 font-semibold">Preço pelo maior valor</span>
+            </div>
+            <select id="modal-second-flavor-select" onchange="onSecondFlavorChange()" class="w-full p-2.5 rounded-xl border border-amber-300 bg-white text-xs font-bold text-slate-800 outline-none focus:border-amber-500 dark:bg-[#1a1412] dark:border-amber-800 dark:text-white">
+              <!-- Preenchido dinamicamente via JS com as pizzas disponíveis -->
+            </select>
+            <p id="modal-half-pricing-hint" class="text-[10px] text-amber-800 dark:text-amber-300 italic">
+              * Cobrado pelo sabor de maior valor entre os dois.
+            </p>
+          </div>
+        </div>
+
         <!-- Escolha de Borda Recheada Opcional -->
         <div id="modal-borda-section">
           <div class="flex items-center justify-between mb-2">
@@ -742,14 +776,14 @@
         </div>
       </section>
 
-      <!-- UPSELL INTELIGENTE / COMPRE JUNTO -->
-      <section id="cart-upsell-section" class="hidden rounded-2xl border border-orange-200/90 bg-gradient-to-br from-orange-50/90 via-amber-50/50 to-orange-50/80 p-3.5 shadow-sm dark:bg-[#251d18] dark:border-orange-900/50">
+      <!-- UPSELL GASTRONÔMICO / PARA ACOMPANHAR -->
+      <section id="cart-upsell-section" class="hidden rounded-2xl border border-amber-200/90 bg-amber-50/70 p-3.5 shadow-xs dark:bg-[#251d18] dark:border-amber-900/50">
         <div class="flex items-center justify-between mb-2">
           <div class="flex items-center gap-1.5">
-            <span class="text-base">🔥</span>
-            <h4 class="font-bold text-xs text-[#2f4a32] dark:text-[#faf5ec]">Que tal adicionar?</h4>
+            <span class="text-base">🍕</span>
+            <h4 class="font-bold text-xs text-[#2f4a32] dark:text-[#faf5ec]">Para acompanhar</h4>
           </div>
-          <span class="rounded-full bg-orange-100 text-orange-700 dark:bg-orange-950 dark:text-orange-300 px-2 py-0.5 text-[9px] font-black uppercase tracking-wider">Combina bem</span>
+          <span class="rounded-full bg-amber-100 text-amber-900 dark:bg-amber-950 dark:text-amber-300 px-2.5 py-0.5 text-[9px] font-bold uppercase tracking-wider">Dica da Casa</span>
         </div>
         <div id="cart-upsell-items" class="space-y-2">
           <!-- Renderizado dinamicamente via JS -->
@@ -784,11 +818,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
           <div>
             <label class="block text-xs font-semibold mb-1 text-[#2f4a32] dark:text-[#faf5ec]">Seu nome *</label>
-            <input id="customer-name" type="text" placeholder="Nome e sobrenome" class="w-full px-3.5 py-2.5 rounded-xl border border-[#dccdb2] bg-[#faf5ec] text-xs text-[#2f4a32] outline-none focus:border-[#2f4a32] dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#faf5ec]">
+            <input id="customer-name" oninput="triggerAbandonedCartCapture()" type="text" placeholder="Nome e sobrenome" class="w-full px-3.5 py-2.5 rounded-xl border border-[#dccdb2] bg-[#faf5ec] text-xs text-[#2f4a32] outline-none focus:border-[#2f4a32] dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#faf5ec]">
           </div>
           <div>
             <label class="block text-xs font-semibold mb-1 text-[#2f4a32] dark:text-[#faf5ec]">WhatsApp / Telefone *</label>
-            <input id="customer-phone" type="tel" placeholder="(21) 99999-9999" class="w-full px-3.5 py-2.5 rounded-xl border border-[#dccdb2] bg-[#faf5ec] text-xs text-[#2f4a32] outline-none focus:border-[#2f4a32] dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#faf5ec]">
+            <input id="customer-phone" oninput="triggerAbandonedCartCapture()" type="tel" placeholder="(21) 99999-9999" class="w-full px-3.5 py-2.5 rounded-xl border border-[#dccdb2] bg-[#faf5ec] text-xs text-[#2f4a32] outline-none focus:border-[#2f4a32] dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#faf5ec]">
           </div>
         </div>
         <div>
@@ -895,43 +929,72 @@
     </div>
   </aside>
 
-  <!-- ==================== CATÁLOGO COMPLETO PIZZA DO JUCA ==================== -->
-  <div id="cart-drawer-overlay" class="hidden fixed inset-0 z-[90] bg-black/60 backdrop-blur-sm" onclick="closeCart()"></div>
-  <aside id="cart-drawer" class="fixed top-0 right-0 z-[100] h-full w-full max-w-md transform translate-x-full transition-transform duration-300 ease-in-out bg-[#faf5ec] border-l border-[#dccdb2] shadow-2xl flex flex-col dark:bg-[#1a1412] dark:border-[#382b24]">
-    <div class="p-5 border-b border-[#dccdb2] flex items-center justify-between dark:border-[#382b24]">
-      <div class="flex items-center gap-2">
-        <span class="text-xl">🛍️</span>
-        <h3 class="font-display text-xl font-bold text-[#2f4a32] dark:text-[#faf5ec]">Seu Pedido</h3>
+  <!-- ==================== MODAL SUGESTÃO DO FORNO (UPSELL PRÉ-PAGAMENTO) ==================== -->
+  <div id="modal-turbo-upsell" class="hidden fixed inset-0 z-[125] flex items-center justify-center bg-black/75 p-4 backdrop-blur-md">
+    <div class="w-full max-w-md rounded-[28px] border border-[#dccdb2] bg-[#faf5ec] p-6 shadow-2xl dark:bg-[#1a1412] dark:border-[#382b24] text-center relative overflow-hidden">
+      <!-- Ícone artesanal -->
+      <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-amber-100/80 border border-amber-200 text-amber-900 text-2xl shadow-sm dark:bg-amber-950/40 dark:border-amber-900 dark:text-amber-200">
+        🍕
       </div>
-      <button onclick="closeCart()" class="h-9 w-9 rounded-full bg-[#e8d9be] text-[#2f4a32] grid place-items-center font-bold hover:bg-[#dccdb2] transition dark:bg-white/10 dark:text-[#faf5ec]">
-        ✕
-      </button>
+      <span class="mt-3 inline-block rounded-full bg-[#2f4a32]/10 border border-[#2f4a32]/20 px-3 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-[#2f4a32] dark:bg-white/10 dark:border-white/20 dark:text-[#faf5ec]">
+        Sugestão do Forno • Para Acompanhar
+      </span>
+      <h3 class="mt-2 font-display text-2xl font-bold text-[#2f4a32] dark:text-[#faf5ec]">Vai uma bebidinha ou borda quentinha?</h3>
+      <p class="mt-1 text-xs text-[#6f6457] dark:text-[#c4b5a2] leading-relaxed">
+        Sua pizza já tá quase no forno! Dá tempo de colocar uma bebida trincando ou borda recheada:
+      </p>
+
+      <div class="mt-5 space-y-2.5 text-left" id="turbo-upsell-options">
+        <button type="button" onclick="selectAndAddTurboUpsell('upsell-borda')" class="group flex w-full items-center justify-between p-3.5 rounded-2xl border border-[#dccdb2] bg-white hover:border-[#2f4a32] hover:bg-amber-50/40 transition shadow-xs dark:bg-[#251d18] dark:border-[#382b24] dark:hover:border-amber-700">
+          <div class="flex items-center gap-3 min-w-0 pr-2">
+            <span class="text-2xl shrink-0">🧀</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-[#2f4a32] dark:text-[#faf5ec] truncate">Borda Recheada de Catupiry</div>
+              <div class="text-[11px] text-[#6f6457] dark:text-[#c4b5a2] truncate">Catupiry Original cremoso até a última fatia</div>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="text-xs font-black text-[#b23a26] dark:text-[#f87171]">+ R$ 12,00</div>
+            <div class="text-[10px] font-bold text-[#2f4a32] dark:text-[#faf5ec] group-hover:underline">+ Adicionar</div>
+          </div>
+        </button>
+
+        <button type="button" onclick="selectAndAddTurboUpsell('upsell-coca')" class="group flex w-full items-center justify-between p-3.5 rounded-2xl border border-[#dccdb2] bg-white hover:border-[#2f4a32] hover:bg-amber-50/40 transition shadow-xs dark:bg-[#251d18] dark:border-[#382b24] dark:hover:border-amber-700">
+          <div class="flex items-center gap-3 min-w-0 pr-2">
+            <span class="text-2xl shrink-0">🥤</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-[#2f4a32] dark:text-[#faf5ec] truncate">Coca-Cola 2L Trincando</div>
+              <div class="text-[11px] text-[#6f6457] dark:text-[#c4b5a2] truncate">Garrafa de 2 litros entregue bem gelada</div>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="text-xs font-black text-[#b23a26] dark:text-[#f87171]">+ R$ 14,00</div>
+            <div class="text-[10px] font-bold text-[#2f4a32] dark:text-[#faf5ec] group-hover:underline">+ Adicionar</div>
+          </div>
+        </button>
+
+        <button type="button" onclick="selectAndAddTurboUpsell('upsell-guarana')" class="group flex w-full items-center justify-between p-3.5 rounded-2xl border border-[#dccdb2] bg-white hover:border-[#2f4a32] hover:bg-amber-50/40 transition shadow-xs dark:bg-[#251d18] dark:border-[#382b24] dark:hover:border-amber-700">
+          <div class="flex items-center gap-3 min-w-0 pr-2">
+            <span class="text-2xl shrink-0">🥤</span>
+            <div class="truncate">
+              <div class="text-xs font-bold text-[#2f4a32] dark:text-[#faf5ec] truncate">Guaraná Antarctica 2L</div>
+              <div class="text-[11px] text-[#6f6457] dark:text-[#c4b5a2] truncate">O clássico bem geladinho de 2 litros</div>
+            </div>
+          </div>
+          <div class="text-right shrink-0">
+            <div class="text-xs font-black text-[#b23a26] dark:text-[#f87171]">+ R$ 12,00</div>
+            <div class="text-[10px] font-bold text-[#2f4a32] dark:text-[#faf5ec] group-hover:underline">+ Adicionar</div>
+          </div>
+        </button>
+      </div>
+
+      <div class="mt-5 pt-3 border-t border-[#dccdb2]/70 dark:border-[#382b24]">
+        <button type="button" onclick="bypassTurboUpsellAndPay()" class="text-xs font-bold text-[#6f6457] hover:text-[#2f4a32] dark:text-[#c4b5a2] dark:hover:text-white transition py-1">
+          Não quero adicionais, continuar para o pagamento →
+        </button>
+      </div>
     </div>
-
-    <div id="cart-items" class="flex-1 overflow-y-auto p-5 space-y-4">
-      <div id="cart-empty-state" class="text-center py-12">
-        <span class="text-5xl">🍕</span>
-        <p class="mt-4 font-bold text-[#2f4a32] dark:text-[#faf5ec]">Seu carrinho está vazio</p>
-        <p class="mt-1 text-xs text-[#6f6457] dark:text-[#c4b5a2]">Escolha pizzas deliciosas no cardápio!</p>
-      </div>
-    </div>
-
-    <div id="cart-footer" class="p-5 border-t border-[#dccdb2] bg-[#f1e7d5]/40 space-y-4 dark:border-[#382b24] dark:bg-white/5">
-      <div class="flex justify-between items-center text-sm font-bold text-[#2f4a32] dark:text-[#faf5ec]">
-        <span>Subtotal:</span>
-        <span id="cart-subtotal" class="font-display text-lg font-bold text-[#b23a26] dark:text-[#f87171]">R$ 0,00</span>
-      </div>
-
-      <div class="space-y-2">
-        <input id="customer-name" type="text" placeholder="Seu nome" class="w-full px-4 py-2.5 rounded-xl border border-[#dccdb2] bg-[#faf5ec] text-sm text-[#2f4a32] outline-none focus:border-[#2f4a32] dark:bg-[#251d18] dark:border-[#382b24] dark:text-[#faf5ec]">
-        <input id="customer-address" type="text" placeholder="Endereço para entrega (ou 'Retirada no balcão')" class="w-full px-4 py-2.5 rounded-xl border border-[#dccdb2] bg-[#faf5ec] text-sm text-[#2f4a32] outline-none focus:border-[#2f4a32] dark:bg-[#251d18] dark:border-[#382b24] dark:text-[#faf5ec]">
-      </div>
-
-      <button onclick="openPaymentModal()" class="w-full py-4 rounded-full bg-[#009ee3] hover:bg-[#0082c4] text-white font-bold text-base flex items-center justify-center gap-2 shadow-lg transition active:scale-95">
-        <span>Pagar com segurança 🔒</span>
-      </button>
-    </div>
-  </aside>
+  </div>
 
   <!-- ==================== MODAL PAGAMENTO MERCADO PAGO BRICKS ==================== -->
   <div id="modal-payment" class="hidden fixed inset-0 z-[130] flex items-end sm:items-center justify-center bg-black/70 backdrop-blur-sm p-0 sm:p-4">
@@ -993,46 +1056,54 @@
     </div>
   </div>
 
-  <!-- MODAL DE SUCESSO & CLUBE DE ANIVERSÁRIO (10% OFF) -->
+  <!-- MODAL DE SUCESSO & CLUBE DE ANIVERSÁRIO -->
   <div id="modal-order-success" class="hidden fixed inset-0 z-[120] flex items-center justify-center bg-black/75 p-4 backdrop-blur-md">
     <div class="w-full max-w-md rounded-[28px] border border-[#dccdb2] bg-[#faf5ec] p-6 shadow-2xl dark:bg-[#1a1412] dark:border-[#382b24] text-center relative overflow-hidden">
-      <div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-emerald-100 text-3xl shadow-sm">
+      <div class="mx-auto grid h-16 w-16 place-items-center rounded-2xl bg-emerald-100 text-3xl shadow-sm dark:bg-emerald-950/40">
         🍕
       </div>
-      <span class="mt-4 inline-block rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-300">
-        ✅ Pedido Confirmado!
+      <span class="mt-4 inline-block rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-emerald-800 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-300">
+        Pedido Confirmado!
       </span>
-      <h3 class="mt-2 text-xl font-black text-[#2f4a32] dark:text-[#faf5ec]">Pizza do Juca no forno!</h3>
-      <p id="success-summary-text" class="mt-1 text-xs text-[#6f6457] dark:text-[#c4b5a2]">
-        Seu pedido foi enviado para o WhatsApp da pizzaria e já está na fila de preparo.
+      <h3 class="mt-2 font-display text-2xl font-bold text-[#2f4a32] dark:text-[#faf5ec]">Pizza do Juca no forno!</h3>
+      <p id="success-summary-text" class="mt-1 text-xs text-[#6f6457] dark:text-[#c4b5a2] leading-relaxed">
+        Seu pedido foi confirmado e o pizzaiolo já está abrindo sua massa no capricho.
       </p>
 
+      <!-- BOTÃO DE RASTREIO AO VIVO EM TEMPO REAL -->
+      <div class="mt-4">
+        <a id="success-tracking-btn" href="/rastreio/?id=1048" class="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#2f4a32] hover:bg-[#243a26] text-white font-extrabold text-sm py-3.5 shadow-lg shadow-[#2f4a32]/20 transition active:scale-95">
+          <span>🛵 Acompanhar Pedido ao Vivo</span>
+          <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded-full font-black uppercase">Tempo Real</span>
+        </a>
+      </div>
+
       <!-- CARD DO CLUBE DE ANIVERSÁRIO (10% OFF) -->
-      <div class="mt-5 rounded-2xl border border-orange-200 bg-gradient-to-br from-orange-50 via-white to-amber-50 p-4 text-left shadow-sm dark:bg-[#251d18] dark:border-orange-900/40">
-        <div class="flex items-center gap-2">
+      <div class="mt-5 rounded-2xl border border-amber-200 bg-amber-50/70 p-4 text-left shadow-xs dark:bg-[#251d18] dark:border-amber-900/40">
+        <div class="flex items-center gap-2.5">
           <span class="text-2xl">🎂</span>
           <div>
-            <h4 class="text-xs font-black text-orange-950 dark:text-orange-300">Clube de Aniversário • 10% OFF</h4>
-            <p class="text-[10px] text-orange-800 dark:text-orange-400">Cadastre seu aniversário e ganhe um cupom de 10% no seu dia especial!</p>
+            <h4 class="text-xs font-bold text-[#2f4a32] dark:text-[#faf5ec]">Faz aniversário esse mês?</h4>
+            <p class="text-[10px] text-[#6f6457] dark:text-[#c4b5a2]">Cadastre sua data de aniversário e ganhe 10% de presente pra comemorar com pizza do Juca!</p>
           </div>
         </div>
         
         <div id="club-form-box" class="mt-3 space-y-2">
           <div>
-            <label class="block text-[10px] font-bold text-slate-700 dark:text-slate-300 mb-0.5">Sua data de aniversário *</label>
-            <input type="date" id="club-birthday-date" class="w-full h-9 rounded-xl border border-orange-300 bg-white px-3 text-xs font-bold text-slate-800 outline-none focus:border-orange-500 dark:bg-[#1a1412] dark:border-orange-800 dark:text-white">
+            <label class="block text-[10px] font-bold text-[#4e3220] dark:text-[#c4b5a2] mb-0.5">Sua data de aniversário</label>
+            <input type="date" id="club-birthday-date" class="w-full h-9 rounded-xl border border-[#dccdb2] bg-white px-3 text-xs font-bold text-[#2f4a32] outline-none focus:border-[#2f4a32] dark:bg-[#1a1412] dark:border-[#382b24] dark:text-white">
           </div>
-          <button type="button" onclick="saveBirthdayClub()" class="w-full h-9 rounded-xl bg-orange-500 hover:bg-orange-600 text-white font-extrabold text-xs shadow transition flex items-center justify-center gap-1.5 active:scale-95">
-            <span>🎁 Ativar Meu Cupom de Aniversário</span>
+          <button type="button" onclick="saveBirthdayClub()" class="w-full h-9 rounded-xl bg-[#b23a26] hover:bg-[#983020] text-white font-extrabold text-xs shadow transition flex items-center justify-center gap-1.5 active:scale-95">
+            <span>Garantir Meu Presente de Aniversário</span>
           </button>
         </div>
-        <p id="club-success-msg" class="hidden mt-2.5 p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] font-bold text-emerald-700 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-300 text-center">
-          ✨ Parabéns! Você ativou seu desconto de 10% para o seu aniversário!
+        <p id="club-success-msg" class="hidden mt-2.5 p-2 rounded-xl bg-emerald-50 border border-emerald-200 text-[11px] font-bold text-emerald-800 dark:bg-emerald-950/40 dark:border-emerald-800 dark:text-emerald-300 text-center">
+          Tudo certo! Aniversário guardado. No seu dia especial seu cupom de 10% estará liberado pra você festejar com a gente!
         </p>
       </div>
 
       <div class="mt-5">
-        <button type="button" onclick="closeSuccessCelebrationModal()" class="w-full py-3 rounded-xl bg-[#2f4a32] text-white font-bold text-xs hover:bg-[#243a26] transition">
+        <button type="button" onclick="closeSuccessCelebrationModal()" class="w-full py-3 rounded-xl border border-[#dccdb2] bg-white text-[#2f4a32] font-bold text-xs hover:bg-[#e8d9be]/30 transition dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#faf5ec]">
           Continuar no cardápio
         </button>
       </div>
@@ -2184,27 +2255,27 @@
   },
   {
     "id": "borda-borda-catupiry-externa-",
-    "name": "BORDA CATUPIRY (EXTERNA)",
+    "name": "Borda Catupiry Especial",
     "category": "bordas",
-    "desc": "Borda recheada externa especial para deixar sua pizza ainda mais deliciosa.",
+    "desc": "Borda recheada com Catupiry original cremoso e casquinha dourada.",
     "price": 12,
     "image": "assets/fatia-calabresa-catupiry.webp",
     "badge": "Borda Recheada"
   },
   {
     "id": "borda-borda-cheddar-externa-",
-    "name": "BORDA CHEDDAR (EXTERNA)",
+    "name": "Borda Cheddar Especial",
     "category": "bordas",
-    "desc": "Borda recheada externa especial para deixar sua pizza ainda mais deliciosa.",
+    "desc": "Borda recheada com cheddar cremoso e quentinho saindo do forno.",
     "price": 12,
     "image": "assets/fatia-calabresa-catupiry.webp",
     "badge": "Borda Recheada"
   },
   {
     "id": "bebida-coca-cola-original-2-l",
-    "name": "Coca-Cola Original 2 L",
+    "name": "Coca-Cola Original 2L",
     "category": "bebidas",
-    "desc": "Coca-cola de 2 litros\n",
+    "desc": "Garrafa de 2 litros entregue trincando de gelada.",
     "price": 15,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
@@ -2213,16 +2284,16 @@
     "id": "bebida-coca-cola-original-1-5l",
     "name": "Coca-Cola Original 1,5L",
     "category": "bebidas",
-    "desc": "Garrafa 1,5l",
+    "desc": "Garrafa de 1,5 litros super gelada.",
     "price": 11,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-coca-cola-zero-1-5l",
-    "name": "Coca-Cola zero 1,5L",
+    "name": "Coca-Cola Zero 1,5L",
     "category": "bebidas",
-    "desc": "Garrafa 1,5l",
+    "desc": "Zero açúcar, garrafa de 1,5 litros bem gelada.",
     "price": 11,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
@@ -2231,52 +2302,52 @@
     "id": "bebida-coca-cola-retorn-vel-2l",
     "name": "Coca-Cola Retornável 2L",
     "category": "bebidas",
-    "desc": "Garrafa Retornável 2l",
+    "desc": "Garrafa retornável de 2 litros bem gelada.",
     "price": 12,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
   },
   {
     "id": "bebida-suco-pronto-guaracamp-guaran-285ml",
-    "name": "Suco Pronto Guaracamp Guaraná 285ml",
+    "name": "Guaracamp Natural 285ml",
     "category": "bebidas",
-    "desc": "Embalagem 285ml",
+    "desc": "O tradicional copo de guaraná natural carioca bem geladinho.",
     "price": 2.5,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-suco-pronto-de-goiaba-marat-1l",
-    "name": "Suco Pronto de Goiaba Maratá 1L",
+    "name": "Suco de Goiaba Maratá 1L",
     "category": "bebidas",
-    "desc": "Caixa 1l",
+    "desc": "Néctar de goiaba refrescante em caixa de 1 litro.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-suco-pronto-sabor-p-ssego-marat-caixa-1l",
-    "name": "Suco Pronto Sabor Pêssego Maratá Caixa 1L",
+    "name": "Suco de Pêssego Maratá 1L",
     "category": "bebidas",
-    "desc": "Caixa 1L\n",
+    "desc": "Néctar de pêssego suave e refrescante em caixa de 1 litro.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-suco-pronto-uva-marat-1l",
-    "name": "Suco Pronto Uva Maratá 1L",
+    "name": "Suco de Uva Maratá 1L",
     "category": "bebidas",
-    "desc": "Embalagem 1L",
+    "desc": "Suco de uva integral refrescante em caixa de 1 litro.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida--gua-sem-g-s-1-5l-",
-    "name": "Água sem gás 1,5L",
+    "name": "Água Mineral sem Gás 1,5L",
     "category": "bebidas",
-    "desc": "Agua mineral sem gás em garrafa pet de 1,5l",
+    "desc": "Água mineral pura e cristalina, garrafa de 1,5L.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
@@ -2285,7 +2356,7 @@
     "id": "bebida-sukita-lim-o-2l",
     "name": "Sukita Limão 2L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Refrigerante de limão cítrico e bem geladinho de 2 litros.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
@@ -2294,7 +2365,7 @@
     "id": "bebida-sukita-laranja-2l",
     "name": "Sukita Laranja 2L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Refrigerante de laranja bem docinho e gelado de 2 litros.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
@@ -2303,43 +2374,43 @@
     "id": "bebida-sukita-uva-2l",
     "name": "Sukita Uva 2L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Refrigerante de uva bem gelado em garrafa de 2 litros.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
   },
   {
     "id": "bebida-guaran-2l",
-    "name": "Guaraná 2l",
+    "name": "Guaraná 2L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Garrafa de 2 litros servida bem gelada no ponto certo.",
     "price": 13,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
   },
   {
     "id": "bebida-guaran-ant-rtica-1-5l",
-    "name": "Guaraná Antártica 1,5L",
+    "name": "Guaraná Antarctica 1,5L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "O clássico guaraná brasileiro em garrafa de 1,5 litros bem gelada.",
     "price": 11,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-guaran-ant-rtica-1l",
-    "name": "Guaraná antártica 1L",
+    "name": "Guaraná Antarctica 1L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Garrafa de 1 litro bem gelada.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-fanta-guaran-1-5l",
-    "name": "Fanta guaraná 1,5L",
+    "name": "Fanta Guaraná 1,5L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Sabor refrescante de guaraná em garrafa de 1,5 litros geladinha.",
     "price": 11,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
@@ -2348,79 +2419,79 @@
     "id": "bebida-fanta-laranja-1-5l",
     "name": "Fanta Laranja 1,5L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Garrafa de 1,5 litros trincando de gelada.",
     "price": 11,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-fanta-uva-1-5l",
-    "name": "Fanta uva 1,5L",
+    "name": "Fanta Uva 1,5L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Garrafa de 1,5 litros bem gelada.",
     "price": 11,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-fanta-laranja-2-l",
-    "name": "Fanta Laranja 2 L",
+    "name": "Fanta Laranja 2L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Garrafa de 2 litros super gelada para dividir com a galera.",
     "price": 13,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
   },
   {
     "id": "bebida-fanta-uva-2l",
-    "name": "Fanta Uva 2l",
+    "name": "Fanta Uva 2L",
     "category": "bebidas",
-    "desc": "Fanta uva 2 litros ",
+    "desc": "Garrafa de 2 litros bem gelada.",
     "price": 12,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
   },
   {
     "id": "bebida-del-valle-1-5l",
-    "name": "Del valle 1,5L",
+    "name": "Del Valle 1,5L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Néctar de fruta bem gelado em garrafa de 1,5 litros.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-lipton-pessego-1-5l",
-    "name": "Lipton pessego 1,5L",
+    "name": "Chá Lipton Pêssego 1,5L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Chá gelado com sabor suave de pêssego, muito refrescante.",
     "price": 10,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-suco-dafruta-uva-1l",
-    "name": "Suco daFruta UVA 1L",
+    "name": "Suco daFruta Uva 1L",
     "category": "bebidas",
-    "desc": "Caixa de 1 Litro ",
+    "desc": "Caixa de 1 litro de suco de uva fresquinho.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-suco-dafruta-laranja-1l",
-    "name": "Suco daFruta LARANJA 1L",
+    "name": "Suco daFruta Laranja 1L",
     "category": "bebidas",
-    "desc": "Caixa de 1 Litro ",
+    "desc": "Caixa de 1 litro de suco de laranja bem gelado.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-suco-dafruta-caju-1l",
-    "name": "Suco daFruta CAJU 1L",
+    "name": "Suco daFruta Caju 1L",
     "category": "bebidas",
-    "desc": "Caixa de 1 Litro ",
+    "desc": "Caixa de 1 litro de suco de caju geladinho.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
@@ -2429,7 +2500,7 @@
     "id": "bebida-pepsi-black-1-5l",
     "name": "Pepsi Black 1,5L",
     "category": "bebidas",
-    "desc": "Pepsi Black 0 açucar",
+    "desc": "Zero açúcar, entregue bem gelada em garrafa de 1,5 litros.",
     "price": 10,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
@@ -2438,43 +2509,43 @@
     "id": "bebida-pepsi-2l",
     "name": "Pepsi 2L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Garrafa de 2 litros entregue trincando de gelada.",
     "price": 13,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
   },
   {
     "id": "bebida-refrigerante-pepsi-1-5l",
-    "name": "Refrigerante Pepsi 1,5L",
+    "name": "Pepsi Tradicional 1,5L",
     "category": "bebidas",
-    "desc": "Garrafa 1,5 litros",
+    "desc": "Garrafa de 1,5 litros super gelada.",
     "price": 10,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-pepsi-1-litro",
-    "name": "Pepsi 1 litro",
+    "name": "Pepsi 1 Litro",
     "category": "bebidas",
-    "desc": "pepsi de 1 litro",
+    "desc": "Garrafa de 1 litro bem gelada.",
     "price": 8,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": ""
   },
   {
     "id": "bebida-coca-cola-zero-2l",
-    "name": "Coca-cola zero 2l",
+    "name": "Coca-Cola Zero 2L",
     "category": "bebidas",
-    "desc": "Bebida bem gelada pronta para acompanhar seu pedido.",
+    "desc": "Zero açúcar em garrafa de 2 litros trincando de gelada.",
     "price": 15,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
   },
   {
     "id": "bebida-sprite-2l",
-    "name": "Sprite 2l",
+    "name": "Sprite 2L",
     "category": "bebidas",
-    "desc": "Sprite de dois litros",
+    "desc": "Garrafa de 2 litros bem gelada, super refrescante.",
     "price": 13,
     "image": "assets/combo-calabresa-guarana.webp",
     "badge": "2 Litros"
@@ -2746,6 +2817,8 @@
       if (p.prices) {
         modalProduct = p;
         selectedSize = 'grande';
+        flavorMode = 'single';
+        secondFlavorProduct = null;
         selectedBorda = 'none';
         selectedRemovals = [];
         modalQty = 1;
@@ -2757,6 +2830,8 @@
         document.getElementById('modal-product-desc').textContent = p.desc;
 
         renderModalSizes();
+        populateSecondFlavors();
+        updateFlavorButtons();
         updateBordaButtons();
         renderModalRemovals();
         calculateModalTotal();
@@ -2773,12 +2848,15 @@
       }
     }
 
+    let flavorMode = 'single';
+    let secondFlavorProduct = null;
+
     function renderModalSizes() {
       const container = document.getElementById('modal-variants-list');
       const sizes = [
         { key: 'broto', label: 'Broto (18cm)', desc: '1 sabor · 4 fatias', price: modalProduct.prices.broto },
         { key: 'media', label: 'Média (30cm)', desc: 'até 2 sabores · 8 fatias', price: modalProduct.prices.media },
-        { key: 'grande', label: 'Gigante (45cm)', desc: 'até 4 sabores · 8 fatias', price: modalProduct.prices.grande },
+        { key: 'grande', label: 'Gigante (45cm)', desc: 'até 2 sabores · 8 fatias', price: modalProduct.prices.grande },
       ];
 
       container.innerHTML = sizes.map(s => `
@@ -2792,8 +2870,80 @@
 
     function selectModalSize(sizeKey) {
       selectedSize = sizeKey;
+      if (selectedSize === 'broto' && flavorMode === 'half') {
+        flavorMode = 'single';
+      }
       renderModalSizes();
+      populateSecondFlavors();
+      updateFlavorButtons();
       calculateModalTotal();
+    }
+
+    function setFlavorMode(mode) {
+      if (selectedSize === 'broto' && mode === 'half') {
+        alert("O tamanho Broto (18cm) só permite 1 sabor! Para pedir Meio a Meio, selecione Média (30cm) ou Gigante (45cm).");
+        return;
+      }
+      flavorMode = mode;
+      updateFlavorButtons();
+      calculateModalTotal();
+    }
+
+    function updateFlavorButtons() {
+      const btnSingle = document.getElementById('btn-flavor-single');
+      const btnHalf = document.getElementById('btn-flavor-half');
+      const halfBox = document.getElementById('modal-second-flavor-box');
+      const badgeStatus = document.getElementById('badge-half-status');
+
+      if (selectedSize === 'broto') {
+        if (badgeStatus) {
+          badgeStatus.textContent = '1 Sabor Apenas';
+          badgeStatus.className = 'text-[10px] bg-amber-100 text-amber-800 dark:bg-amber-950/40 dark:text-amber-300 px-2 py-0.5 rounded-full font-bold';
+        }
+      } else {
+        if (badgeStatus) {
+          badgeStatus.textContent = '2 Sabores Permitido';
+          badgeStatus.className = 'text-[10px] bg-emerald-100 text-emerald-800 dark:bg-emerald-950/40 dark:text-emerald-300 px-2 py-0.5 rounded-full font-bold';
+        }
+      }
+
+      if (flavorMode === 'half') {
+        if (btnHalf) btnHalf.className = 'p-2.5 rounded-xl border text-center transition border-[#2f4a32] bg-[#2f4a32] text-white shadow font-bold text-xs';
+        if (btnSingle) btnSingle.className = 'p-2.5 rounded-xl border text-center transition border-[#dccdb2] bg-[#faf5ec] text-[#4e3220] font-bold text-xs dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#faf5ec]';
+        if (halfBox) halfBox.classList.remove('hidden');
+      } else {
+        if (btnSingle) btnSingle.className = 'p-2.5 rounded-xl border text-center transition border-[#2f4a32] bg-[#2f4a32] text-white shadow font-bold text-xs';
+        if (btnHalf) btnHalf.className = 'p-2.5 rounded-xl border text-center transition border-[#dccdb2] bg-[#faf5ec] text-[#4e3220] font-bold text-xs dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#faf5ec]';
+        if (halfBox) halfBox.classList.add('hidden');
+      }
+    }
+
+    function populateSecondFlavors() {
+      const select = document.getElementById('modal-second-flavor-select');
+      if (!select || !modalProduct) return;
+      const isDoce = modalProduct.category === 'doces';
+      const availablePizzas = allProducts.filter(p => p.prices && p.id !== modalProduct.id && (isDoce ? p.category === 'doces' : p.category !== 'doces'));
+      
+      select.innerHTML = availablePizzas.map(p => {
+        const pPrice = p.prices[selectedSize] || 0;
+        return `<option value="${p.id}">${p.name} (R$ ${pPrice.toFixed(2).replace('.', ',')})</option>`;
+      }).join('');
+
+      if (availablePizzas.length > 0) {
+        secondFlavorProduct = availablePizzas[0];
+      } else {
+        secondFlavorProduct = null;
+      }
+    }
+
+    function onSecondFlavorChange() {
+      const select = document.getElementById('modal-second-flavor-select');
+      if (!select) return;
+      const p = allProducts.find(item => item.id === select.value);
+      if (p) {
+        secondFlavorProduct = p;
+        calculateModalTotal();
+      }
     }
 
     function selectModalBorda(bordaKey) {
@@ -2852,7 +3002,15 @@
 
     function calculateModalTotal() {
       if (!modalProduct) return;
-      const basePrice = modalProduct.prices[selectedSize];
+      let basePrice = modalProduct.prices[selectedSize];
+      if (flavorMode === 'half' && secondFlavorProduct) {
+        const p2Price = secondFlavorProduct.prices[selectedSize] || basePrice;
+        basePrice = Math.max(basePrice, p2Price);
+        const hint = document.getElementById('modal-half-pricing-hint');
+        if (hint) {
+          hint.textContent = `* Sabores: 1/2 ${modalProduct.name} + 1/2 ${secondFlavorProduct.name} • Cobrado pelo maior: R$ ${basePrice.toFixed(2).replace('.', ',')}`;
+        }
+      }
       const bordaPrice = selectedBorda === 'none' ? 0 : 12;
       const total = (basePrice + bordaPrice) * modalQty;
       document.getElementById('modal-submit-btn').textContent = `Adicionar • R$ ${total.toFixed(2).replace('.', ',')}`;
@@ -2875,11 +3033,20 @@
         cheddar: 'Borda Cheddar (+R$ 12)'
       };
 
-      const basePrice = modalProduct.prices[selectedSize];
+      let basePrice = modalProduct.prices[selectedSize];
+      let itemName = modalProduct.name;
+      const detailsParts = [sizeLabels[selectedSize]];
+
+      if (flavorMode === 'half' && secondFlavorProduct) {
+        const p2Price = secondFlavorProduct.prices[selectedSize] || basePrice;
+        basePrice = Math.max(basePrice, p2Price);
+        itemName = `1/2 ${modalProduct.name} + 1/2 ${secondFlavorProduct.name}`;
+        detailsParts.push(`Meio a Meio: 1/2 ${modalProduct.name} • 1/2 ${secondFlavorProduct.name}`);
+      }
+
       const bordaPrice = selectedBorda === 'none' ? 0 : 12;
       const unitPrice = basePrice + bordaPrice;
 
-      const detailsParts = [sizeLabels[selectedSize]];
       if (selectedBorda !== 'none') detailsParts.push(bordaLabels[selectedBorda]);
       if (selectedRemovals.length > 0) detailsParts.push('Retirar: ' + selectedRemovals.join(', '));
       const note = document.getElementById('modal-item-notes').value.trim();
@@ -2889,14 +3056,40 @@
 
       for (let i = 0; i < modalQty; i++) {
         addToCartDirect({
-          id: `${modalProduct.id}-${selectedSize}-${selectedBorda}-${selectedRemovals.sort().join('-')}-${note}`,
-          name: modalProduct.name,
+          id: `${modalProduct.id}-${flavorMode}-${secondFlavorProduct ? secondFlavorProduct.id : 'none'}-${selectedSize}-${selectedBorda}-${selectedRemovals.sort().join('-')}-${note}`,
+          name: itemName,
           price: unitPrice,
           image: modalProduct.image,
           details: detailStr
         });
       }
       closeProductModal();
+    }
+
+    // ==========================================
+    // RECUPERADOR DE VENDAS AUTOMÁTICO (TRACKER)
+    // ==========================================
+    let _abandonedCartTimer = null;
+    window._orderCompleted = false;
+
+    function triggerAbandonedCartCapture() {
+      clearTimeout(_abandonedCartTimer);
+      _abandonedCartTimer = setTimeout(async () => {
+        const phone = (document.getElementById('customer-phone')?.value || '').trim();
+        const customer = (document.getElementById('customer-name')?.value || '').trim() || 'Cliente';
+        const cleanPhone = phone.replace(/\D/g, '');
+        if (cleanPhone.length >= 10 && cart.length > 0 && !window._orderCompleted) {
+          const payload = {
+            customer,
+            phone: cleanPhone,
+            items: cart.map(i => `${i.qty}x ${i.name}${i.details ? ' (' + i.details + ')' : ''}`),
+            total: cart.reduce((acc, i) => acc + (i.price * i.qty), 0)
+          };
+          if (window.JucaAPI && window.JucaAPI.trackAbandonedCart) {
+            window.JucaAPI.trackAbandonedCart(payload);
+          }
+        }
+      }, 120000);
     }
 
     function addToCartDirect(itemObj) {
@@ -2968,19 +3161,21 @@
     }
 
     const UPSELL_CATALOG = [
-      { id: 'upsell-coca', name: 'Coca-Cola 2L Trincando', price: 14.00, image: '/combo-calabresa-guarana.webp' },
-      { id: 'upsell-guarana', name: 'Guaraná Antarctica 2L', price: 12.00, image: '/combo-calabresa-guarana.webp' },
-      { id: 'upsell-borda', name: 'Borda Recheada Catupiry', price: 12.00, image: '/fatia-calabresa-catupiry.webp' },
-      { id: 'upsell-doce', name: 'Brotinho Nutella c/ Ninho', price: 29.90, image: '/hero-calabresa-catupiry.webp' }
+      { id: 'upsell-coca', name: 'Coca-Cola 2L Trincando', price: 14.00, image: 'assets/combo-calabresa-guarana.webp' },
+      { id: 'upsell-guarana', name: 'Guaraná Antarctica 2L', price: 12.00, image: 'assets/combo-calabresa-guarana.webp' },
+      { id: 'upsell-borda', name: 'Borda Recheada Catupiry', price: 12.00, image: 'assets/fatia-calabresa-catupiry.webp' },
+      { id: 'upsell-doce', name: 'Brotinho Chocolate e Morango', price: 29.90, image: 'assets/cardapio/chocolate-morango.webp' }
     ];
 
     function renderCartUpsell() {
       const section = document.getElementById('cart-upsell-section');
       const container = document.getElementById('cart-upsell-items');
-      if (!section || !container) return;
+      const drawerSection = document.getElementById('cart-drawer-upsell-section');
+      const drawerContainer = document.getElementById('cart-drawer-upsell-items');
 
       if (cart.length === 0) {
-        section.classList.add('hidden');
+        if (section) section.classList.add('hidden');
+        if (drawerSection) drawerSection.classList.add('hidden');
         return;
       }
 
@@ -2988,25 +3183,33 @@
       const available = UPSELL_CATALOG.filter(u => !cart.some(c => c.name.toLowerCase().includes(u.name.toLowerCase().slice(0, 8))));
 
       if (available.length === 0) {
-        section.classList.add('hidden');
+        if (section) section.classList.add('hidden');
+        if (drawerSection) drawerSection.classList.add('hidden');
         return;
       }
 
-      section.classList.remove('hidden');
-      container.innerHTML = available.slice(0, 2).map(u => `
-        <div class="flex items-center justify-between rounded-xl border border-orange-200/60 bg-white p-2 shadow-xs dark:bg-[#1a1412] dark:border-orange-950">
-          <div class="flex items-center gap-2 min-w-0 pr-2">
-            <img src="${u.image}" alt="${u.name}" class="size-9 rounded-lg object-cover shrink-0" onerror="this.onerror=null; this.src='assets/hero-calabresa-catupiry.webp';">
+      const html = available.slice(0, 2).map(u => `
+        <div class="flex items-center justify-between rounded-xl border border-[#dccdb2] bg-white p-2.5 shadow-xs dark:bg-[#1a1412] dark:border-[#382b24]">
+          <div class="flex items-center gap-2.5 min-w-0 pr-2">
+            <img src="${u.image}" alt="${u.name}" class="size-10 rounded-lg object-cover shrink-0" onerror="this.onerror=null; this.src='assets/hero-calabresa-catupiry.webp';">
             <div class="truncate">
-              <h5 class="text-xs font-black text-slate-900 dark:text-slate-100 truncate">${u.name}</h5>
-              <p class="text-[10px] text-orange-600 dark:text-orange-400 font-extrabold">+ R$ ${u.price.toFixed(2).replace('.', ',')}</p>
+              <h5 class="text-xs font-bold text-[#2f4a32] dark:text-[#faf5ec] truncate">${u.name}</h5>
+              <p class="text-[10px] text-[#b23a26] dark:text-[#f87171] font-bold">+ R$ ${u.price.toFixed(2).replace('.', ',')}</p>
             </div>
           </div>
-          <button type="button" onclick="addUpsellItem('${u.id}')" class="shrink-0 rounded-xl bg-orange-500 hover:bg-orange-600 px-2.5 py-1 text-[10px] font-extrabold text-white shadow-xs transition active:scale-95">
+          <button type="button" onclick="addUpsellItem('${u.id}')" class="shrink-0 rounded-xl bg-[#2f4a32] hover:bg-[#243a26] px-3 py-1.5 text-[10px] font-bold text-white shadow-xs transition active:scale-95">
             + Adicionar
           </button>
         </div>
       `).join('');
+
+      if (section && container) {
+        section.classList.remove('hidden');
+        container.innerHTML = html;
+      }
+      if (drawerSection && drawerContainer) {
+        drawerSection.classList.remove('hidden');
+        drawerContainer.innerHTML = html;
     }
 
     window.addUpsellItem = function(upsellId) {
@@ -3176,9 +3379,27 @@
       };
     }
 
+    let _upsellPromptShown = false;
+
     function openPaymentModal() {
       const order = validateOrderFields();
       if (!order) return;
+
+      // Se ainda não ofereceu o turbo upsell e o cliente não pegou borda ou bebida:
+      const hasDrinkOrBorder = cart.some(i => {
+        const n = (i.name || '').toLowerCase();
+        return n.includes('coca') || n.includes('guaraná') || n.includes('guarana') || n.includes('refrigerante') || n.includes('refri') || n.includes('borda') || n.includes('2l') || n.includes('bebida');
+      });
+
+      if (!_upsellPromptShown && !hasDrinkOrBorder) {
+        _upsellPromptShown = true;
+        closeCart();
+        const modalUpsell = document.getElementById('modal-turbo-upsell');
+        if (modalUpsell) {
+          modalUpsell.classList.remove('hidden');
+          return;
+        }
+      }
 
       window._currentOrderData = order;
 
@@ -3196,6 +3417,23 @@
       if (paymentModal) paymentModal.classList.remove('hidden');
 
       initPaymentBricks();
+    }
+
+    function selectAndAddTurboUpsell(upsellId) {
+      addUpsellItem(upsellId);
+      const modalUpsell = document.getElementById('modal-turbo-upsell');
+      if (modalUpsell) modalUpsell.classList.add('hidden');
+      _upsellPromptShown = true;
+      setTimeout(() => {
+        openPaymentModal();
+      }, 150);
+    }
+
+    function bypassTurboUpsellAndPay() {
+      const modalUpsell = document.getElementById('modal-turbo-upsell');
+      if (modalUpsell) modalUpsell.classList.add('hidden');
+      _upsellPromptShown = true;
+      openPaymentModal();
     }
 
     function closePaymentModal() {
@@ -3484,8 +3722,12 @@
     window.openSuccessCelebrationModal = function(data) {
       const modal = document.getElementById('modal-order-success');
       const text = document.getElementById('success-summary-text');
+      const trackBtn = document.getElementById('success-tracking-btn');
       if (text) {
         text.innerHTML = `O pedido <strong>#${data.orderId}</strong> de <strong>${data.customerName}</strong> foi <strong>confirmado e pago</strong> com sucesso! Ele já está na tela da cozinha do Juca.`;
+      }
+      if (trackBtn && data.orderId) {
+        trackBtn.href = `/rastreio/?id=${data.orderId}`;
       }
       if (modal) modal.classList.remove('hidden');
     };

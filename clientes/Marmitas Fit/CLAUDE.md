@@ -20,6 +20,8 @@ Cliente novo / Food Delivery Saudável & Gastronomia
 - Entregas de site e cardápio: `site/`
   - `site/index.html` — Cardápio digital oficial para os clientes.
   - `site/painel.html` — Painel Operacional completo do Eduardo Fiocchi.
+- **Contrato Jurídico:**
+  - `contrato - parceria food delivery e consultoria cmv - marmitas fit - versão final.md` — Instrumento jurídico blindado de parceria tecnológica, food delivery e consultoria operacional/CMV.
 - **Links Públicos Ativos na Web (Deploy 100% Automático via GitHub):**
   - Cardápio da Loja: `https://rhenanjogafacil123.github.io/marmitasfit/`
   - Painel do Gerente: `https://rhenanjogafacil123.github.io/marmitasfit/painel.html`

@@ -24,6 +24,7 @@ Cliente ativo / Operação Piloto Food Delivery & Audiovisual
 - `backend-api/` — API REST em Node.js/Express com banco de dados SQLite local na VPS.
 - `atualizar-tudo-vps.bat` e `atualizar-tudo-vps.ps1` — Scripts de deploy automatizado 1-clique para a VPS.
 - `frames/`, `trilhas/`, `videos/`, `capas/` — Acervo e produções audiovisuais de campo (drone, repórter, vídeos comerciais de produto).
+- `contrato - parceria food delivery e audiovisual - pizza do juca - versão final.md` — Instrumento jurídico blindado de parceria tecnológica, food delivery e cessão de imagem.
 
 ---
 

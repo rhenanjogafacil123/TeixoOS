@@ -127,6 +127,7 @@ Quando o usuário pedir skill nova:
 - **Dia Operacional Noturno:** Corte às 05:00 da manhã (pedidos da madrugada pertencem ao turno da noite anterior).
 - **Comandas Impressas Segmentadas:** Via Cozinha (sem valores monetários, foco em preparo e alertas) + Via Motoboy (endereço com referência, conferência, destaque de cobrança/pago) + Balcão. Botão 1-clique [ ⚡ As 2 Vias ].
 - **Central de Despacho:** Visão em tempo real das telas dos celulares dos motoboys (pedidos em espera no balcão e rota ativa com WhatsApp do cliente). Zero mapas decorativos pesados.
+- **Checkout Transparente & Pagamento Antecipado:** Pagamento 100% online integrado direto na tela via Mercado Pago Bricks (PIX dinâmico com QR Code e Cartão). O pedido só é despachado para a fila KDS da cozinha após confirmação/aprovação bancária, eliminando cobrança manual no WhatsApp ou fiado na entrega.
 - **Performance e Custo Zero:** Frontend estático ultrarrápido + API REST/SQLite com fallback local (`localStorage`), sem requisições caras ou dependência de nuvem pesada.
 - **Controle de Estoque & CMV Semanal (Quinta-feira):** Curva ABC (Classe A diário; B e C por cardápio), Ordem de Produção antecipada em lote com fatores de cocção (perdas e rendimento de insumos crus).
 
@@ -138,11 +139,17 @@ Quando o usuário pedir skill nova:
 - `marketing/` — conteúdo institucional e posicionamento da Teixo
 - `saidas/` — arquivos finais, relatórios e entregas
 - `dados/` — relatórios, dados de clientes e métricas
+- `scripts/` — scripts utilitários e automações da operação (ex: gerador de delivery)
+- `templates/` — templates de delivery-store, presets gastronômicos e catálogo de skills
 - `.agent/skills/` — catálogo de skills e automações operacionais
 
 **Regra de Nomenclatura e Limpeza de Arquivos (Todos os Projetos):**
 - Zero underline (`_`) em nomes de arquivos gerados ou salvos.
 - Nomes legíveis e limpos com hífen e espaços (ex: `capa - tema - versão final.jpg`).
 - Apagar rascunhos e versões intermediárias ao concluir, mantendo apenas a versão final.
+
+**Regra de Comandos e Performance da Interface:**
+- Proibido rodar processos em segundo plano (background tasks, daemons ou servidores locais) que deixem a tela do usuário travada com barras de carregamento contínuas.
+- Todas as ações e comandos devem ser diretos, rápidos e síncronos, liberando o prompt do usuário no mesmo instante.
 
 

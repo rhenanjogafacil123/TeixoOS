@@ -31,6 +31,12 @@ Skills externas prontas pra instalar. Use como referencia ao criar skills novas 
 **Como instalar:** Ja vem nativo no Claude Code. Chamar com `/frontend-design`
 **Fonte:** Skill nativa do Claude Code
 
+### Clonar Loja (delivery completo em segundos)
+**O que faz:** Clona e gera uma operação completa de food delivery (hamburgueria, pizzaria, pastelaria, lanchonete, açaiteria, marmitas, sushi) em segundos a partir da matriz da Teixo. Cria cardápio digital com Checkout Bricks do Mercado Pago, painel Kanban, notinhas térmicas dual, despacho de motoboy e backend SQLite.
+**Bom pra:** Subir e cadastrar novos restaurantes parceiros em tempo recorde com zero atrito comercial e infraestrutura ultrarrápida.
+**Como instalar:** Instalada localmente. Chamar com `/clonar-loja`
+**Fonte:** Skill desenvolvida sob medida para a Teixo
+
 ---
 
 ## Criar visuais e arte
@@ -50,6 +56,12 @@ Skills externas prontas pra instalar. Use como referencia ao criar skills novas 
 **Bom pra:** Extrair dados de contratos, criar relatorios em PDF, preencher formularios
 **Como instalar:** Ja vem nativo no Claude Code. Chamar com `/pdf`
 **Fonte:** Skill nativa do Claude Code
+
+### Contratos Teixo (jurídico blindado)
+**O que faz:** Gera contratos de alto padrão advocatício para a Teixo (Food Delivery R$ 0,67/pedido, Tráfego Pago, Automações CRM, Captação de Rua/Drone, Google Meu Negócio, Consultoria de Estoque/CMV ou Combo 360º), com blindagem operacional, LGPD, SLA e Título Executivo Extrajudicial (Art. 784 CPC).
+**Bom pra:** Fechar novos parceiros de delivery, clientes de tráfego, autorizações de imagem para gravações de rua e proteção jurídica total da operação.
+**Como instalar:** Instalada localmente. Chamar com `/contratos`
+**Fonte:** Skill desenvolvida sob medida para a Teixo
 
 ### DOCX
 **O que faz:** Cria e edita documentos Word com formatacao, tracked changes e comentarios.

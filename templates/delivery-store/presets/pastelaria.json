@@ -1,0 +1,123 @@
+{
+  "niche": "pastelaria",
+  "name": "Pastelaria Crocante",
+  "segment": "Pastelaria & Caldo de Cana",
+  "kitchenSector": "FRITURA / MONTAGEM",
+  "theme": {
+    "primary": "#d97706",
+    "primaryHover": "#b45309",
+    "accent": "#15803d",
+    "bgLight": "#faf5ec",
+    "cardLight": "#ffffff",
+    "bgDark": "#14120e",
+    "cardDark": "#1f1b14",
+    "borderDark": "#332c1f",
+    "textLight": "#2b1c14",
+    "textDark": "#f5ede4"
+  },
+  "categories": [
+    { "id": "especiais", "name": "Pastéis Especiais (30cm)", "icon": "🥟" },
+    { "id": "tradicionais", "name": "Pastéis Tradicionais (20cm)", "icon": "🥟" },
+    { "id": "doces", "name": "Pastéis Doces", "icon": "🍫" },
+    { "id": "caldo-cana", "name": "Caldo de Cana & Bebidas", "icon": "🥤" },
+    { "id": "porcoes", "name": "Mini Pastéis & Porções", "icon": "🍽️" }
+  ],
+  "upsell": [
+    { "id": "upsell-caldo-500", "name": "Caldo de Cana com Limão 500ml", "price": 9.00, "desc": "Moído na hora, geladinho e com toque de limão", "icon": "🥤" },
+    { "id": "upsell-molho-pimenta", "name": "Molho de Pimenta Artesanal da Casa", "price": 3.50, "desc": "Pote 40ml de pimenta caseira aromática", "icon": "🌶️" },
+    { "id": "upsell-pastel-nutella", "name": "Mini Pastel Nutella com Banana", "price": 10.00, "desc": "Crocante por fora e transbordando Nutella", "icon": "🍫" },
+    { "id": "upsell-guarana-lata", "name": "Guaraná Antarctica 350ml", "price": 6.50, "desc": "Lata gelada", "icon": "🥤" }
+  ],
+  "products": [
+    {
+      "id": "pas-mega-costela",
+      "name": "Super Pastel de Costela com Catupiry (30cm)",
+      "category": "especiais",
+      "desc": "Costela bovina desfiada marinada por 12 horas, queijo mussarela derretido e Catupiry legítimo. Massa caseira ultra crocante e sequinha.",
+      "price": 27.90,
+      "badge": "O Campeão",
+      "featured": true,
+      "image": "assets/produtos/pastel-costela.webp"
+    },
+    {
+      "id": "pas-carne-seca-queijo",
+      "name": "Pastel Carne Seca com Queijo Coalho (30cm)",
+      "category": "especiais",
+      "desc": "Carne seca desfiada e dessalgada no ponto certo, cubos de queijo coalho tostado e cheiro verde fresco.",
+      "price": 25.90,
+      "badge": "Mais Pedido",
+      "featured": true,
+      "image": "assets/produtos/pastel-carne-seca.webp"
+    },
+    {
+      "id": "pas-carne-ovo",
+      "name": "Pastel de Carne com Ovo (20cm)",
+      "category": "tradicionais",
+      "desc": "Carne moída de primeira bem temperada, pedacinhos de ovo cozido e azeitonas picadas.",
+      "price": 14.90,
+      "badge": "Tradicional",
+      "featured": false,
+      "image": "assets/produtos/pastel-carne.webp"
+    },
+    {
+      "id": "pas-frango-catupiry",
+      "name": "Pastel Frango Desfiado com Catupiry (20cm)",
+      "category": "tradicionais",
+      "desc": "Frango desfiado suculento, molho suave de tomate e Catupiry cremoso.",
+      "price": 14.90,
+      "badge": "Sucesso",
+      "featured": true,
+      "image": "assets/produtos/pastel-frango.webp"
+    },
+    {
+      "id": "pas-pizza",
+      "name": "Pastel de Pizza (20cm)",
+      "category": "tradicionais",
+      "desc": "Mussarela farta, rodelas de tomate fresco, orégano chileno e presunto de qualidade.",
+      "price": 13.90,
+      "badge": "",
+      "featured": false,
+      "image": "assets/produtos/pastel-pizza.webp"
+    },
+    {
+      "id": "pas-nutella-morango",
+      "name": "Pastel de Nutella com Morango",
+      "category": "doces",
+      "desc": "Massa folhadinha crocante recheada com Nutella pura e pedaços de morango fresco.",
+      "price": 17.90,
+      "badge": "Irresistível",
+      "featured": true,
+      "image": "assets/produtos/pastel-nutella.webp"
+    },
+    {
+      "id": "pas-romeu-julieta",
+      "name": "Pastel Romeu & Julieta",
+      "category": "doces",
+      "desc": "Goiabada cascão cremosa derretida com generosa fatia de queijo minas padrão.",
+      "price": 13.90,
+      "badge": "",
+      "featured": false,
+      "image": "assets/produtos/pastel-romeu.webp"
+    },
+    {
+      "id": "caldo-cana-1l",
+      "name": "Garrafa de Caldo de Cana Puro 1 Litro",
+      "category": "caldo-cana",
+      "desc": "Caldo de cana extraído na hora em moenda de inox. Opção puro, com limão ou com abacaxi.",
+      "price": 16.00,
+      "badge": "Geladinho",
+      "featured": true,
+      "image": "assets/produtos/caldo-1l.webp"
+    },
+    {
+      "id": "porcao-mini-12",
+      "name": "Porção 12 Mini Pastéis Misto",
+      "category": "porcoes",
+      "desc": "12 mini pastéis de festa (6 de carne e 6 de queijo) com massa fininha e crocante. Acompanha vinagrete da casa.",
+      "price": 28.90,
+      "badge": "Pra Petiscar",
+      "featured": false,
+      "image": "assets/produtos/porcao-mini.webp"
+    }
+  ]
+}

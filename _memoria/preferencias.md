@@ -34,14 +34,22 @@ Quando o contexto for criar roteiros, ideias ou direcionamentos específicos par
 
 ---
 
-## 4. Padrão Estético e Visual
+## 4. Maleabilidade de Atendimento (Presencial vs. 100% Digital)
+
+Ao conduzir diagnósticos, criar propostas, alinhar entregas ou redigir contratos, calibrar a abordagem conforme a natureza do cliente:
+- **Cliente Presencial (Comércio Local / Físico):** Foco em chão de loja, balcão, caixa, cozinha, presença física, rotina de rua (PL & Mateus), tomadas de drone e movimentação da vizinhança.
+- **Cliente 100% Digital (Remoto):** Foco em esteiras digitais, métricas de retenção, audiência, canais de nuvem/YouTube, campanhas remotas, automações de CRM e reuniões/entregas virtuais.
+
+---
+
+## 5. Padrão Estético e Visual
 
 - **Conceito:** Moderno, contemporâneo, sofisticado, tecnológico e premium.
 - **Percepção:** Nada comum ou genérico — acabamento de alto nível que transmita que foi construído por especialistas avançados.
 
 ---
 
-## 5. Nomenclatura e Organização de Arquivos (Padrão Geral)
+## 6. Nomenclatura e Organização de Arquivos (Padrão Geral)
 
 - **Zero underline (`_`):** Nunca usar underline em nomes de arquivos baixados, criados ou gerados.
 - **Nomes limpos, bonitos e humanos:** Usar separação por hífen e espaços em português legível (ex: `capa - nome do tema - versão final.jpg`).
@@ -49,7 +57,7 @@ Quando o contexto for criar roteiros, ideias ou direcionamentos específicos par
 
 ---
 
-## 6. Produção Audiovisual & Capas de Reels (Padrão Teixo)
+## 7. Produção Audiovisual & Capas de Reels (Padrão Teixo)
 
 - **Safe Zone Obrigatória nas Capas:** Textos em capas de Reels nunca devem ficar no terço inferior (para não serem cobertos pela legenda do post, botões e nome de usuário). Devem ficar na zona segura central/terço médio, visíveis perfeitamente em 1:1, 4:5 e 9:16.
 - **Fidelidade Facial Real:** Em projetos com pessoas públicas/clientes (ex: Beto Chaves), nunca usar rostos genéricos gerados por IA. Basear-se rigorosamente em fotos e frames reais de alta resolução da pessoa.
@@ -60,7 +68,7 @@ Quando o contexto for criar roteiros, ideias ou direcionamentos específicos par
 
 ---
 
-## 7. Vídeos Comerciais 3D de Produtos, Gastronomia & Earth Zoom (Skill `/video-produto`)
+## 8. Vídeos Comerciais 3D de Produtos, Gastronomia & Earth Zoom (Skill `/video-produto`)
 
 - **Formato Padrão:** Vertical 9:16 (1080x1920) otimizado para Reels, TikTok e YouTube Shorts.
 - **Visual Gastronômico & Produto:** Estética premium, lente macro, iluminação de contorno (*rim light*), fumaça/vapor quente subindo, queijo derretendo, gotas de condensação em latas de bebida e foco de apetite agressivo.

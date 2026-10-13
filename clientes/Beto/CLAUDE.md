@@ -19,6 +19,7 @@ Cliente ativo / Esteira de produção audiovisual
 ## Onde salvar o que
 
 - Briefings e regras operacionais: `clientes/Beto/briefing.md` e `clientes/Beto/CLAUDE.md`
+- Contrato jurídico: `clientes/Beto/contrato - producao audiovisual e cessao de imagem - beto chaves - versão final.md`
 - Banco de trilhas sonoras: `clientes/Beto/trilhas/`
 - Banco de capas cinematográficas: `clientes/Beto/capas/` (`capa - [tema] - versão final.jpg`)
 - Frames e capturas de validação: `clientes/Beto/frames/`

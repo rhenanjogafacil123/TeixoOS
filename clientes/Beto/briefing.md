@@ -53,4 +53,5 @@ A referência enviada (`referencia-estilo.png`) segue a estética consagrada de 
 - [x] **Capa 01 (11/10/2026):** *Cicatrizes Invisíveis — O que um policial esconde* (Arquivo: `capas/capa - cicatrizes invisíveis - versão final.jpg`)
 - [x] **Corte & Capa 02 (12/10/2026):** *Fração de Segundos — O medo de apertar o gatilho* (Vídeo: `videos/reels - fração de segundos - versão final.mp4`, Capa: `capas/capa - fração de segundos - versão final.jpg`)
 - [x] **Corte & Capa 03 (12/10/2026):** *Aquele Suor, Aquele Medo — O que nenhum livro ensina* (Vídeo: `videos/reels - aquele suor aquele medo - versão final.mp4`, Capa: `capas/capa - aquele suor aquele medo - versão final.jpg`)
+- [x] **Corte & Capa 04 (13/10/2026):** *O Alvo Não Atira de Volta — A verdade que nenhum policial conta* (Vídeo: `videos/reels - o alvo não atira de volta - versão final.mp4`, Capa: `capas/capa - o alvo não atira de volta - versão final.jpg`)
 - [ ] Próximos vídeos / temas de corte conforme esteira de produção.

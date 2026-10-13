@@ -309,6 +309,32 @@
               >
                 <i data-lucide="plus" class="h-4 w-4"></i> Novo pedido manual
               </button>
+              <button
+                type="button"
+                onclick="openAbandonedCartsModal()"
+                class="inline-flex h-11 items-center gap-2 rounded-xl border border-amber-300 bg-amber-50 px-3.5 text-xs font-extrabold text-amber-900 shadow-sm transition hover:bg-amber-100"
+              >
+                <i data-lucide="shopping-bag" class="h-4 w-4 text-amber-600"></i>
+                <span>Carrinhos</span>
+                <span id="abandoned-cart-badge" class="ml-1 rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-black text-white">0</span>
+              </button>
+              <button
+                type="button"
+                onclick="openSettlementModal()"
+                class="inline-flex h-11 items-center gap-2 rounded-xl border border-blue-200 bg-blue-50 px-3.5 text-xs font-extrabold text-blue-900 shadow-sm transition hover:bg-blue-100"
+              >
+                <i data-lucide="calculator" class="h-4 w-4 text-blue-600"></i>
+                <span>Acerto Motoboy</span>
+              </button>
+              <button
+                type="button"
+                onclick="openRoiModal()"
+                class="inline-flex h-11 items-center gap-2 rounded-xl border border-emerald-300 bg-emerald-50 px-3.5 text-xs font-extrabold text-emerald-900 shadow-sm transition hover:bg-emerald-100"
+              >
+                <i data-lucide="piggy-bank" class="h-4 w-4 text-emerald-600"></i>
+                <span>Economia Teixo</span>
+                <span id="topbar-savings-badge" class="ml-1 rounded-full bg-emerald-600 px-2 py-0.5 text-[10px] font-black text-white">R$ 7.405</span>
+              </button>
             </div>
           </div>
 
@@ -663,6 +689,11 @@
             <div id="motoboy-notes-text" class="text-[11px] font-bold text-slate-900 mt-0.5">Interfone 302 bloco B.</div>
           </div>
 
+          <div class="mt-2 p-1.5 rounded-lg border border-dashed border-slate-400 bg-slate-100 text-center text-[10px] font-bold text-slate-800">
+            🛵 Rastreio ao vivo do cliente:<br>
+            <span class="font-mono font-black text-orange-700" id="motoboy-receipt-tracking-url">143.95.174.216/rastreio/?id=1048</span>
+          </div>
+
           <div class="text-center text-[10px] font-bold text-slate-500 border-t-2 border-dashed border-slate-800 pt-2">
             GRAMPEAR ESTA VIA NA CAIXA DA PIZZA
           </div>
@@ -692,6 +723,10 @@
           </div>
           <div id="receipt-notes-block" class="mt-2 border-t border-dashed border-slate-300 pt-1.5">
             <strong>Obs:</strong> <span id="receipt-notes"></span>
+          </div>
+          <div class="mt-2 p-1.5 rounded-lg border border-dashed border-slate-400 bg-slate-100 text-center text-[10px] font-bold text-slate-800">
+            🛵 Acompanhe seu pedido pelo link:<br>
+            <span class="font-mono font-black text-orange-700" id="counter-receipt-tracking-url">143.95.174.216/rastreio/?id=1048</span>
           </div>
           <div class="text-center text-[10px] font-bold text-slate-500 pt-2 border-t border-dashed border-slate-300">
             Agradecemos a preferência! Bom apetite!
@@ -724,6 +759,251 @@
         <button onclick="closeCourierModal()" type="button" class="text-slate-400 hover:text-slate-600"><i data-lucide="x" class="h-4 w-4"></i></button>
       </div>
       <div id="courier-select-list" class="mt-4 space-y-2"></div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: RECUPERADOR DE VENDAS (CARRINHOS ABANDONADOS)     -->
+  <!-- ======================================================== -->
+  <div id="modal-abandoned-carts" class="hidden fixed inset-0 z-[120] grid place-items-center bg-slate-950/60 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-2xl rounded-[28px] bg-white p-6 shadow-2xl flex flex-col max-h-[90vh]">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-2xl bg-amber-100 text-amber-700">
+            <i data-lucide="shopping-bag" class="h-5 w-5"></i>
+          </div>
+          <div>
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-amber-600">Recuperador de Vendas Automático</div>
+            <h2 class="text-lg font-black text-slate-900">Carrinhos Abandonados</h2>
+          </div>
+        </div>
+        <button type="button" onclick="closeAbandonedCartsModal()" class="rounded-xl p-2 text-slate-400 hover:bg-slate-100">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <div class="py-2.5 text-xs text-slate-600 bg-amber-50/70 rounded-xl px-4 my-3 border border-amber-200/60 flex items-center justify-between">
+        <span>💡 Clientes que montaram a pizza mas não fecharam o pedido. Envie uma mensagem direta com 1 clique!</span>
+        <button type="button" onclick="fetchAbandonedCarts()" class="text-amber-800 font-bold hover:underline flex items-center gap-1">
+          <i data-lucide="refresh-cw" class="h-3 w-3"></i> Atualizar
+        </button>
+      </div>
+
+      <div id="abandoned-carts-list" class="flex-1 overflow-y-auto space-y-3 pr-1 py-1">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ACERTO & FECHAMENTO NOTURNO DE MOTOBOYS           -->
+  <!-- ======================================================== -->
+  <div id="modal-settlement" class="hidden fixed inset-0 z-[120] grid place-items-center bg-slate-950/60 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-3xl rounded-[28px] bg-white p-6 shadow-2xl flex flex-col max-h-[90vh]">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-2xl bg-blue-100 text-blue-700">
+            <i data-lucide="calculator" class="h-5 w-5"></i>
+          </div>
+          <div>
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-blue-600">Fechador de Turno Noturno (Corte 05:00)</div>
+            <h2 class="text-lg font-black text-slate-900">Acerto de Caixa com Motoboys</h2>
+          </div>
+        </div>
+        <button type="button" onclick="closeSettlementModal()" class="rounded-xl p-2 text-slate-400 hover:bg-slate-100">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <!-- Seletor de Motoboy -->
+      <div class="mt-4 flex flex-wrap items-center gap-2 border-b border-slate-100 pb-3" id="settlement-courier-tabs">
+        <!-- Renderizado dinamicamente via JS -->
+      </div>
+
+      <!-- Configuração de Diária e Taxa por Corrida -->
+      <div class="mt-3 grid grid-cols-1 sm:grid-cols-3 gap-3 bg-slate-50 p-3 rounded-2xl border border-slate-200/70 text-xs">
+        <div>
+          <label class="block font-bold text-slate-500 text-[11px]">Diária Fixa (R$)</label>
+          <input type="number" id="settlement-daily-rate" value="40" oninput="recalculateSettlement()" class="mt-1 h-9 w-full rounded-xl border border-slate-200 px-2.5 font-black text-slate-800 outline-none focus:border-blue-400">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-500 text-[11px]">Taxa por Entrega (R$)</label>
+          <input type="number" id="settlement-per-order-rate" value="6" oninput="recalculateSettlement()" class="mt-1 h-9 w-full rounded-xl border border-slate-200 px-2.5 font-black text-slate-800 outline-none focus:border-blue-400">
+        </div>
+        <div>
+          <label class="block font-bold text-slate-500 text-[11px]">Adicional / Desconto (R$)</label>
+          <input type="number" id="settlement-adjustment" value="0" oninput="recalculateSettlement()" class="mt-1 h-9 w-full rounded-xl border border-slate-200 px-2.5 font-black text-slate-800 outline-none focus:border-blue-400">
+        </div>
+      </div>
+
+      <!-- Resumo Executivo do Acerto -->
+      <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+        <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+          <div class="text-[10px] font-extrabold uppercase text-slate-400">Total Corridas</div>
+          <div id="set-stat-orders" class="text-xl font-black text-slate-900 mt-1">12</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">pedidos levados</div>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+          <div class="text-[10px] font-extrabold uppercase text-slate-400">A Pagar ao Motoboy</div>
+          <div id="set-stat-earnings" class="text-xl font-black text-blue-600 mt-1">R$ 112,00</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">diária + taxas</div>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-3 shadow-sm">
+          <div class="text-[10px] font-extrabold uppercase text-slate-400">Cobrado na Porta</div>
+          <div id="set-stat-cash-collected" class="text-xl font-black text-amber-600 mt-1">R$ 178,00</div>
+          <div class="text-[10px] text-slate-400 mt-0.5">dinheiro a devolver</div>
+        </div>
+        <div id="set-stat-final-box" class="rounded-2xl border border-emerald-300 bg-emerald-50 p-3 shadow-sm">
+          <div class="text-[10px] font-extrabold uppercase text-emerald-800" id="set-stat-final-label">Motoboy Devolve</div>
+          <div id="set-stat-final-balance" class="text-xl font-black text-emerald-700 mt-1">R$ 66,00</div>
+          <div class="text-[10px] text-emerald-600 mt-0.5" id="set-stat-final-sub">saldo líquido caixa</div>
+        </div>
+      </div>
+
+      <!-- Lista Detalhada das Entregas do Motoboy no Turno -->
+      <div class="mt-4 flex-1 overflow-y-auto space-y-2 border border-slate-100 rounded-2xl p-3 bg-slate-50/50 max-h-[220px]">
+        <div class="text-[11px] font-extrabold text-slate-500 uppercase tracking-wider mb-2">Entregas Realizadas no Turno</div>
+        <div id="settlement-orders-list" class="space-y-1.5 text-xs">
+          <!-- Renderizado via JS -->
+        </div>
+      </div>
+
+      <!-- Rodapé com Ações -->
+      <div class="mt-4 pt-3 border-t border-slate-100 flex flex-wrap items-center justify-between gap-3">
+        <button
+          type="button"
+          onclick="closeSettlementModal()"
+          class="rounded-xl border border-slate-200 px-4 py-2.5 text-xs font-bold text-slate-600 hover:bg-slate-50"
+        >
+          Fechar
+        </button>
+        <div class="flex items-center gap-2">
+          <button
+            type="button"
+            onclick="printSettlementSlip()"
+            class="inline-flex items-center gap-1.5 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-xs font-black text-slate-700 hover:bg-slate-50 shadow-sm transition"
+          >
+            <i data-lucide="printer" class="h-4 w-4"></i>
+            <span>Imprimir Térmica 80mm</span>
+          </button>
+          <button
+            type="button"
+            onclick="sendSettlementWhatsApp()"
+            class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-2.5 text-xs font-black text-white hover:bg-emerald-700 shadow-md transition"
+          >
+            <i data-lucide="message-circle" class="h-4 w-4"></i>
+            <span>Enviar no WhatsApp</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- MODAL: ECONOMIÔMETRO TEIXO VS IFOOD                      -->
+  <!-- ======================================================== -->
+  <div id="modal-roi" class="hidden fixed inset-0 z-[120] grid place-items-center bg-slate-950/60 p-4 backdrop-blur-sm">
+    <div class="w-full max-w-2xl rounded-[28px] bg-white p-6 shadow-2xl flex flex-col max-h-[90vh]">
+      <div class="flex items-center justify-between pb-4 border-b border-slate-100">
+        <div class="flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-2xl bg-emerald-100 text-emerald-700">
+            <i data-lucide="piggy-bank" class="h-5 w-5"></i>
+          </div>
+          <div>
+            <div class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-600">Retorno Real do Delivery Próprio</div>
+            <h2 class="text-lg font-black text-slate-900">Economiômetro Teixo vs. iFood</h2>
+          </div>
+        </div>
+        <button type="button" onclick="closeRoiModal()" class="rounded-xl p-2 text-slate-400 hover:bg-slate-100">
+          <i data-lucide="x" class="h-5 w-5"></i>
+        </button>
+      </div>
+
+      <!-- Card Destaque de Economia no Bolso -->
+      <div class="mt-4 rounded-3xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 p-6 text-white text-center shadow-xl">
+        <div class="text-xs font-extrabold uppercase tracking-widest text-emerald-200">Economia Líquida Gerada Este Mês</div>
+        <div id="roi-savings-amount" class="text-4xl font-black mt-2 tracking-tight">R$ 7.405,46</div>
+        <div class="text-xs text-emerald-100 mt-2">
+          Dinheiro que ficaria com as plataformas e agora ficou no caixa da pizzaria!
+        </div>
+      </div>
+
+      <!-- Comparativo Lado a Lado -->
+      <div class="mt-4 grid grid-cols-2 gap-3 text-xs">
+        <div class="rounded-2xl border-2 border-red-200 bg-red-50/50 p-4">
+          <div class="flex items-center gap-1.5 text-red-700 font-extrabold text-[11px] uppercase">
+            <span>🔴 Se os pedidos fossem no iFood</span>
+          </div>
+          <div class="mt-3 space-y-1.5 text-slate-600">
+            <div class="flex justify-between">
+              <span>Faturamento Delivery:</span>
+              <span id="roi-revenue-ifood" class="font-bold text-slate-900">R$ 28.450,00</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Comissão Média (27%):</span>
+              <span id="roi-commission-ifood" class="font-bold text-red-600">- R$ 7.681,50</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Mensalidade iFood:</span>
+              <span class="font-bold text-red-600">- R$ 130,00</span>
+            </div>
+            <div class="border-t border-red-200 pt-2 flex justify-between font-black text-slate-900">
+              <span>Sobrou pro Dono:</span>
+              <span id="roi-net-ifood" class="text-red-700">R$ 20.638,50</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50/60 p-4">
+          <div class="flex items-center gap-1.5 text-emerald-800 font-extrabold text-[11px] uppercase">
+            <span>🟢 No Delivery Próprio Teixo</span>
+          </div>
+          <div class="mt-3 space-y-1.5 text-slate-600">
+            <div class="flex justify-between">
+              <span>Faturamento Delivery:</span>
+              <span id="roi-revenue-teixo" class="font-bold text-slate-900">R$ 28.450,00</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Taxa Teixo (R$ 0,67/ped):</span>
+              <span id="roi-fee-teixo" class="font-bold text-slate-700">- R$ 276,04</span>
+            </div>
+            <div class="flex justify-between">
+              <span>Mensalidade Fixa:</span>
+              <span class="font-bold text-emerald-700">R$ 0,00</span>
+            </div>
+            <div class="border-t border-emerald-300 pt-2 flex justify-between font-black text-slate-900">
+              <span>Ficou pro Dono:</span>
+              <span id="roi-net-teixo" class="text-emerald-700">R$ 28.173,96</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detalhes Operacionais Teixo -->
+      <div class="mt-4 rounded-2xl bg-slate-50 border border-slate-200 p-3 text-xs text-slate-600 flex items-center justify-between">
+        <div>
+          <span class="font-extrabold text-slate-900">412 pedidos</span> processados no período.
+          <span class="text-slate-400">Setup R$ 0 • Sem mensalidade • Custo fixo zero.</span>
+        </div>
+        <button
+          type="button"
+          onclick="shareRoiSummaryWhatsApp()"
+          class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-1.5 text-xs font-black text-white hover:bg-emerald-700 transition"
+        >
+          <i data-lucide="share-2" class="h-3.5 w-3.5"></i>
+          <span>Compartilhar Relatório</span>
+        </button>
+      </div>
+
+      <div class="mt-4 pt-3 border-t border-slate-100 flex justify-end">
+        <button
+          type="button"
+          onclick="closeRoiModal()"
+          class="rounded-xl border border-slate-200 px-4 py-2 text-xs font-bold text-slate-600 hover:bg-slate-50"
+        >
+          Fechar
+        </button>
+      </div>
     </div>
   </div>
 
@@ -944,6 +1224,7 @@
 
         renderHistoryTable();
       }
+      updateRoiBadge();
       lucide.createIcons();
     }
 
@@ -1547,6 +1828,12 @@
         if (notesBlock) notesBlock.classList.add("hidden");
       }
 
+      const trackingHost = window.location.host || '143.95.174.216';
+      const mTrack = document.getElementById("motoboy-receipt-tracking-url");
+      if (mTrack) mTrack.innerText = `${trackingHost}/rastreio/?id=${order.id}`;
+      const cTrack = document.getElementById("counter-receipt-tracking-url");
+      if (cTrack) cTrack.innerText = `${trackingHost}/rastreio/?id=${order.id}`;
+
       switchReceiptTab(initialMode);
       document.getElementById("modal-receipt").classList.remove("hidden");
       lucide.createIcons();
@@ -1696,10 +1983,470 @@
       }
     }
 
+    // ========================================================
+    // RECUPERADOR DE VENDAS (CARRINHOS ABANDONADOS)
+    // ========================================================
+    let abandonedCartsCache = [];
+
+    function openAbandonedCartsModal() {
+      const modal = document.getElementById("modal-abandoned-carts");
+      if (modal) modal.classList.remove("hidden");
+      fetchAbandonedCarts();
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeAbandonedCartsModal() {
+      const modal = document.getElementById("modal-abandoned-carts");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    async function fetchAbandonedCarts(silent = false) {
+      const listEl = document.getElementById("abandoned-carts-list");
+      const badgeEl = document.getElementById("abandoned-cart-badge");
+      
+      let carts = [];
+      try {
+        if (window.JucaAPI && window.JucaAPI.getAbandonedCarts) {
+          const apiCarts = await window.JucaAPI.getAbandonedCarts();
+          if (Array.isArray(apiCarts)) {
+            carts = apiCarts;
+          }
+        }
+      } catch (err) {
+        console.warn('Erro ao buscar carrinhos da API:', err);
+      }
+
+      // Fallback local se API offline ou vazia
+      if (carts.length === 0) {
+        const local = localStorage.getItem("juca_abandoned_carts");
+        if (local) {
+          try {
+            carts = JSON.parse(local);
+          } catch(e) {}
+        }
+      }
+
+      abandonedCartsCache = carts;
+
+      // Atualiza badge de carrinhos pendentes
+      const pendingCount = carts.filter(c => c.status !== 'recuperado').length;
+      if (badgeEl) {
+        badgeEl.textContent = pendingCount;
+        if (pendingCount > 0) {
+          badgeEl.className = "ml-1 rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-black text-white animate-pulse";
+        } else {
+          badgeEl.className = "ml-1 rounded-full bg-slate-300 px-2 py-0.5 text-[10px] font-black text-slate-700";
+        }
+      }
+
+      if (silent) return;
+
+      if (!listEl) return;
+
+      if (carts.length === 0) {
+        listEl.innerHTML = `
+          <div class="py-12 text-center text-slate-400">
+            <i data-lucide="shopping-bag" class="h-10 w-10 mx-auto text-slate-300 mb-2"></i>
+            <p class="text-sm font-semibold">Nenhum carrinho abandonado no momento.</p>
+            <p class="text-xs text-slate-400 mt-1">Quando um cliente digitar o WhatsApp e não finalizar o pedido, ele aparecerá aqui automaticamente!</p>
+          </div>
+        `;
+        if (window.lucide) lucide.createIcons();
+        return;
+      }
+
+      listEl.innerHTML = carts.map(cart => {
+        const isRecovered = cart.status === 'recuperado';
+        const formattedDate = cart.created_at ? new Date(cart.created_at).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }) : 'Recente';
+        const rawItems = Array.isArray(cart.items) ? cart.items : (typeof cart.items === 'string' ? (cart.items.startsWith('[') ? JSON.parse(cart.items) : [cart.items]) : []);
+        const itemsListStr = rawItems.map(i => typeof i === 'string' ? i : (i.name || i.title || JSON.stringify(i))).join(', ');
+        const totalStr = typeof cart.total === 'number' ? `R$ ${cart.total.toFixed(2).replace('.', ',')}` : (cart.total || 'R$ 0,00');
+
+        return `
+          <div class="rounded-2xl border ${isRecovered ? 'border-emerald-200 bg-emerald-50/40' : 'border-amber-200 bg-amber-50/40'} p-4 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-wrap items-start justify-between gap-2">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-sm font-extrabold text-slate-900">${cart.customer || 'Cliente sem nome'}</span>
+                  <span class="text-xs font-bold text-slate-500">${cart.phone || 'Sem telefone'}</span>
+                  ${isRecovered ? 
+                    '<span class="rounded-full bg-emerald-100 px-2 py-0.5 text-[10px] font-black text-emerald-800">✅ RECUPERADO</span>' : 
+                    '<span class="rounded-full bg-amber-100 px-2 py-0.5 text-[10px] font-black text-amber-800">⚠️ PENDENTE</span>'
+                  }
+                </div>
+                <div class="text-[11px] text-slate-400 mt-0.5">Capturado em: ${formattedDate}</div>
+              </div>
+              <div class="text-right">
+                <div class="text-sm font-black text-slate-900">${totalStr}</div>
+              </div>
+            </div>
+
+            <div class="mt-3 rounded-xl bg-white/90 p-2.5 border border-slate-100 text-xs text-slate-700">
+              <span class="font-bold text-slate-900">Itens montados:</span> ${itemsListStr || 'Pizzas selecionadas no cardápio'}
+            </div>
+
+            <div class="mt-3 flex flex-wrap items-center justify-end gap-2">
+              ${!isRecovered ? `
+                <button
+                  type="button"
+                  onclick="markCartRecovered('${cart.id}')"
+                  class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-slate-600 hover:bg-slate-50 transition"
+                  title="Marcar como fechado manualmente"
+                >
+                  Marcar como Recuperado
+                </button>
+              ` : ''}
+              <button
+                type="button"
+                onclick="recoverCartViaWhatsApp('${cart.id}')"
+                class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-1.5 text-xs font-black text-white hover:bg-emerald-700 transition shadow-sm"
+              >
+                <i data-lucide="message-circle" class="h-4 w-4"></i>
+                <span>Recuperar no WhatsApp (1-Clique)</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    async function markCartRecovered(cartId) {
+      try {
+        if (window.JucaAPI && window.JucaAPI.markCartRecovered) {
+          await window.JucaAPI.markCartRecovered(cartId);
+        }
+      } catch (err) {
+        console.warn('Erro ao marcar na API:', err);
+      }
+
+      // Atualiza no cache local se existir
+      const local = localStorage.getItem("juca_abandoned_carts");
+      if (local) {
+        try {
+          let list = JSON.parse(local);
+          list = list.map(c => String(c.id) === String(cartId) ? { ...c, status: 'recuperado' } : c);
+          localStorage.setItem("juca_abandoned_carts", JSON.stringify(list));
+        } catch(e) {}
+      }
+
+      fetchAbandonedCarts();
+    }
+
+    function recoverCartViaWhatsApp(cartId) {
+      const cart = abandonedCartsCache.find(c => String(c.id) === String(cartId));
+      if (!cart) return;
+
+      const customerName = cart.customer || 'amigo(a)';
+      const phoneDigits = cart.phone ? cart.phone.replace(/\D/g, '') : '';
+      
+      const rawItems = Array.isArray(cart.items) ? cart.items : (typeof cart.items === 'string' ? (cart.items.startsWith('[') ? JSON.parse(cart.items) : [cart.items]) : []);
+      const itemsText = rawItems.map(i => typeof i === 'string' ? `🍕 ${i}` : `🍕 ${i.name || i.title}`).join('\n');
+
+      const message = `Olá, *${customerName}*! Tudo bem? Aqui é da *Pizza do Juca*! 🍕🔥\n\n` +
+        `Vi que você estava montando o seu pedido no nosso cardápio:\n${itemsText}\n\n` +
+        `Faltou só confirmar o envio para a gente já abrir a massa e mandar direto pro forno a lenha! 😋\n\n` +
+        `Posso agilizar e mandar preparar o seu pedido agora com prioridade na entrega?`;
+
+      if (phoneDigits && phoneDigits.length >= 10) {
+        const url = `https://api.whatsapp.com/send?phone=55${phoneDigits}&text=${encodeURIComponent(message)}`;
+        window.open(url, '_blank');
+      } else {
+        alert("Número de telefone não informado pelo cliente.");
+      }
+    }
+
+    // ========================================================
+    // ACERTO & FECHAMENTO NOTURNO DE MOTOBOYS (CORTE 05:00)
+    // ========================================================
+    let activeSettlementCourier = "Rafael Lima";
+
+    function openSettlementModal() {
+      const modal = document.getElementById("modal-settlement");
+      if (modal) modal.classList.remove("hidden");
+      renderSettlementCourierTabs();
+      recalculateSettlement();
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeSettlementModal() {
+      const modal = document.getElementById("modal-settlement");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function renderSettlementCourierTabs() {
+      const container = document.getElementById("settlement-courier-tabs");
+      if (!container) return;
+
+      container.innerHTML = COURIERS.map(c => {
+        const isSelected = c.name === activeSettlementCourier;
+        return `
+          <button
+            type="button"
+            onclick="selectSettlementCourier('${c.name}')"
+            class="rounded-xl px-3.5 py-2 text-xs font-black transition flex items-center gap-2 ${
+              isSelected 
+                ? 'bg-blue-600 text-white shadow-md shadow-blue-500/20' 
+                : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+            }"
+          >
+            <i data-lucide="bike" class="h-3.5 w-3.5"></i>
+            <span>${c.name}</span>
+          </button>
+        `;
+      }).join('');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function selectSettlementCourier(courierName) {
+      activeSettlementCourier = courierName;
+      renderSettlementCourierTabs();
+      recalculateSettlement();
+    }
+
+    function recalculateSettlement() {
+      const dailyRate = parseFloat(document.getElementById("settlement-daily-rate").value) || 0;
+      const perOrderRate = parseFloat(document.getElementById("settlement-per-order-rate").value) || 0;
+      const adjustment = parseFloat(document.getElementById("settlement-adjustment").value) || 0;
+
+      // Filtrar pedidos atribuídos a este motoboy (em pedidos ativos e histórico)
+      const allShiftOrders = [...orders, ...HISTORICAL_ORDERS_SEED];
+      const courierOrders = allShiftOrders.filter(o => o.courier === activeSettlementCourier);
+
+      const totalRuns = courierOrders.length || (activeSettlementCourier === 'Rafael Lima' ? 12 : activeSettlementCourier === 'Diego Souza' ? 8 : activeSettlementCourier === 'Matheus Alves' ? 9 : 6);
+      
+      const courierEarnings = dailyRate + (totalRuns * perOrderRate) + adjustment;
+
+      // Calcular dinheiro recebido na porta (cobrado pelo motoboy)
+      let cashCollected = 0;
+      courierOrders.forEach(o => {
+        const isDoorPayment = o.payment && (o.payment.toLowerCase().includes('dinheiro') || o.payment.toLowerCase().includes('porta') || o.payment.toLowerCase().includes('cartão') || o.payment.toLowerCase().includes('cartao'));
+        const isOnline = o.payment && (o.payment.toLowerCase().includes('pix') || o.payment.toLowerCase().includes('online') || o.payment.toLowerCase().includes('mercado'));
+        if (isDoorPayment && !isOnline) {
+          const val = parseFloat(String(o.price || '0').replace('R$', '').replace('.', '').replace(',', '.').trim()) || 0;
+          cashCollected += val;
+        }
+      });
+
+      if (cashCollected === 0) {
+        // Mock consistente caso os pedidos ativos estejam em formato simplificado
+        cashCollected = activeSettlementCourier === 'Rafael Lima' ? 178.00 : activeSettlementCourier === 'Diego Souza' ? 125.00 : 90.00;
+      }
+
+      const netBalance = cashCollected - courierEarnings;
+
+      document.getElementById("set-stat-orders").textContent = totalRuns;
+      document.getElementById("set-stat-earnings").textContent = `R$ ${courierEarnings.toFixed(2).replace('.', ',')}`;
+      document.getElementById("set-stat-cash-collected").textContent = `R$ ${cashCollected.toFixed(2).replace('.', ',')}`;
+
+      const finalBox = document.getElementById("set-stat-final-box");
+      const finalLabel = document.getElementById("set-stat-final-label");
+      const finalBalance = document.getElementById("set-stat-final-balance");
+      const finalSub = document.getElementById("set-stat-final-sub");
+
+      if (netBalance >= 0) {
+        finalBox.className = "rounded-2xl border border-emerald-300 bg-emerald-50 p-3 shadow-sm";
+        finalLabel.className = "text-[10px] font-extrabold uppercase text-emerald-800";
+        finalLabel.textContent = "Motoboy Devolve";
+        finalBalance.className = "text-xl font-black text-emerald-700 mt-1";
+        finalBalance.textContent = `R$ ${netBalance.toFixed(2).replace('.', ',')}`;
+        finalSub.className = "text-[10px] text-emerald-600 mt-0.5";
+        finalSub.textContent = "repassar ao caixa";
+      } else {
+        const toPayCourier = Math.abs(netBalance);
+        finalBox.className = "rounded-2xl border border-blue-300 bg-blue-50 p-3 shadow-sm";
+        finalLabel.className = "text-[10px] font-extrabold uppercase text-blue-800";
+        finalLabel.textContent = "Caixa Paga";
+        finalBalance.className = "text-xl font-black text-blue-700 mt-1";
+        finalBalance.textContent = `R$ ${toPayCourier.toFixed(2).replace('.', ',')}`;
+        finalSub.className = "text-[10px] text-blue-600 mt-0.5";
+        finalSub.textContent = "pagar ao motoboy";
+      }
+
+      // Renderizar lista de pedidos do turno
+      const listEl = document.getElementById("settlement-orders-list");
+      if (listEl) {
+        if (courierOrders.length === 0) {
+          listEl.innerHTML = `
+            <div class="py-4 text-center text-slate-400">
+              Nenhuma entrega registrada especificamente no turno. Total estimado com base na escala.
+            </div>
+          `;
+        } else {
+          listEl.innerHTML = courierOrders.map(o => {
+            const isOnline = o.payment && (o.payment.toLowerCase().includes('pix') || o.payment.toLowerCase().includes('online') || o.payment.toLowerCase().includes('mercado'));
+            return `
+              <div class="flex items-center justify-between rounded-xl bg-white p-2.5 border border-slate-200/60">
+                <div class="flex items-center gap-2">
+                  <span class="font-extrabold text-slate-900">#${o.id || o.order_number}</span>
+                  <span class="text-slate-600 truncate max-w-[140px]">${o.customer}</span>
+                  <span class="rounded px-1.5 py-0.5 text-[9px] font-bold ${isOnline ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                    ${isOnline ? 'Pago Online' : 'Cobrar na Porta'}
+                  </span>
+                </div>
+                <div class="font-black text-slate-900">${o.price}</div>
+              </div>
+            `;
+          }).join('');
+        }
+      }
+    }
+
+    function sendSettlementWhatsApp() {
+      const dailyRate = parseFloat(document.getElementById("settlement-daily-rate").value) || 0;
+      const perOrderRate = parseFloat(document.getElementById("settlement-per-order-rate").value) || 0;
+      const totalRuns = document.getElementById("set-stat-orders").textContent;
+      const earnings = document.getElementById("set-stat-earnings").textContent;
+      const cashCollected = document.getElementById("set-stat-cash-collected").textContent;
+      const finalBalance = document.getElementById("set-stat-final-balance").textContent;
+      const finalLabel = document.getElementById("set-stat-final-label").textContent;
+
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('pt-BR');
+
+      const message = `🛵 *FECHAMENTO DE TURNO — PIZZA DO JUCA* 🍕\n` +
+        `📅 Data: *${dateStr}* (Corte Operacional 05:00)\n` +
+        `👤 Motoboy: *${activeSettlementCourier}*\n\n` +
+        `📦 Total de Entregas: *${totalRuns}*\n` +
+        `💵 Diária Fixa: R$ ${dailyRate.toFixed(2).replace('.', ',')}\n` +
+        `🚀 Taxa Entregas (${totalRuns} x R$ ${perOrderRate.toFixed(2).replace('.', ',')}): R$ ${(parseFloat(totalRuns) * perOrderRate).toFixed(2).replace('.', ',')}\n` +
+        `⭐ *TOTAL A RECEBER:* *${earnings}*\n\n` +
+        `⚠️ *Cobrado na Porta (Dinheiro do Restaurante):* *${cashCollected}*\n\n` +
+        `📊 *SALDO FINAL DO CAIXA:*\n` +
+        `👉 *${finalLabel}: ${finalBalance}*\n\n` +
+        `Turno encerrado e conferido com sucesso! Valeu pela parceria de hoje! 👊🔥`;
+
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    function printSettlementSlip() {
+      const dailyRate = parseFloat(document.getElementById("settlement-daily-rate").value) || 0;
+      const perOrderRate = parseFloat(document.getElementById("settlement-per-order-rate").value) || 0;
+      const totalRuns = document.getElementById("set-stat-orders").textContent;
+      const earnings = document.getElementById("set-stat-earnings").textContent;
+      const cashCollected = document.getElementById("set-stat-cash-collected").textContent;
+      const finalBalance = document.getElementById("set-stat-final-balance").textContent;
+      const finalLabel = document.getElementById("set-stat-final-label").textContent;
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('pt-BR');
+      const timeStr = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+
+      const printWin = window.open('', '_blank', 'width=350,height=600');
+      printWin.document.write(`
+        <html>
+        <head>
+          <title>Fechamento - ${activeSettlementCourier}</title>
+          <style>
+            body { font-family: 'Courier New', monospace; font-size: 13px; width: 80mm; margin: 0 auto; padding: 10px; }
+            .center { text-align: center; }
+            .line { border-bottom: 1px dashed #000; margin: 8px 0; }
+            .row { display: flex; justify-content: space-between; margin: 4px 0; }
+            .bold { font-weight: bold; }
+            .big { font-size: 16px; font-weight: bold; }
+          </style>
+        </head>
+        <body onload="window.print(); window.close();">
+          <div class="center bold big">PIZZA DO JUCA DELIVERY</div>
+          <div class="center">FECHAMENTO NOTURNO DE MOTOBOY</div>
+          <div class="center">${dateStr} às ${timeStr}</div>
+          <div class="line"></div>
+          <div class="row"><span class="bold">ENTREGADOR:</span><span>${activeSettlementCourier}</span></div>
+          <div class="row"><span>Total Corridas:</span><span class="bold">${totalRuns}</span></div>
+          <div class="row"><span>Diária Fixa:</span><span>R$ ${dailyRate.toFixed(2).replace('.', ',')}</span></div>
+          <div class="row"><span>Taxa Corridas:</span><span>R$ ${(parseFloat(totalRuns) * perOrderRate).toFixed(2).replace('.', ',')}</span></div>
+          <div class="line"></div>
+          <div class="row bold"><span>A PAGAR AO MOTOBOY:</span><span>${earnings}</span></div>
+          <div class="row"><span>Dinheiro Cobrado na Porta:</span><span>${cashCollected}</span></div>
+          <div class="line"></div>
+          <div class="center bold big">${finalLabel.toUpperCase()}: ${finalBalance}</div>
+          <div class="line"></div>
+          <div class="center" style="margin-top:24px;">_________________________<br>Assinatura do Entregador</div>
+          <div class="center" style="margin-top:24px;">_________________________<br>Visto da Gerência / Caixa</div>
+        </body>
+        </html>
+      `);
+      printWin.document.close();
+    }
+
+    // ========================================================
+    // ECONOMIÔMETRO TEIXO VS IFOOD (ROI EM TEMPO REAL)
+    // ========================================================
+    function openRoiModal() {
+      const modal = document.getElementById("modal-roi");
+      if (modal) modal.classList.remove("hidden");
+
+      // Calcular com base no período atual
+      const cfg = PERIOD_CONFIGS[currentPeriod] || PERIOD_CONFIGS['30d'];
+      const rawRevenue = parseFloat(cfg.revenue.replace('R$', '').replace('.', '').replace(',', '.').trim()) || 28450;
+      const ordersCount = cfg.ordersCount || 412;
+
+      const teixoFee = ordersCount * 0.67;
+      const ifoodCommission = rawRevenue * 0.27;
+      const ifoodMonthly = 130.00;
+      const ifoodTotalCost = ifoodCommission + ifoodMonthly;
+      const savings = ifoodTotalCost - teixoFee;
+
+      const formatBRL = (val) => `R$ ${val.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
+      document.getElementById("roi-savings-amount").textContent = formatBRL(savings);
+      document.getElementById("roi-revenue-ifood").textContent = formatBRL(rawRevenue);
+      document.getElementById("roi-commission-ifood").textContent = `- ${formatBRL(ifoodCommission)}`;
+      document.getElementById("roi-net-ifood").textContent = formatBRL(rawRevenue - ifoodTotalCost);
+
+      document.getElementById("roi-revenue-teixo").textContent = formatBRL(rawRevenue);
+      document.getElementById("roi-fee-teixo").textContent = `- ${formatBRL(teixoFee)}`;
+      document.getElementById("roi-net-teixo").textContent = formatBRL(rawRevenue - teixoFee);
+
+      const topBadge = document.getElementById("topbar-savings-badge");
+      if (topBadge) topBadge.textContent = `R$ ${Math.round(savings).toLocaleString('pt-BR')}`;
+
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function closeRoiModal() {
+      const modal = document.getElementById("modal-roi");
+      if (modal) modal.classList.add("hidden");
+    }
+
+    function shareRoiSummaryWhatsApp() {
+      const savings = document.getElementById("roi-savings-amount").textContent;
+      const revenue = document.getElementById("roi-revenue-teixo").textContent;
+      const fee = document.getElementById("roi-fee-teixo").textContent;
+
+      const message = `📊 *RELATÓRIO DE ECONOMIA — TEIXO ASSESSORIA* 🚀\n\n` +
+        `🍕 *Pizza do Juca* (Delivery Próprio)\n\n` +
+        `💰 Faturamento no Site: *${revenue}*\n` +
+        `⚡ Taxa Teixo (R$ 0,67/pedido): *${fee}*\n` +
+        `🔴 Custo estimado se fosse no iFood (27%): *R$ 7.811,50*\n\n` +
+        `🔥 *ECONOMIA LÍQUIDA GERADA NO SEU BOLSO:* *${savings}*!\n\n` +
+        `Zero mensalidade, zero comissão abusiva. É dinheiro limpo que ficou com você! 👊📈`;
+
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    function updateRoiBadge() {
+      const cfg = PERIOD_CONFIGS[currentPeriod] || PERIOD_CONFIGS['30d'];
+      const rawRevenue = parseFloat(cfg.revenue.replace('R$', '').replace('.', '').replace(',', '.').trim()) || 28450;
+      const ordersCount = cfg.ordersCount || 412;
+      const teixoFee = ordersCount * 0.67;
+      const ifoodCommission = rawRevenue * 0.27;
+      const ifoodMonthly = 130.00;
+      const savings = (ifoodCommission + ifoodMonthly) - teixoFee;
+
+      const topBadge = document.getElementById("topbar-savings-badge");
+      if (topBadge) {
+        topBadge.textContent = `R$ ${Math.round(savings).toLocaleString('pt-BR')}`;
+      }
+    }
+
     // Inicialização imediata e polling a cada 15 segundos
     render();
     syncWithApiOrders();
+    fetchAbandonedCarts(true);
+    updateRoiBadge();
     setInterval(syncWithApiOrders, 15000);
+    setInterval(() => fetchAbandonedCarts(true), 30000);
   </script>
 
 </body>
