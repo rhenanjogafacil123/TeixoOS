@@ -71,10 +71,21 @@ A Teixo opera com esteiras padronizadas de serviços, garantindo escalabilidade 
 
 4. **Tática Comercial de Risco Zero (Garantia Condicional de 15 Dias):**
    - Utilizada para superar objeções de lojistas a custos iniciais de tecnologia (ex: setup de R$ 500 em sites ou módulo NFC).
-   - O cliente tem 15 dias de teste na prática; se não quiser continuar, escolhe entre **devolução de 100%** ou **conversão flexível em crédito de serviços** (podendo fracionar livremente o valor entre tráfego com Tiago, audiovisual com PL ou drone com Patrick).
+   - O cliente tem 15 dias de teste na prática; se não quiser continuar, escolhe entre **devolução de 100%** ou **conversão em crédito de tráfego pago para pagar o Tiago**.
 
-5. **Centralização Financeira no MEI:**
-   - Formalmente nos contratos e faturamento com os clientes, todos os valores são quitados centralizadamente na conta do MEI do Tiago (`69.390.968/0001-78`), transmitindo blindagem institucional. A divisão das receitas entre os núcleos é gerida internamente pela equipe.
+5. **Recebimentos e Flexibilidade de Contas:**
+   - A operação adota flexibilidade nos recebimentos conforme o alinhamento de cada cliente: pode centralizar na conta do MEI do Tiago (`69.390.968/0001-78`) OU receber diretamente nas contas individuais de cada executor técnico (Tiago no tráfego, PL no vídeo e Rhenan no site via Mercado Pago `rhenanteixeira.rj@gmail.com`).
+
+---
+
+## Padrões Contratuais e Blindagens Jurídicas B2B (Padrão Teixo)
+
+Todos os contratos gerados pela Teixo incorporam as seguintes blindagens essenciais de direito digital e empresarial:
+
+1. **Isenção de Bloqueios e Riscos de Big Techs (Meta/Google):** A gestão de tráfego constitui estritamente obrigação de meio. A Teixo é juridicamente isenta de responsabilidade civil ou financeira por bloqueios algorítmicos, suspensões preventivas de contas de anúncios ou reprovações de criativos pelas plataformas (Meta, Google, TikTok).
+2. **Aprovação Tácita em 48h Úteis:** Cópias, roteiros e criativos submetidos via WhatsApp oficial consideram-se tacitamente aprovados se o cliente não solicitar ajustes em até 48 horas úteis, resguardando o cronograma de postagens e o SLA da agência.
+3. **Direito de Regresso Processual Obrigatório (Art. 125, II, do CPC):** Isenção total da Teixo por infrações sanitárias, trabalhistas, tributárias ou acidentes nas instalações físicas do cliente. Se a Teixo for acionada indevidamente, o cliente deve assumir o polo passivo e ressarcir despesas com advogados e defesas em até 5 dias úteis.
+4. **Título Executivo Extrajudicial (Art. 784, III, do CPC):** Todos os contratos são formalizados com 2 testemunhas instrumentárias e validade de assinatura eletrônica (MP 2.200-2/2001 e Lei 14.063/2020), permitindo cobrança executiva direta em caso de inadimplência.
 
 ---
 
