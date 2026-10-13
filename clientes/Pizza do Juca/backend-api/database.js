@@ -17,7 +17,8 @@ let jsonStore = {
   pedidos: [],
   clientes: [],
   carrinhos: [],
-  produtos: []
+  produtos: [],
+  fechamentos: []
 };
 
 // 1. Tentar inicializar SQLite
@@ -90,6 +91,23 @@ function initSqliteTables() {
       channels TEXT,
       ingredients TEXT,
       updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS fechamentos_motoboys (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      courier_name TEXT NOT NULL,
+      shift_date TEXT NOT NULL,
+      deliveries_count INTEGER NOT NULL,
+      fee_per_delivery REAL NOT NULL,
+      daily_allowance REAL DEFAULT 0,
+      total_earnings REAL NOT NULL,
+      cash_collected REAL DEFAULT 0,
+      final_balance REAL NOT NULL,
+      orders_list TEXT,
+      payment_method TEXT DEFAULT 'PIX',
+      status TEXT DEFAULT 'pago',
+      notes TEXT,
+      created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
   `);
 }
@@ -379,6 +397,110 @@ const dbService = {
         return true;
       }
       return false;
+    }
+  },
+
+  // --- HISTÓRICO DE MOTOBOYS (FECHAMENTOS DE TURNO) ---
+  saveMotoboyClosing: ({
+    courier_name,
+    shift_date,
+    deliveries_count,
+    fee_per_delivery,
+    daily_allowance,
+    total_earnings,
+    cash_collected,
+    final_balance,
+    orders_list,
+    payment_method,
+    status,
+    notes
+  }) => {
+    const ordersJson = typeof orders_list === 'string' ? orders_list : JSON.stringify(orders_list || []);
+    const numDeliveries = parseInt(deliveries_count, 10) || 0;
+    const numFee = parseFloat(fee_per_delivery) || 0;
+    const numDaily = parseFloat(daily_allowance) || 0;
+    const numEarnings = parseFloat(total_earnings) || (numDeliveries * numFee + numDaily);
+    const numCash = parseFloat(cash_collected) || 0;
+    const numBalance = parseFloat(final_balance) || (numEarnings - numCash);
+    const dateStr = shift_date || new Date().toISOString().slice(0, 10);
+    const payMethod = payment_method || 'PIX';
+    const st = status || 'pago';
+
+    if (dbDriver === 'sqlite') {
+      const stmt = sqliteDb.prepare(`
+        INSERT INTO fechamentos_motoboys (
+          courier_name, shift_date, deliveries_count, fee_per_delivery,
+          daily_allowance, total_earnings, cash_collected, final_balance,
+          orders_list, payment_method, status, notes
+        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `);
+      const info = stmt.run(
+        courier_name || 'Motoboy Desconhecido',
+        dateStr,
+        numDeliveries,
+        numFee,
+        numDaily,
+        numEarnings,
+        numCash,
+        numBalance,
+        ordersJson,
+        payMethod,
+        st,
+        notes || null
+      );
+      return dbService.getMotoboyClosingById(info.lastInsertRowid);
+    } else {
+      if (!jsonStore.fechamentos) jsonStore.fechamentos = [];
+      const closing = {
+        id: jsonStore.fechamentos.length + 1,
+        courier_name: courier_name || 'Motoboy Desconhecido',
+        shift_date: dateStr,
+        deliveries_count: numDeliveries,
+        fee_per_delivery: numFee,
+        daily_allowance: numDaily,
+        total_earnings: numEarnings,
+        cash_collected: numCash,
+        final_balance: numBalance,
+        orders_list: Array.isArray(orders_list) ? orders_list : JSON.parse(ordersJson),
+        payment_method: payMethod,
+        status: st,
+        notes: notes || null,
+        created_at: new Date().toISOString()
+      };
+      jsonStore.fechamentos.push(closing);
+      persistJsonStore();
+      return closing;
+    }
+  },
+
+  getMotoboyClosings: (limit = 100) => {
+    if (dbDriver === 'sqlite') {
+      const rows = sqliteDb.prepare(`
+        SELECT * FROM fechamentos_motoboys 
+        ORDER BY id DESC 
+        LIMIT ?
+      `).all(limit);
+      return rows.map(r => ({
+        ...r,
+        orders_list: JSON.parse(r.orders_list || '[]')
+      }));
+    } else {
+      const list = jsonStore.fechamentos || [];
+      return [...list].reverse().slice(0, limit);
+    }
+  },
+
+  getMotoboyClosingById: (id) => {
+    if (dbDriver === 'sqlite') {
+      const row = sqliteDb.prepare('SELECT * FROM fechamentos_motoboys WHERE id = ?').get(id);
+      if (!row) return null;
+      return {
+        ...row,
+        orders_list: JSON.parse(row.orders_list || '[]')
+      };
+    } else {
+      const list = jsonStore.fechamentos || [];
+      return list.find(c => c.id === Number(id)) || null;
     }
   }
 };
