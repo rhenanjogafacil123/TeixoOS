@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Acesso Seguro ao Painel | Pizza do Juca</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/assets/juca-api.js"></script>
+  <script>
+    if (!window.JucaAPI) {
+      document.write('<script src="../../assets/juca-api.js"><\/script>');
+    }
+  </script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 flex items-center justify-center p-4 font-sans text-slate-100 antialiased selection:bg-orange-500 selection:text-white relative overflow-hidden">
+
+  <!-- Brilho de fundo ambiental -->
+  <div class="absolute -top-40 -left-40 h-96 w-96 rounded-full bg-orange-600/15 blur-3xl pointer-events-none"></div>
+  <div class="absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-blue-600/10 blur-3xl pointer-events-none"></div>
+
+  <main class="w-full max-w-md relative z-10">
+    <div class="rounded-3xl border border-slate-800/80 bg-slate-900/90 p-7 sm:p-8 shadow-2xl backdrop-blur-xl">
+      
+      <!-- Cabeçalho -->
+      <div class="text-center">
+        <div class="mx-auto mb-4 grid h-16 w-16 place-items-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-lg shadow-orange-500/20 p-2">
+          <img src="/logo_juca.png" alt="Pizza do Juca" class="h-12 w-12 object-contain" onerror="this.src='/logo.png'">
+        </div>
+        <h1 class="text-xl font-black text-white sm:text-2xl">Acesso ao Painel Operacional</h1>
+        <p class="mt-1 text-xs text-slate-400">Entre com as suas credenciais para acessar o sistema</p>
+      </div>
+
+      <!-- Alerta de Erro -->
+      <div id="login-error-alert" class="hidden mt-4 rounded-2xl border border-red-500/30 bg-red-500/10 p-3 text-xs text-red-300 flex items-center gap-2">
+        <i data-lucide="alert-circle" class="h-4 w-4 shrink-0 text-red-400"></i>
+        <span id="login-error-msg">Usuário ou senha incorretos.</span>
+      </div>
+
+      <!-- Formulário de Login -->
+      <form id="login-form" onsubmit="handleLoginSubmit(event)" class="mt-6 space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">Usuário ou Login</label>
+          <div class="relative">
+            <i data-lucide="user" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+            <input 
+              type="text" 
+              id="input-username" 
+              required 
+              autocomplete="username"
+              placeholder="ex: admin, balcao ou rafael"
+              class="w-full rounded-2xl border border-slate-800 bg-slate-950/70 py-3 pl-10 pr-4 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-orange-500 transition"
+            >
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1.5">Senha de Acesso</label>
+          <div class="relative">
+            <i data-lucide="lock" class="absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-500"></i>
+            <input 
+              type="password" 
+              id="input-password" 
+              required 
+              autocomplete="current-password"
+              placeholder="Digite sua senha"
+              class="w-full rounded-2xl border border-slate-800 bg-slate-950/70 py-3 pl-10 pr-10 text-sm font-semibold text-white placeholder-slate-500 outline-none focus:border-orange-500 transition"
+            >
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility()" 
+              class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-300"
+              title="Mostrar/ocultar senha"
+            >
+              <i data-lucide="eye" id="toggle-eye-icon" class="h-4 w-4"></i>
+            </button>
+          </div>
+        </div>
+
+        <button 
+          type="submit" 
+          id="btn-login-submit"
+          class="w-full mt-2 inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-orange-600 to-amber-600 py-3.5 text-sm font-black text-white hover:brightness-110 shadow-lg shadow-orange-600/25 transition active:scale-[0.98]"
+        >
+          <span>Entrar no Painel</span>
+          <i data-lucide="arrow-right" class="h-4 w-4"></i>
+        </button>
+      </form>
+
+      <!-- Acesso Rápido para Demonstração (Permissões RBAC) -->
+      <div class="mt-6 border-t border-slate-800/80 pt-5">
+        <div class="text-[10px] font-extrabold uppercase tracking-wider text-slate-400 mb-2.5 text-center">
+          Credenciais Padrão de Homologação
+        </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-[11px]">
+          <button 
+            type="button"
+            onclick="fillCredentials('admin', 'juca@admin2026')"
+            class="rounded-xl border border-slate-800 bg-slate-950/60 p-2 hover:border-orange-500/40 hover:bg-slate-800/50 transition group"
+          >
+            <div class="font-black text-orange-400 group-hover:text-orange-300">Gestor</div>
+            <div class="text-[9px] text-slate-400 font-mono mt-0.5">admin</div>
+          </button>
+
+          <button 
+            type="button"
+            onclick="fillCredentials('balcao', 'balcao@juca')"
+            class="rounded-xl border border-slate-800 bg-slate-950/60 p-2 hover:border-blue-500/40 hover:bg-slate-800/50 transition group"
+          >
+            <div class="font-black text-blue-400 group-hover:text-blue-300">Atendente</div>
+            <div class="text-[9px] text-slate-400 font-mono mt-0.5">balcao</div>
+          </button>
+
+          <button 
+            type="button"
+            onclick="fillCredentials('rafael', 'moto@rafael')"
+            class="rounded-xl border border-slate-800 bg-slate-950/60 p-2 hover:border-emerald-500/40 hover:bg-slate-800/50 transition group"
+          >
+            <div class="font-black text-emerald-400 group-hover:text-emerald-300">Motoboy</div>
+            <div class="text-[9px] text-slate-400 font-mono mt-0.5">rafael</div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Rodapé -->
+      <div class="mt-5 text-center text-[10px] text-slate-500">
+        Plataforma protegida com criptografia <span class="font-mono text-slate-400">bcrypt</span> e tokens <span class="font-mono text-slate-400">JWT</span>
+      </div>
+
+    </div>
+  </main>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+
+    // Se já estiver logado, redireciona conforme o cargo
+    (function checkAlreadyLoggedIn() {
+      if (window.JucaAPI && window.JucaAPI.getCurrentUser) {
+        const user = window.JucaAPI.getCurrentUser();
+        const token = window.JucaAPI.getToken();
+        if (user && token) {
+          redirectByRole(user.role);
+        }
+      }
+    })();
+
+    function fillCredentials(u, p) {
+      document.getElementById('input-username').value = u;
+      document.getElementById('input-password').value = p;
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('input-password');
+      const icon = document.getElementById('toggle-eye-icon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.setAttribute('data-lucide', 'eye-off');
+      } else {
+        input.type = 'password';
+        icon.setAttribute('data-lucide', 'eye');
+      }
+      if (window.lucide) lucide.createIcons();
+    }
+
+    function redirectByRole(role) {
+      if (role === 'motoboy') {
+        window.location.href = '../motoboy/';
+      } else if (role === 'atendente') {
+        window.location.href = '../pedidos/';
+      } else {
+        // Admin vai para pedidos ou visão geral
+        window.location.href = '../pedidos/';
+      }
+    }
+
+    async function handleLoginSubmit(e) {
+      e.preventDefault();
+      const errBox = document.getElementById('login-error-alert');
+      const errMsg = document.getElementById('login-error-msg');
+      const btn = document.getElementById('btn-login-submit');
+
+      errBox.classList.add('hidden');
+
+      const username = document.getElementById('input-username').value.trim();
+      const password = document.getElementById('input-password').value;
+
+      btn.disabled = true;
+      btn.innerHTML = `<i data-lucide="loader-2" class="h-4 w-4 animate-spin"></i><span>Autenticando...</span>`;
+      if (window.lucide) lucide.createIcons();
+
+      try {
+        if (!window.JucaAPI || !window.JucaAPI.login) {
+          throw new Error('Módulo de API não carregado.');
+        }
+
+        const res = await window.JucaAPI.login(username, password);
+        if (res && res.success && res.user) {
+          redirectByRole(res.user.role);
+        } else {
+          errMsg.textContent = (res && res.error) || 'Usuário ou senha incorretos.';
+          errBox.classList.remove('hidden');
+        }
+      } catch (err) {
+        errMsg.textContent = err.message || 'Erro ao conectar com o servidor.';
+        errBox.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>Entrar no Painel</span><i data-lucide="arrow-right" class="h-4 w-4"></i>`;
+        if (window.lucide) lucide.createIcons();
+      }
+    }
+  </script>
+</body>
+</html>

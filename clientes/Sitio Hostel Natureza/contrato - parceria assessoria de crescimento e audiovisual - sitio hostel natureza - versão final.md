@@ -42,13 +42,16 @@ Resolvem celebrar o presente Contrato, subordinando-se às seguintes cláusulas 
 
 - **PILAR 1 — GESTÃO DE TRÁFEGO PAGO LOCAL E AQUISIÇÃO DIGITAL (TIAGO TEIXEIRA):**
   - Mapeamento e segmentação geográfica por raio de cobertura e raio de interesse turístico na Cidade do Rio de Janeiro e polos emissores de visitantes;
-  - Criação, configuração, contingência técnica e veiculação de anúncios patrocinados no ecossistema Meta Ads (Instagram e Facebook) e/ou Google Ads;
+  - Criação, configuração, contingência técnica e veiculação de anúncios patrocinados no ecossistema Meta Ads (Instagram e Facebook);
   - Redação de copies persuasivas focadas em reserva direta, atratividade da natureza, hospedagem e gastronomia do local;
-  - Otimização algorítmica contínua, testes A/B de criativos e monitoramento dos custos por clique (CPC), por lead (CPL) e por reserva convertida.
+  - Otimização algorítmica contínua, testes A/B de criativos e monitoramento dos custos por clique (CPC), por lead (CPL) e por reserva convertida;
+  - **Fase de Aprendizado Algorítmico do Meta Ads:** Os primeiros 14 (quatorze) dias úteis de veiculação das campanhas no ecossistema Meta Ads (Instagram e Facebook) constituem período técnico de aprendizado e calibração de inteligência algorítmica (*learning phase*), destinado à coleta de dados e maturação do pixel antes da escala de conversões;
+  - **Regularidade do Cartão de Anúncios:** A manutenção de saldo, limite operacional e regularidade do cartão de crédito corporativo cadastrado na conta de anúncios é obrigação exclusiva da CONTRATANTE. Eventual interrupção ou pausa dos anúncios em virtude de recusa bancária, falta de limite ou falha no cartão da CONTRATANTE não suspende, não reduz e não exonera o pagamento integral dos honorários mensais devidos à assessoria.
 
 - **PILAR 2 — PRODUÇÃO AUDIOVISUAL, CONTEÚDO ORGÂNICO E COBERTURA DE CAMPO (PAULO ROBERTO - PL):**
   - **Fase 1 — Apresentação Institucional de Lançamento (1º Mês de Operação):** Produção, captação presencial e edição de 1 (um) vídeo matriz em alta definição no formato horizontal (16:9), formatado especificamente para o canal do YouTube, evidenciando as instalações, áreas de lazer, acomodações, ecoturismo e a gastronomia da casa. A partir dessa gravação matriz, extração e edição de um **lote de pelo menos 20 (vinte) cortes verticais dinâmicos (9:16)** com ganchos de retenção e ritmo viral para postagem estratégica e coordenada no YouTube Shorts, Instagram Reels, TikTok e Facebook;
-  - **Fase 2 — Cobertura Presencial Dinâmica de Eventos:** Cobertura presencial em eventos realizados nas dependências do hostel (tais como rodas de pagode, encontros comemorativos, confraternizações e programações festivas), reproduzindo a mesma esteira de entrega: captação presencial de campo no estilo repórter autêntico, 1 (um) vídeo matriz horizontal para YouTube e geração de cortes verticais virais para redes sociais, sem quantidade pré-fixada ou limite de cortes estipulado por evento.
+  - **Fase 2 — Cobertura Presencial Dinâmica de Eventos:** Cobertura presencial em eventos realizados nas dependências do hostel (tais como rodas de pagode, encontros comemorativos, confraternizações e programações festivas), reproduzindo a mesma esteira de entrega: captação presencial de campo no estilo repórter autêntico, 1 (um) vídeo matriz horizontal para YouTube e geração de cortes verticais virais para redes sociais, sem quantidade pré-fixada ou limite de cortes estipulado por evento;
+  - **Política de Remarcação e Proteção de Deslocamento:** As visitas e filmagens presenciais serão agendadas previamente entre as Partes. Qualquer solicitação de cancelamento ou remarcação de data por parte da CONTRATANTE deverá ser comunicada formalmente via WhatsApp com antecedência mínima de **24 (vinte e quatro) horas**. Caso o cancelamento ocorra com prazo inferior a 24 horas ou haja impossibilidade de gravação por motivo imputável à CONTRATANTE após o deslocamento do profissional até o local, **50% (cinquenta por cento) do valor do evento é retido** para ressarcimento de custos operacionais de deslocamento e bloqueio de agenda do criador, sendo **50% (cinquenta por cento) do valor devolvido** à CONTRATANTE (ou abatido na remarcação).
 
 - **PILAR 3 — STOREFRONT WEB PRÓPRIO & MÓDULO BALCÃO/MESA NFC (MODALIDADE RISCO ZERO):**
   - Estruturação de plataforma web responsiva, ultrarrápida e intuitiva para visualização de cardápio, consumação e reservas diretas no celular do cliente;
@@ -59,11 +62,13 @@ Resolvem celebrar o presente Contrato, subordinando-se às seguintes cláusulas 
   - Planejamento e implantação gradual de réguas de relacionamento, lembretes de reserva e recuperação de contatos via API de WhatsApp geridas pela equipe de CRM.
 
 1.2. **Exclusões Expressas e Delimitação Técnica:** Não estão inclusos no escopo da CONTRATADA:
-I - A verba pública de mídia consumida diretamente nas plataformas de anúncios (Meta Ads e Google Ads), que é de responsabilidade direta e exclusiva da CONTRATANTE;
+I - A verba pública de mídia consumida diretamente nas plataformas de anúncios (Meta Ads), que é de responsabilidade direta e exclusiva da CONTRATANTE;
 II - Custos de hospedagem, bebidas, insumos alimentícios, buffet e itens de hospitalidade física do estabelecimento;
 III - Fornecimento de smartphones físicos, equipamentos de impressão, custos de conexão com provedores de internet locais ou infraestrutura elétrica do hostel.
 
 1.3. **Dinâmica de Aprovação Tácita:** Para assegurar o ritmo contínuo das publicações e o SLA de marketing, materiais de anúncio, copies e roteiros submetidos pela CONTRATADA considerar-se-ão tacitamente aprovados se a CONTRATANTE não se manifestar com solicitações de ajuste formal em até **48 (quarenta e oito) horas úteis** contadas do envio via WhatsApp oficial de alinhamento.
+
+1.4. **Condição de Início dos Serviços (Disponibilização de Acessos):** O cronograma e o prazo de início da prestação dos serviços pela CONTRATADA ficam expressamente condicionados à entrega e liberação pela CONTRATANTE de todos os acessos administrativos necessários ao Gerenciador de Negócios (Meta BM), redes sociais, dados institucionais e fotos/materiais do estabelecimento.
 
 ---
 
@@ -73,14 +78,15 @@ III - Fornecimento de smartphones físicos, equipamentos de impressão, custos d
 
 a) **Honorários de Gestão de Tráfego Pago (Tiago Teixeira):**
 - **Valor Recorrente:** **R$ 1.200,00 (um mil e duzentos reais)** mensais fixos;
-- **Vencimento:** Todo dia [A DEFINIR / PREENCHER] de cada mês subsequente;
+- **Vencimento:** Todo dia **20 (vinte)** de cada mês subsequente;
 - **Destino Bancário Individual:** Transferência bancária PIX para a conta do gestor Tiago Teixeira via Chave PIX (CNPJ): **`69.390.968/0001-78`**;
-- A verba de mídia consumida diretamente nas plataformas de anúncio (Meta/Google) será custeada pela CONTRATANTE via cartão de crédito corporativo cadastrado na conta de anúncios.
+- A verba de mídia consumida diretamente nas plataformas de anúncio (Meta Ads) será custeada pela CONTRATANTE via cartão de crédito corporativo cadastrado na conta de anúncios.
 
 b) **Honorários de Produção Audiovisual e Criação Orgânica (PL - Paulo Roberto):**
 - **Fase 1 — Apresentação Institucional de Lançamento (1º Mês):** **R$ 500,00 (quinhentos reais)** em taxa única, remunerando a entrega do vídeo longo horizontal para YouTube e do lote contratual de pelo menos 20 cortes verticais para distribuição multiplataforma;
 - **Fase 2 — Cobertura Presencial de Eventos:** **R$ 200,00 (duzentos reais)** por evento coberto presencialmente no hostel (rodas de pagode, programações temáticas e confraternizações), mediante agendamento prévio no calendário de eventos do estabelecimento;
-- **Destino Bancário Individual:** Transferência bancária PIX direta para a conta individual de titularidade de **Paulo Roberto (PL)**, conforme chave PIX informada no ato da gravação presencial: `[CHAVE PIX DO PL: A PREENCHER NO ATO]`.
+- **Destino Bancário Individual:** Transferência bancária PIX direta para a conta individual de titularidade de **Paulo Roberto (PL)**, conforme chave PIX informada no ato:  
+  **Chave PIX do PL:** `_____________________________________________` (Titular: Paulo Roberto).
 
 c) **Implementação da Plataforma Web & Módulo Balcão/Mesa NFC (Rhenan Teixeira):**
 - **Taxa Única de Setup e Implementação Tecnológica:** **R$ 500,00 (quinhentos reais)**, devida no ato da contratação e estritamente subordinada à Cláusula Terceira de Garantia Condicional;
@@ -158,9 +164,9 @@ II - A CONTRATANTE ressarcirá integralmente à CONTRATADA, no prazo improrrogá
 
 ### CLÁUSULA OITAVA — DA VIGÊNCIA, AVISO PRÉVIO E RESCISÃO
 
-8.1. **Prazo de Vigência:** O presente instrumento vigorará pelo prazo determinado de **{{PRAZO_MESES}} meses**, com início na data de sua assinatura [ou prazo indeterminado de cooperação mútua].
+8.1. **Prazo de Vigência:** O presente instrumento vigorará pelo prazo determinado inicial de **3 (três) meses**, com início formal na data de sua assinatura e entrega dos acessos técnicos pela CONTRATANTE, renovando-se e prorrogando-se automaticamente por prazo indeterminado ao término deste ciclo.
 
-8.2. **Rescisão Imotivada e Aviso Prévio:** Qualquer das Partes poderá rescindir unilateralmente este contrato sem penalidade adicional após transcorrido o primeiro trimestre de execução, mediante comunicação formal, expressa e por escrito à outra Parte, com antecedência mínima obrigatória de **30 (trinta) dias de aviso prévio**, período no qual os serviços continuarão a ser prestados e faturados normalmente.
+8.2. **Rescisão Imotivada e Aviso Prévio:** Qualquer das Partes poderá rescindir unilateralmente este contrato sem penalidade adicional após transcorrido o período inicial de 3 (três) meses, mediante comunicação formal, expressa e por escrito à outra Parte via WhatsApp oficial ou e-mail, com antecedência mínima obrigatória de **30 (trinta) dias de aviso prévio**, período no qual os serviços continuarão a ser prestados e faturados normalmente.
 
 8.3. **Rescisão Motivada (Justa Causa):** O contrato poderá ser rescindido de imediato, independentemente de aviso prévio ou notificação:
 I - Em caso de inadimplemento de qualquer obrigação financeira ou quebra substancial de cláusula contratual não sanada no prazo de 5 (cinco) dias úteis após interpelação;
