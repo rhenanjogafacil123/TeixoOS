@@ -9,7 +9,7 @@ Pelo presente instrumento particular, celebrado com fulcro nos artigos 421, 421-
 ### 1.1. CONTRATADA:
 **TIAGO TEIXEIRA DO NASCIMENTO SILVA**, pessoa jurídica de direito privado sob a forma de empresário individual (Microempreendedor Individual — MEI), inscrita no CNPJ/MF sob o nº **`69.390.968/0001-78`**, operando sob o nome empresarial e fantasia **TEIXO (ASSESSORIA DE CRESCIMENTO E TECNOLOGIA)**, com domicílio na Cidade do Rio de Janeiro / RJ, e-mails de contato: `contato@teixo.com.br` / `rhenanteixeira.rj@gmail.com`, representada por seu titular e signatário:
 - **TIAGO TEIXEIRA DO NASCIMENTO SILVA**, gestor de aquisição de tráfego pago e estrategista de crescimento, titular do CPF/MF sob o nº [ARQUIVADO NA OPERAÇÃO / PREENCHIDO], plenamente capaz civilmente;
-- **Equipe Técnica e Copartícipes Operacionais:** Contando para a execução com **PAULO ROBERTO - "PL"** (Influenciador, Apresentador e Diretor de Criação Audiovisual de Campo), **ERICK TEIXEIRA DA SILVA** (Gestor de Automações e CRM) e **RHENAN DE OLIVEIRA TEIXEIRA** (Operações e Estrutura Digital).
+- **Equipe Técnica e Copartícipes Operacionais:** Contando para a execução com **PAULO ROBERTO - "PL"** (Influenciador, Apresentador e Diretor de Criação Audiovisual de Campo) e **RHENAN DE OLIVEIRA TEIXEIRA** (Operações e Estratégia Digital).
 
 ### 1.2. CONTRATANTE:
 **SÍTIO HOSTEL NATUREZA** [Razão Social / Denominação Comercial / Titular: __________________________________________________], pessoa jurídica de direito privado [ou empreendimento econômico], inscrita no CNPJ/MF sob o nº ____________________________, situada na Cidade do Rio de Janeiro / RJ, neste ato formalmente representada por seu Gestor / Administrador Operacional de Fato:
@@ -54,8 +54,6 @@ Resolvem celebrar o presente Contrato, subordinando-se às seguintes cláusulas 
   - **Política de Remarcação, Condições Climáticas e Proteção de Deslocamento:** As visitas e filmagens presenciais serão agendadas previamente entre as Partes. Qualquer solicitação de cancelamento ou remarcação de data por parte da CONTRATANTE deverá ser comunicada formalmente via WhatsApp oficial com antecedência mínima de **24 (vinte e quatro) horas**. Caso o cancelamento ocorra com prazo inferior a 24 horas ou haja impossibilidade de gravação por circunstância imputável à CONTRATANTE após o deslocamento do profissional até o estabelecimento, **50% (cinquenta por cento) do custo de deslocamento do PL é devolvido** à CONTRATANTE (sendo os 50% restantes retidos para cobertura das despesas efetivas de transporte e logística havidas pelo criador). Na hipótese de intempéries meteorológicas severas (chuvas fortes, tempestades ou temporais comprovados) ou motivo de força maior que inviabilizem a captação externa no sítio, a data será remarcada de comum acordo sem qualquer retenção ou penalidade para ambas as Partes;
   - **Delimitação da Entrega Final e Não Fornecimento de Arquivos Brutos (Raw Footage):** A obrigação de entrega da CONTRATADA e do criador PL restringe-se exclusivamente aos produtos audiovisuais finais, finalizados, sonorizados e renderizados em alta definição (1080p/4K). Os arquivos brutos de captação de câmera (*raw footage*), descartes de gravação, arquivos de projeto e linhas do tempo de software de edição não integram a entrega contratual, constituindo acervo técnico e patrimônio metodológico privativo da CONTRATADA.
 
-- **PILAR 3 — AUTOMAÇÕES DE CRM E MENSAGERIA WHATSAPP (MODALIDADE FUTURA):**
-  - Planejamento e implantação gradual de réguas de relacionamento, lembretes de reserva e recuperação de contatos via API de WhatsApp geridas pela equipe de CRM.
 
 1.2. **Exclusões Expressas e Delimitação Técnica:** Não estão inclusos no escopo da CONTRATADA:
 I - A verba pública de mídia consumida diretamente nas plataformas de anúncios (Meta Ads), que é de responsabilidade direta e exclusiva da CONTRATANTE;
@@ -126,7 +124,7 @@ II - A CONTRATANTE ressarcirá integralmente à CONTRATADA, no prazo improrrogá
 
 ### CLÁUSULA QUINTA — DA PROPRIEDADE INTELECTUAL, ACESSOS E PROTEÇÃO DE DADOS (LGPD)
 
-5.1. **Propriedade Intelectual das Metodologias:** Todas as estratégias, métodos de testes de público, automações e roteiros desenvolvidos pela CONTRATADA pertencem exclusivamente a esta.
+5.1. **Propriedade Intelectual das Metodologias:** Todas as estratégias, métodos de testes de público, formatos de criativos e roteiros desenvolvidos pela CONTRATADA pertencem exclusivamente a esta.
 
 5.2. **Titularidade de Ativos Digitais e Acessos:** O Gerenciador de Negócios (Business Manager — BM), as páginas de redes sociais e os canais da CONTRATANTE permanecem de propriedade exclusiva desta. A CONTRATANTE obriga-se a manter os acessos concedidos à CONTRATADA como administradora ou parceira técnica, sendo vedada a remoção imotivada de acessos ou a alteração de senhas durante o período contratual sem prévia comunicação formal.
 
