@@ -178,3 +178,11 @@ Para todos os estabelecimentos gastronômicos e clientes de delivery atendidos p
      - **Equipe Operacional (`atendente` e `motoboy`):** Atendentes acessam KDS/pedidos/balcão; motoboys acessam exclusivamente suas rotas e fechamentos.
      - **Cliente (`cliente`):** Acesso ao cardápio e checkout. Se entrar no painel, é orientado com cordialidade a solicitar liberação ao gestor informando seu e-mail.
 
+9. **Infraestrutura Híbrida & Hardening de Servidor (Padrão Teixo):**
+   - **Frontend em CDN Edge:** Publicação estática global via Cloudflare Pages (ex: https://pizzadojuca.pages.dev) com HTTPS automático e roteamento de APIs via _worker.js.
+   - **VPS HostGator Blindada (AlmaLinux 9):**
+     - **Firewall de Pacotes (IPTables/IP6Tables):** Política restritiva DROP por padrão. Portas públicas restritas estritamente a 22022 (SSH), 80 (HTTP) e 443 (HTTPS).
+     - **Defesa Ativa contra Brute-Force (Fail2Ban):** Janela de detecção estendida de 24h e banimento incremental progressivo (evitando ataques lentos/espaçados).
+     - **Isolamento de Processos (Menor Privilégio):** Node.js rodando exclusivamente sob usuário de sistema não-privilegiado (pizzajuca), com sandbox do systemd (NoNewPrivileges=true, ProtectSystem=full, ProtectHome=true, PrivateTmp=true). Permissões de arquivos .sqlite e .env travadas em chmod 600.
+     - **Rate Limiting no Nginx:** Proteção contra ataques de negação de serviço e sobrecarga de autenticação (25 req/s geral e 10 req/min para login/cadastro com HTTP 429).
+

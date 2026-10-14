@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrossel — Como fugir das taxas do iFood</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      background-color: #050708;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+      padding: 40px 0;
+    }
+    .slide {
+      width: 1080px;
+      height: 1350px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 90px 90px 80px 90px;
+      background-color: #0B0F10;
+      color: #FFFFFF;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+    }
+    /* Estilos alternados de fundo */
+    .slide.theme-dark {
+      background-color: #0B0F10;
+    }
+    .slide.theme-card {
+      background: linear-gradient(180deg, #101618 0%, #0B0F10 100%);
+    }
+    .slide.theme-accent {
+      background: linear-gradient(135deg, #122316 0%, #0B0F10 100%);
+      border: 2px solid rgba(76, 175, 80, 0.25);
+    }
+    .slide.theme-final {
+      background: radial-gradient(circle at 50% 30%, #152d19 0%, #0B0F10 80%);
+      text-align: center;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Header padrão de slide */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      z-index: 10;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-symbol {
+      width: 32px;
+      height: 32px;
+      background: #4CAF50;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      color: #0B0F10;
+      font-size: 18px;
+    }
+    .brand-name {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: #FFFFFF;
+    }
+    .counter {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      color: #94A3B8;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    /* Conteúdo principal */
+    .content {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+      z-index: 10;
+    }
+    .eyebrow {
+      font-size: 16px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.25em;
+      color: #4CAF50;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 24px;
+      height: 3px;
+      background: #4CAF50;
+      border-radius: 2px;
+    }
+    .title-cover {
+      font-size: 78px;
+      font-weight: 900;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      color: #FFFFFF;
+    }
+    .title-cover span {
+      color: #4CAF50;
+    }
+    .title-slide {
+      font-size: 58px;
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.035em;
+      color: #FFFFFF;
+    }
+    .text-body {
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1.5;
+      color: #CBD5E1;
+      max-width: 880px;
+    }
+
+    /* Componentes visuais */
+    .giant-number {
+      font-size: 190px;
+      font-weight: 900;
+      line-height: 0.85;
+      letter-spacing: -0.05em;
+      color: #4CAF50;
+      margin: 10px 0;
+      text-shadow: 0 10px 30px rgba(76, 175, 80, 0.2);
+    }
+    .comparison-box {
+      background: #141A1C;
+      border-radius: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    .comparison-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+      border-radius: 12px;
+    }
+    .comparison-row.bad {
+      background: rgba(239, 68, 68, 0.08);
+      border-left: 4px solid #EF4444;
+    }
+    .comparison-row.good {
+      background: rgba(76, 175, 80, 0.12);
+      border-left: 4px solid #4CAF50;
+    }
+    .comparison-label {
+      font-size: 22px;
+      font-weight: 700;
+      color: #F8FAFC;
+    }
+    .comparison-sub {
+      font-size: 16px;
+      color: #94A3B8;
+      margin-top: 4px;
+    }
+    .comparison-value {
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+    .comparison-value.bad { color: #EF4444; }
+    .comparison-value.good { color: #4CAF50; }
+
+    .step-card {
+      background: #141A1C;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 16px;
+      padding: 24px 28px;
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .step-badge {
+      background: #4CAF50;
+      color: #0B0F10;
+      font-weight: 900;
+      font-size: 20px;
+      width: 44px;
+      height: 44px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step-text h4 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #FFFFFF;
+      margin-bottom: 6px;
+    }
+    .step-text p {
+      font-size: 19px;
+      color: #94A3B8;
+      line-height: 1.4;
+    }
+
+    /* Footer padrão */
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 10;
+    }
+    .handle {
+      font-size: 18px;
+      font-weight: 700;
+      color: #94A3B8;
+    }
+    .swipe-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 17px;
+      font-weight: 700;
+      color: #4CAF50;
+      letter-spacing: 0.05em;
+    }
+
+    /* Slide Final */
+    .final-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 32px;
+      max-width: 820px;
+    }
+    .final-logo {
+      width: 90px;
+      height: 90px;
+      background: #4CAF50;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      font-weight: 900;
+      color: #0B0F10;
+      box-shadow: 0 15px 35px rgba(76, 175, 80, 0.35);
+    }
+    .final-title {
+      font-size: 64px;
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+    .final-btn {
+      background: #4CAF50;
+      color: #0B0F10;
+      font-size: 24px;
+      font-weight: 800;
+      padding: 20px 42px;
+      border-radius: 14px;
+      display: inline-block;
+      letter-spacing: -0.01em;
+      box-shadow: 0 10px 25px rgba(76, 175, 80, 0.25);
+    }
+    .final-meta {
+      font-size: 20px;
+      color: #94A3B8;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SLIDE 1: CAPA -->
+  <div class="slide theme-dark" id="slide-1">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-symbol">T</div>
+        <div class="brand-name">TEIXO</div>
+      </div>
+      <div class="counter">01 / 07</div>
+    </div>
+    <div class="content">
+      <div class="eyebrow">Gestão de Delivery</div>
+      <h1 class="title-cover">
+        Seu restaurante está trabalhando <span>pro iFood?</span>
+      </h1>
+      <p class="text-body">
+        Como hamburguerias e pizzarias estão perdendo até 27% de cada pedido e a estratégia exata para recuperar esse lucro com delivery próprio.
+      </p>
+    </div>
+    <div class="footer">
+      <div class="handle">@teixo.ai</div>
+      <div class="swipe-cta">ARRASTE PRO LADO ➔</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: NÚMERO / SANGRIA -->
+  <div class="slide theme-card" id="slide-2">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-symbol">T</div>
+        <div class="brand-name">TEIXO</div>
+      </div>
+      <div class="counter">02 / 07</div>
+    </div>
+    <div class="content">
+      <div class="eyebrow">A Sangria Oculta</div>
+      <div class="giant-number">27%</div>
+      <h2 class="title-slide">É quanto o aplicativo pode morder da sua receita bruta.</h2>
+      <p class="text-body">
+        Mesmo no plano básico (com seu próprio motoboy), a taxa fica entre 12% e 15,2% + 3,2% de pagamento online. No fim do mês, você pagou todas as contas e o lucro ficou na plataforma.
+      </p>
+    </div>
+    <div class="footer">
+      <div class="handle">@teixo.ai</div>
+      <div class="swipe-cta">CONTINUE LENDO ➔</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: O ECONOMIÔMETRO -->
+  <div class="slide theme-dark" id="slide-3">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-symbol">T</div>
+        <div class="brand-name">TEIXO</div>
+      </div>
+      <div class="counter">03 / 07</div>
+    </div>
+    <div class="content">
+      <div class="eyebrow">Na Ponta do Lápis</div>
+      <h2 class="title-slide">Simulação real: 800 pedidos/mês a R$ 50 cada</h2>
+      
+      <div class="comparison-box">
+        <div class="comparison-row bad">
+          <div>
+            <div class="comparison-label">No Marketplace (15,2%)</div>
+            <div class="comparison-sub">Comissão entregue à plataforma</div>
+          </div>
+          <div class="comparison-value bad">- R$ 6.080,00/mês</div>
+        </div>
+        <div class="comparison-row good">
+          <div>
+            <div class="comparison-label">No Delivery Próprio Teixo</div>
+            <div class="comparison-sub">800 pedidos × microtaxa de R$ 0,67</div>
+          </div>
+          <div class="comparison-value good">Apenas R$ 536,00/mês</div>
+        </div>
+      </div>
+
+      <p class="text-body" style="font-size: 22px; color: #4CAF50; font-weight: 700;">
+        💡 Economia direta de R$ 5.544,00 todos os meses no caixa do seu restaurante.
+      </p>
+    </div>
+    <div class="footer">
+      <div class="handle">@teixo.ai</div>
+      <div class="swipe-cta">QUAL É O SEGREDO? ➔</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: O ERRO COMUM -->
+  <div class="slide theme-card" id="slide-4">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-symbol">T</div>
+        <div class="brand-name">TEIXO</div>
+      </div>
+      <div class="counter">04 / 07</div>
+    </div>
+    <div class="content">
+      <div class="eyebrow">Estratégia Inteligente</div>
+      <h2 class="title-slide">O grande erro: tentar sair do aplicativo do nada.</h2>
+      <p class="text-body">
+        O iFood tem uma utilidade clara: atrair clientes que ainda não conhecem a sua comida.
+      </p>
+      <p class="text-body">
+        O erro fatal é o <strong>mesmo cliente pedir 5 vezes no app</strong> e você pagar 15% a cada pedido de alguém que já ama sua marca. A regra é: <em>iFood atrai, sua casa própria fideliza</em>.
+      </p>
+    </div>
+    <div class="footer">
+      <div class="handle">@teixo.ai</div>
+      <div class="swipe-cta">COMO FAZER O DESMAME ➔</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: OS 3 PASSOS DO DESMAME -->
+  <div class="slide theme-dark" id="slide-5">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-symbol">T</div>
+        <div class="brand-name">TEIXO</div>
+      </div>
+      <div class="counter">05 / 07</div>
+    </div>
+    <div class="content">
+      <div class="eyebrow">Passo a Passo</div>
+      <h2 class="title-slide">Como desmamar o cliente do aplicativo:</h2>
+      
+      <div class="step-card">
+        <div class="step-badge">1</div>
+        <div class="step-text">
+          <h4>Panfleto no pacote da entrega</h4>
+          <p>QR Code exclusivo na sacola com 10% OFF no primeiro pedido no seu site oficial.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-badge">2</div>
+        <div class="step-text">
+          <h4>Cardápio mais rápido que o app</h4>
+          <p>Sem travar no WhatsApp: o cliente escolhe, adiciona os itens e fecha em 1 minuto.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-badge">3</div>
+        <div class="step-text">
+          <h4>Pagamento online antecipado</h4>
+          <p>PIX e Cartão aprovados na hora. Pedido entra pago na cozinha e sem maquininha na rua.</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <div class="handle">@teixo.ai</div>
+      <div class="swipe-cta">CONHEÇA O MODELO TEIXO ➔</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: O MODELO TEIXO -->
+  <div class="slide theme-accent" id="slide-6">
+    <div class="header">
+      <div class="brand">
+        <div class="brand-symbol">T</div>
+        <div class="brand-name">TEIXO</div>
+      </div>
+      <div class="counter">06 / 07</div>
+    </div>
+    <div class="content">
+      <div class="eyebrow">Parceria Justa</div>
+      <h2 class="title-slide">Sem pegadinhas, sem mensalidade, sem porcentagem.</h2>
+      
+      <div class="comparison-box" style="background: rgba(11, 15, 16, 0.85);">
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <div style="font-size: 26px; font-weight: 800; color: #FFFFFF;">
+            ✓ R$ 0,00 de setup (loja no ar sem pagar nada)
+          </div>
+          <div style="font-size: 26px; font-weight: 800; color: #FFFFFF;">
+            ✓ R$ 0,00 de mensalidade fixa
+          </div>
+          <div style="font-size: 26px; font-weight: 800; color: #4CAF50;">
+            ✓ Apenas R$ 0,67 por pedido aprovado
+          </div>
+        </div>
+      </div>
+
+      <p class="text-body">
+        Comanda térmica dual (Cozinha e Motoboy), painel de despacho em tempo real e base de dados de clientes 100% sua.
+      </p>
+    </div>
+    <div class="footer">
+      <div class="handle">@teixo.ai</div>
+      <div class="swipe-cta">ÚLTIMO SLIDE ➔</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: CTA FINAL -->
+  <div class="slide theme-final" id="slide-7">
+    <div class="final-container">
+      <div class="final-logo">T</div>
+      <div class="eyebrow" style="justify-content: center;">Artigo Completo</div>
+      <h2 class="final-title">
+        Quer ver o passo a passo completo e a calculadora de economia?
+      </h2>
+      <p class="text-body" style="text-align: center; font-size: 24px;">
+        Publicamos o guia detalhado no nosso blog com todos os bastidores operacionais de delivery.
+      </p>
+      <div class="final-btn">
+        Leia no link da nossa bio
+      </div>
+      <div class="final-meta">
+        teixo.com.br • @teixo.ai
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
