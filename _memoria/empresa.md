@@ -6,6 +6,7 @@
 **Nome Fantasia:** Teixo (Assessoria de Crescimento / Growth & Operações)  
 **Razão Social / Nome Empresarial:** TIAGO TEIXEIRA DO NASCIMENTO SILVA  
 **CNPJ:** 69.390.968/0001-78  
+**E-mail Oficial:** teixoag@gmail.com  
 **Origem do nome:** Família Teixeira e o Teixo (árvore milenar resistente, que representa raízes fortes e crescimento contínuo).  
 **Localização:** Rio de Janeiro / RJ (foco de atuação presencial na Zona Oeste do Rio).  
 

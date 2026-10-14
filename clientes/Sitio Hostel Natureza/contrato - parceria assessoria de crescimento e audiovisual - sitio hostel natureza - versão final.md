@@ -8,7 +8,7 @@ Pelo presente instrumento particular, celebrado com fulcro nos artigos 421, 421-
 
 ### 1.1. CONTRATADA:
 **TEIXO** (TIAGO TEIXEIRA DO NASCIMENTO SILVA), inscrita no CNPJ sob o nº **`69.390.968/0001-78`**, neste ato representada por seu titular **TIAGO TEIXEIRA DO NASCIMENTO SILVA**, com coparticipação operacional de **PAULO ROBERTO ("PL")** no audiovisual de campo.
-- **E-mail Oficial:** `contato@teixo.com.br`
+- **E-mail Oficial:** `teixoag@gmail.com`
 
 ### 1.2. CONTRATANTE:
 **SÍTIO HOSTEL NATUREZA**, inscrita no CNPJ sob o nº ____________________________, representada pelo gestor operacional signatário:
