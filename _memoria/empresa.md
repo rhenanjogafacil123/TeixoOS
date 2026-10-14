@@ -109,6 +109,7 @@ Todos os contratos gerados pela Teixo incorporam as seguintes blindagens essenci
 - **Marmitas Fit** (`clientes/Marmitas Fit/`) — Refeições saudáveis congeladas, cardápio porcionado e controle de CMV/estoque (Piedade, RJ).
 - **Beto Chaves** (`clientes/Beto/`) — Produção audiovisual e esteira cinematográfica de cortes verticais (@betochavesrj).
 - **Sítio Hostel Natureza** (`clientes/Sitio Hostel Natureza/`) — Turismo e gastronomia / Tráfego, audiovisual com PL e plataforma web/NFC (Rio de Janeiro, RJ).
+- **Matilha09** (`clientes/Matilha09/`) — Comunidade e Criadores / Matilha AI, esteira audiovisual de cortes virais e clipadores do Major Ronald Cadar (@caveiracadar09 / Mente Imperturbável / Cão Pastor).
 - **Foco Geográfico:** Zona Oeste, Zona Norte e Grande Rio.
 
 ---

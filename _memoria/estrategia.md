@@ -35,6 +35,14 @@ Expansão acelerada no nicho de **gastronomia, food delivery e alimentação loc
   - [x] Notinhas térmicas dual (Cozinha sem valores + Balcão com endereço/cobrança) e Clube de Aniversário 10% OFF no ar.
   - [x] Chave SSH permanente do Rhenan configurada no servidor para deploys diretos.
   - [x] Primeiro vídeo viral comercial Earth to Shop Zoom concluído (`clientes/Pizza do Juca/videos/`).
+  - [x] Economiômetro calibrado para o Plano Básico iFood (15,2% de comissão/taxa com frota própria de 3 a 4 motoboys) e briefing atualizado.
+
+- **Matilha09 (Major Ronald Cadar — @caveiracadar09 / Mente Imperturbável):**
+  - [x] Estruturação da pasta dedicada e hub da Matilha AI para clipadores e curadores de conteúdo (`clientes/Matilha09/`).
+  - [ ] Cadastrar referências visuais de alta resolução em `referencias-rosto/`.
+  - [ ] Mapear acervo de trilhas sonoras e sound effects em `trilhas/`.
+  - [ ] Desenvolver modelos de capas cinematográficas com Safe Zone central em `capas/`.
+  - [ ] Consolidar guia prático de garimpo de cortes virais em `conteudo/`.
 
 - **Marmitas Fit (Piedade, RJ — Eduardo Fiocchi):**
   - [x] Mapeamento completo de produção (lotes, porcionamento 150g/120g/70-80g, curva ABC e rotina de quinta-feira de estoque/CMV).

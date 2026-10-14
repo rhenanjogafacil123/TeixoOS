@@ -47,6 +47,12 @@ Skills externas prontas pra instalar. Use como referencia ao criar skills novas 
 **Como instalar:** Ja vem nativo no Claude Code. Chamar com `/canvas-design`
 **Fonte:** Skill nativa do Claude Code
 
+### Vídeo de Produto & Earth to Shop Zoom (audiovisual cinematográfico)
+**O que faz:** Cria vídeos e animações comerciais de produtos, gastronomia (hambúrgueres suculentos, pizzas com queijo esticando, latas e embalagens 3D) e o efeito viral 'Earth to Shop Zoom' (mergulho contínuo do satélite no espaço sideral até a fachada ou balcão do restaurante). Gera prompts para Google Flow / Google Veo, frames 4K e renderiza vídeos locais com FFmpeg e trilha sonora.
+**Bom pra:** Criativos de tráfego pago de altíssimo impacto para delivery, vídeos institucionais de lojas físicas e virais para Reels, TikTok e YouTube Shorts.
+**Como instalar:** Instalada localmente. Chamar com `/video-produto`
+**Fonte:** Skill desenvolvida sob medida para a Teixo
+
 ---
 
 ## Trabalhar com documentos

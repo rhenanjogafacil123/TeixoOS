@@ -1,7 +1,13 @@
 # TeixoAI — Cursor / Codex Rules
-
-1. Leia sempre `_memoria/empresa.md`, `_memoria/preferencias.md` e `_memoria/estrategia.md` antes de qualquer resposta sobre clientes, copies ou campanhas.
-2. Para Tráfego Pago, siga estritamente o fluxo das skills em `.claude/skills/`:
-   - Google Ads: `.claude/skills/anuncio-google/SKILL.md` (exportar CSV para Google Ads Editor).
-   - Relatórios Semanais Meta & Google: `.claude/skills/relatorio-ads/SKILL.md` (analisar CSVs brutos em `dados/`).
+ 
+1. Leia sempre `_memoria/empresa.md`, `_memoria/preferencias.md` e `_memoria/estrategia.md` antes de qualquer resposta sobre clientes, copies, sistemas ou finanças.
+2. Para execução técnica e de negócios, siga estritamente o fluxo das skills em `.claude/skills/` (ou `.agent/skills/`):
+   - Food Delivery & Clonador de Lojas: `.claude/skills/clonar-loja/SKILL.md` (checkout transparente Mercado Pago, R$ 0,67/pedido, KDS, motoboys).
+   - Contratos Blindados: `.claude/skills/contratos/SKILL.md` (minutas B2B de 3 páginas, título executivo Art. 784 CPC).
+   - Contador & Fiscal: `.claude/skills/contador/SKILL.md` (tributação, NFS-e, MEI, Simples Nacional/Fator R, E-Financeira).
+   - Security Gate: `.claude/skills/security-gate/SKILL.md` (OWASP ASVS 5.0 L2, RBAC e headers antes de deploys).
+   - Vídeos Comerciais 3D: `.claude/skills/video-produto/SKILL.md` (Google Flow / Veo + FFmpeg, zoom do satélite).
+   - Tráfego Pago & Ads: `.claude/skills/anuncio-google/SKILL.md` e `.claude/skills/relatorio-ads/SKILL.md`.
 3. Zero underline (`_`) em arquivos gerados. Nomes limpos e legíveis com hífen e espaço.
+4. Precisão cirúrgica: modifique estritamente o solicitado, mantendo o restante intacto.
+5. Sem processos em background que travem a interface.
