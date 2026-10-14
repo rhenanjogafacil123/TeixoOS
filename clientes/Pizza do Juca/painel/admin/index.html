@@ -466,8 +466,44 @@
             </button>
           </div>
 
+          <!-- Seletor do Modelo Real de Entrega do iFood -->
+          <div class="mt-4 flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-slate-200/90 bg-slate-50/80 p-3">
+            <div class="flex items-center gap-2">
+              <span class="grid h-7 w-7 place-items-center rounded-lg bg-orange-100 text-orange-700">
+                <i data-lucide="sliders" class="h-4 w-4"></i>
+              </span>
+              <div>
+                <span class="block text-xs font-bold text-slate-800">Plano de Comparação no iFood:</span>
+                <span class="block text-[10px] text-slate-400">O Juca tem equipe de 3 a 4 motoboys próprios</span>
+              </div>
+            </div>
+
+            <div class="inline-flex rounded-xl bg-white p-1 border border-slate-200 shadow-xs text-xs font-bold">
+              <button
+                id="btn-ifood-mode-basic"
+                type="button"
+                onclick="setIfoodPlanMode('basic')"
+                class="rounded-lg px-3 py-1.5 transition bg-emerald-50 text-emerald-800 font-extrabold border border-emerald-200 shadow-2xs flex items-center gap-1.5"
+                title="Plano em que o restaurante usa sua própria frota de motoboys"
+              >
+                <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                <span>Plano Básico (15,2% • Motoboys da Pizzaria)</span>
+              </button>
+              <button
+                id="btn-ifood-mode-delivery"
+                type="button"
+                onclick="setIfoodPlanMode('delivery')"
+                class="rounded-lg px-3 py-1.5 transition text-slate-500 hover:text-slate-800 flex items-center gap-1.5"
+                title="Plano em que o iFood fornece os entregadores"
+              >
+                <span class="h-2 w-2 rounded-full bg-slate-300"></span>
+                <span>Plano Entrega (27% • Motoboy do iFood)</span>
+              </button>
+            </div>
+          </div>
+
           <!-- Card de Destaque da Economia Líquida -->
-          <div class="mt-5 rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 p-6 text-white shadow-lg relative overflow-hidden">
+          <div class="mt-4 rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 p-6 text-white shadow-lg relative overflow-hidden">
             <div aria-hidden="true" class="pointer-events-none absolute -right-10 -bottom-10 h-48 w-48 rounded-full bg-emerald-400/20 blur-2xl"></div>
             
             <div class="relative flex flex-wrap items-center justify-between gap-4">
@@ -476,10 +512,10 @@
                   Economia Líquida Gerada no Período Selecionado
                 </div>
                 <div id="admin-roi-savings-amount" class="mt-1 text-4xl sm:text-5xl font-black tracking-tight text-white">
-                  R$ 1.117,22
+                  R$ 664,10
                 </div>
-                <p class="mt-2 text-xs sm:text-sm text-emerald-100 max-w-2xl leading-relaxed">
-                  Dinheiro que ficaria retido nas plataformas (comissão de 27% + mensalidade) e <strong>ficou 100% no caixa da pizzaria</strong>!
+                <p id="admin-roi-savings-desc" class="mt-2 text-xs sm:text-sm text-emerald-100 max-w-2xl leading-relaxed">
+                  Dinheiro que ficaria retido no iFood mesmo com seus próprios motoboys (12% comissão + 3,2% repasse + mensalidade) e <strong>ficou 100% no caixa da pizzaria</strong>!
                 </p>
               </div>
 
@@ -492,7 +528,7 @@
           </div>
 
           <!-- Comparativo Lado a Lado Mais Explícito -->
-          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Coluna iFood (Vermelha) -->
             <div class="rounded-2xl border-2 border-red-200 bg-red-50/40 p-5 flex flex-col justify-between">
               <div>
@@ -501,8 +537,8 @@
                     <i data-lucide="alert-triangle" class="h-4 w-4 text-red-500"></i>
                     <span>Se os pedidos fossem no iFood</span>
                   </span>
-                  <span class="rounded-lg bg-red-100 px-2 py-0.5 text-[10px] font-extrabold text-red-800">
-                    Comissão Alta (27%)
+                  <span id="admin-roi-ifood-badge" class="rounded-lg bg-red-100 px-2 py-0.5 text-[10px] font-extrabold text-red-800">
+                    Plano Básico (15,2% • Motoboy Próprio)
                   </span>
                 </div>
 
@@ -512,25 +548,31 @@
                     <span id="admin-roi-rev-ifood" class="font-bold text-slate-900">R$ 3.840,00</span>
                   </div>
                   <div class="flex justify-between text-slate-600">
-                    <span class="flex items-center gap-1">
-                      Comissão Média (27%):
-                      <span class="text-[10px] text-slate-400">(taxa do pedido + repasse)</span>
+                    <span id="admin-roi-com-label" class="flex items-center gap-1">
+                      Comissão Média (15,2%):
+                      <span class="text-[10px] text-slate-400">(12% pedido + 3,2% repasse)</span>
                     </span>
-                    <span id="admin-roi-com-ifood" class="font-bold text-red-600">- R$ 1.036,80</span>
+                    <span id="admin-roi-com-ifood" class="font-bold text-red-600">- R$ 583,68</span>
                   </div>
                   <div class="flex justify-between text-slate-600">
                     <span>Mensalidade Fixa iFood:</span>
                     <span id="admin-roi-monthly-ifood" class="font-bold text-red-600">- R$ 130,00</span>
                   </div>
                 </div>
+
+                <!-- Alerta Operacional da Frota Própria -->
+                <div id="admin-roi-courier-note" class="mt-4 rounded-xl border border-red-200/80 bg-red-100/60 p-2.5 text-[11px] text-red-900 flex items-start gap-2">
+                  <i data-lucide="info" class="h-4 w-4 shrink-0 text-red-600 mt-0.5"></i>
+                  <span><strong>Atenção:</strong> O Juca ainda arca sozinho com as diárias e taxas dos seus 3 a 4 motoboys por fora. O iFood não disponibiliza entregador no Plano Básico.</span>
+                </div>
               </div>
 
               <div class="mt-5 border-t border-red-200 pt-3 flex items-center justify-between">
                 <div>
                   <div class="text-[10px] font-bold uppercase text-slate-400">Sobrou no Caixa:</div>
-                  <div class="text-xs text-red-600 font-semibold">Após descontos da plataforma</div>
+                  <div class="text-xs text-red-600 font-semibold">Após taxas da plataforma</div>
                 </div>
-                <span id="admin-roi-net-ifood" class="text-xl font-black text-red-700">R$ 2.673,20</span>
+                <span id="admin-roi-net-ifood" class="text-xl font-black text-red-700">R$ 3.126,32</span>
               </div>
             </div>
 
@@ -543,7 +585,7 @@
                     <span>No Delivery Próprio Teixo</span>
                   </span>
                   <span class="rounded-lg bg-emerald-100 px-2 py-0.5 text-[10px] font-black text-emerald-800">
-                    Taxa Mínima Fixa
+                    Taxa Fixa R$ 0,67/ped
                   </span>
                 </div>
 
@@ -555,7 +597,7 @@
                   <div class="flex justify-between text-slate-600">
                     <span class="flex items-center gap-1">
                       Taxa Teixo (R$ 0,67/pedido):
-                      <span class="text-[10px] text-slate-400">(cobrado só em pedido aprovado)</span>
+                      <span class="text-[10px] text-slate-400">(paga no checkout pelo cliente)</span>
                     </span>
                     <span id="admin-roi-fee-teixo" class="font-bold text-slate-800">- R$ 49,58</span>
                   </div>
@@ -563,6 +605,12 @@
                     <span>Mensalidade Fixa Teixo:</span>
                     <span class="font-black text-emerald-700">R$ 0,00 (Grátis)</span>
                   </div>
+                </div>
+
+                <!-- Vantagem Operacional da Frota Própria -->
+                <div class="mt-4 rounded-xl border border-emerald-200/80 bg-emerald-100/60 p-2.5 text-[11px] text-emerald-950 flex items-start gap-2">
+                  <i data-lucide="check-circle" class="h-4 w-4 shrink-0 text-emerald-700 mt-0.5"></i>
+                  <span><strong>Vantagem Total:</strong> Seus 3 a 4 motoboys fixos conectados no App de Despacho Teixo com rota direta no WhatsApp, sem comissão percentual e com KDS integrado.</span>
                 </div>
               </div>
 
@@ -584,7 +632,7 @@
               <span class="text-slate-400">• Setup R$ 0 • Sem mensalidade • Custo fixo zero • 100% clientes seus.</span>
             </div>
             <div class="text-[11px] font-extrabold text-emerald-800 bg-emerald-100 border border-emerald-200 rounded-lg px-3 py-1">
-              Diferença líquida no bolso: <span id="admin-roi-diff-badge" class="font-black">+ R$ 1.117,22</span>
+              Diferença líquida no bolso: <span id="admin-roi-diff-badge" class="font-black">+ R$ 664,10</span>
             </div>
           </div>
         </section>
@@ -1122,10 +1170,41 @@
 
     // ========================================================
     // CÁLCULO E SINCRONIZAÇÃO DO ECONOMIÔMETRO TEIXO VS IFOOD
+    // Suporte ao Plano Básico (15,2% c/ motoboys próprios da pizzaria)
+    // e ao Plano Entrega (27% c/ motoboys do iFood)
     // ========================================================
+    let currentIfoodPlanMode = 'basic';
+    let lastRawRev = 3840;
+    let lastOrders = 74;
+    let lastKeyOrDays = 'hoje';
+
+    function setIfoodPlanMode(mode) {
+      currentIfoodPlanMode = mode;
+      const btnBasic = document.getElementById("btn-ifood-mode-basic");
+      const btnDelivery = document.getElementById("btn-ifood-mode-delivery");
+      
+      if (mode === 'basic') {
+        if (btnBasic) btnBasic.className = "rounded-lg px-3 py-1.5 transition bg-emerald-50 text-emerald-800 font-extrabold border border-emerald-200 shadow-2xs flex items-center gap-1.5";
+        if (btnDelivery) btnDelivery.className = "rounded-lg px-3 py-1.5 transition text-slate-500 hover:text-slate-800 flex items-center gap-1.5";
+      } else {
+        if (btnDelivery) btnDelivery.className = "rounded-lg px-3 py-1.5 transition bg-red-50 text-red-800 font-extrabold border border-red-200 shadow-2xs flex items-center gap-1.5";
+        if (btnBasic) btnBasic.className = "rounded-lg px-3 py-1.5 transition text-slate-500 hover:text-slate-800 flex items-center gap-1.5";
+      }
+      updateAdminRoi(lastRawRev, lastOrders, lastKeyOrDays);
+      if (window.lucide) lucide.createIcons();
+    }
+
     function updateAdminRoi(rawRev, orders, keyOrDays) {
+      lastRawRev = rawRev;
+      lastOrders = orders;
+      lastKeyOrDays = keyOrDays;
+
       const teixoFee = orders * 0.67;
-      const ifoodCommission = rawRev * 0.27;
+      const isBasic = currentIfoodPlanMode === 'basic';
+      // Plano Básico iFood: 12% de comissão sobre o pedido + 3,2% de processamento de pagamento = 15,2%
+      // Plano Entrega iFood: 23% de comissão + 4% processamento/repasse = 27%
+      const ifoodRate = isBasic ? 0.152 : 0.27;
+      const ifoodCommission = rawRev * ifoodRate;
       
       let ifoodMonthly = 130.00;
       if (keyOrDays === 'hoje' || keyOrDays === 1) {
@@ -1157,6 +1236,34 @@
 
       const elPct = document.getElementById("admin-roi-retention-pct");
       if (elPct) elPct.innerText = '+' + retentionPct;
+
+      const elDesc = document.getElementById("admin-roi-savings-desc");
+      if (elDesc) {
+        if (isBasic) {
+          elDesc.innerHTML = `Dinheiro que ficaria retido no iFood mesmo com seus próprios motoboys (12% comissão + 3,2% repasse + mensalidade) e <strong>ficou 100% no caixa da pizzaria</strong>!`;
+        } else {
+          elDesc.innerHTML = `Dinheiro que ficaria retido no iFood no Plano Entrega (27% comissão + mensalidade) e <strong>ficou 100% no caixa da pizzaria</strong>!`;
+        }
+      }
+
+      const elBadge = document.getElementById("admin-roi-ifood-badge");
+      if (elBadge) {
+        elBadge.innerText = isBasic ? "Plano Básico (15,2% • Motoboy Próprio)" : "Plano Entrega (27% • Entrega iFood)";
+      }
+
+      const elComLabel = document.getElementById("admin-roi-com-label");
+      if (elComLabel) {
+        elComLabel.innerHTML = isBasic
+          ? `Comissão Média (15,2%): <span class="text-[10px] text-slate-400">(12% pedido + 3,2% repasse)</span>`
+          : `Comissão Média (27%): <span class="text-[10px] text-slate-400">(23% pedido + 4% repasse)</span>`;
+      }
+
+      const elNote = document.getElementById("admin-roi-courier-note");
+      if (elNote) {
+        elNote.innerHTML = isBasic
+          ? `<i data-lucide="info" class="h-4 w-4 shrink-0 text-red-600 mt-0.5"></i><span><strong>Atenção:</strong> O Juca ainda arca sozinho com as diárias e taxas dos seus 3 a 4 motoboys por fora. O iFood não disponibiliza entregador no Plano Básico.</span>`
+          : `<i data-lucide="info" class="h-4 w-4 shrink-0 text-red-600 mt-0.5"></i><span><strong>Atenção:</strong> No Plano Entrega, o iFood fornece os motoboys mas cobra taxa integral de 27% sobre todo o faturamento da loja.</span>`;
+      }
 
       const elRevIfood = document.getElementById("admin-roi-rev-ifood");
       if (elRevIfood) elRevIfood.innerText = formatBRL(rawRev);
@@ -1191,19 +1298,24 @@
       const revenue = document.getElementById("admin-roi-rev-teixo").textContent;
       const fee = document.getElementById("admin-roi-fee-teixo").textContent;
       const period = document.getElementById("label-active-period").textContent;
+      const isBasic = currentIfoodPlanMode === 'basic';
 
       const rawRevenue = parseFloat(revenue.replace('R$', '').replace(/\./g, '').replace(',', '.').trim()) || 0;
-      const ifoodEst = (rawRevenue * 0.27) + 130;
+      const rate = isBasic ? 0.152 : 0.27;
+      const ifoodEst = (rawRevenue * rate) + 130;
       const fmtIfoodEst = 'R$ ' + ifoodEst.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const planName = isBasic ? "Plano Básico (15,2% c/ motoboys próprios da pizzaria)" : "Plano Entrega (27% c/ motoboys do app)";
 
       const message = `📊 *RELATÓRIO EXECUTIVO DE ECONOMIA — TEIXO* 🚀\n\n` +
         `🍕 *Pizza do Juca* (Delivery Próprio)\n` +
         `📅 Período analisado: *${period}*\n\n` +
         `💰 Faturamento no Site Próprio: *${revenue}*\n` +
         `⚡ Taxa Teixo (R$ 0,67 por pedido): *${fee}*\n` +
-        `🔴 Custo caso fosse no iFood (Comissão 27% + Mensalidade): *${fmtIfoodEst}*\n\n` +
+        `🔴 Custo caso fosse no iFood (${planName} + Mensalidade): *${fmtIfoodEst}*\n\n` +
         `🔥 *ECONOMIA LÍQUIDA GERADA NO SEU CAIXA: ${savings}*!\n\n` +
-        `Zero mensalidade e zero comissão abusiva de 27%. É dinheiro limpo que ficou 100% no caixa da pizzaria! 👊📈`;
+        (isBasic
+          ? `Lembrando que no iFood Básico você AINDA pagaria a diária dos seus 3 a 4 motoboys por fora. Na Teixo, você economiza ${savings} e despacha com sua equipe própria sem pagar comissões abusivas! 👊📈`
+          : `Zero mensalidade e zero comissão de 27%. É dinheiro limpo que ficou 100% no caixa da pizzaria! 👊📈`);
 
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
     }

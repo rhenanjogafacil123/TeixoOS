@@ -981,9 +981,9 @@
       <!-- Card Destaque de Economia no Bolso -->
       <div class="mt-4 rounded-3xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 p-6 text-white text-center shadow-xl">
         <div class="text-xs font-extrabold uppercase tracking-widest text-emerald-200">Economia Líquida Gerada Este Mês</div>
-        <div id="roi-savings-amount" class="text-4xl font-black mt-2 tracking-tight">R$ 7.405,46</div>
+        <div id="roi-savings-amount" class="text-4xl font-black mt-2 tracking-tight">R$ 4.178,36</div>
         <div class="text-xs text-emerald-100 mt-2">
-          Dinheiro que ficaria com as plataformas e agora ficou no caixa da pizzaria!
+          Comparado ao Plano Básico do iFood (15,2% + mensalidade) mantendo sua frota própria de motoboys!
         </div>
       </div>
 
@@ -999,17 +999,20 @@
               <span id="roi-revenue-ifood" class="font-bold text-slate-900">R$ 28.450,00</span>
             </div>
             <div class="flex justify-between">
-              <span>Comissão Média (27%):</span>
-              <span id="roi-commission-ifood" class="font-bold text-red-600">- R$ 7.681,50</span>
+              <span id="roi-commission-label">Plano Básico (15,2%):</span>
+              <span id="roi-commission-ifood" class="font-bold text-red-600">- R$ 4.324,40</span>
             </div>
             <div class="flex justify-between">
               <span>Mensalidade iFood:</span>
-              <span class="font-bold text-red-600">- R$ 130,00</span>
+              <span id="roi-monthly-ifood" class="font-bold text-red-600">- R$ 130,00</span>
             </div>
             <div class="border-t border-red-200 pt-2 flex justify-between font-black text-slate-900">
               <span>Sobrou pro Dono:</span>
-              <span id="roi-net-ifood" class="text-red-700">R$ 20.638,50</span>
+              <span id="roi-net-ifood" class="text-red-700">R$ 23.995,60</span>
             </div>
+          </div>
+          <div class="mt-2 text-[10px] text-red-700/80 italic">
+            * No Plano Básico o Juca ainda arca sozinho com seus 3 a 4 motoboys fixos.
           </div>
         </div>
 
@@ -2696,13 +2699,17 @@
       const revenue = document.getElementById("roi-revenue-teixo").textContent;
       const fee = document.getElementById("roi-fee-teixo").textContent;
 
+      const rawRevenue = parseFloat(revenue.replace('R$', '').replace(/\./g, '').replace(',', '.').trim()) || 28450;
+      const ifoodEst = (rawRevenue * 0.152) + 130;
+      const fmtIfoodEst = 'R$ ' + ifoodEst.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
       const message = `📊 *RELATÓRIO DE ECONOMIA — TEIXO ASSESSORIA* 🚀\n\n` +
         `🍕 *Pizza do Juca* (Delivery Próprio)\n\n` +
         `💰 Faturamento no Site: *${revenue}*\n` +
         `⚡ Taxa Teixo (R$ 0,67/pedido): *${fee}*\n` +
-        `🔴 Custo estimado se fosse no iFood (27%): *R$ 7.811,50*\n\n` +
+        `🔴 Custo estimado no iFood Plano Básico (15,2% c/ seus motoboys + Mensalidade): *${fmtIfoodEst}*\n\n` +
         `🔥 *ECONOMIA LÍQUIDA GERADA NO SEU BOLSO:* *${savings}*!\n\n` +
-        `Zero mensalidade, zero comissão abusiva. É dinheiro limpo que ficou com você! 👊📈`;
+        `Lembrando que no iFood Básico você ainda arca sozinho com a diária dos seus 3 a 4 motoboys por fora. Na Teixo, você economiza ${savings} mantendo seus motoboys no despacho sem pagar comissão abusiva! 👊📈`;
 
       window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
     }
@@ -2712,7 +2719,8 @@
       const rawRevenue = parseFloat(cfg.revenue.replace('R$', '').replace('.', '').replace(',', '.').trim()) || 28450;
       const ordersCount = cfg.ordersCount || 412;
       const teixoFee = ordersCount * 0.67;
-      const ifoodCommission = rawRevenue * 0.27;
+      // iFood Plano Básico: 12% comissão + 3,2% taxa de pagamento online = 15,2%
+      const ifoodCommission = rawRevenue * 0.152;
       const ifoodMonthly = 130.00;
       const savings = (ifoodCommission + ifoodMonthly) - teixoFee;
 
