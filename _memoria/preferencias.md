@@ -76,4 +76,9 @@ Ao conduzir diagnósticos, criar propostas, alinhar entregas ou redigir contrato
 - **Workflow Híbrido:** Prompts cinematográficos em inglês calibrados para Google Flow / Google Veo (`flow.google`) + geração de quadros-chave 4K e renderização local animada com FFmpeg (`zoompan`, `xfade`, áudio sincronizado).
 - **Nomenclatura Obrigatória:** Zero underline (`_`), nomes em português com hífen e espaço (ex: `vídeo - earth to shop zoom - pizza do juca - versão final.mp4`).
 
+---
 
+## 9. Precisão Cirúrgica nas Edições
+
+- **Modificar apenas o solicitado:** Sempre que o usuário pedir uma alteração ou exclusão, mudar estritamente e exclusivamente o ponto apontado.
+- **Preservação do que não foi mencionado:** Manter 100% intactos todos os demais trechos, cláusulas, parâmetros e informações que não foram expressamente mencionados, sem fazer deduções ou exclusões colaterais.

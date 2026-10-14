@@ -157,5 +157,6 @@ Quando o usuário pedir skill nova:
 - `_memoria/empresa.md` armazena exclusivamente **padrões gerais de serviços, modelos comerciais, regras de cobrança e a forma de trabalhar da Teixo**.
 - Detalhes de contratos, briefings, valores negociados e entregas individuais pertencem e ficam **isolados estritamente na pasta de cada cliente (`clientes/<Nome>/`)**, mantendo o sistema leve, ágil e escalável para dezenas ou centenas de clientes sem inchar a memória global.
 
-
-
+**Regra de Precisão Cirúrgica nas Edições:**
+- Sempre que o usuário solicitar qualquer alteração, exclusão ou adição, modificar **estritamente e exclusivamente** o que foi ordenado.
+- Manter intactos todos os demais elementos, cláusulas, seções e dados não relacionados, sem deduções automáticas ou exclusões paralelas não solicitadas.
