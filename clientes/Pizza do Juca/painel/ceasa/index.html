@@ -50,6 +50,19 @@
 </head>
 <body id="page-body" class="min-h-screen bg-[#111215] text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-white transition-colors duration-200">
 
+  <!-- AVISO DE MÓDULO TEMPORARIAMENTE INATIVO -->
+  <div class="sticky top-0 z-[100] border-b border-amber-500/30 bg-amber-950/90 px-4 py-3 text-amber-200 backdrop-blur-md">
+    <div class="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="rounded-full bg-amber-500/20 px-2 py-0.5 text-[10px] font-black uppercase text-amber-300">Inativo</span>
+        <span><strong>Atenção:</strong> A função de Lista Ceasa e compras está inativa por enquanto na operação.</span>
+      </div>
+      <a href="../admin/" class="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3 py-1 font-bold text-slate-950 hover:bg-amber-400 transition">
+        Voltar ao Dashboard
+      </a>
+    </div>
+  </div>
+
   <!-- ======================================================== -->
   <!-- BARRA SUPERIOR MOBILE                                   -->
   <!-- ======================================================== -->
@@ -106,11 +119,13 @@
               <span class="flex-1">Pizzas & Itens</span>
             </a>
 
+            <!-- Contagem de Estoque inativa por enquanto
             <a href="../estoque/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-400 hover:bg-slate-800 hover:text-white transition">
               <i data-lucide="boxes" class="h-[17px] w-[17px] text-emerald-400"></i>
               <span class="flex-1">Contagem Estoque</span>
               <span class="rounded-full bg-slate-800 px-1.5 py-0.5 text-[9px] font-bold text-slate-400">Quinta</span>
             </a>
+            -->
 
             <!-- CATEGORIA CEASA ATIVA -->
             <a href="./" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-black bg-emerald-950/80 text-emerald-400 transition border border-emerald-500/40 shadow-sm">
@@ -211,7 +226,7 @@
             <span id="theme-btn-label">Modo Claro</span>
           </button>
 
-          <!-- Botão Puxar do Estoque -->
+          <!-- Botão Puxar do Estoque inativo por enquanto
           <a
             href="../estoque/"
             class="inline-flex items-center gap-1.5 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-xs font-black text-emerald-300 hover:bg-emerald-500/20 transition"
@@ -220,6 +235,7 @@
             <i data-lucide="boxes" class="h-4 w-4 text-emerald-400"></i>
             <span>Puxar da Contagem</span>
           </a>
+          -->
 
           <!-- Botão WhatsApp -->
           <button

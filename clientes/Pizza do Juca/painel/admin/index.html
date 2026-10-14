@@ -80,6 +80,7 @@
               <i data-lucide="package" class="h-[17px] w-[17px]"></i>
               <span class="flex-1">Pizzas & Itens</span>
             </a>
+            <!-- Funções de Estoque e Ceasa inativas por enquanto
             <a href="../estoque/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition group">
               <i data-lucide="boxes" class="h-[17px] w-[17px] text-emerald-500 group-hover:scale-110 transition-transform"></i>
               <span class="flex-1">Contagem Estoque</span>
@@ -90,6 +91,7 @@
               <span class="flex-1">Lista Ceasa</span>
               <span class="rounded-full bg-red-100 px-1.5 py-0.5 text-[9px] font-black text-red-700">Insumos</span>
             </a>
+            -->
             <a href="../promocoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
               <i data-lucide="tag" class="h-[17px] w-[17px]"></i>
               <span class="flex-1">Promoções</span>
@@ -428,6 +430,164 @@
             </div>
           </section>
         </div>
+
+        <!-- ======================================================== -->
+        <!-- SEÇÃO: ECONOMIÔMETRO TEIXO VS IFOOD (RETORNO REAL DO DELIVERY) -->
+        <!-- ======================================================== -->
+        <section class="mt-4 rounded-3xl border border-emerald-200/90 bg-white p-5 sm:p-6 shadow-[0_20px_50px_-38px_rgba(5,150,105,0.25)]">
+          <!-- Topo do Card com Badge e Título -->
+          <div class="flex flex-wrap items-center justify-between gap-4 border-b border-slate-100 pb-5">
+            <div class="flex items-center gap-3.5">
+              <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-100 text-emerald-700 shadow-sm">
+                <i data-lucide="piggy-bank" class="h-6 w-6"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="rounded-full bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-emerald-700">
+                    Retorno Real do Delivery Próprio
+                  </span>
+                  <span class="text-xs font-semibold text-slate-400">• Comparativo transparente</span>
+                </div>
+                <h2 class="mt-1 text-xl font-black text-slate-900 tracking-tight sm:text-2xl">
+                  Economiômetro Teixo vs. iFood
+                </h2>
+              </div>
+            </div>
+
+            <!-- Botão de Ação Rápida WhatsApp -->
+            <button
+              type="button"
+              onclick="shareAdminRoiSummaryWhatsApp()"
+              class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2.5 text-xs font-extrabold text-white shadow-sm transition hover:bg-emerald-700 hover:shadow-md"
+              title="Compartilhar relatório executivo de economia no WhatsApp"
+            >
+              <i data-lucide="share-2" class="h-4 w-4"></i>
+              <span>Compartilhar Relatório</span>
+            </button>
+          </div>
+
+          <!-- Card de Destaque da Economia Líquida -->
+          <div class="mt-5 rounded-2xl bg-gradient-to-br from-emerald-600 via-emerald-700 to-teal-800 p-6 text-white shadow-lg relative overflow-hidden">
+            <div aria-hidden="true" class="pointer-events-none absolute -right-10 -bottom-10 h-48 w-48 rounded-full bg-emerald-400/20 blur-2xl"></div>
+            
+            <div class="relative flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <div class="text-[11px] font-extrabold uppercase tracking-widest text-emerald-200">
+                  Economia Líquida Gerada no Período Selecionado
+                </div>
+                <div id="admin-roi-savings-amount" class="mt-1 text-4xl sm:text-5xl font-black tracking-tight text-white">
+                  R$ 1.117,22
+                </div>
+                <p class="mt-2 text-xs sm:text-sm text-emerald-100 max-w-2xl leading-relaxed">
+                  Dinheiro que ficaria retido nas plataformas (comissão de 27% + mensalidade) e <strong>ficou 100% no caixa da pizzaria</strong>!
+                </p>
+              </div>
+
+              <div class="rounded-xl bg-white/10 backdrop-blur-md border border-white/20 px-5 py-3.5 text-right">
+                <div class="text-[10px] font-extrabold uppercase tracking-wider text-emerald-200">Retenção de Faturamento</div>
+                <div id="admin-roi-retention-pct" class="text-2xl font-black text-white">+98,7%</div>
+                <div class="text-[10px] text-emerald-200">preservado direto no seu caixa</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comparativo Lado a Lado Mais Explícito -->
+          <div class="mt-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Coluna iFood (Vermelha) -->
+            <div class="rounded-2xl border-2 border-red-200 bg-red-50/40 p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="inline-flex items-center gap-1.5 text-xs font-black uppercase text-red-700">
+                    <span class="h-2 w-2 rounded-full bg-red-500 animate-pulse"></span>
+                    🔴 Se os pedidos fossem no iFood
+                  </span>
+                  <span class="rounded-lg bg-red-100 px-2 py-0.5 text-[10px] font-extrabold text-red-800">
+                    Comissão Alta (27%)
+                  </span>
+                </div>
+
+                <div class="mt-4 space-y-2.5 text-xs">
+                  <div class="flex justify-between text-slate-600">
+                    <span>Faturamento Delivery:</span>
+                    <span id="admin-roi-rev-ifood" class="font-bold text-slate-900">R$ 3.840,00</span>
+                  </div>
+                  <div class="flex justify-between text-slate-600">
+                    <span class="flex items-center gap-1">
+                      Comissão Média (27%):
+                      <span class="text-[10px] text-slate-400">(taxa do pedido + repasse)</span>
+                    </span>
+                    <span id="admin-roi-com-ifood" class="font-bold text-red-600">- R$ 1.036,80</span>
+                  </div>
+                  <div class="flex justify-between text-slate-600">
+                    <span>Mensalidade Fixa iFood:</span>
+                    <span id="admin-roi-monthly-ifood" class="font-bold text-red-600">- R$ 130,00</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-5 border-t border-red-200 pt-3 flex items-center justify-between">
+                <div>
+                  <div class="text-[10px] font-bold uppercase text-slate-400">Sobrou no Caixa:</div>
+                  <div class="text-xs text-red-600 font-semibold">Após descontos da plataforma</div>
+                </div>
+                <span id="admin-roi-net-ifood" class="text-xl font-black text-red-700">R$ 2.673,20</span>
+              </div>
+            </div>
+
+            <!-- Coluna Teixo (Verde) -->
+            <div class="rounded-2xl border-2 border-emerald-300 bg-emerald-50/50 p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between">
+                  <span class="inline-flex items-center gap-1.5 text-xs font-black uppercase text-emerald-800">
+                    <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+                    🟢 No Delivery Próprio Teixo
+                  </span>
+                  <span class="rounded-lg bg-emerald-100 px-2 py-0.5 text-[10px] font-black text-emerald-800">
+                    Taxa Mínima Fixa
+                  </span>
+                </div>
+
+                <div class="mt-4 space-y-2.5 text-xs">
+                  <div class="flex justify-between text-slate-600">
+                    <span>Faturamento Delivery:</span>
+                    <span id="admin-roi-rev-teixo" class="font-bold text-slate-900">R$ 3.840,00</span>
+                  </div>
+                  <div class="flex justify-between text-slate-600">
+                    <span class="flex items-center gap-1">
+                      Taxa Teixo (R$ 0,67/pedido):
+                      <span class="text-[10px] text-slate-400">(cobrado só em pedido aprovado)</span>
+                    </span>
+                    <span id="admin-roi-fee-teixo" class="font-bold text-slate-800">- R$ 49,58</span>
+                  </div>
+                  <div class="flex justify-between text-slate-600">
+                    <span>Mensalidade Fixa Teixo:</span>
+                    <span class="font-black text-emerald-700">R$ 0,00 (Grátis)</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="mt-5 border-t border-emerald-300 pt-3 flex items-center justify-between">
+                <div>
+                  <div class="text-[10px] font-bold uppercase text-slate-400">Ficou pro Dono:</div>
+                  <div class="text-xs text-emerald-700 font-semibold">Lucro quase 100% preservado</div>
+                </div>
+                <span id="admin-roi-net-teixo" class="text-xl font-black text-emerald-700">R$ 3.790,42</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rodapé com Detalhes e Indicador de Transparência -->
+          <div class="mt-4 rounded-xl border border-slate-200/80 bg-slate-50 p-3.5 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-600">
+            <div class="flex flex-wrap items-center gap-2">
+              <span class="h-2 w-2 rounded-full bg-emerald-500"></span>
+              <span><strong id="admin-roi-orders-count" class="font-extrabold text-slate-900">74 pedidos</strong> processados no período.</span>
+              <span class="text-slate-400">• Setup R$ 0 • Sem mensalidade • Custo fixo zero • 100% clientes seus.</span>
+            </div>
+            <div class="text-[11px] font-extrabold text-emerald-800 bg-emerald-100 border border-emerald-200 rounded-lg px-3 py-1">
+              Diferença líquida no bolso: <span id="admin-roi-diff-badge" class="font-black">+ R$ 1.117,22</span>
+            </div>
+          </div>
+        </section>
 
         <!-- Gráfico Semanal e Formas de Pagamento -->
         <div class="mt-4 grid grid-cols-[minmax(0,1.55fr)_minmax(310px,0.85fr)] gap-4">
@@ -907,6 +1067,12 @@
       document.getElementById("status-cancelado-pct").innerText = data.status.cancPct;
       document.getElementById("status-cancelado-bar").style.width = data.status.cancPct;
 
+      // Atualiza Economiômetro Teixo vs. iFood
+      const rawRev = parseFloat(data.revVal.replace('R$', '').replace(/\./g, '').replace(',', '.').trim()) || 0;
+      const orders = parseInt(data.ordVal.replace(/\./g, '').replace(',', '').trim(), 10) || 0;
+      updateAdminRoi(rawRev, orders, key);
+
+      if (window.lucide) lucide.createIcons();
       if (dropPeriod) dropPeriod.classList.add("hidden");
     }
 
@@ -948,8 +1114,102 @@
       document.getElementById("status-recebido-val").innerText = Math.round(pedidos * 0.11).toLocaleString("pt-BR");
       document.getElementById("status-cancelado-val").innerText = Math.round(pedidos * 0.05).toLocaleString("pt-BR");
 
+      // Atualiza Economiômetro Teixo vs. iFood no período personalizado
+      updateAdminRoi(faturamento, pedidos, diffDays);
+
       if (dropPeriod) dropPeriod.classList.add("hidden");
     }
+
+    // ========================================================
+    // CÁLCULO E SINCRONIZAÇÃO DO ECONOMIÔMETRO TEIXO VS IFOOD
+    // ========================================================
+    function updateAdminRoi(rawRev, orders, keyOrDays) {
+      const teixoFee = orders * 0.67;
+      const ifoodCommission = rawRev * 0.27;
+      
+      let ifoodMonthly = 130.00;
+      if (keyOrDays === 'hoje' || keyOrDays === 1) {
+        ifoodMonthly = 130.00;
+      } else if (keyOrDays === '7d' || keyOrDays === 7) {
+        ifoodMonthly = 130.00;
+      } else if (keyOrDays === '15d' || keyOrDays === 15) {
+        ifoodMonthly = 130.00;
+      } else if (keyOrDays === '30d' || (typeof keyOrDays === 'number' && keyOrDays <= 30)) {
+        ifoodMonthly = 130.00;
+      } else if (keyOrDays === '60d' || (typeof keyOrDays === 'number' && keyOrDays <= 60)) {
+        ifoodMonthly = 260.00;
+      } else if (keyOrDays === '90d' || (typeof keyOrDays === 'number' && keyOrDays <= 90)) {
+        ifoodMonthly = 390.00;
+      } else if (keyOrDays === '180d' || (typeof keyOrDays === 'number' && keyOrDays > 90)) {
+        ifoodMonthly = 780.00;
+      }
+
+      const ifoodTotalCost = ifoodCommission + ifoodMonthly;
+      const savings = ifoodTotalCost - teixoFee;
+      const netIfood = Math.max(0, rawRev - ifoodTotalCost);
+      const netTeixo = Math.max(0, rawRev - teixoFee);
+      const retentionPct = rawRev > 0 ? ((netTeixo / rawRev) * 100).toFixed(1) + '%' : '100%';
+
+      const formatBRL = (v) => 'R$ ' + v.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      const elSavings = document.getElementById("admin-roi-savings-amount");
+      if (elSavings) elSavings.innerText = formatBRL(savings);
+
+      const elPct = document.getElementById("admin-roi-retention-pct");
+      if (elPct) elPct.innerText = '+' + retentionPct;
+
+      const elRevIfood = document.getElementById("admin-roi-rev-ifood");
+      if (elRevIfood) elRevIfood.innerText = formatBRL(rawRev);
+
+      const elComIfood = document.getElementById("admin-roi-com-ifood");
+      if (elComIfood) elComIfood.innerText = `- ${formatBRL(ifoodCommission)}`;
+
+      const elMonthIfood = document.getElementById("admin-roi-monthly-ifood");
+      if (elMonthIfood) elMonthIfood.innerText = `- ${formatBRL(ifoodMonthly)}`;
+
+      const elNetIfood = document.getElementById("admin-roi-net-ifood");
+      if (elNetIfood) elNetIfood.innerText = formatBRL(netIfood);
+
+      const elRevTeixo = document.getElementById("admin-roi-rev-teixo");
+      if (elRevTeixo) elRevTeixo.innerText = formatBRL(rawRev);
+
+      const elFeeTeixo = document.getElementById("admin-roi-fee-teixo");
+      if (elFeeTeixo) elFeeTeixo.innerText = `- ${formatBRL(teixoFee)}`;
+
+      const elNetTeixo = document.getElementById("admin-roi-net-teixo");
+      if (elNetTeixo) elNetTeixo.innerText = formatBRL(netTeixo);
+
+      const elOrders = document.getElementById("admin-roi-orders-count");
+      if (elOrders) elOrders.innerText = `${orders.toLocaleString('pt-BR')} pedidos`;
+
+      const elDiff = document.getElementById("admin-roi-diff-badge");
+      if (elDiff) elDiff.innerText = `+ ${formatBRL(savings)}`;
+    }
+
+    function shareAdminRoiSummaryWhatsApp() {
+      const savings = document.getElementById("admin-roi-savings-amount").textContent;
+      const revenue = document.getElementById("admin-roi-rev-teixo").textContent;
+      const fee = document.getElementById("admin-roi-fee-teixo").textContent;
+      const period = document.getElementById("label-active-period").textContent;
+
+      const rawRevenue = parseFloat(revenue.replace('R$', '').replace(/\./g, '').replace(',', '.').trim()) || 0;
+      const ifoodEst = (rawRevenue * 0.27) + 130;
+      const fmtIfoodEst = 'R$ ' + ifoodEst.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      const message = `📊 *RELATÓRIO EXECUTIVO DE ECONOMIA — TEIXO* 🚀\n\n` +
+        `🍕 *Pizza do Juca* (Delivery Próprio)\n` +
+        `📅 Período analisado: *${period}*\n\n` +
+        `💰 Faturamento no Site Próprio: *${revenue}*\n` +
+        `⚡ Taxa Teixo (R$ 0,67 por pedido): *${fee}*\n` +
+        `🔴 Custo caso fosse no iFood (Comissão 27% + Mensalidade): *${fmtIfoodEst}*\n\n` +
+        `🔥 *ECONOMIA LÍQUIDA GERADA NO SEU CAIXA: ${savings}*!\n\n` +
+        `Zero mensalidade e zero comissão abusiva de 27%. É dinheiro limpo que ficou 100% no caixa da pizzaria! 👊📈`;
+
+      window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`, '_blank');
+    }
+
+    // Inicialização do período padrão
+    setPeriod('hoje');
   </script>
 </body>
 </html>

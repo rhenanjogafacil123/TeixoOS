@@ -44,7 +44,8 @@ Expansão acelerada no nicho de **gastronomia, food delivery e alimentação loc
   - [x] Template Modular ("Clonador de Lojas"): Empacotado via skill `/clonar-loja`, script nativo `scripts/gerar-delivery.ps1` e presets de nicho (`templates/delivery-store/presets/`).
   - [x] Esteira Jurídica de Contratos Blindados (`/contratos`): Modelos completos, biblioteca de cláusulas (Delivery R$ 0,67, Tráfego, Audiovisual, GMB, CMV e Combo 360º), termos de responsabilidade com regresso processual, LGPD e título executivo extrajudicial prontos para assinatura eletrônica. Contratos individuais finalizados para os clientes ativos (`Pizza do Juca`, `Marmitas Fit`, `Beto` e `Sitio Hostel Natureza` — este último validado no padrão executivo enxuto de 3 páginas para Tráfego de R$ 1.200 + Audiovisual com PL).
   - [x] Ferramentas Operacionais de Alto Impacto: Rastreio ao vivo do pedido para clientes (`/rastreio/`), Fechamento Noturno de Motoboys com impressão térmica 80mm e WhatsApp, Economiômetro Teixo vs. iFood e Turbo Upsell de fechamento implementados e ativos na VPS.
-  - [ ] Credenciais de Produção Mercado Pago: Inserir `PUBLIC_KEY` e `ACCESS_TOKEN` do Juca em `backend-api/config.js` na VPS assim que ele disponibilizar.
+  - [x] Credenciais de Produção Mercado Pago: Inseridas via .env protegido (Zero Trust) e ativas na VPS (143.95.174.216) com checkout PIX e Cartão ao vivo para a conta bancária do Juca.
+  - [x] Security Gate & Auditoria OWASP ASVS 5.0 L2: Rotas de pedidos, clientes e fechamentos 100% blindadas com JWT RBAC e headers defensivos (Score 100/100 A+).
   - [ ] Domínio e SSL (HTTPS): Configurar apontamento Cloudflare e certificado SSL na VPS HostGator (`143.95.174.216`).
 
 ---

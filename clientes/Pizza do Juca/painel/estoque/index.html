@@ -46,6 +46,19 @@
 </head>
 <body class="min-h-screen bg-[#111215] text-slate-100 font-sans antialiased selection:bg-emerald-500 selection:text-white">
 
+  <!-- AVISO DE MÓDULO TEMPORARIAMENTE INATIVO -->
+  <div class="sticky top-0 z-[100] border-b border-amber-500/30 bg-amber-950/90 px-4 py-3 text-amber-200 backdrop-blur-md">
+    <div class="mx-auto flex max-w-[1600px] flex-wrap items-center justify-between gap-3 text-xs">
+      <div class="flex items-center gap-2">
+        <span class="rounded-full bg-amber-500/20 px-2 py-0.5 text-[10px] font-black uppercase text-amber-300">Inativo</span>
+        <span><strong>Atenção:</strong> A função de contagem de estoque e CMV está inativa por enquanto na operação.</span>
+      </div>
+      <a href="../admin/" class="inline-flex items-center gap-1.5 rounded-lg bg-amber-500 px-3 py-1 font-bold text-slate-950 hover:bg-amber-400 transition">
+        Voltar ao Dashboard
+      </a>
+    </div>
+  </div>
+
   <!-- ======================================================== -->
   <!-- BARRA SUPERIOR MOBILE                                   -->
   <!-- ======================================================== -->
@@ -98,9 +111,11 @@
             <a href="./index.html" class="flex items-center gap-3 rounded-2xl bg-emerald-500/15 text-emerald-400 px-3 py-2.5 text-xs font-black shadow-inner">
               <i data-lucide="boxes" class="h-4 w-4"></i> Contagem de Estoque
             </a>
+            <!-- Lista Ceasa inativa por enquanto
             <a href="../ceasa/index.html" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
               <i data-lucide="carrot" class="h-4 w-4"></i> Lista Ceasa & Compras
             </a>
+            -->
             <a href="../produtos/index.html" class="flex items-center gap-3 rounded-2xl px-3 py-2.5 text-xs font-bold text-slate-400 hover:bg-slate-800 hover:text-white transition">
               <i data-lucide="pizza" class="h-4 w-4"></i> Produtos & Cardápio
             </a>

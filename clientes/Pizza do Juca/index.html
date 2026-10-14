@@ -126,10 +126,6 @@
             </svg>
             <span>@pizzadojuca</span>
           </a>
-          <a href="painel/index.html" class="flex items-center gap-1.5 rounded-full bg-[#b23a26]/10 px-3.5 py-1.5 text-xs font-bold text-[#b23a26] hover:bg-[#b23a26]/20 transition dark:bg-white/10 dark:text-[#f87171]">
-            <svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-            <span>Painel</span>
-          </a>
         </nav>
 
         <!-- Botão Alternar Tema Claro/Escuro -->
@@ -169,10 +165,6 @@
       <a href="#contato" onclick="closeMobileMenu()" class="block rounded-2xl px-4 py-3 text-sm font-bold text-[#2f4a32] hover:bg-[#e8d9be]/60 transition dark:text-[#faf5ec]">
         Contato
       </a>
-      <a href="painel/index.html" class="flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold text-[#b23a26] hover:bg-[#b23a26]/10 transition dark:text-[#f87171]">
-        <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-        Área Interna / Painel da Loja
-      </a>
       <a href="https://www.instagram.com/pizzadojuca/" target="_blank" rel="noreferrer" class="flex items-center gap-2 rounded-2xl px-4 py-3 text-sm font-bold text-[#b23a26] hover:bg-[#b23a26]/10 transition">
         <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -201,20 +193,15 @@
       <!-- Coluna Esquerda: Pizza do Juca Branding, Status, Badges & Botões -->
       <div class="relative z-10 animate-surgir">
         
-        <!-- Top Branding & Status Tag -->
-        <div class="mb-4 flex flex-wrap items-center gap-3">
-          <div class="flex items-center gap-2.5">
-            <span class="grid size-14 shrink-0 place-items-center overflow-hidden rounded-full border-2 border-[#b23a26] bg-black shadow-md">
-              <img src="assets/logo_juca.png" alt="Pizza do Juca" class="h-full w-full object-cover" onerror="this.onerror=null; this.src='assets/logo.webp';">
-            </span>
-            <div>
-              <h3 class="font-display text-lg font-bold leading-none text-[#2f4a32] dark:text-[#faf5ec]">Pizza do Juca</h3>
-              <span class="text-[11px] font-bold uppercase tracking-[0.20em] text-[#b23a26] dark:text-[#f87171]">Sabor e tradição • Desde 2001 • Paciência – RJ</span>
-            </div>
-          </div>
+        <!-- Top Branding & Status Tag (Minimalista e Elegante) -->
+        <div class="mb-5 flex flex-wrap items-center gap-3">
+          <span class="inline-flex items-center gap-2 rounded-full border border-[#dccdb2] bg-[#faf5ec]/90 px-3.5 py-1.5 text-xs font-semibold text-[#2f4a32] shadow-sm backdrop-blur dark:bg-[#1a1412]/90 dark:border-[#382b24] dark:text-[#faf5ec]">
+            <span class="h-2 w-2 rounded-full bg-[#b23a26]"></span>
+            <span>Desde 2001 • Paciência, RJ</span>
+          </span>
 
           <!-- Status Aberto/Fechado com Ponto Verde Pulsante Dinâmico -->
-          <span id="hero-status-pill" class="inline-flex items-center gap-2 rounded-full bg-[#2f4a32]/10 px-3 py-1 text-xs font-semibold text-[#2f4a32] shadow-sm dark:bg-white/10 dark:text-[#faf5ec]">
+          <span id="hero-status-pill" class="inline-flex items-center gap-2 rounded-full bg-[#2f4a32]/10 px-3.5 py-1.5 text-xs font-semibold text-[#2f4a32] shadow-sm dark:bg-white/10 dark:text-[#faf5ec]">
             <span class="relative flex size-2">
               <span class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-75"></span>
               <span class="relative inline-flex size-2 rounded-full bg-emerald-600"></span>
@@ -224,7 +211,7 @@
         </div>
 
         <!-- Headline com Estilo Italiano Palazzo -->
-        <h1 class="font-display text-[clamp(2.6rem,6.8vw,5.4rem)] leading-[0.98] font-semibold tracking-[-0.03em] text-[#2f4a32] dark:text-[#faf5ec]">
+        <h1 class="font-display text-[clamp(2.6rem,6.2vw,5.2rem)] leading-[1.0] font-semibold tracking-[-0.03em] text-[#2f4a32] dark:text-[#faf5ec]">
           Sabor de verdade <em class="font-bold text-[#b23a26] not-italic dark:text-[#f87171]">em cada fatia.</em>
         </h1>
 
@@ -233,54 +220,56 @@
           Massa artesanal fresca, recheios fartos e mais de 80 opções de pizzas salgadas e doces preparadas com todo carinho em Paciência.
         </p>
 
-        <!-- Badges de Avaliação, Cidade e Horário (Pizza do Juca Real) -->
-        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2.5 text-sm font-medium text-[#4e3220] dark:text-[#e8d9be]">
-          <span class="inline-flex items-center gap-1.5 font-bold text-[#b23a26] bg-[#faf5ec]/90 px-2.5 py-1 rounded-full shadow-sm dark:bg-[#1a1412] dark:text-[#f87171]">
-            <svg class="h-4 w-4 fill-current text-[#b23a26] dark:text-[#f87171]" viewBox="0 0 20 20">
+        <!-- Informações Chave Harmonizadas (Avaliação, Cidade e Horário) -->
+        <div class="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs sm:text-sm font-medium text-[#4e3220] dark:text-[#e8d9be]">
+          <span class="inline-flex items-center gap-1.5 font-bold text-[#b23a26] bg-[#faf5ec]/90 px-3 py-1 rounded-full border border-[#dccdb2]/80 shadow-sm dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#f87171]">
+            <svg class="h-3.5 w-3.5 fill-current" viewBox="0 0 20 20">
               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
             </svg>
             4,5 <span class="font-normal text-[#6f6457] dark:text-[#a89985]">(243 avaliações)</span>
           </span>
-          <span class="inline-flex items-center gap-1.5">
-            <svg class="h-4 w-4 text-[#7a8450]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-            </svg>
-            Paciência, Rio de Janeiro – RJ
-          </span>
+          <span class="hidden sm:inline text-[#dccdb2] dark:text-[#382b24]">•</span>
           <span class="inline-flex items-center gap-1.5">
             <svg class="h-4 w-4 text-[#7a8450]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             Todos os dias, das 19h às 00h
           </span>
+          <span class="hidden sm:inline text-[#dccdb2] dark:text-[#382b24]">•</span>
+          <span class="inline-flex items-center gap-1.5">
+            <svg class="h-4 w-4 text-[#7a8450]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Paciência, RJ
+          </span>
         </div>
 
-        <!-- Chips de Serviços (Delivery, Retirada, No Local) -->
-        <div class="mt-5 flex flex-wrap gap-2">
-          <span class="inline-flex items-center gap-2 rounded-full border border-[#dccdb2] bg-[#faf5ec]/90 px-3.5 py-1.5 text-xs font-semibold text-[#2f4a32] shadow-sm backdrop-blur dark:bg-[#1a1412]/90 dark:text-[#faf5ec] dark:border-[#382b24]">
-            🛵 Delivery
+        <!-- Chips de Atendimento Discretos e Limpos -->
+        <div class="mt-4 flex flex-wrap items-center gap-2 text-xs font-semibold text-[#2f4a32] dark:text-[#faf5ec]">
+          <span class="rounded-full bg-[#faf5ec]/70 px-3 py-1 border border-[#dccdb2]/60 dark:bg-white/5 dark:border-[#382b24]">
+            Delivery
           </span>
-          <span class="inline-flex items-center gap-2 rounded-full border border-[#dccdb2] bg-[#faf5ec]/90 px-3.5 py-1.5 text-xs font-semibold text-[#2f4a32] shadow-sm backdrop-blur dark:bg-[#1a1412]/90 dark:text-[#faf5ec] dark:border-[#382b24]">
-            🛍️ Retirada
+          <span class="rounded-full bg-[#faf5ec]/70 px-3 py-1 border border-[#dccdb2]/60 dark:bg-white/5 dark:border-[#382b24]">
+            Retirada no Balcão
           </span>
-          <span class="inline-flex items-center gap-2 rounded-full border border-[#dccdb2] bg-[#faf5ec]/90 px-3.5 py-1.5 text-xs font-semibold text-[#2f4a32] shadow-sm backdrop-blur dark:bg-[#1a1412]/90 dark:text-[#faf5ec] dark:border-[#382b24]">
-            🏪 Atendimento no local
+          <span class="rounded-full bg-[#faf5ec]/70 px-3 py-1 border border-[#dccdb2]/60 dark:bg-white/5 dark:border-[#382b24]">
+            Salão
           </span>
         </div>
 
         <!-- BOTÕES DA CAPA -->
         <div class="mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center">
           <!-- Botão 1: "Ver cardápio" -->
-          <a href="#cardapio" class="group inline-flex items-center justify-center gap-3 rounded-full bg-[#eab308] hover:bg-[#ca8a04] px-8 py-4 text-base font-bold text-[#2f4a32] shadow-[0_12px_28px_rgba(202,138,4,0.35)] transition-all hover:scale-[1.02] active:scale-95">
+          <a href="#cardapio" class="group inline-flex items-center justify-center gap-3 rounded-full bg-[#b23a26] hover:bg-[#992f1e] px-8 py-4 text-base font-bold text-white shadow-[0_12px_28px_rgba(178,58,38,0.30)] transition-all hover:scale-[1.02] active:scale-95">
             <span>Ver cardápio</span>
-            <span class="grid size-7 place-items-center rounded-full bg-black/10 transition-transform group-hover:translate-x-1">
+            <span class="grid size-7 place-items-center rounded-full bg-white/20 transition-transform group-hover:translate-x-1">
               →
             </span>
           </a>
 
           <!-- Botão 2: "ⓘ Informações" -->
-          <button id="btn-open-info" type="button" class="inline-flex items-center justify-center gap-2.5 rounded-full border-2 border-[#2f4a32]/30 bg-[#faf5ec]/80 hover:bg-[#faf5ec] hover:border-[#2f4a32] px-7 py-3.5 text-base font-bold text-[#2f4a32] transition-all shadow-sm active:scale-95 dark:bg-[#1a1412]/80 dark:border-white/20 dark:text-[#faf5ec] dark:hover:bg-[#1a1412]">
+          <button id="btn-open-info" type="button" class="inline-flex items-center justify-center gap-2.5 rounded-full border-2 border-[#2f4a32]/25 bg-[#faf5ec]/80 hover:bg-[#faf5ec] hover:border-[#2f4a32] px-7 py-3.5 text-base font-bold text-[#2f4a32] transition-all shadow-sm active:scale-95 dark:bg-[#1a1412]/80 dark:border-white/20 dark:text-[#faf5ec] dark:hover:bg-[#1a1412]">
             <svg class="h-5 w-5 text-[#b23a26] dark:text-[#f87171]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
@@ -290,43 +279,27 @@
 
       </div>
 
-      <!-- Coluna Direita: Assinatura Visual Palazzo (Pizza 360°, Manjericão, Tomates e Selo SVG) -->
+      <!-- Coluna Direita: Apresentação da Pizza Artesanal com Selo de Qualidade -->
       <div class="relative order-first mx-auto aspect-square w-[82%] max-w-[26rem] sm:max-w-[34rem] lg:order-none lg:w-full lg:max-w-none">
         
         <!-- Círculo de fundo verde manjericão em telas menores -->
         <div class="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[104%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2f4a32] lg:hidden shadow-2xl"></div>
 
-        <!-- Manjericão Flutuante (animate-flutuar) -->
-        <img alt="Folhas de manjericão fresco" class="absolute -top-3 left-0 z-20 w-[24%] animate-flutuar drop-shadow-xl" style="--giro: -20deg;" src="assets/manjericao.webp">
+        <!-- Ingredientes e detalhes de suporte estáticos com leve profundidade -->
+        <img alt="Folhas de manjericão fresco" class="pointer-events-none absolute -top-2 left-2 z-20 w-[20%] drop-shadow-md opacity-90 transition-transform duration-700 hover:scale-105" src="assets/manjericao.webp">
+        <img alt="Tomates frescos selecionados" class="pointer-events-none absolute right-2 bottom-4 z-20 w-[22%] drop-shadow-md opacity-90 transition-transform duration-700 hover:scale-105" src="assets/tomates.webp">
 
-        <!-- Tomates Frescos Flutuantes (animate-flutuar) -->
-        <img alt="Tomates frescos selecionados" class="absolute right-0 bottom-3 z-20 w-[27%] animate-flutuar drop-shadow-xl" style="--giro: 15deg; animation-delay: -2.5s;" src="assets/tomates.webp">
-
-        <!-- Pizza Artesanal em Rotação Contínua 360° (animate-girar) -->
-        <div class="absolute inset-[4%] animate-girar">
-          <img alt="Pizza artesanal da Pizza do Juca" class="size-full object-contain drop-shadow-[0_40px_50px_rgba(23,38,25,0.55)]" src="assets/hero-calabresa-catupiry.webp">
+        <!-- Pizza Artesanal Estática, Nítida e Imersiva com Sombra Realista -->
+        <div class="relative z-10 p-2 sm:p-4">
+          <img alt="Pizza artesanal da Pizza do Juca" class="mx-auto size-full max-h-[500px] object-contain drop-shadow-[0_35px_50px_rgba(23,38,25,0.45)] transition-transform duration-500 hover:scale-[1.02]" src="assets/hero-calabresa-catupiry.webp">
         </div>
 
-        <!-- Selo Circular Artesanal Rotativo em SVG com Nota 4,5 Pizza do Juca -->
-        <div class="grid place-items-center absolute bottom-[6%] left-[2%] z-20 size-[28%] min-h-24 min-w-24 rounded-full bg-[#faf5ec] text-[#2f4a32] shadow-2xl border-2 border-[#dccdb2] dark:bg-[#1a1412] dark:text-[#faf5ec] dark:border-[#382b24]">
-          <svg viewBox="0 0 200 200" class="absolute inset-0 size-full animate-girar [animation-duration:30s]" aria-hidden="true">
-            <defs>
-              <path id="selo-juca" d="M100 100m-76 0a76 76 0 1 1 152 0a76 76 0 1 1 -152 0"></path>
-            </defs>
-            <circle cx="100" cy="100" r="97" fill="none" stroke="currentColor" stroke-width="1.2"></circle>
-            <circle cx="100" cy="100" r="58" fill="none" stroke="currentColor" stroke-width="1"></circle>
-            <text fill="currentColor" font-size="14" font-weight="700" letter-spacing="3" class="uppercase">
-              <textPath href="#selo-juca" textLength="473.5" lengthAdjust="spacing">
-                PIZZA DO JUCA • DESDE 2001 • PACIÊNCIA - RJ • 
-              </textPath>
-            </text>
-          </svg>
-
-          <div class="relative grid size-[52%] place-items-center text-center">
-            <span class="leading-none">
-              <span class="block font-display text-[clamp(1.1rem,2.6vw,1.8rem)] font-bold italic text-[#2f4a32] dark:text-[#faf5ec]">4,5</span>
-              <span class="mt-0.5 block text-[clamp(0.5rem,1vw,0.65rem)] font-bold tracking-[0.14em] uppercase text-[#b23a26] dark:text-[#f87171]">nota</span>
-            </span>
+        <!-- Selo de Tradição Pizza do Juca (Estático, Limpo e Legível) -->
+        <div class="grid place-items-center absolute bottom-[6%] left-[2%] z-20 size-24 sm:size-28 rounded-full bg-[#faf5ec] text-[#2f4a32] shadow-2xl border-2 border-[#dccdb2] dark:bg-[#1a1412] dark:text-[#faf5ec] dark:border-[#382b24]">
+          <div class="relative flex flex-col items-center justify-center text-center p-2">
+            <span class="text-[9px] font-extrabold uppercase tracking-widest text-[#b23a26] dark:text-[#f87171]">Desde</span>
+            <span class="font-display text-2xl font-black text-[#2f4a32] dark:text-[#faf5ec] leading-none">2001</span>
+            <span class="mt-0.5 text-[8px] font-extrabold uppercase tracking-wider text-[#6f6457] dark:text-[#a89985]">Tradicional</span>
           </div>
         </div>
 
@@ -363,20 +336,20 @@
 
     <!-- Navegação de Categorias do Juca -->
     <div id="cat-tabs-container" class="no-scrollbar -mx-4 mb-7 flex gap-2 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0">
-      <button data-cat="pizzas" onclick="filterCategory('pizzas')" class="cat-btn active shrink-0 rounded-full border px-5 py-2.5 text-sm font-bold transition border-transparent bg-[#2f4a32] text-[#faf5ec] shadow-md">
-        🍕 Pizzas Salgadas (80)
+      <button data-cat="pizzas" onclick="filterCategory('pizzas')" class="cat-btn active shrink-0 rounded-full border px-5 py-2.5 text-sm font-bold transition border-transparent bg-[#2f4a32] text-[#faf5ec] shadow-sm">
+        Pizzas Salgadas
       </button>
       <button onclick="filterCategory('doces')" class="cat-btn shrink-0 rounded-full border px-5 py-2.5 text-sm font-bold transition border-[#dccdb2] bg-[#faf5ec] text-[#4e3220] hover:border-[#2f4a32]/40 hover:bg-[#e8d9be]/50 dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#c4b5a2]">
-        🍫 Pizzas Doces (7)
+        Pizzas Doces
       </button>
       <button onclick="filterCategory('promocoes')" class="cat-btn shrink-0 rounded-full border px-5 py-2.5 text-sm font-bold transition border-[#dccdb2] bg-[#faf5ec] text-[#4e3220] hover:border-[#2f4a32]/40 hover:bg-[#e8d9be]/50 dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#c4b5a2]">
-        ⭐ Gigante do Dia
+        Gigante do Dia
       </button>
       <button onclick="filterCategory('bordas')" class="cat-btn shrink-0 rounded-full border px-5 py-2.5 text-sm font-bold transition border-[#dccdb2] bg-[#faf5ec] text-[#4e3220] hover:border-[#2f4a32]/40 hover:bg-[#e8d9be]/50 dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#c4b5a2]">
-        🧀 Bordas Recheadas
+        Bordas Recheadas
       </button>
       <button onclick="filterCategory('bebidas')" class="cat-btn shrink-0 rounded-full border px-5 py-2.5 text-sm font-bold transition border-[#dccdb2] bg-[#faf5ec] text-[#4e3220] hover:border-[#2f4a32]/40 hover:bg-[#e8d9be]/50 dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#c4b5a2]">
-        🥤 Bebidas (31)
+        Bebidas
       </button>
     </div>
 
@@ -384,8 +357,8 @@
     <div id="pizza-notice-box" class="mb-8 rounded-3xl border border-[#dccdb2] bg-[#e8d9be]/30 p-4 text-xs font-semibold text-[#4e3220] sm:p-5 dark:border-[#382b24] dark:bg-white/5 dark:text-[#e8d9be]">
       <div class="flex flex-wrap items-center justify-between gap-3">
         <span class="inline-flex items-center gap-2">
-          <span class="text-lg">🍕</span>
-          <span>Tamanhos: <strong>Broto 18cm (R$ 20,00)</strong> • <strong>Média 30cm (R$ 35,00)</strong> • <strong>Gigante 45cm (R$ 55,00)</strong></span>
+          <span class="h-2 w-2 rounded-full bg-[#b23a26]"></span>
+          <span>Tamanhos artesanais: <strong>Broto 18cm (R$ 20,00)</strong> • <strong>Média 30cm (R$ 35,00)</strong> • <strong>Gigante 45cm (R$ 55,00)</strong></span>
         </span>
         <span class="rounded-full bg-[#2f4a32] px-3.5 py-1 text-[11px] font-bold text-white shadow-sm">
           Opção Meio a Meio (2 sabores)
@@ -514,24 +487,14 @@
         </div>
       </div>
 
-      <!-- Assinatura do Desenvolvedor Rhenan Preservada -->
+      <!-- Assinatura Teixo Preservada com Discrição e Elegância -->
       <div class="mt-8 pt-6 border-t border-[#dccdb2]/60 text-center dark:border-[#382b24]">
-        <p class="flex items-center justify-center gap-2 text-[15px] text-[#6f6457] dark:text-[#c4b5a2]">
-          <span class="font-mono text-lg font-black text-[#b23a26]">&lt;/&gt;</span>
-          <span>Desenvolvido por <strong class="font-bold text-[#b23a26]">Rhenan</strong></span>
+        <p class="text-xs text-[#6f6457] dark:text-[#c4b5a2] flex items-center justify-center gap-1.5">
+          <span>Plataforma desenvolvida por</span>
+          <a href="https://wa.me/5521973152056?text=Ol%C3%A1%2C%20Rhenan!%20Vi%20o%20site%20da%20Pizza%20do%20Juca%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener noreferrer" class="font-bold text-[#2f4a32] hover:text-[#b23a26] dark:text-[#faf5ec] dark:hover:text-[#f87171] underline underline-offset-4 decoration-[#dccdb2] hover:decoration-[#b23a26] transition">
+            Teixo Growth
+          </a>
         </p>
-
-        <a href="https://wa.me/5521973152056?text=Ol%C3%A1%2C%20Rhenan!%20Vi%20o%20site%20que%20voc%C3%AA%20desenvolveu%20para%20a%20Pizza%20do%20Juca%20e%20gostaria%20de%20conversar%20sobre%20um%20projeto." target="_blank" rel="noopener noreferrer" class="mx-auto mt-3 flex min-h-[58px] w-full max-w-[340px] items-center justify-center gap-3 rounded-2xl border border-[#25D366] px-5 py-2.5 text-left transition hover:bg-[#25D366]/10">
-          <span class="flex h-8 w-8 shrink-0 items-center justify-center text-[#25D366]">
-            <svg class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-              <path d="M20.4 11.6a8.4 8.4 0 0 1-12.5 7.35L3 20.5l1.5-4.75A8.4 8.4 0 1 1 20.4 11.6Z" />
-            </svg>
-          </span>
-          <span class="flex min-h-10 flex-col justify-center leading-none">
-            <strong class="block text-base font-extrabold leading-none text-[#2f4a32] dark:text-[#faf5ec]">(21) 97315-2056</strong>
-            <small class="mt-1 block text-xs leading-none text-[#6f6457] dark:text-[#c4b5a2]">Fale comigo no WhatsApp</small>
-          </span>
-        </a>
       </div>
     </div>
   </footer>
@@ -615,25 +578,6 @@
           </span>
           <span class="text-xs font-bold text-[#2f4a32] dark:text-[#faf5ec]">Rota →</span>
         </a>
-      </div>
-
-      <!-- Linha do Desenvolvedor Rhenan -->
-      <div class="mt-5 border-t border-[#dccdb2] pt-4 dark:border-[#382b24]">
-        <div class="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#25D366]/40 bg-[#25D366]/10 px-3.5 py-3">
-          <div class="flex min-w-0 items-center gap-3">
-            <span class="grid h-9 w-9 shrink-0 place-items-center rounded-xl bg-[#25D366] text-white font-bold text-sm">
-              &lt;/&gt;
-            </span>
-            <div class="min-w-0">
-              <p class="text-[10px] font-bold uppercase tracking-[0.16em] text-[#159447] dark:text-[#4ade80]">Desenvolvedor do site</p>
-              <p class="truncate text-sm font-bold text-[#2f4a32] dark:text-[#faf5ec]">Rhenan</p>
-            </div>
-          </div>
-
-          <a href="https://wa.me/5521973152056?text=Ol%C3%A1%2C%20Rhenan!%20Vi%20o%20site%20que%20voc%C3%AA%20desenvolveu%20para%20a%20Pizza%20do%20Juca%20e%20gostaria%20de%20conversar%20sobre%20um%20design%20baseado%20na%20minha%20empresa!" target="_blank" rel="noopener noreferrer" class="inline-flex shrink-0 items-center justify-center gap-1.5 rounded-full bg-[#25D366] px-3.5 py-2 text-xs font-bold text-white transition hover:brightness-95 shadow-sm">
-            WhatsApp
-          </a>
-        </div>
       </div>
     </div>
   </div>
@@ -2658,15 +2602,15 @@
               
               <!-- Badges de Destaque e Dias -->
               <div class="absolute left-3 top-3 flex flex-col gap-1 items-start">
-                ${p.featured ? `<span class="rounded-full bg-amber-400 border border-amber-300 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-950 shadow-sm flex items-center gap-1">⭐ Destaque da Casa</span>` : ''}
-                ${p.badge ? `<span class="rounded-full bg-[#b23a26] px-3 py-1 text-[11px] font-bold uppercase tracking-wider text-white shadow">${p.badge}</span>` : ''}
+                ${p.featured ? `<span class="rounded-full bg-amber-400 border border-amber-300 px-2.5 py-0.5 text-[10px] font-black uppercase tracking-wider text-slate-950 shadow-sm flex items-center gap-1"><svg class="h-3 w-3 fill-current" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg> Destaque</span>` : ''}
+                ${p.badge ? `<span class="rounded-full bg-[#b23a26] px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-white shadow-sm">${p.badge}</span>` : ''}
                 ${isScheduled && !isAvailableToday ? `
-                  <span class="rounded-full bg-amber-600 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow">
-                    📅 Só ${daysLabel}
+                  <span class="rounded-full bg-amber-600 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-sm">
+                    Disponível ${daysLabel}
                   </span>
                 ` : (isScheduled && isAvailableToday ? `
-                  <span class="rounded-full bg-emerald-600 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow">
-                    ⚡ Especial de Hoje
+                  <span class="rounded-full bg-emerald-600 px-2.5 py-0.5 text-[10px] font-extrabold uppercase tracking-wider text-white shadow-sm">
+                    Especial de Hoje
                   </span>
                 ` : '')}
               </div>
@@ -2785,7 +2729,7 @@
               btn.setAttribute('data-cat', catKey);
               btn.setAttribute('onclick', `filterCategory('${catKey}')`);
               btn.className = 'cat-btn shrink-0 rounded-full border px-5 py-2.5 text-sm font-bold transition border-[#dccdb2] bg-[#faf5ec] text-[#4e3220] hover:border-[#2f4a32]/40 hover:bg-[#e8d9be]/50 dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#c4b5a2]';
-              btn.innerHTML = `${sc.icon || '📦'} ${sc.name} ${count > 0 ? `(${count})` : ''}`;
+              btn.innerHTML = `${sc.icon ? `${sc.icon} ` : ''}${sc.name} ${count > 0 ? `(${count})` : ''}`;
               catContainer.appendChild(btn);
             }
           });

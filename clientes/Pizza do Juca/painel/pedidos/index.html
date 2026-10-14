@@ -107,6 +107,7 @@
               <i data-lucide="package" class="h-[17px] w-[17px]"></i>
               <span class="flex-1">Pizzas & Itens</span>
             </a>
+            <!-- Funções de Estoque e Ceasa inativas por enquanto
             <a href="../estoque/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition group">
               <i data-lucide="boxes" class="h-[17px] w-[17px] text-emerald-500 group-hover:scale-110 transition-transform"></i>
               <span class="flex-1">Contagem Estoque</span>
@@ -117,6 +118,7 @@
               <span class="flex-1">Lista Ceasa</span>
               <span class="rounded-full bg-red-100 px-1.5 py-0.5 text-[9px] font-black text-red-700">Insumos</span>
             </a>
+            -->
             <a href="../promocoes/" class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] font-semibold text-slate-600 hover:bg-slate-50 hover:text-slate-950 transition">
               <i data-lucide="tag" class="h-[17px] w-[17px]"></i>
               <span class="flex-1">Promoções</span>
@@ -357,6 +359,17 @@
               <i data-lucide="bike" class="h-4 w-4 text-blue-500"></i>
               <strong id="summary-routes" class="font-extrabold text-slate-900">2</strong> em rota de entrega
             </span>
+            <button
+              type="button"
+              onclick="openRoiModal()"
+              class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-50 border border-emerald-200/90 px-3 py-1 text-xs font-bold text-emerald-800 hover:bg-emerald-100 transition shadow-xs"
+              title="Abrir detalhamento da Economia Teixo vs. iFood"
+            >
+              <i data-lucide="piggy-bank" class="h-3.5 w-3.5 text-emerald-600"></i>
+              <span>Economia no bolso:</span>
+              <strong id="strip-savings-amount" class="text-emerald-950 font-black">R$ 325,26</strong>
+              <span class="text-[10px] text-emerald-600 font-extrabold underline">Ver comparativo</span>
+            </button>
             <span class="ml-auto text-[10px] text-slate-400">Sincronizado localmente</span>
           </div>
         </section>
@@ -1028,7 +1041,7 @@
       <!-- Detalhes Operacionais Teixo -->
       <div class="mt-4 rounded-2xl bg-slate-50 border border-slate-200 p-3 text-xs text-slate-600 flex items-center justify-between">
         <div>
-          <span class="font-extrabold text-slate-900">412 pedidos</span> processados no período.
+          <span id="roi-orders-count-modal" class="font-extrabold text-slate-900">412 pedidos</span> processados no período.
           <span class="text-slate-400">Setup R$ 0 • Sem mensalidade • Custo fixo zero.</span>
         </div>
         <button
@@ -2664,6 +2677,12 @@
       const topBadge = document.getElementById("topbar-savings-badge");
       if (topBadge) topBadge.textContent = `R$ ${Math.round(savings).toLocaleString('pt-BR')}`;
 
+      const elOrdersCount = document.getElementById("roi-orders-count-modal");
+      if (elOrdersCount) elOrdersCount.textContent = `${ordersCount} pedidos`;
+
+      const stripSavings = document.getElementById("strip-savings-amount");
+      if (stripSavings) stripSavings.textContent = formatBRL(savings);
+
       if (window.lucide) lucide.createIcons();
     }
 
@@ -2700,6 +2719,11 @@
       const topBadge = document.getElementById("topbar-savings-badge");
       if (topBadge) {
         topBadge.textContent = `R$ ${Math.round(savings).toLocaleString('pt-BR')}`;
+      }
+
+      const stripSavings = document.getElementById("strip-savings-amount");
+      if (stripSavings) {
+        stripSavings.textContent = `R$ ${savings.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
       }
     }
 
