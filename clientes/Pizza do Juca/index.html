@@ -176,116 +176,143 @@
     </div>
   </header>
 
-  <!-- ==================== 2. CAPA / HERO ARTESANAL ==================== -->
-  <section id="topo" class="relative isolate overflow-hidden bg-gradient-to-b from-[#faf5ec] via-[#f7efe0] to-[#faf5ec] pt-24 pb-16 lg:pt-32 lg:pb-24 dark:from-[#1a1412] dark:via-[#201814] dark:to-[#1a1412]">
-    <!-- Luzes de fundo atmosféricas (quentes e discretas) -->
-    <div class="pointer-events-none absolute -top-20 right-1/4 h-96 w-96 rounded-full bg-amber-500/10 blur-[110px] dark:bg-amber-600/15"></div>
-    <div class="pointer-events-none absolute bottom-10 left-10 h-80 w-80 rounded-full bg-[#2f4a32]/5 blur-[90px] dark:bg-emerald-900/15"></div>
+  <!-- ==================== 2. CAPA / HERO PALAZZO ==================== -->
+  <section id="topo" class="relative isolate min-h-[92svh] overflow-hidden bg-[#e8d9be] pt-24 pb-16 lg:min-h-[100svh] lg:pt-32 lg:pb-24">
+    <!-- Textura de fundo suave e círculo verde basílico -->
+    <div class="padrao-marca pointer-events-none absolute inset-0 opacity-[0.20]"></div>
+    <div class="pointer-events-none absolute top-1/2 -right-[12%] hidden aspect-square w-[62%] -translate-y-1/2 rounded-full bg-[#2f4a32] lg:block shadow-2xl"></div>
 
-    <div class="relative mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:min-h-[580px] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-12">
+    <div class="relative mx-auto grid max-w-7xl gap-10 px-4 sm:px-6 lg:min-h-[660px] lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-8">
       
-      <!-- Coluna Esquerda: Pizza do Juca Branding, Status & CTAs -->
+      <!-- Coluna Esquerda: Pizza do Juca Branding, Status, Badges & Botões -->
       <div class="relative z-10 animate-surgir">
         
-        <!-- Status Operacional Dinâmico & Cidade -->
-        <div class="mb-5 inline-flex flex-wrap items-center gap-2.5 rounded-full border border-[#dccdb2] bg-white/80 px-4 py-2 text-xs font-semibold text-[#2f4a32] shadow-sm backdrop-blur-md dark:bg-white/5 dark:border-[#382b24] dark:text-[#faf5ec]">
-          <span id="hero-status-pill" class="inline-flex items-center gap-2 font-bold text-emerald-700 dark:text-emerald-400">
+        <!-- Top Branding & Status Tag -->
+        <div class="mb-4 flex flex-wrap items-center gap-3">
+          <div class="flex items-center gap-2.5">
+            <span class="grid size-14 shrink-0 place-items-center overflow-hidden rounded-full border-2 border-[#b23a26] bg-black shadow-md">
+              <img src="assets/logo_juca.png" alt="Pizza do Juca" class="h-full w-full object-cover" onerror="this.onerror=null; this.src='assets/logo.webp';">
+            </span>
+            <div>
+              <h3 class="font-display text-lg font-bold leading-none text-[#2f4a32]">Pizza do Juca</h3>
+              <span class="text-[11px] font-bold uppercase tracking-[0.20em] text-[#b23a26]">Sabor e tradição • Desde 2001 • Paciência – RJ</span>
+            </div>
+          </div>
+
+          <!-- Status Aberto/Fechado com Ponto Verde Pulsante Dinâmico -->
+          <span id="hero-status-pill" class="inline-flex items-center gap-2 rounded-full bg-[#2f4a32]/10 px-3 py-1 text-xs font-semibold text-[#2f4a32] shadow-sm">
             <span id="hero-status-dot" class="relative flex size-2">
               <span class="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-75"></span>
               <span class="relative inline-flex size-2 rounded-full bg-emerald-600"></span>
             </span>
             <span id="hero-status-text">Aberto agora · Fecha às 00:30</span>
           </span>
-          <span class="text-[#dccdb2] dark:text-[#382b24]">•</span>
-          <span class="text-[#6f6457] dark:text-[#c4b5a2]">Paciência, RJ • Desde 2001</span>
         </div>
 
         <!-- Headline com Estilo Italiano Palazzo -->
-        <h1 class="font-display text-[clamp(2.5rem,5.2vw,4.5rem)] font-bold leading-[1.08] tracking-[-0.02em] text-[#2f4a32] dark:text-[#faf5ec]">
-          Sabor de verdade, <br class="hidden sm:inline">
-          <span class="text-[#b23a26] dark:text-[#f87171]">em cada fatia.</span>
+        <h1 class="font-display text-[clamp(2.6rem,6.8vw,5.4rem)] leading-[0.98] font-semibold tracking-[-0.03em] text-[#2f4a32]">
+          Sabor de verdade <em class="font-bold text-[#b23a26] not-italic">em cada fatia.</em>
         </h1>
 
         <!-- Descrição -->
-        <p class="mt-5 max-w-xl text-base leading-relaxed text-[#4e3220]/90 sm:text-lg dark:text-[#e8d9be]/90">
-          Massa artesanal fresca aberta na hora, recheios generosos e mais de 80 opções de pizzas salgadas e doces preparadas com o carinho que Paciência conhece há mais de 20 anos.
+        <p class="mt-5 max-w-xl text-base leading-relaxed text-[#4e3220]/90 sm:text-lg">
+          Massa artesanal fresca, recheios fartos e mais de 80 opções de pizzas salgadas e doces preparadas com todo carinho em Paciência.
         </p>
 
-        <!-- Destaques Operacionais em Grid Simétrico -->
-        <div class="mt-7 grid max-w-lg grid-cols-3 gap-3 rounded-2xl border border-[#dccdb2] bg-white/70 p-3.5 shadow-sm backdrop-blur-sm dark:bg-white/5 dark:border-[#382b24]">
-          <div class="text-center sm:text-left sm:pl-2">
-            <div class="font-display text-lg sm:text-xl font-bold text-[#2f4a32] dark:text-[#faf5ec]">+80</div>
-            <div class="text-[11px] font-semibold text-[#6f6457] dark:text-[#c4b5a2]">Sabores únicos</div>
-          </div>
-          <div class="border-x border-[#dccdb2]/80 dark:border-[#382b24] text-center sm:text-left sm:pl-3">
-            <div class="font-display text-lg sm:text-xl font-bold text-[#b23a26] dark:text-[#f87171]">45 cm</div>
-            <div class="text-[11px] font-semibold text-[#6f6457] dark:text-[#c4b5a2]">Gigante real</div>
-          </div>
-          <div class="text-center sm:text-left sm:pl-2">
-            <div class="font-display text-lg sm:text-xl font-bold text-[#2f4a32] dark:text-[#faf5ec]">4,5 ★</div>
-            <div class="text-[11px] font-semibold text-[#6f6457] dark:text-[#c4b5a2]">Google Reviews</div>
-          </div>
+        <!-- Badges de Avaliação, Cidade e Horário (Pizza do Juca Real) -->
+        <div class="mt-6 flex flex-wrap items-center gap-x-5 gap-y-2.5 text-sm font-medium text-[#4e3220]">
+          <span class="inline-flex items-center gap-1.5 font-bold text-[#b23a26] bg-[#faf5ec]/90 px-2.5 py-1 rounded-full shadow-sm">
+            <svg class="h-4 w-4 fill-current text-[#b23a26]" viewBox="0 0 20 20">
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
+            </svg>
+            4,5 <span class="font-normal text-[#6f6457]">(243 avaliações)</span>
+          </span>
+          <span class="inline-flex items-center gap-1.5">
+            <svg class="h-4 w-4 text-[#7a8450]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Paciência, Rio de Janeiro – RJ
+          </span>
+          <span class="inline-flex items-center gap-1.5">
+            <svg class="h-4 w-4 text-[#7a8450]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Todos os dias, das 19h às 00h
+          </span>
+        </div>
+
+        <!-- Chips de Serviços (Delivery, Retirada, No Local) -->
+        <div class="mt-5 flex flex-wrap gap-2">
+          <span class="inline-flex items-center gap-2 rounded-full border border-[#dccdb2] bg-[#faf5ec]/90 px-3.5 py-1.5 text-xs font-semibold text-[#2f4a32] shadow-sm backdrop-blur">
+            🛵 Delivery
+          </span>
+          <span class="inline-flex items-center gap-2 rounded-full border border-[#dccdb2] bg-[#faf5ec]/90 px-3.5 py-1.5 text-xs font-semibold text-[#2f4a32] shadow-sm backdrop-blur">
+            🛍️ Retirada
+          </span>
+          <span class="inline-flex items-center gap-2 rounded-full border border-[#dccdb2] bg-[#faf5ec]/90 px-3.5 py-1.5 text-xs font-semibold text-[#2f4a32] shadow-sm backdrop-blur">
+            🏪 Atendimento no local
+          </span>
         </div>
 
         <!-- BOTÕES DA CAPA -->
         <div class="mt-8 flex flex-col gap-3.5 sm:flex-row sm:items-center">
           <!-- Botão 1: "Ver cardápio" -->
-          <a href="#cardapio" class="group inline-flex items-center justify-center gap-3 rounded-full bg-[#b23a26] hover:bg-[#992f1e] px-8 py-4 text-base font-bold text-white shadow-[0_12px_28px_rgba(178,58,38,0.28)] transition-all hover:scale-[1.02] active:scale-95">
-            <span>Ver cardápio completo</span>
-            <span class="grid size-7 place-items-center rounded-full bg-white/20 transition-transform group-hover:translate-x-1">
+          <a href="#cardapio" class="group inline-flex items-center justify-center gap-3 rounded-full bg-[#eab308] hover:bg-[#ca8a04] px-8 py-4 text-base font-bold text-[#2f4a32] shadow-[0_12px_28px_rgba(202,138,4,0.35)] transition-all hover:scale-[1.02] active:scale-95">
+            <span>Ver cardápio</span>
+            <span class="grid size-7 place-items-center rounded-full bg-black/10 transition-transform group-hover:translate-x-1">
               →
             </span>
           </a>
 
           <!-- Botão 2: "ⓘ Informações" -->
-          <button id="btn-open-info" type="button" class="inline-flex items-center justify-center gap-2.5 rounded-full border border-[#dccdb2] bg-white/80 hover:bg-white hover:border-[#2f4a32] px-6 py-4 text-sm font-bold text-[#2f4a32] transition-all shadow-sm active:scale-95 dark:bg-[#1a1412]/80 dark:border-white/20 dark:text-[#faf5ec] dark:hover:bg-[#1a1412]">
-            <svg class="h-4 w-4 text-[#b23a26] dark:text-[#f87171]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <button id="btn-open-info" type="button" class="inline-flex items-center justify-center gap-2.5 rounded-full border-2 border-[#2f4a32]/30 bg-[#faf5ec]/80 hover:bg-[#faf5ec] hover:border-[#2f4a32] px-7 py-3.5 text-base font-bold text-[#2f4a32] transition-all shadow-sm active:scale-95">
+            <svg class="h-5 w-5 text-[#b23a26]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span>Horários & Contato</span>
+            <span>Informações</span>
           </button>
-        </div>
-
-        <!-- Indicador de modalidades de atendimento -->
-        <div class="mt-5 flex flex-wrap items-center gap-2 text-xs font-semibold text-[#6f6457] dark:text-[#a89985]">
-          <span class="inline-flex items-center gap-1.5">
-            <span class="h-1.5 w-1.5 rounded-full bg-[#2f4a32] dark:bg-emerald-400"></span>
-            Delivery & Retirada no Balcão
-          </span>
-          <span>•</span>
-          <span>Todos os dias, das 19h às 00h</span>
         </div>
 
       </div>
 
-      <!-- Coluna Direita: Apresentação da Pizza Artesanal com Selos de Qualidade -->
-      <div class="relative order-first mx-auto flex items-center justify-center w-full max-w-[28rem] sm:max-w-[34rem] lg:order-none lg:max-w-none py-6 lg:py-0">
+      <!-- Coluna Direita: Assinatura Visual Palazzo (Pizza 360°, Manjericão, Tomates e Selo SVG) -->
+      <div class="relative order-first mx-auto aspect-square w-[82%] max-w-[26rem] sm:max-w-[34rem] lg:order-none lg:w-full lg:max-w-none">
         
-        <!-- Halo de luz suave atrás da pizza -->
-        <div class="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[85%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2f4a32]/10 blur-3xl dark:bg-amber-500/10"></div>
+        <!-- Círculo de fundo verde manjericão em telas menores -->
+        <div class="pointer-events-none absolute top-1/2 left-1/2 aspect-square w-[104%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#2f4a32] lg:hidden shadow-2xl"></div>
 
-        <!-- Selo Superior Flutuante: Forno & Crocância -->
-        <div class="absolute -top-1 right-2 sm:right-6 z-20 flex items-center gap-3 rounded-2xl border border-[#dccdb2] bg-white/95 px-3.5 py-2.5 shadow-lg backdrop-blur-md dark:bg-[#1a1412]/95 dark:border-[#382b24]">
-          <span class="grid size-9 shrink-0 place-items-center rounded-xl bg-orange-100 text-lg dark:bg-orange-950/40">🔥</span>
-          <div>
-            <div class="text-xs font-bold text-[#2f4a32] dark:text-[#faf5ec]">Forno em Alta Temperatura</div>
-            <div class="text-[10px] text-[#6f6457] dark:text-[#c4b5a2]">Massa crocante e leve</div>
-          </div>
+        <!-- Manjericão Flutuante (animate-flutuar) -->
+        <img alt="Folhas de manjericão fresco" class="absolute -top-3 left-0 z-20 w-[24%] animate-flutuar drop-shadow-xl" style="--giro: -20deg;" src="assets/manjericao.webp">
+
+        <!-- Tomates Frescos Flutuantes (animate-flutuar) -->
+        <img alt="Tomates frescos selecionados" class="absolute right-0 bottom-3 z-20 w-[27%] animate-flutuar drop-shadow-xl" style="--giro: 15deg; animation-delay: -2.5s;" src="assets/tomates.webp">
+
+        <!-- Pizza Artesanal em Rotação Contínua 360° (animate-girar) -->
+        <div class="absolute inset-[4%] animate-girar">
+          <img alt="Pizza artesanal da Pizza do Juca" class="size-full object-contain drop-shadow-[0_40px_50px_rgba(23,38,25,0.55)]" src="assets/hero-calabresa-catupiry.webp">
         </div>
 
-        <!-- Pizza Artesanal Estática, Nítida e com Sombra Realista -->
-        <div class="relative z-10 w-full p-2 sm:p-4">
-          <img alt="Pizza artesanal da Pizza do Juca" class="mx-auto w-full max-w-[480px] object-contain drop-shadow-[0_24px_40px_rgba(47,74,50,0.25)] transition-transform duration-700 hover:scale-[1.02] dark:drop-shadow-[0_24px_45px_rgba(0,0,0,0.7)]" src="assets/hero-calabresa-catupiry.webp">
-        </div>
+        <!-- Selo Circular Artesanal Rotativo em SVG com Nota 4,5 Pizza do Juca -->
+        <div class="grid place-items-center absolute bottom-[6%] left-[2%] z-20 size-[28%] min-h-24 min-w-24 rounded-full bg-[#faf5ec] text-[#2f4a32] shadow-2xl border-2 border-[#dccdb2]">
+          <svg viewBox="0 0 200 200" class="absolute inset-0 size-full animate-girar [animation-duration:30s]" aria-hidden="true">
+            <defs>
+              <path id="selo-juca" d="M100 100m-76 0a76 76 0 1 1 152 0a76 76 0 1 1 -152 0"></path>
+            </defs>
+            <circle cx="100" cy="100" r="97" fill="none" stroke="currentColor" stroke-width="1.2"></circle>
+            <circle cx="100" cy="100" r="58" fill="none" stroke="currentColor" stroke-width="1"></circle>
+            <text fill="currentColor" font-size="14" font-weight="700" letter-spacing="3" class="uppercase">
+              <textPath href="#selo-juca" textLength="473.5" lengthAdjust="spacing">
+                PIZZA DO JUCA • DESDE 2001 • PACIÊNCIA - RJ • 
+              </textPath>
+            </text>
+          </svg>
 
-        <!-- Selo Inferior Flutuante: Avaliação Google -->
-        <div class="absolute -bottom-2 left-2 sm:left-6 z-20 flex items-center gap-3 rounded-2xl border border-[#dccdb2] bg-white/95 px-4 py-2.5 shadow-lg backdrop-blur-md dark:bg-[#1a1412]/95 dark:border-[#382b24]">
-          <div class="flex flex-col">
-            <div class="flex items-center gap-1">
-              <span class="font-display text-sm font-black text-[#2f4a32] dark:text-[#faf5ec]">4,5</span>
-              <span class="text-amber-500 text-xs">★★★★★</span>
-            </div>
-            <span class="text-[10px] font-semibold text-[#6f6457] dark:text-[#c4b5a2]">243 avaliações no Google</span>
+          <div class="relative grid size-[52%] place-items-center text-center">
+            <span class="leading-none">
+              <span class="block font-display text-[clamp(1.1rem,2.6vw,1.8rem)] font-bold italic text-[#2f4a32]">4,5</span>
+              <span class="mt-0.5 block text-[clamp(0.5rem,1vw,0.65rem)] font-bold tracking-[0.14em] uppercase text-[#b23a26]">nota</span>
+            </span>
           </div>
         </div>
 
