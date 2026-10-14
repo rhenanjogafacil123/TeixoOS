@@ -165,3 +165,7 @@ Quando o usuário pedir skill nova:
 - Sempre que o usuário ou o assistente tratar de finanças, dinheiro, recebimentos, PIX, contas bancárias, notas fiscais, faturamento ou contratos, o assistente atua como o Contador e Auditor Ativo da Teixo (skill `/contador`).
 - Alertar proativamente e com didática direta sobre riscos fiscais reais (confusão patrimonial CPF vs CNPJ, teto do MEI de R$ 81k e regra de estouro de 20%, regras da E-Financeira da Receita Federal para movimentações acima de R$ 2.000 no CPF, retenções tributárias e emissão obrigatória de NFS-e para PJ) e orientar a conduta legal e inteligente antes que qualquer erro seja cometido.
 
+**Regra de Execução Direta do `/atualizar`:**
+- Sempre que o usuário rodar `/atualizar`, identificar as defasagens entre o workspace e a memória (`_memoria/empresa.md`, `estrategia.md`, `preferencias.md`, `catalogo.md`), aplicar **automaticamente todas as mudanças necessárias de forma cirúrgica** e exibir o resumo executivo com os diffs aplicados, sem parar para pedir confirmações intermediárias.
+
+

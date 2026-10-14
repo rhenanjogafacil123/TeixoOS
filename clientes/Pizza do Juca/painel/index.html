@@ -51,21 +51,21 @@
       </p>
     </div>
 
-    <!-- Cards dos Painéis -->
-    <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <!-- Cards dos Painéis (Grid Simétrico 2x2) -->
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
       <!-- Admin -->
-      <a href="./admin/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-orange-200">
+      <a href="./admin/index.html" class="group rounded-3xl border border-slate-200/90 bg-white p-7 shadow-[0_18px_45px_-32px_rgba(15,23,42,.35)] transition-all hover:-translate-y-1 hover:border-orange-300 hover:shadow-xl">
         <div class="flex items-start justify-between">
           <div class="grid h-12 w-12 place-items-center rounded-2xl bg-violet-50 text-violet-600">
             <i data-lucide="layout-dashboard" class="h-6 w-6"></i>
           </div>
-          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
             Desktop
           </span>
         </div>
-        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Dono / Administrador</h2>
-        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
-          Visão do negócio com faturamento, pedidos, ticket médio, pagamentos, produtos e indicadores.
+        <h2 class="mt-6 text-xl font-extrabold text-slate-950">Dono / Administrador</h2>
+        <p class="mt-2 min-h-16 text-sm leading-6 text-slate-500">
+          Visão completa do negócio com faturamento, economiômetro Teixo vs. iFood, ticket médio, canais e indicadores.
         </p>
         <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-orange-600">
           Abrir painel
@@ -74,18 +74,18 @@
       </a>
 
       <!-- Atendente -->
-      <a href="./pedidos/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-orange-200">
+      <a href="./pedidos/index.html" class="group rounded-3xl border border-slate-200/90 bg-white p-7 shadow-[0_18px_45px_-32px_rgba(15,23,42,.35)] transition-all hover:-translate-y-1 hover:border-orange-300 hover:shadow-xl">
         <div class="flex items-start justify-between">
           <div class="grid h-12 w-12 place-items-center rounded-2xl bg-orange-50 text-orange-600">
             <i data-lucide="chef-hat" class="h-6 w-6"></i>
           </div>
-          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
             Desktop
           </span>
         </div>
-        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Atendente</h2>
-        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
-          Central operacional com Kanban de pedidos, preparo, produtos esgotados e motoboys disponíveis.
+        <h2 class="mt-6 text-xl font-extrabold text-slate-950">Atendente & KDS</h2>
+        <p class="mt-2 min-h-16 text-sm leading-6 text-slate-500">
+          Central operacional com Kanban de pedidos, fila de cozinha KDS, notinhas térmicas e despacho.
         </p>
         <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-orange-600">
           Abrir painel
@@ -93,25 +93,19 @@
         </div>
       </a>
 
-      <!-- Módulos de Estoque e Ceasa inativos por enquanto
-      <div class="hidden">
-        ...
-      </div>
-      -->
-
       <!-- Motoboy -->
-      <a href="./motoboy/index.html" class="group rounded-3xl border border-slate-200 bg-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-orange-200">
+      <a href="./motoboy/index.html" class="group rounded-3xl border border-slate-200/90 bg-white p-7 shadow-[0_18px_45px_-32px_rgba(15,23,42,.35)] transition-all hover:-translate-y-1 hover:border-orange-300 hover:shadow-xl">
         <div class="flex items-start justify-between">
           <div class="grid h-12 w-12 place-items-center rounded-2xl bg-blue-50 text-blue-600">
             <i data-lucide="bike" class="h-6 w-6"></i>
           </div>
-          <span class="rounded-full bg-slate-100 px-2.5 py-1 text-[9px] font-extrabold uppercase tracking-[0.12em] text-slate-500">
-            Mobile
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
+            Mobile / Gestor
           </span>
         </div>
-        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Central do Motoboy</h2>
-        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
-          Aplicativo mobile com entregas disponíveis, rotas, ganhos, status online e despacho em tempo real.
+        <h2 class="mt-6 text-xl font-extrabold text-slate-950">Central do Motoboy</h2>
+        <p class="mt-2 min-h-16 text-sm leading-6 text-slate-500">
+          Despacho em tempo real, visualização de rotas, celulares dos motoboys lado a lado e status de entregas.
         </p>
         <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-orange-600">
           Abrir painel
@@ -120,20 +114,20 @@
       </a>
 
       <!-- Gestão de Equipe & Acessos -->
-      <a href="./equipe/index.html" class="group rounded-3xl border border-amber-200/90 bg-gradient-to-br from-amber-50/50 via-white to-white p-6 shadow-[0_22px_50px_-38px_rgba(15,23,42,.45)] transition hover:-translate-y-1 hover:border-amber-400">
+      <a href="./equipe/index.html" class="group rounded-3xl border border-slate-200/90 bg-white p-7 shadow-[0_18px_45px_-32px_rgba(15,23,42,.35)] transition-all hover:-translate-y-1 hover:border-orange-300 hover:shadow-xl">
         <div class="flex items-start justify-between">
-          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-amber-100 text-amber-700">
+          <div class="grid h-12 w-12 place-items-center rounded-2xl bg-emerald-50 text-emerald-700">
             <i data-lucide="user-check" class="h-6 w-6"></i>
           </div>
-          <span class="rounded-full bg-amber-100 px-2.5 py-1 text-[9px] font-black uppercase tracking-[0.12em] text-amber-800">
+          <span class="rounded-full bg-slate-100 px-3 py-1 text-[10px] font-extrabold uppercase tracking-wider text-slate-500">
             Segurança & RBAC
           </span>
         </div>
-        <h2 class="mt-6 text-lg font-extrabold text-slate-950">Gestão de Equipe & Permissões</h2>
-        <p class="mt-2 min-h-20 text-sm leading-6 text-slate-500">
+        <h2 class="mt-6 text-xl font-extrabold text-slate-950">Gestão de Equipe & Permissões</h2>
+        <p class="mt-2 min-h-16 text-sm leading-6 text-slate-500">
           Liberar acessos operacionais de atendentes e motoboys por e-mail ou nomear gestores gerais com segurança.
         </p>
-        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-amber-700">
+        <div class="mt-5 flex items-center gap-2 text-sm font-extrabold text-orange-600">
           Gerenciar acessos
           <i data-lucide="move-right" class="h-4 w-4 transition group-hover:translate-x-1"></i>
         </div>
