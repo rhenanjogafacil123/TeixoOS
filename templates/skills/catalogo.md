@@ -63,6 +63,19 @@ Skills externas prontas pra instalar. Use como referencia ao criar skills novas 
 **Como instalar:** Instalada localmente. Chamar com `/contratos`
 **Fonte:** Skill desenvolvida sob medida para a Teixo
 
+### Contador Teixo (fiscal, tributário e financeiro)
+**O que faz:** Atua como o CFO, Tributarista e Auditor Ativo da Teixo. Fiscaliza e estrutura obrigações fiscais, emissão de NFS-e, calendário fiscal (DAS dia 20), transição de MEI para ME/LTDA no Simples Nacional com Fator R (redução de 15,5% para 6%), regras da Receita Federal (E-Financeira, DECRED, PIX), combate à confusão patrimonial (CPF vs CNPJ), distribuição de lucros 100% isenta, DRE simplificado, caixinha intocável de impostos e régua de cobrança anti-inadimplência.
+**Bom pra:** Organizar as finanças da agência, evitar malha fina da Receita Federal, planejar sociedade formal, não se enrolar com impostos e receber alertas automáticos de correção.
+**Como instalar:** Instalada localmente. Chamar com `/contador`
+**Fonte:** Skill desenvolvida sob medida para a Teixo
+
+### Security Gate (auditoria OWASP ASVS 5.0 + Top 10 + API Security)
+**O que faz:** Executa auditoria automatizada de segurança de aplicações web e APIs baseada no OWASP ASVS 5.0 (Nível 2), OWASP Top 10:2025 e OWASP API Security. Inspeciona vulnerabilidades de acesso (BOLA/BFLA), injeção SQL, integridade de webhooks bancários, headers defensivos e proteção LGPD/PCI-DSS antes de deploys.
+**Bom pra:** Auditar lojas de delivery, validar código antes de subir pra VPS, proteger dados de clientes e garantir que nenhuma falha crítica vá para produção.
+**Como instalar:** Instalada localmente e globalmente. Chamar com `/security-gate`
+**Fonte:** Skill desenvolvida sob medida para a Teixo
+
+
 ### DOCX
 **O que faz:** Cria e edita documentos Word com formatacao, tracked changes e comentarios.
 **Bom pra:** Propostas formais, contratos, documentos pra clientes que pedem Word

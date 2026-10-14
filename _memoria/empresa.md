@@ -50,6 +50,9 @@ A Teixo atua como uma **Assessoria de Crescimento**, combinando tecnologia, trá
 7. **Google Meu Negócio & Reputação Local:** Presença no Google Maps, otimização SEO local, fotos e gestão humanizada de avaliações (skills `/seo` e `/responder-avaliacoes`).
 8. **Consultoria Operacional de Estoque & CMV:** Rotina de quinta-feira de contagem física, Curva ABC de insumos e fatores de cocção para controle de custos e redução de desperdício em cozinhas.
 9. **Clonador de Lojas de Food Delivery (`/clonar-loja`):** Geração e setup instantâneo de novas operações completas (hamburgueria, pizzaria, pastelaria, açaí, marmitas) em segundos a partir da matriz validada da Teixo, com script nativo (`scripts/gerar-delivery.ps1`), presets de nicho e esteira de checkout integrada.
+10. **Contador, Blindagem Fiscal & Gestão Financeira (`/contador`):** Atuação como CFO e Auditor Fiscal Ativo — fiscalização tributária, emissão de NFS-e, calendário do DAS/RMRB, combate à confusão patrimonial (CPF vs CNPJ), regras da Receita Federal (E-Financeira, DECRED, PIX), planejamento da transição de MEI para ME/LTDA com Fator R (reduzindo imposto de 15,5% para 6%), distribuição de lucros 100% isenta, DRE simplificado e régua de cobrança anti-inadimplência.
+11. **Security Gate & Auditoria Contínua de Cibersegurança (`/security-gate`):** Portão automatizado de segurança baseado em OWASP ASVS 5.0 (Nível 2), OWASP Top 10:2025 e OWASP API Security. Varredura SAST, controle de acesso RBAC, headers defensivos e blindagem de dados contra vazamentos antes de qualquer deploy em produção.
+
 
 ---
 
