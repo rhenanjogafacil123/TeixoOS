@@ -853,10 +853,10 @@ function traduzirStatusMP(statusDetail) {
 // ===========================================
 // INICIALIZAÇÃO
 // ===========================================
-app.listen(config.PORT, '0.0.0.0', () => {
+app.listen(config.PORT, '127.0.0.1', () => {
   console.log(`===============================================`);
   console.log(`🍕 Pizza do Juca - Backend API Iniciado`);
-  console.log(`🚀 Porta: ${config.PORT} (http://localhost:${config.PORT})`);
+  console.log(`🚀 Porta: ${config.PORT} (http://127.0.0.1:${config.PORT})`);
   console.log(`💾 Banco: ${db.driver.toUpperCase()}`);
   console.log(`💳 Mercado Pago: ${isMP_Configured ? '✅ Configurado (' + config.MP_MODE + ')' : '⚠️  Aguardando credenciais'}`);
   console.log(`===============================================`);
