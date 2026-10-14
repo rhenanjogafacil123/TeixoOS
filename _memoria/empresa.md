@@ -69,7 +69,7 @@ A Teixo opera com esteiras padronizadas de serviços, garantindo escalabilidade 
    - **Mídia:** Verba de anúncios custeada diretamente pelo cliente via cartão corporativo cadastrado nas plataformas (Meta/Google).
 
 3. **Produção Audiovisual e Captação de Campo (PL - Paulo Roberto):**
-   - **Apresentação Institucional (1º Mês):** **R$ 500,00** (taxa única). 1 vídeo completo horizontal (16:9) para o canal do YouTube + lote de pelo menos 20 cortes verticais (9:16) para YouTube Shorts, Instagram Reels, TikTok e Facebook.
+   - **Apresentação Institucional (1º Mês):** **R$ 500,00** (taxa única). 1 vídeo completo horizontal (16:9) para o canal do YouTube + lote de pelo menos 15 cortes verticais (9:16) para YouTube Shorts, Instagram Reels, TikTok e Facebook.
    - **Cobertura de Eventos:** **R$ 200,00 por evento** coberto presencialmente (rodas de pagode, festas e momentos de resenha/viralização de campo), gerando vídeo no YouTube e cortes verticais para redes sociais.
 
 4. **Tática Comercial de Risco Zero (Garantia Condicional de 15 Dias):**
@@ -89,7 +89,12 @@ Todos os contratos gerados pela Teixo incorporam as seguintes blindagens essenci
 1. **Isenção de Bloqueios e Riscos de Big Techs (Meta/Google):** A gestão de tráfego constitui estritamente obrigação de meio. A Teixo é juridicamente isenta de responsabilidade civil ou financeira por bloqueios algorítmicos, suspensões preventivas de contas de anúncios ou reprovações de criativos pelas plataformas (Meta, Google, TikTok).
 2. **Aprovação Tácita em 48h Úteis:** Cópias, roteiros e criativos submetidos via WhatsApp oficial consideram-se tacitamente aprovados se o cliente não solicitar ajustes em até 48 horas úteis, resguardando o cronograma de postagens e o SLA da agência.
 3. **Direito de Regresso Processual Obrigatório (Art. 125, II, do CPC):** Isenção total da Teixo por infrações sanitárias, trabalhistas, tributárias ou acidentes nas instalações físicas do cliente. Se a Teixo for acionada indevidamente, o cliente deve assumir o polo passivo e ressarcir despesas com advogados e defesas em até 5 dias úteis.
-4. **Título Executivo Extrajudicial (Art. 784, III, do CPC):** Todos os contratos são formalizados com 2 testemunhas instrumentárias e validade de assinatura eletrônica (MP 2.200-2/2001 e Lei 14.063/2020), permitindo cobrança executiva direta em caso de inadimplência.
+4. **Título Executivo Extrajudicial e Validade Digital (Art. 784, III e § 4º do CPC / Lei nº 14.620/2023):** Assinatura 100% digital (Gov.br, ZapSign, Clicksign) que **dispensa expressamente as 2 testemunhas físicas**, mantendo integral força executiva extrajudicial.
+5. **Teoria da Aparência para Gestores de Fato (Art. 1.015 do Código Civil):** Quando o filho ou administrador de fato assina no lugar da mãe ou titular formal, insere-se cláusula de solidariedade civil expressa, vinculando o estabelecimento e impedindo alegação futura de nulidade.
+6. **Proteção Operacional de Deslocamento Audiovisual:** Remarcações presenciais exigem aviso formal de 24h. Em cancelamento tardio após o deslocamento do videomaker (PL), 50% do valor do frete/transporte é devolvido (50% retido para cobertura das despesas). Chuvas fortes ou tempestades ensejam remarcação automática por força maior sem custos.
+7. **Delimitação de Entrega Audiovisual (Zero Raw Footage):** A entrega limita-se estritamente aos arquivos finais renderizados e editados em 1080p/4K. Arquivos brutos de gravação (*raw footage*) e projetos de edição pertencem à metodologia da Teixo e não são fornecidos.
+8. **Padrão Executivo Enxuto de 3 Páginas:** Para evitar o "bloqueio do advogado" e atritos que esfriam a negociação, contratos B2B locais são calibrados em **3 páginas**, mantendo redação direta e objetiva sem juridiquês prolixo, mas preservando 100% das blindagens.
+9. **Suspensão Preventiva Limpa (Art. 476 do Código Civil):** Pausa de anúncios e filmagens após 5 dias de atraso injustificado, sem cláusulas hostis de multa ou juros moratórios que criam atrito com clientes em fase inicial de parceria.
 
 ---
 
