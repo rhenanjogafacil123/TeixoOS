@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidade & Termos de Uso (LGPD) | Pizza do Juca</title>
+  <link rel="icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-100 font-sans antialiased selection:bg-orange-500 selection:text-white p-4 sm:p-8">
+
+  <div class="mx-auto max-w-3xl">
+    
+    <!-- Cabeçalho -->
+    <header class="pb-8 border-b border-slate-800 flex items-center justify-between gap-4">
+      <div class="flex items-center gap-3.5">
+        <div class="grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br from-orange-500 to-amber-600 shadow-md shadow-orange-500/20 p-2">
+          <img src="/logo_juca.png" alt="Pizza do Juca" class="h-10 w-10 object-contain" onerror="this.src='/logo.png'">
+        </div>
+        <div>
+          <h1 class="text-xl font-black text-white sm:text-2xl">Política de Privacidade & Termos</h1>
+          <p class="text-xs text-slate-400 mt-0.5">Conformidade integral com a LGPD (Lei Federal nº 13.709/2018)</p>
+        </div>
+      </div>
+      <a 
+        href="/" 
+        class="inline-flex items-center gap-1.5 rounded-xl border border-slate-800 bg-slate-900 px-3.5 py-2 text-xs font-bold text-slate-300 hover:text-white transition"
+      >
+        <i data-lucide="arrow-left" class="h-4 w-4"></i>
+        <span>Voltar ao Cardápio</span>
+      </a>
+    </header>
+
+    <!-- Conteúdo da Política -->
+    <main class="mt-8 space-y-8 text-sm leading-relaxed text-slate-300">
+      
+      <!-- Selo de Compromisso -->
+      <div class="rounded-2xl border border-emerald-500/30 bg-emerald-500/10 p-4 text-xs text-emerald-200 flex items-center gap-3">
+        <i data-lucide="shield-check" class="h-6 w-6 shrink-0 text-emerald-400"></i>
+        <div>
+          <strong class="text-white block font-bold text-sm">Compromisso com a sua Privacidade</strong>
+          A <strong>Pizza do Juca</strong> preza pela segurança e transparência no tratamento dos dados pessoais de seus clientes, operadores e parceiros de entrega, em total observância à legislação brasileira de proteção de dados.
+        </div>
+      </div>
+
+      <!-- Seção 1 -->
+      <section class="space-y-3">
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <span class="text-orange-500 font-mono">1.</span> Quais dados nós coletamos?
+        </h2>
+        <p>
+          Coletamos exclusivamente os dados estritamente necessários para viabilizar o preparo e a entrega do seu pedido:
+        </p>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs text-slate-400">
+          <li><strong>Nome Completo:</strong> para identificação do pedido e da comanda de preparo.</li>
+          <li><strong>Número de Telefone / WhatsApp:</strong> para envio do status da entrega, confirmação do endereço pelo motoboy e suporte direto em caso de imprevistos.</li>
+          <li><strong>Endereço de Entrega (com ponto de referência):</strong> para despacho e roteirização do entregador até a sua residência.</li>
+          <li><strong>E-mail e Senha Criptografada:</strong> para criação de conta de acesso ao histórico de pedidos e cadastro de equipe.</li>
+          <li><strong>Data de Nascimento (opcional):</strong> exclusivamente para conceder benefícios e descontos de aniversário no Clube da Pizzaria.</li>
+        </ul>
+      </section>
+
+      <!-- Seção 2 -->
+      <section class="space-y-3">
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <span class="text-orange-500 font-mono">2.</span> Segurança Bancária & Dados de Cartão (PCI-DSS)
+        </h2>
+        <p>
+          <strong>Nenhum dado de cartão de crédito ou código de segurança (CVV) é armazenado em nossos servidores.</strong>
+        </p>
+        <p class="text-xs text-slate-400">
+          Todas as transações de pagamento (PIX Dinâmico com QR Code bancário e Cartão de Crédito) são processadas diretamente pela infraestrutura segura do <strong>Mercado Pago</strong>, instituição de pagamento regulada pelo Banco Central do Brasil com certificação internacional PCI-DSS de conformidade bancária.
+        </p>
+      </section>
+
+      <!-- Seção 3 -->
+      <section class="space-y-3">
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <span class="text-orange-500 font-mono">3.</span> Medidas Técnicas de Proteção da Informação
+        </h2>
+        <p>
+          Adotamos as mais rigorosas práticas de cibersegurança para garantir a inviolabilidade da nossa base de dados:
+        </p>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs text-slate-400">
+          <li><strong>Criptografia com Salt (<span class="font-mono text-slate-300">bcrypt</span>):</strong> Todas as senhas cadastradas passam por função de dispersão criptográfica irreversível antes de serem salvas no banco. Nem os próprios desenvolvedores ou administradores têm acesso à sua senha original.</li>
+          <li><strong>Tokens de Autenticação Assinados (<span class="font-mono text-slate-300">JWT</span>):</strong> As sessões de usuários utilizam tokens temporários assinados digitalmente com prazo de expiração de 12 horas.</li>
+          <li><strong>Banco de Dados Isolado:</strong> A base de dados SQLite opera isolada na VPS, sem portas abertas para a internet pública e sem exposição do arquivo físico.</li>
+          <li><strong>Hierarquia de Acesso (RBAC):</strong> Cada função (gestor, atendente, motoboy e cliente) só visualiza as informações pertinentes à sua atividade operacional.</li>
+        </ul>
+      </section>
+
+      <!-- Seção 4 -->
+      <section class="space-y-3">
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <span class="text-orange-500 font-mono">4.</span> Compartilhamento e Não Comercialização de Dados
+        </h2>
+        <p>
+          A Pizza do Juca <strong>NUNCA comercializa, aluga ou cede dados pessoais a empresas de telemarketing, corretoras de dados ou anunciantes terceiros</strong>. Os dados cadastrais são visualizados unicamente pela equipe responsável pelo preparo da sua pizza e pelo motoboy escalado para levar o seu pedido.
+        </p>
+      </section>
+
+      <!-- Seção 5 -->
+      <section class="space-y-3">
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <span class="text-orange-500 font-mono">5.</span> Seus Direitos como Titular (Art. 18 da LGPD)
+        </h2>
+        <p>
+          Você tem pleno direito de, a qualquer momento:
+        </p>
+        <ul class="list-disc pl-5 space-y-1.5 text-xs text-slate-400">
+          <li>Confirmar a existência de tratamento e acessar seus dados cadastrados;</li>
+          <li>Corrigir dados incompletos, inexatos ou desatualizados;</li>
+          <li>Solicitar a anonimização, bloqueio ou eliminação definitiva dos seus dados de cadastro;</li>
+          <li>Revogar seu consentimento para envio de promoções ou novidades.</li>
+        </ul>
+        <p class="text-xs text-slate-400 mt-2">
+          Para exercer qualquer um desses direitos, basta entrar em contato com nossa equipe pelo WhatsApp de atendimento da pizzaria ou solicitar diretamente pelo nosso canal oficial.
+        </p>
+      </section>
+
+      <!-- Seção 6 -->
+      <section class="space-y-3">
+        <h2 class="text-base font-extrabold text-white flex items-center gap-2">
+          <span class="text-orange-500 font-mono">6.</span> Atualizações desta Política
+        </h2>
+        <p class="text-xs text-slate-400">
+          Esta Política de Privacidade pode ser atualizada periodicamente para refletir melhorias no sistema ou alterações regulatórias. A versão vigente sempre estará pública e acessível neste endereço.
+        </p>
+        <div class="text-[11px] font-mono text-slate-500 pt-2">
+          Última atualização: Outubro de 2026 • Versão 1.0 (Auditoria LGPD Aprovada)
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="mt-12 border-t border-slate-800 pt-6 text-center text-xs text-slate-500">
+      <div class="flex items-center justify-center gap-2">
+        <span>© 2026 Pizza do Juca — Todos os direitos reservados.</span>
+      </div>
+      <div class="mt-2 text-[10px] text-slate-600">
+        Tecnologia e Infraestrutura Segura por <strong>Teixo Growth & Tecnologia</strong>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    if (window.lucide) lucide.createIcons();
+  </script>
+</body>
+</html>
