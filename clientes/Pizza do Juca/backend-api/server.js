@@ -16,6 +16,14 @@ app.use('/api/webhook/mercadopago', express.raw({ type: 'application/json' }));
 app.use(cors());
 app.use(express.json());
 
+// Security Headers Defensivos (OWASP Top 10 A05 / ASVS V14)
+app.use((req, res, next) => {
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
+});
+
 const isMP_Configured = config.MP_ACCESS_TOKEN && !config.MP_ACCESS_TOKEN.includes('COLE_AQUI');
 
 // Log colorido de requisições
@@ -417,8 +425,8 @@ app.get('/api/health', (req, res) => {
   });
 });
 
-// 2. Pedidos: Listar todos
-app.get('/api/pedidos', (req, res) => {
+// 2. Pedidos: Listar todos (Protegido por RBAC - apenas equipe autorizada)
+app.get('/api/pedidos', authenticateToken, authorizeRoles('superadmin', 'admin', 'atendente', 'motoboy'), (req, res) => {
   try {
     const orders = db.getAllOrders();
     res.json({ success: true, count: orders.length, orders });
@@ -444,8 +452,8 @@ app.post('/api/pedidos', (req, res) => {
   }
 });
 
-// 4. Pedidos: Atualizar status
-app.patch('/api/pedidos/:id/status', (req, res) => {
+// 4. Pedidos: Atualizar status (Apenas equipe autorizada)
+app.patch('/api/pedidos/:id/status', authenticateToken, authorizeRoles('superadmin', 'admin', 'atendente', 'motoboy'), (req, res) => {
   try {
     const { id } = req.params;
     const { status, courier } = req.body;
@@ -460,7 +468,7 @@ app.patch('/api/pedidos/:id/status', (req, res) => {
   }
 });
 
-// 5. Clube de Aniversário: Cadastrar
+// 5. Clube de Aniversário: Cadastrar (Público no cardápio)
 app.post('/api/clientes/aniversario', (req, res) => {
   try {
     const { name, phone, birthday, couponCode } = req.body;
@@ -476,8 +484,8 @@ app.post('/api/clientes/aniversario', (req, res) => {
   }
 });
 
-// 6. Clube de Aniversário: Listar
-app.get('/api/clientes/aniversariantes', (req, res) => {
+// 6. Clube de Aniversário: Listar (Protegido - Apenas Gestão e Atendentes)
+app.get('/api/clientes/aniversariantes', authenticateToken, authorizeRoles('superadmin', 'admin', 'atendente'), (req, res) => {
   try {
     const clients = db.getBirthdayCustomers();
     res.json({ success: true, count: clients.length, clients });
@@ -486,7 +494,7 @@ app.get('/api/clientes/aniversariantes', (req, res) => {
   }
 });
 
-// 7. Carrinho Abandonado: Salvar
+// 7. Carrinho Abandonado: Salvar (Público no site)
 app.post('/api/carrinho-abandonado', (req, res) => {
   try {
     const { customer, phone, items, total } = req.body;
@@ -497,8 +505,8 @@ app.post('/api/carrinho-abandonado', (req, res) => {
   }
 });
 
-// 8. Carrinho Abandonado: Listar
-app.get('/api/carrinho-abandonado', (req, res) => {
+// 8. Carrinho Abandonado: Listar (Protegido - Apenas Gestão e Atendentes)
+app.get('/api/carrinho-abandonado', authenticateToken, authorizeRoles('superadmin', 'admin', 'atendente'), (req, res) => {
   try {
     const carts = db.getAbandonedCarts();
     res.json({ success: true, count: carts.length, carts });
@@ -507,8 +515,8 @@ app.get('/api/carrinho-abandonado', (req, res) => {
   }
 });
 
-// 9. Carrinho Abandonado: Marcar recuperado
-app.patch('/api/carrinho-abandonado/:id/recuperado', (req, res) => {
+// 9. Carrinho Abandonado: Marcar recuperado (Protegido)
+app.patch('/api/carrinho-abandonado/:id/recuperado', authenticateToken, authorizeRoles('superadmin', 'admin', 'atendente'), (req, res) => {
   try {
     const { id } = req.params;
     db.markCartRecovered(id);
@@ -522,12 +530,9 @@ app.patch('/api/carrinho-abandonado/:id/recuperado', (req, res) => {
 // MOTOBOYS — FECHAMENTOS DE TURNO
 // ===========================================
 
-// 10. Salvar fechamento de turno do motoboy (Protegido por RBAC)
-app.post('/api/motoboys/fechamentos', optionalAuth, (req, res) => {
+// 10. Salvar fechamento de turno do motoboy (Protegido por RBAC - Apenas Administradores)
+app.post('/api/motoboys/fechamentos', authenticateToken, authorizeRoles('superadmin', 'admin'), (req, res) => {
   try {
-    if (req.user && req.user.role !== 'admin') {
-      return res.status(403).json({ success: false, error: '403 Proibido: Apenas administradores podem registrar fechamentos.' });
-    }
     const data = req.body;
     if (!data || !data.courier_name) {
       return res.status(400).json({ success: false, error: 'Nome do motoboy é obrigatório' });
@@ -541,8 +546,8 @@ app.post('/api/motoboys/fechamentos', optionalAuth, (req, res) => {
   }
 });
 
-// 11. Listar histórico de fechamentos de motoboys (Filtra por motoboy se não for admin)
-app.get('/api/motoboys/fechamentos', optionalAuth, (req, res) => {
+// 11. Listar histórico de fechamentos de motoboys (Protegido - Filtra por motoboy se for motoboy)
+app.get('/api/motoboys/fechamentos', authenticateToken, (req, res) => {
   try {
     const limit = parseInt(req.query.limit, 10) || 100;
     let closings = db.getMotoboyClosings(limit);
