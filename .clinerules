@@ -10,12 +10,18 @@ Sempre verifique e leia os arquivos de contexto em `_memoria/`:
 - `identidade/design-guide.md`: Cores, fontes e estilo visual para criativos.
 
 ## 2. Execução de Skills
-Antes de criar qualquer entrega, leia o arquivo correspondente em `.claude/skills/<nome-da-skill>/SKILL.md`:
-- **Google Ads Search**: `.claude/skills/anuncio-google/SKILL.md` -> Gere campanhas completas com RSAs (15 títulos / 4 descrições) e exporte o CSV pronto para o Google Ads Editor.
-- **Relatório de Tráfego (Meta + Google)**: `.claude/skills/relatorio-ads/SKILL.md` -> Analise os CSVs brutos em `dados/`, compare semana a semana, calcule KPIs (CPA, CTR, ROAS, frequência) e salve o relatório executivo em `marketing/campanhas/relatorios/`.
-- **Pesquisa de Demanda & SEO**: `.claude/skills/seo/SKILL.md` -> Mapeie clusters de palavras-chave e concorrentes.
-- **Criativos Visuais**: `.claude/skills/carrossel/SKILL.md` -> Criativos estáticos e carrosséis 1080x1350.
+Antes de criar qualquer entrega, leia o arquivo correspondente em `.claude/skills/<nome-da-skill>/SKILL.md` (ou `.agent/skills/`):
+- **Food Delivery & Clonador de Lojas**: `.claude/skills/clonar-loja/SKILL.md` -> Operações completas de delivery (R$ 0,67/pedido, Checkout Mercado Pago Bricks, KDS e app motoboys).
+- **Contratos Jurídicos Blindados**: `.claude/skills/contratos/SKILL.md` -> Contratos de alto padrão advocatício B2B (Delivery, Tráfego, Audiovisual, GMB, CMV e Combo 360º com Título Executivo Art. 784 CPC).
+- **Contador & Gestão Fiscal Ativa**: `.claude/skills/contador/SKILL.md` -> Consultoria fiscal e tributária, NFS-e, MEI vs ME/Simples Nacional, Fator R, E-Financeira e blindagem CPF vs CNPJ.
+- **Security Gate (Cibersegurança)**: `.claude/skills/security-gate/SKILL.md` -> Auditoria OWASP ASVS 5.0 L2, RBAC e headers defensivos antes de deploys.
+- **Vídeo de Produto & Earth to Shop Zoom**: `.claude/skills/video-produto/SKILL.md` -> Vídeos comerciais 3D e zoom cinematográfico de satélite até a loja.
+- **Google Ads Search**: `.claude/skills/anuncio-google/SKILL.md` -> Campanhas completas com RSAs e exportação de CSV para o Google Ads Editor.
+- **Relatório de Tráfego (Meta + Google)**: `.claude/skills/relatorio-ads/SKILL.md` -> Análise de métricas, CPA, ROAS e relatórios executivos.
+- **Pesquisa de Demanda & SEO**: `.claude/skills/seo/SKILL.md` -> Clusters de palavras-chave, concorrentes e GEO para IAs.
+- **Criativos Visuais & Carrossel**: `.claude/skills/carrossel/SKILL.md` -> Criativos estáticos e carrosséis 1080x1350.
 
 ## 3. Padrão de Nomenclatura e Arquivos
 - **Zero underline (`_`)** em nomes de arquivos gerados (apenas hífen e espaços legíveis, ex: `analise - google ads - novembro.md`).
-- Sem processos infinitos ou servidores que travem o terminal do usuário.
+- Sem processos em background que travem o terminal do usuário.
+- Precisão cirúrgica: modifique estritamente o que foi solicitado, mantendo o restante 100% intacto.

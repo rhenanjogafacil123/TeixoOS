@@ -33,7 +33,7 @@ usar o contexto naturalmente.
 ## Fluxo de trabalho
 
 Antes de executar qualquer tarefa, verificar se existe skill relevante
-em `.agent/skills/`. Se encontrar, seguir as instruções da skill. Se
+em `.claude/skills/` ou `.agent/skills/`. Se encontrar, seguir as instruções da skill. Se
 não encontrar, executar a tarefa normalmente.
 
 Ao concluir uma tarefa que não tinha skill mas parece repetível (o
@@ -130,6 +130,7 @@ Quando o usuário pedir skill nova:
 - **Checkout Transparente & Pagamento Antecipado:** Pagamento 100% online integrado direto na tela via Mercado Pago Bricks (PIX dinâmico com QR Code e Cartão). O pedido só é despachado para a fila KDS da cozinha após confirmação/aprovação bancária, eliminando cobrança manual no WhatsApp ou fiado na entrega.
 - **Performance e Custo Zero:** Frontend estático ultrarrápido + API REST/SQLite com fallback local (`localStorage`), sem requisições caras ou dependência de nuvem pesada.
 - **Controle de Estoque & CMV Semanal (Quinta-feira):** Curva ABC (Classe A diário; B e C por cardápio), Ordem de Produção antecipada em lote com fatores de cocção (perdas e rendimento de insumos crus).
+- **Segurança, Auto-Cadastro & RBAC Hierárquico Blindado:** 3 camadas obrigatórias: (1) Auto-cadastro ilimitado sem contas pré-fixadas (Nome, E-mail, Telefone, Nascimento e Senha) nascendo como `cliente`, com senhas protegidas com Salt via `bcrypt`; (2) Tokens digitais assinados via `JWT` com 12h de expiração; (3) Hierarquia dinâmica no Backend e Frontend: Superadmin Master Global (`rhenanteixeira.rj@gmail.com`) concede cargo de Gestor Geral (`admin`) para a conta da loja (ex: Juca). O Gestor Geral, por sua vez, concede permissão de `atendente` e `motoboy` para os e-mails da sua equipe via painel. Requisições indevidas são rejeitadas na raiz com HTTP 403 Forbidden.
 
 **Estrutura de Pastas:**
 - `_memoria/` — memória permanente (empresa, preferências, estratégia)
@@ -141,7 +142,7 @@ Quando o usuário pedir skill nova:
 - `dados/` — relatórios, dados de clientes e métricas
 - `scripts/` — scripts utilitários e automações da operação (ex: gerador de delivery)
 - `templates/` — templates de delivery-store, presets gastronômicos e catálogo de skills
-- `.agent/skills/` — catálogo de skills e automações operacionais
+- `.claude/skills/` e `.agent/skills/` — catálogo de skills e automações operacionais
 
 **Regra de Nomenclatura e Limpeza de Arquivos (Todos os Projetos):**
 - Zero underline (`_`) em nomes de arquivos gerados ou salvos.
@@ -155,5 +156,16 @@ Quando o usuário pedir skill nova:
 **Regra de Gestão de Memória vs. Pastas de Clientes:**
 - `_memoria/empresa.md` armazena exclusivamente **padrões gerais de serviços, modelos comerciais, regras de cobrança e a forma de trabalhar da Teixo**.
 - Detalhes de contratos, briefings, valores negociados e entregas individuais pertencem e ficam **isolados estritamente na pasta de cada cliente (`clientes/<Nome>/`)**, mantendo o sistema leve, ágil e escalável para dezenas ou centenas de clientes sem inchar a memória global.
+
+**Regra de Precisão Cirúrgica nas Edições:**
+- Sempre que o usuário solicitar qualquer alteração, exclusão ou adição, modificar **estritamente e exclusivamente** o que foi ordenado.
+- Manter intactos todos os demais elementos, cláusulas, seções e dados não relacionados, sem deduções automáticas ou exclusões paralelas não solicitadas.
+
+**Regra de Vigilância Contábil, Fiscal e Financeira Ativa:**
+- Sempre que o usuário ou o assistente tratar de finanças, dinheiro, recebimentos, PIX, contas bancárias, notas fiscais, faturamento ou contratos, o assistente atua como o Contador e Auditor Ativo da Teixo (skill `/contador`).
+- Alertar proativamente e com didática direta sobre riscos fiscais reais (confusão patrimonial CPF vs CNPJ, teto do MEI de R$ 81k e regra de estouro de 20%, regras da E-Financeira da Receita Federal para movimentações acima de R$ 2.000 no CPF, retenções tributárias e emissão obrigatória de NFS-e para PJ) e orientar a conduta legal e inteligente antes que qualquer erro seja cometido.
+
+**Regra de Execução Direta do `/atualizar`:**
+- Sempre que o usuário rodar `/atualizar`, identificar as defasagens entre o workspace e a memória (`_memoria/empresa.md`, `estrategia.md`, `preferencias.md`, `catalogo.md`), aplicar **automaticamente todas as mudanças necessárias de forma cirúrgica** e exibir o resumo executivo com os diffs aplicados, sem parar para pedir confirmações intermediárias.
 
 
