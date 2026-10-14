@@ -1,4 +1,4 @@
-﻿---
+---
 name: novo-projeto
 description: >
   Cria uma pasta de projeto nova com `CLAUDE.md` dedicado, depois de uma entrevista curta sobre
@@ -12,12 +12,13 @@ Quando o usuário começa um projeto novo (cliente, iniciativa, produto), cria u
 
 ## Workflow
 
-### Passo 1 — Entrevista (4 perguntas)
+### Passo 1 — Entrevista (5 perguntas)
 
 1. "Qual o nome do projeto ou cliente?"
 2. "É um cliente novo, projeto interno ou iniciativa pessoal?"
-3. "Qual o objetivo principal? (uma frase)"
-4. "Que tipo de entrega vai ter? (ex: ads, site, conteúdo, automação, proposta — pode ser mais de uma)"
+3. "Qual o modelo de atendimento: Presencial (loja física, balcão, campo, drone, repórter) ou 100% Digital (remoto, criador de conteúdo, e-commerce, tráfego/CRM à distância)?"
+4. "Qual o objetivo principal? (uma frase)"
+5. "Que tipo de entrega vai ter? (ex: delivery, ads, site, vídeos, contratos, automação — pode ser mais de uma)"
 
 ### Passo 2 — Decidir local
 

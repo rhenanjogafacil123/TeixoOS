@@ -1,4 +1,4 @@
-﻿---
+---
 name: atualizar
 description: >
   Varre o projeto e atualiza os arquivos de contexto (`_memoria/empresa.md`, `preferencias.md`,
@@ -30,23 +30,23 @@ Ler os arquivos de contexto e identificar:
 - **Em `CLAUDE.md`:** as regras de organização e a estrutura de pastas listada batem com o que existe?
 - **Em `identidade/design-guide.md`:** continua coerente com o que foi gerado nas últimas peças (carrosséis, slides)?
 
-### Passo 3 — Proposta de mudanças
+### Passo 3 — Aplicação Automática das Mudanças
 
-Apresentar pro usuário uma lista curta no formato:
+Identificar as defasagens e aplicar **imediatamente e de forma cirúrgica** todas as atualizações identificadas nos respectivos arquivos (`_memoria/empresa.md`, `preferencias.md`, `estrategia.md`, `identidade/design-guide.md`, `GEMINI.md`, `templates/skills/catalogo.md`), sem travar o fluxo para perguntar aprovação.
 
+### Passo 4 — Resumo Executivo das Atualizações
+
+Apresentar pro usuário a confirmação direta com o resumo do que foi aplicado:
+
+```markdown
+Atualizei [N] itens na memória e contexto:
+
+1. `_memoria/empresa.md` — [O que foi atualizado]
+2. `_memoria/estrategia.md` — [O que foi atualizado]
+3. `templates/skills/catalogo.md` — [O que foi atualizado]
+
+Tudo sincronizado e coerente com o estado real do workspace!
 ```
-Encontrei [N] coisas pra atualizar:
-
-1. _memoria/empresa.md — falta o cliente "Acme" (vi pasta clientes/Acme/ criada em [data])
-2. CLAUDE.md — tem regra "propostas vão em propostas/" mas vejo propostas em clientes/<x>/propostas/
-3. _memoria/estrategia.md — fala em "fechar 1º cliente em fevereiro", já é abril e tem 3 clientes ativos
-
-Quer que eu aplique essas mudanças? Posso aplicar todas, escolher algumas, ou nenhuma.
-```
-
-### Passo 4 — Aplicação
-
-Se o usuário aprovar, editar os arquivos com cirurgia — só a linha relevante, sem reformatar o documento todo. Mostrar o diff de cada mudança aplicada.
 
 ## Regras
 

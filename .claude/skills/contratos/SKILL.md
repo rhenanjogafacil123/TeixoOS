@@ -44,7 +44,7 @@ O contrato pode ser emitido sob duas modalidades jurídicas, de acordo com o mom
   `TIAGO TEIXEIRA DO NASCIMENTO SILVA, pessoa jurídica de direito privado, inscrita no CNPJ/MF sob o nº 69.390.968/0001-78, operando sob o nome fantasia TEIXO (ASSESSORIA DE CRESCIMENTO E TECNOLOGIA), com sede no Rio de Janeiro/RJ, neste ato representada por seu titular legal, TIAGO TEIXEIRA DO NASCIMENTO SILVA, doravante denominada simplesmente "CONTRATADA" ou "TEIXO"...`
 
 - **Opção B (Sócios Fundadores como Pessoas Físicas / Sociedade de Fato):**  
-  `RHENAN DE OLIVEIRA TEIXEIRA, brasileiro, desenvolvedor e diretor de tecnologia, portador do CPF nº [CPF]; TIAGO TEIXEIRA DO NASCIMENTO SILVA, brasileiro, gestor de tráfego, portador do CPF nº [CPF]; e ERICK TEIXEIRA DA SILVA, brasileiro, gestor de automações, portador do CPF nº [CPF]; todos residentes e domiciliados na Cidade do Rio de Janeiro/RJ, doravante denominados em conjunto simplesmente "CONTRATADA" ou "TEIXO"...`
+  `RHENAN DE OLIVEIRA TEIXEIRA, brasileiro, desenvolvedor e diretor de tecnologia, portador do CPF nº [CPF]; TIAGO TEIXEIRA DO NASCIMENTO SILVA, brasileiro, gestor de tráfego, portador do CPF nº [CPF]; e ERICK TEIXEIRA FIGUEIREDO, brasileiro, gestor de automações, portador do CPF nº [CPF]; todos residentes e domiciliados na Cidade do Rio de Janeiro/RJ, doravante denominados em conjunto simplesmente "CONTRATADA" ou "TEIXO"...`
 
 - **Padrão Oficial de Assinatura e Recebimento:**
   - **Signatário Oficial da Teixo:** **Tiago Teixeira do Nascimento Silva (21 anos)** assina como o titular e representante legal nos contratos. Isso confere capacidade civil plena imediata e validade jurídica de 100% sem envolver pais/responsáveis legais.
@@ -85,7 +85,7 @@ Carregar o modelo correspondente de `templates/` e preencher com precisão milim
 6. **Propriedade Intelectual & Dados:** Plataforma e códigos pertencem 100% à Teixo; dados do cardápio e clientes protegidos sob a LGPD (Lei 13.709/2018).
 7. **Cessão de Imagem e Voz:** Cláusula irrevogável para uso comercial e institucional dos vídeos gravados na loja.
 8. **Rescisão & Desmame Sem Traumas:** Aviso prévio de 30 dias por escrito, exportação da base de dados e cardápio garantida.
-9. **Foro & Força Executiva:** Foro da Comarca da Capital do Estado do Rio de Janeiro / RJ, com 2 testemunhas para constituir Título Executivo Extrajudicial (Art. 784, III, CPC).
+9. **Foro & Força Executiva:** Foro da Comarca da Capital do Estado do Rio de Janeiro / RJ, constituindo Título Executivo Extrajudicial (Art. 784, III e § 4º, CPC / Lei Federal nº 14.620/2023), com dispensa de testemunhas instrumentárias na assinatura digital.
 
 ### Passo 3 — Salvar o Arquivo no Padrão Teixo
 Salvar na pasta do cliente:
@@ -106,5 +106,9 @@ Apresentar um resumo executivo com os principais pontos blindados e orientar com
 1. **Clareza com Rigor:** Redação firme, técnica e sem jargões arcaicos ininteligíveis ("outrossim", "data venia"), priorizando assertividade e segurança jurídica.
 2. **Zero Fricção no Delivery:** Deixar claro em letras destacadas que para a plataforma de delivery própria não há mensalidade fixa nem cobrança de taxa de adesão/setup — a Teixo ganha junto com o sucesso da loja via R$ 0,67 por pedido pago pelo consumidor final.
 3. **Blindagem Sanitária e Trabalhista:** A Teixo jamais responde por higiene de cozinha, intoxicação, atraso de motoboy ou vínculo empregatício de funcionários da loja.
-4. **Título Executivo Extrajudicial:** Sempre incluir o campo das 2 testemunhas qualificadas com nome e CPF para permitir cobrança judicial direta em caso de inadimplência em serviços com fee fixo.
+4. **Título Executivo Extrajudicial & Validade Digital (Art. 784, § 4º do CPC / Lei 14.620/2023):** Assinaturas realizadas via Gov.br, ZapSign ou provedores digitais dispensam expressamente as 2 testemunhas instrumentárias físicas sem perder a força de título executivo.
 5. **Nomenclatura Limpa:** Nunca usar underline (`_`) em arquivos gerados.
+6. **Extensão Máxima Executiva (Padrão 3 Páginas):** Nunca gerar contratos com 6 ou 7 páginas para pequenos e médios negócios locais. Calibrar o formato executivo em até 3 páginas para eliminar a trava do "vou mandar pro advogado", preservando 100% das cláusulas de proteção.
+7. **Blindagem do Gestor de Fato (Art. 1.015 do Código Civil):** Quando o filho ou gerente operacional assina pelo negócio no lugar do titular formal, incluir cláusula de solidariedade civil expressa.
+8. **Salvaguardas de Audiovisual (Zero Raw Footage & Cancelamento 24h):** Entregar apenas vídeos editados e renderizados; cancelamento com menos de 24h retém 50% do custo de deslocamento do videomaker/PL; chuvas fortes remarcam sem custo.
+9. **Suspensão Preventiva Limpa (Art. 476 do Código Civil):** Atraso superior a 5 dias pausa anúncios e filmagens sem cobrança de multas ou juros que causem atrito com clientes em fase inicial de parceria.
