@@ -1,11 +1,25 @@
-/**
- * config.js - Configuração de Credenciais do Mercado Pago
- * 
- * Quando o Juca criar a conta no Mercado Pago:
- * 1. Acessar: https://mercadopago.com.br/developers/panel
- * 2. Criar aplicação "Pizza do Juca" → Checkout Bricks
- * 3. Colar as chaves abaixo
- */
+const fs = require('fs');
+const path = require('path');
+
+// Carregador nativo de variáveis .env (Zero Trust / Sem vazar para o Git)
+const envPath = path.join(__dirname, '.env');
+if (fs.existsSync(envPath)) {
+  try {
+    const envContent = fs.readFileSync(envPath, 'utf8');
+    envContent.split(/\r?\n/).forEach(line => {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith('#')) return;
+      const eqIdx = trimmed.indexOf('=');
+      if (eqIdx !== -1) {
+        const key = trimmed.slice(0, eqIdx).trim();
+        const val = trimmed.slice(eqIdx + 1).trim().replace(/^['"]|['"]$/g, '');
+        if (key && !process.env[key]) {
+          process.env[key] = val;
+        }
+      }
+    });
+  } catch (e) {}
+}
 
 module.exports = {
   // ===================================================
