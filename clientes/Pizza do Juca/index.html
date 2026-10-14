@@ -18,13 +18,9 @@
   <script src="https://sdk.mercadopago.com/js/v2"></script>
   <script src="assets/juca-api.js"></script>
   <script>
-    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+    document.documentElement.classList.remove('dark');
+    localStorage.setItem('theme', 'light');
     tailwind.config = {
-      darkMode: 'class',
       theme: {
         extend: {
           colors: {
@@ -132,26 +128,6 @@
             <span>@pizzadojuca</span>
           </a>
         </nav>
-
-        <!-- Botão Alternar Tema Claro/Escuro -->
-        <button id="theme-toggle" type="button" aria-label="Alternar tema claro e escuro" class="relative grid h-10 w-10 shrink-0 place-items-center rounded-full border border-[#dccdb2] bg-[#faf5ec] text-[#2f4a32] shadow-sm hover:border-[#2f4a32]/40 hover:bg-[#e8d9be]/50 transition active:scale-95 dark:bg-[#1a1412] dark:border-[#382b24] dark:text-[#faf5ec]">
-          <!-- Ícone Sol (visível em modo escuro) -->
-          <svg class="hidden h-[18px] w-[18px] dark:block text-amber-400 transition-transform hover:rotate-45" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <circle cx="12" cy="12" r="5"></circle>
-            <line x1="12" y1="1" x2="12" y2="3"></line>
-            <line x1="12" y1="21" x2="12" y2="23"></line>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
-            <line x1="1" y1="12" x2="3" y2="12"></line>
-            <line x1="21" y1="12" x2="23" y2="12"></line>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
-          </svg>
-          <!-- Ícone Lua (visível em modo claro) -->
-          <svg class="block h-[18px] w-[18px] dark:hidden text-[#2f4a32] transition-transform hover:-rotate-12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-          </svg>
-        </button>
 
         <!-- Botão Abrir Carrinho -->
         <button id="btn-open-cart" type="button" aria-label="Abrir carrinho" class="relative grid h-10 w-10 place-items-center rounded-full bg-[#2f4a32] text-[#faf5ec] shadow-sm hover:bg-[#243a26] transition active:scale-95">
@@ -3754,15 +3730,6 @@
         header.classList.remove('bg-[#faf5ec]/95', 'backdrop-blur-md', 'border-b', 'border-[#dccdb2]', 'shadow-sm', 'dark:bg-[#1a1412]/95', 'dark:border-[#382b24]');
       }
     });
-
-    // Dark Mode Toggle
-    const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-      themeToggle.onclick = () => {
-        const isDark = document.documentElement.classList.toggle('dark');
-        try { localStorage.setItem('theme', isDark ? 'dark' : 'light'); } catch (e) {}
-      };
-    }
 
     // Horário de Funcionamento Dinâmico (18:00 às 00:30) com suporte a virada de meia-noite
     function updateOpenStatus() {

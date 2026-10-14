@@ -46,6 +46,7 @@ Ao conduzir diagnósticos, criar propostas, alinhar entregas ou redigir contrato
 
 - **Conceito:** Moderno, contemporâneo, sofisticado, tecnológico e premium.
 - **Percepção:** Nada comum ou genérico — acabamento de alto nível que transmita que foi construído por especialistas avançados.
+- **Tema 100% Claro Obrigatório:** Proibido usar tema escuro em qualquer parte das lojas de delivery, cardápios, checkout, tela de login, rastreio ou painéis. Usar sempre e exclusivamente o tema claro, limpo, acolhedor e com padrão gastronômico. Banir seletores de tema escuro e desativar qualquer detecção automática de `prefers-color-scheme: dark`.
 
 ---
 

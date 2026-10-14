@@ -129,30 +129,30 @@
     if (document.getElementById('juca-auth-session-badge')) return;
 
     const roleBadges = {
-      superadmin: { label: 'Master Global', bg: 'bg-amber-500/10 text-amber-400 border-amber-500/30', icon: '👑' },
-      admin: { label: 'Gestor Geral', bg: 'bg-orange-500/10 text-orange-400 border-orange-500/30', icon: '🍕' },
-      atendente: { label: 'Atendente', bg: 'bg-blue-500/10 text-blue-400 border-blue-500/30', icon: '📋' },
-      motoboy: { label: 'Motoboy', bg: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30', icon: '🛵' },
-      cliente: { label: 'Cliente', bg: 'bg-purple-500/10 text-purple-400 border-purple-500/30', icon: '👤' }
+      superadmin: { label: 'Master Global', bg: 'bg-amber-50 text-amber-800 border-amber-200', icon: '👑' },
+      admin: { label: 'Gestor Geral', bg: 'bg-orange-50 text-orange-800 border-orange-200', icon: '🍕' },
+      atendente: { label: 'Atendente', bg: 'bg-blue-50 text-blue-800 border-blue-200', icon: '📋' },
+      motoboy: { label: 'Motoboy', bg: 'bg-emerald-50 text-emerald-800 border-emerald-200', icon: '🛵' },
+      cliente: { label: 'Cliente', bg: 'bg-purple-50 text-purple-800 border-purple-200', icon: '👤' }
     };
 
     const userRoleKey = (currentUser.role || 'cliente').toLowerCase();
     const info = roleBadges[userRoleKey] || roleBadges.cliente;
     const badge = document.createElement('div');
     badge.id = 'juca-auth-session-badge';
-    badge.className = 'fixed bottom-4 right-4 z-[9999] flex items-center gap-2 rounded-2xl border border-slate-700/80 bg-slate-900/95 p-2 shadow-2xl backdrop-blur-md text-xs';
+    badge.className = 'fixed bottom-4 right-4 z-[9999] flex items-center gap-2 rounded-2xl border border-slate-200 bg-white/95 p-2 shadow-xl backdrop-blur-md text-xs text-slate-900';
     badge.innerHTML = `
       <div class="flex items-center gap-1.5 pl-2 pr-1">
         <span class="text-sm">${info.icon}</span>
         <div>
-          <div class="font-extrabold text-white text-[11px] leading-tight">${currentUser.nome_completo || currentUser.nome || currentUser.name || currentUser.username}</div>
-          <div class="text-[9px] font-bold text-slate-400 uppercase tracking-wider">${info.label}</div>
+          <div class="font-extrabold text-slate-900 text-[11px] leading-tight">${currentUser.nome_completo || currentUser.nome || currentUser.name || currentUser.username}</div>
+          <div class="text-[9px] font-bold text-slate-500 uppercase tracking-wider">${info.label}</div>
         </div>
       </div>
       <button 
         type="button" 
         onclick="window.JucaAuthGuard.logout()" 
-        class="rounded-xl border border-red-500/30 bg-red-500/10 hover:bg-red-500/20 text-red-400 px-2.5 py-1 text-[10px] font-black transition"
+        class="rounded-xl border border-red-200 bg-red-50 hover:bg-red-100 text-red-600 px-2.5 py-1 text-[10px] font-black transition"
         title="Encerrar sessão segura"
       >
         Sair
